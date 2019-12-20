@@ -1,6 +1,6 @@
 <?php
-namespace OCA\GeoBlocker\LocalizationServices;
 
+namespace OCA\GeoBlocker\LocalizationServices;
 
 interface ILocalizationService {
 	/**
@@ -8,24 +8,26 @@ interface ILocalizationService {
 	 *
 	 * @return bool
 	 */
-	public function getStatus();
-	
+	public function getStatus(): bool;
+
 	/**
 	 * If service is not working, returns a string with a hint, what might be the Problem starting with "ERROR: "
-	 * If the service is working properly, returns a string starting with "OK". It may give some additional inforamtion after that.
+	 * If the service is working properly, returns a string starting with "OK".
+	 * It may give some additional inforamtion after that.
 	 *
 	 * @return string
 	 */
-	public function getStatusString();
-	
+	public function getStatusString(): string;
+
 	/**
-	 * Returns the country code as string of two charactersof the IP adresses, if it can be determind.
-	 * If it is not found, it returns "AA" (Country Code for Country not found).
-	 * If the service is not usable, it returns "INVALID"
+	 * Returns the country code of the IP adresses as string of two characters, if it can be determind.
+	 * If the country is not found, it returns "AA" (Country Code for Country not found).
+	 * If the input wasn't a valid IP Adress it returns "INVALID_IP
+	 * If the service is not usable, it returns "UNAVAILABLE"
 	 *
-	 * @param string $IPAdress The IP Adress to check.
-	 * @return string 
+	 * @param string $IPAdress
+	 *        	The IP Adress to check.
+	 * @return string
 	 */
-	public function getCountryCodeFromIP(string $IPAddress);
-	
+	public function getCountryCodeFromIP(string $IPAddress): string;
 }

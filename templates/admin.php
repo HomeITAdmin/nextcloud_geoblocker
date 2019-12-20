@@ -8,6 +8,9 @@ style ( 'geoblocker', 'admin' );
 ?>
 <div id="geoblocker" class="section">
 	<h2><?php p($l->t('GeoBlocker')); ?></h2>
+	<?php p($l->t('This is a front end to geo localization services, that allows blocking (currently onyl logging!) of login attempts from specific countries. ')); ?> <br />
+	<?php p($l->t('Login attempts from local IP adresses are not blocked (or logged).')); ?> <br />
+	<?php p($l->t('Determination of the country from IP address is only as good as the choosen service.')); ?> 
 	<div id="service">
 		<h3><?php p($l->t('Service')); ?></h3>
 			<?php p($l->t('Choose the service you want to use to determine the country from the IP Address:')); ?> 
@@ -23,8 +26,10 @@ style ( 'geoblocker', 'admin' );
 	<div id="countrySelection">
 		<h3><?php p($l->t('Country Selection')); ?></h3>
 		<select name="choose-white-black-list" id="choose-white-black-list">
-			<option value="0" <?php if (!$_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('Blacklisting'))?></option>
-			<option value="1" <?php if ($_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('Whitelisting'))?></option>
+			<option value="0"
+				<?php if (!$_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('Blacklisting'))?></option>
+			<option value="1"
+				<?php if ($_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('Whitelisting'))?></option>
 		</select> 
 			<?php p($l->t('the following entries'))?>:
 		

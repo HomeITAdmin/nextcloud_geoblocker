@@ -7,7 +7,7 @@ class GeoIPLookup implements ILocalizationService {
 	public function __construct() {
 		
 	}
-	public function getStatus() {
+	public function getStatus():bool {
 		$output = "";
 		$return_val = 0;
 		$return_val2 = 0;
@@ -24,7 +24,7 @@ class GeoIPLookup implements ILocalizationService {
 			return FALSE;
 		}
 	}
-	public function getStatusString() {
+	public function getStatusString():string {
 		if ($this->getStatus() === TRUE) {
 			return "OK.  (Please make sure the databases are up to date. This is currently not checked here.)";
 		} else {
@@ -32,13 +32,13 @@ class GeoIPLookup implements ILocalizationService {
 		}		
 	}
 	
-	public function getCountryCodeFromIP($IPAddress) {
+	public function getCountryCodeFromIP($IPAddress):string {
 		$output = "";
 		$return_val = 0;
 		$location = "";
 		
 		if (!$this->getStatus()) {
-			return 'INVALID';
+			return 'UNAVAILABLE';
 		}
 		
 		if( filter_var($IPAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ) {
@@ -46,11 +46,11 @@ class GeoIPLookup implements ILocalizationService {
 		} else if( filter_var($IPAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) ) {
 			$location_raw = exec ( 'geoiplookup6 ' . $IPAddress , $output, $return_val);
 		} else {
-			return 'INVALID';
+			return 'INVALID_IP';
 		}
 		
 		if ($return_val != 0) {
-			$location = 'INVALID';
+			$location = 'UNAVAILABLE';
 		} else if (strpos ( $location_raw, 'IP Address not found' ) !== FALSE) {
 			$location = 'AA'; //Country not found
 		} else {

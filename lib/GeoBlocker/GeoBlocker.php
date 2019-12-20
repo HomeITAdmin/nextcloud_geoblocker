@@ -9,46 +9,71 @@ use OCP\IL10N;
 
 class GeoBlocker {
 	private $user;
-	private $address;
+	private $IPAddress;
 	private $logger;
 	private $config;
 	private $l;
-	public function __construct(String $user, String $address, ILogger $logger,
+	public function __construct(String $user, String $IPAddress, ILogger $logger,
 			GeoBlockerConfig $config, IL10N $l) {
 		$this->user = $user;
-		$this->address = $address;
+		$this->IPAddress = $IPAddress;
 		$this->logger = $logger;
 		$this->config = $config;
 		$this->l = $l;
 	}
 	public function check() {
 		// TODO: Create depending on the configurated service the right service
-		// TODO: Do special treatment for internal IP Adresses?
-		$location_service = new GeoIPLookup ();
+		if (! $this->isIPAdressLocal ()) {
+			$location_service = new GeoIPLookup ();
 
-		$location = $location_service->getCountryCodeFromIP ( $this->address );
+			$location = $location_service->getCountryCodeFromIP ( 
+					$this->IPAddress );
 
-		if ($location !== "INVALID") {
-			// TODO: Check if blocked country
-			if ($this->config->isCountryCodeInListOfChoosenCountries ( 
-					$location ) xor $this->config->getUseWhiteListing ()) {
-				$log_user = $this->config->getLogWithUserName () ? $this->user : 'NOT_SHOWN_IN_LOG';
-				$log_location = $this->config->getLogWithCountryCode () ? $location : 'NOT_SHOWN_IN_LOG';
-				$log_address = $this->config->getLogWithIpAddress () ? $this->address : 'NOT_SHOWN_IN_LOG';
+			$log_user = $this->config->getLogWithUserName () ? $this->user : 'NOT_SHOWN_IN_LOG';
+			$log_location = $this->config->getLogWithCountryCode () ? $location : 'NOT_SHOWN_IN_LOG';
+			$log_address = $this->config->getLogWithIpAddress () ? $this->IPAddress : 'NOT_SHOWN_IN_LOG';
 
+			if ($location !== 'INVALID_IP' && $location !== 'UNAVAILABLE') {
+				if ($this->config->isCountryCodeInListOfChoosenCountries ( 
+						$location ) xor $this->config->getUseWhiteListing ()) {
+					$log_string = $this->l->t ( 
+							'The user "%s" logged in with IP address "%s" from blocked country "%s".',
+							array ($log_user,$log_address,$log_location
+							) );
+					$this->logger->warning ( $log_string,
+							array ('app' => 'geoblocker'
+							) );
+				}
+			} elseif ($location === 'UNAVAILABLE') {
 				$log_string = $this->l->t ( 
-						'The user "%s" logged in with IP address "%s" from blocked country "%s".',
-						array ($log_user,$log_address,$log_location
+						'The login of user "%s" with IP address "%s" could not be checked due to problems with location serverive.',
+						array ($log_user,$log_address
 						) );
 				$this->logger->warning ( $log_string,
 						array ('app' => 'geoblocker'
 						) );
+			} elseif ($location === 'INVALID_IP') {
+				$log_string = $this->l->t ( 
+						'The user "%s" logged in with an invalid IP address "%s".',
+						array ($log_user,$log_address
+						) );
+				$this->logger->warning ( $log_string,
+						array ('app' => 'geoblocker'
+						) );
+			} else {
+				$this->logger->error ( 
+						"This shouldn't have happen. This line should never be reached.",
+						array ('app' => 'geoblocker'
+						) );
 			}
+		}
+	}
+	private function isIPAdressLocal(): bool {
+		if (filter_var ( $this->IPAddress, FILTER_VALIDATE_IP,
+				FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE )) {
+			return FALSE;
 		} else {
-			$this->logger->warning ( 
-					"Login of user could not be checked due to problems with the location service.",
-					array ('app' => 'geoblocker'
-					) );
+			return TRUE;
 		}
 	}
 }
