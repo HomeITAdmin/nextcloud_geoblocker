@@ -4,13 +4,17 @@ namespace OCA\GeoBlocker\Settings;
 
 use OCP\IL10N;
 use OCP\Settings\IIconSection;
+use OCP\IURLGenerator;
 
 class AdminSection implements IIconSection {
 
 	/** @var IL10N */
 	private $l;
-	public function __construct(IL10N $l) {
+	/** @var IURLGenerator */
+	private $url;
+	public function __construct(IURLGenerator $url, IL10N $l) {
 		$this->l = $l;
+		$this->url=$url;
 	}
 	/**
 	 * returns the ID of the section.
@@ -44,6 +48,6 @@ class AdminSection implements IIconSection {
 	}
 	
 	public function getIcon() {
-		return '/nextcloud/core/img/actions/settings-dark.svg';
+		return $this->url->imagePath('core', 'actions/settings-dark.svg');
 	}
 }

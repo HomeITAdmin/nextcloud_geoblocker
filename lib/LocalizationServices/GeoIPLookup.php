@@ -28,7 +28,7 @@ class GeoIPLookup implements ILocalizationService {
 		if ($this->getStatus() === TRUE) {
 			return "OK.  (Please make sure the databases are up to date. This is currently not checked here.)";
 		} else {
-			return "ERROR: \"geoiplookup\" seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database für IPv4 and IPv6 available?!";
+			return "ERROR: \"geoiplookup\" seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!)";
 		}		
 	}
 	
