@@ -9,6 +9,7 @@ use OCP\ILogger;
 use OCP\IRequest;
 use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 use OCP\IL10N;
+use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
 
 class UserHooks {
 	private $userSession;
@@ -28,12 +29,15 @@ class UserHooks {
 		$callback = function ($user) {
 			$address = $this->request->getRemoteAddress ();
 			// TODO: For testing reasons override the address!!!
-			//$address = '24.165.23.67';
-			//$address = '2a02:2e0:3fe:1001:302::';
-
-			$geoblocker = new GeoBlocker ( $user, $address, $this->logger,
-					$this->config, $this->l );
-			$geoblocker->check ();
+			// $address = '24.165.23.67';
+			// $address = '2a02:2e0:3fe:1001:302::';
+			
+			// TODO: Create depending on the configurated service the right service
+			$location_service = new GeoIPLookup ();
+			
+			$geoblocker = new GeoBlocker ( $user, $this->logger, $this->config,
+					$this->l, $location_service );
+			$geoblocker->check ( $address );
 		};
 		$this->userSession->listen ( '\OC\User', 'preLogin', $callback );
 	}

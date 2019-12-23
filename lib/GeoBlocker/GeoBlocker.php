@@ -1,38 +1,39 @@
 <?php
+declare(strict_types = 1)
+	;
 
 namespace OCA\GeoBlocker\GeoBlocker;
 
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
-use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
 use OCP\ILogger;
 use OCP\IL10N;
+use OCA\GeoBlocker\LocalizationServices\ILocalizationService;
 
 class GeoBlocker {
 	private $user;
-	private $ip_address;
 	private $logger;
 	private $config;
 	private $l;
-	public function __construct(String $user, String $ip_address, ILogger $logger,
-			GeoBlockerConfig $config, IL10N $l) {
+	private $location_service;
+	public function __construct(String $user, ILogger $logger,
+			GeoBlockerConfig $config, IL10N $l,
+			ILocalizationService $location_service) {
 		$this->user = $user;
-		$this->ip_address = $ip_address;
 		$this->logger = $logger;
 		$this->config = $config;
 		$this->l = $l;
+		$this->location_service = $location_service;
 	}
-	public function check() {
-		// TODO: Create depending on the configurated service the right service
+	public function check(String $ip_address): void {
 		// TODO: Wrong configuration of Nextcloud in Container can lead to that all access come from local container IP.
-		if (! $this->isIPAdressLocal ()) {
-			$location_service = new GeoIPLookup ();
+		if (! $this->isIPAdressLocal ( $ip_address )) {
 
-			$location = $location_service->getCountryCodeFromIP ( 
-					$this->ip_address );
+			$location = $this->location_service->getCountryCodeFromIP ( 
+					$ip_address );
 
 			$log_user = $this->config->getLogWithUserName () ? $this->user : 'NOT_SHOWN_IN_LOG';
 			$log_location = $this->config->getLogWithCountryCode () ? $location : 'NOT_SHOWN_IN_LOG';
-			$log_address = $this->config->getLogWithIpAddress () ? $this->ip_address : 'NOT_SHOWN_IN_LOG';
+			$log_address = $this->config->getLogWithIpAddress () ? $ip_address : 'NOT_SHOWN_IN_LOG';
 
 			if ($location !== 'INVALID_IP' && $location !== 'UNAVAILABLE') {
 				if ($this->config->isCountryCodeInListOfChoosenCountries ( 
@@ -69,13 +70,17 @@ class GeoBlocker {
 			}
 		}
 	}
-	private function isIPAdressLocal(): bool {
-		//TODO: Is this exactly what I want?
-		if (filter_var ( $this->ip_address, FILTER_VALIDATE_IP,
-				FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE )) {
+	private function isIPAdressLocal(String $ip_address): bool {
+		// TODO: Is this exactly what I want?
+		if (filter_var ( $ip_address, FILTER_VALIDATE_IP )) {
+			if (filter_var ( $ip_address, FILTER_VALIDATE_IP,
+					FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE )) {
+				return FALSE;
+			} else {
+				return TRUE;
+			}
+		} else  {
 			return FALSE;
-		} else {
-			return TRUE;
 		}
 	}
 }
