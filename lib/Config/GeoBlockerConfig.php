@@ -1,5 +1,8 @@
 <?php
 
+declare(strict_types = 1)
+	;
+
 namespace OCA\GeoBlocker\Config;
 
 use OCP\IConfig;
@@ -79,15 +82,25 @@ class GeoBlockerConfig {
 	}
 
 	/**
+	 * Set or unset if the user name should appear in the logging
+	 *
+	 * @param bool $logWithUserName
+	 */
+	public function setLogWithUserName(bool $logWithUserName) {
+		$value = $logWithUserName === true ? '1' : '0';
+		$this->config->setAppValue ( 'geoblocker', 'logWithUserName', $value );
+	}
+	/**
 	 * Set or unset if whitelisting should be used instead of blacklisting
 	 *
 	 * @param bool $logWithUserName
 	 */
 	public function setUseWhiteListing(bool $useWhiteListing) {
 		$value = $useWhiteListing === true ? '1' : '0';
-		$this->config->setAppValue ( 'geoblocker', 'choosenWhiteBlackList', $value );
+		$this->config->setAppValue ( 'geoblocker', 'choosenWhiteBlackList',
+				$value );
 	}
-	
+
 	/**
 	 * Whether whitelisting should be used instead of blacklisting
 	 *
@@ -97,16 +110,6 @@ class GeoBlockerConfig {
 		$logWithUserName = $this->config->getAppValue ( 'geoblocker',
 				'choosenWhiteBlackList', '0' );
 		return $logWithUserName === '1';
-	}
-	
-	/**
-	 * Set or unset if the user name should appear in the logging
-	 *
-	 * @param bool $logWithUserName
-	 */
-	public function setLogWithUserName(bool $logWithUserName) {
-		$value = $logWithUserName === true ? '1' : '0';
-		$this->config->setAppValue ( 'geoblocker', 'logWithUserName', $value );
 	}
 
 	/**

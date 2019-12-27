@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types = 1)
+;
 
 namespace OCA\GeoBlocker\LocalizationServices;
 
@@ -26,9 +27,9 @@ class GeoIPLookup implements ILocalizationService {
 	}
 	public function getStatusString():string {
 		if ($this->getStatus() === TRUE) {
-			return "OK.  (Please make sure the databases are up to date. This is currently not checked here.)";
+			return 'OK.  (Please make sure the databases are up to date. This is currently not checked here.)';
 		} else {
-			return "ERROR: \"geoiplookup\" seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!)";
+			return 'ERROR: \"geoiplookup\" seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!)';
 		}		
 	}
 	
