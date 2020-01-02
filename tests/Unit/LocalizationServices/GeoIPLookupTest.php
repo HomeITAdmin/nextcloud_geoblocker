@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
 
 class GeoIPLookupTest extends TestCase {
-	// TODO: How to Mock the service? To also test no valid service.
 	protected $cmd_wrapper;
 	private $geo_ip_lookup;
 	public function setUp(): void {

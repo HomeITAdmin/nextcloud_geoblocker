@@ -10,6 +10,7 @@ use OCP\IRequest;
 use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 use OCP\IL10N;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
+use OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper;
 
 class UserHooks {
 	private $userSession;
@@ -33,7 +34,7 @@ class UserHooks {
 			// $address = '2a02:2e0:3fe:1001:302::';
 			
 			// TODO: Create depending on the configurated service the right service
-			$location_service = new GeoIPLookup ();
+			$location_service = new GeoIPLookup (new GeoIPLookupCmdWrapper());
 			
 			$geoblocker = new GeoBlocker ( $user, $this->logger, $this->config,
 					$this->l, $location_service );

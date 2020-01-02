@@ -1,5 +1,6 @@
 <?php
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
+use OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper;
 
 /** @var $l \OCP\IL10N */
 /** @var $_ array */
@@ -19,7 +20,7 @@ style ( 'geoblocker', 'admin' );
 		</select></label> <br /> <?php p($l->t('Status of the choosen service: ')); ?>
 			<?php
 			// TODO: Make dynamic when there is more then one service.
-			$service = new GeoIPLookup ();
+			$service = new GeoIPLookup (new GeoIPLookupCmdWrapper());
 			p ( $l->t ( $service->getStatusString () ) );
 			?>
 	</div>
