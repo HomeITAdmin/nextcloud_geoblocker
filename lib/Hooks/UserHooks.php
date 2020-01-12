@@ -31,7 +31,8 @@ class UserHooks {
 			$address = $this->request->getRemoteAddress ();
 			// TODO: For testing reasons override the address!!!
 			// $address = '24.165.23.67';
-			// $address = '2a02:2e0:3fe:1001:302::';
+			
+			$address = '2a02:2e0:3fe:1001:302::';
 			
 			// TODO: Create depending on the configurated service the right service
 			$location_service = new GeoIPLookup (new GeoIPLookupCmdWrapper());

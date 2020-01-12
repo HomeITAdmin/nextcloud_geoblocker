@@ -17,14 +17,14 @@ class GeoBlockerConfigTest extends TestCase {
 	public function testIsGetLogWithIpAddressFalseValid() {
 		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with ( 
 				$this->equalTo ( 'geoblocker' ),
-				$this->equalTo ( 'logWithIpAddress' ) )->will ( 
+				$this->equalTo ( 'logWithIpAddress' ), $this->equalTo ( '0' ) )->will ( 
 				$this->returnValue ( '0' ) );
 		$this->assertFalse ( $this->geo_config->getLogWithIpAddress () );
 	}
 	public function testIsGetLogWithIpAddressTrueValid() {
 		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with ( 
 				$this->equalTo ( 'geoblocker' ),
-				$this->equalTo ( 'logWithIpAddress' ) )->will ( 
+				$this->equalTo ( 'logWithIpAddress' ), $this->equalTo ( '0' ) )->will ( 
 				$this->returnValue ( '1' ) );
 		$this->assertTrue ( $this->geo_config->getLogWithIpAddress () );
 	}
@@ -43,14 +43,14 @@ class GeoBlockerConfigTest extends TestCase {
 	public function testIsGetLogWithCountryCodeFalseValid() {
 		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with ( 
 				$this->equalTo ( 'geoblocker' ),
-				$this->equalTo ( 'logWithCountryCode' ) )->will ( 
+				$this->equalTo ( 'logWithCountryCode' ), $this->equalTo ( '0' ) )->will ( 
 				$this->returnValue ( '0' ) );
 		$this->assertFalse ( $this->geo_config->getLogWithCountryCode () );
 	}
 	public function testIsGetLogWithCountryCodeTrueValid() {
 		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with ( 
 				$this->equalTo ( 'geoblocker' ),
-				$this->equalTo ( 'logWithCountryCode' ) )->will ( 
+				$this->equalTo ( 'logWithCountryCode' ), $this->equalTo ( '0' ) )->will ( 
 				$this->returnValue ( '1' ) );
 		$this->assertTrue ( $this->geo_config->getLogWithCountryCode () );
 	}
@@ -70,13 +70,13 @@ class GeoBlockerConfigTest extends TestCase {
 		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with ( 
 				$this->equalTo ( 'geoblocker' ),
 				$this->equalTo ( 'logWithUserName' ) )->will ( 
-				$this->returnValue ( '0' ) );
+				$this->returnValue ( '0' ), $this->equalTo ( '0' ) );
 		$this->assertFalse ( $this->geo_config->getLogWithUserName () );
 	}
 	public function testIsGetLogWithUserNameTrueValid() {
 		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with ( 
 				$this->equalTo ( 'geoblocker' ),
-				$this->equalTo ( 'logWithUserName' ) )->will ( 
+				$this->equalTo ( 'logWithUserName' ), $this->equalTo ( '0' ) )->will ( 
 				$this->returnValue ( '1' ) );
 		$this->assertTrue ( $this->geo_config->getLogWithUserName () );
 	}
@@ -92,6 +92,69 @@ class GeoBlockerConfigTest extends TestCase {
 				$this->equalTo ( 'logWithUserName' ), $this->equalTo ( '1' ) );
 		$this->geo_config->setLogWithUserName ( TRUE );
 	}
-	
-	//TODOs: Follow ip Unit Tests for that class.
+	public function testIsGetUseWhiteListingFalseValid() {
+		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with ( 
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'choosenWhiteBlackList' ),
+				$this->equalTo ( '0' ) )->will ( $this->returnValue ( '0' ) );
+		$this->assertFalse ( $this->geo_config->getUseWhiteListing () );
+	}
+	public function testIsGetUseWhiteListingTrueValid() {
+		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with ( 
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'choosenWhiteBlackList' ),
+				$this->equalTo ( '0' ) )->will ( $this->returnValue ( '1' ) );
+		$this->assertTrue ( $this->geo_config->getUseWhiteListing () );
+	}
+	public function testIsSetUseWhiteListingFalseValid() {
+		$this->config->expects ( $this->once () )->method ( 'setAppValue' )->with ( 
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'choosenWhiteBlackList' ),
+				$this->equalTo ( '0' ) );
+		$this->geo_config->setUseWhiteListing ( FALSE );
+	}
+	public function testIsSetUseWhiteListingTrueValid() {
+		$this->config->expects ( $this->once () )->method ( 'setAppValue' )->with ( 
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'choosenWhiteBlackList' ),
+				$this->equalTo ( '1' ) );
+		$this->geo_config->setUseWhiteListing ( TRUE );
+	}
+	public function testIsGetChoosenCountriesByStringValid() {
+		$return_string = 'AE, AF, AG, AI, AL,';
+		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with ( 
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'choosenCountries' ), $this->equalTo ( '' ) )->will ( 
+				$this->returnValue ( $return_string ) );
+		$this->assertEquals ( $return_string,
+				$this->geo_config->getChoosenCountriesByString () );
+	}
+	public function testIsCountryCodeInListOfChoosenCountriesFalseValid() {
+		$return_string = 'AE, AF, AG, AI, AL,';
+		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with ( 
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'choosenCountries' ), $this->equalTo ( '' ) )->will ( 
+				$this->returnValue ( $return_string ) );
+		$this->assertFalse ( 
+				$this->geo_config->isCountryCodeInListOfChoosenCountries ( 'AQ' ) );
+	}
+	public function testIsCountryCodeInListOfChoosenCountriesFalseEmptyCountryListValid() {
+		$return_string = '';
+		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with (
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'choosenCountries' ), $this->equalTo ( '' ) )->will (
+						$this->returnValue ( $return_string ) );
+				$this->assertFalse (
+						$this->geo_config->isCountryCodeInListOfChoosenCountries ( 'AQ' ) );
+	}
+	public function testIsCountryCodeInListOfChoosenCountriesTrueValid() {
+		$return_string = 'AE, AF, AG, AI, AL,';
+		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with ( 
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'choosenCountries' ), $this->equalTo ( '' ) )->will ( 
+				$this->returnValue ( $return_string ) );
+		$this->assertTrue ( 
+				$this->geo_config->isCountryCodeInListOfChoosenCountries ( 'AG' ) );
+	}
+
 }

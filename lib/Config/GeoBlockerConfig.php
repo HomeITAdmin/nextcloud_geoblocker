@@ -91,17 +91,6 @@ class GeoBlockerConfig {
 		$this->config->setAppValue ( 'geoblocker', 'logWithUserName', $value );
 	}
 	/**
-	 * Set or unset if whitelisting should be used instead of blacklisting
-	 *
-	 * @param bool $logWithUserName
-	 */
-	public function setUseWhiteListing(bool $useWhiteListing) {
-		$value = $useWhiteListing === true ? '1' : '0';
-		$this->config->setAppValue ( 'geoblocker', 'choosenWhiteBlackList',
-				$value );
-	}
-
-	/**
 	 * Whether whitelisting should be used instead of blacklisting
 	 *
 	 * @return bool
@@ -110,6 +99,16 @@ class GeoBlockerConfig {
 		$logWithUserName = $this->config->getAppValue ( 'geoblocker',
 				'choosenWhiteBlackList', '0' );
 		return $logWithUserName === '1';
+	}
+	/**
+	 * Set or unset if whitelisting should be used instead of blacklisting
+	 *
+	 * @param bool $useWhiteListing
+	 */
+	public function setUseWhiteListing(bool $useWhiteListing) {
+		$value = $useWhiteListing === true ? '1' : '0';
+		$this->config->setAppValue ( 'geoblocker', 'choosenWhiteBlackList',
+				$value );
 	}
 
 	/**
