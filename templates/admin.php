@@ -9,15 +9,17 @@ style ( 'geoblocker', 'admin' );
 ?>
 <div id="geoblocker" class="section">
 	<h2><?php p($l->t('GeoBlocker')); ?></h2>
-	<?php p($l->t('This is a front end to geo localization services, that allows blocking (currently onyl logging!) of login attempts from specific countries. ')); ?> <br />
-	<?php p($l->t('Login attempts from local IP adresses are not blocked (or logged).')); ?> <br />
-	<?php p($l->t('Determination of the country from IP address is only as good as the choosen service.')); ?> 
+	<?php p($l->t('This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. ')); ?> <br />
+	<?php p($l->t('Login attempts from local network IP addresses are not blocked (or logged).')); ?> <br />
+	<?php p($l->t('Wrong Nextcloud configuration (especially in container) can lead to all access seems to come from local network IP address.')); ?> <br />
+	<?php p($l->t('If you are accessing from external network, this should be an external address: ')); print_unescaped($_['ipAddress'])  ?> <br />
+	<?php p($l->t('Determination of the country from IP address is only as good as the chosen service.')); ?> 
 	<div id="service">
 		<h3><?php p($l->t('Service')); ?></h3>
 			<?php p($l->t('Choose the service you want to use to determine the country from the IP Address:')); ?> 
 			<br /> <label> <select name="choose-service">
 				<option selected="selected">Geoiplookup (<?php p($l->t('local'))?>, <?php p($l->t('default'))?>)</option>
-		</select></label> <br /> <?php p($l->t('Status of the choosen service: ')); ?>
+		</select></label> <br /> <?php p($l->t('Status of the chosen service: ')); ?>
 			<?php
 			// TODO: Make dynamic when there is more then one service.
 			$service = new GeoIPLookup (new GeoIPLookupCmdWrapper());
@@ -38,7 +40,7 @@ style ( 'geoblocker', 'admin' );
 				<?php include 'countries.php';?>
 			</div>
 		<p>
-			<?php p($l->t('The following countries were choosen: '));?> 
+			<?php p($l->t('The following countries were chosen: '));?> 
 		</p>
 		<p id="countryList">
 			<?php p($_['countryList']) ?>
@@ -47,14 +49,14 @@ style ( 'geoblocker', 'admin' );
 	<div id="reaction">
 		<h3><?php p($l->t('Reaction')); ?></h3>
 		
-			<?php p($l->t('If a login attempt is detected from the blacklisted or not whitelisted countries, the attemped is logged with the followin information'))?>:<br />
+			<?php p($l->t('If a login attempt is detected from the blacklisted or not whitelisted countries, the attempted is logged with the following information (be aware of data protection issues)'))?>:<br />
 		<p id="logWithIpAddress">
 			<input type="checkbox" name="log-with-ip-address" id="log-with-ip-address"
 				class="checkbox"
 				<?php if ($_['logWithIpAddress']) print_unescaped('checked="checked"'); ?>>
 			<!-- value="1" -->
 			<label for="log-with-ip-address">
-					<?php p($l->t('with IP Address (be aware of data protection issues)'))?></label>
+					<?php p($l->t('with IP Address'))?></label>
 		</p>
 		<p id="logWithCountryCode">
 			<input type="checkbox" name="log-with-country-code"
@@ -71,7 +73,7 @@ style ( 'geoblocker', 'admin' );
 					<?php p($l->t('with User Name'))?></label>
 		</p>
 		<br />
-			<?php p($l->t('In addition the login attempt can also be blocked'))?> <?php p($l->t('(in a future version)'))?>:<br />
+			<?php p($l->t('In addition, the login attempt can also be blocked'))?> <?php p($l->t('(in a future version)'))?>:<br />
 		<p>
 			<input type="checkbox" name="blocking-active" id="blocking-active"
 				class="checkbox" value="1" disabled><label for="blocking-active"><?php p($l->t('Activate blocking of the login attempt from IPs of the specified countries.'))?></label><br />

@@ -8,7 +8,7 @@ namespace OCA\GeoBlocker\Config;
 use OCP\IConfig;
 
 /**
- * Class Config
+ * Class GeoBlockerConfig
  *
  * read/write config of the GeoBlocker
  *

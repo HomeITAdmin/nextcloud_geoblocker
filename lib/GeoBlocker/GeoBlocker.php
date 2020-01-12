@@ -25,7 +25,7 @@ class GeoBlocker {
 		$this->location_service = $location_service;
 	}
 	public function check(String $ip_address): void {
-		// TODO: Wrong configuration of Nextcloud in Container can lead to that all access come from local container IP.
+		// TODO: How can I be sure, that the localization service is using the same country list then I do?
 		if (! $this->isIPAdressLocal ( $ip_address )) {
 
 			$location = $this->location_service->getCountryCodeFromIP ( 

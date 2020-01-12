@@ -6,17 +6,20 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\Settings\ISettings;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
 use OCP\ILogger;
+use OCP\IRequest;
 
 class Admin implements ISettings {
-
-	/** @var ILogger */
-	private $logger;
-
 	/** @var GeoBlockerConfig */
 	private $config;
-	public function __construct(GeoBlockerConfig $config, ILogger $logger) {
+	/** @var ILogger */
+	private $logger;
+	/** @var IRequest */
+	private $request;
+	public function __construct(GeoBlockerConfig $config, ILogger $logger,
+			IRequest $request) {
 		$this->config = $config;
 		$this->logger = $logger;
+		$this->request = $request;
 	}
 	public function getForm() {
 		$response = new TemplateResponse ( 'geoblocker', 'admin' );
@@ -25,7 +28,8 @@ class Admin implements ISettings {
 						'logWithCountryCode' => $this->config->getLogWithCountryCode (),
 						'logWithUserName' => $this->config->getLogWithUserName (),
 						'countryList' => $this->config->getChoosenCountriesByString (),
-						'chosenBlackWhiteList' => $this->config->getUseWhiteListing ()
+						'chosenBlackWhiteList' => $this->config->getUseWhiteListing (),
+						'ipAddress' => $this->request->getRemoteAddress()
 				] );
 		return $response;
 	}
