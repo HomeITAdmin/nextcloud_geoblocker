@@ -1,4 +1,4 @@
-# nextcloud geoblocker App
+# Nextcloud Geoblocker App
 This is a server side app for a nextcloud instance (https://nextcloud.com/).
 This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries.
 Login attempts from local network IP addresses are not blocked (or logged).
