@@ -8,4 +8,4 @@ Determination of the country from IP address is only as good as the chosen servi
 You can activate the latest release version of the app in the "Apps" configuration section of your Nextcloud server when logged in as admin.
 
 ## Personal remark
-Besides the hopefully helpful functionality of the app, it is a learning project for Open Source, Nextcloud App API, PHP, Javascript, HTML, CSS, Clean Coding and Github for me. All kind of feedback, constructive crtiticism and constributions are highly welcome. 
+Besides the hopefully helpful functionality of the app, it is a learning project for Open Source, Nextcloud App API, PHP, Javascript, HTML, CSS, Clean Coding and Github for me. All kind of feedback, constructive crtiticism and contributions are highly welcome. 
