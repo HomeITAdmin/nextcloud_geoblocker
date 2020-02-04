@@ -173,7 +173,7 @@ class GeoBlockerTest extends TestCase {
 	public function testIsUnavailableServiceLogged() {
 		$ip_address = '2a02:2e0:3fe:1001:302::';
 		$country_code = 'UNAVAILABLE';
-		$log_string_template = 'The login of user "%s" with IP address "%s" could not be checked due to problems with location serverive.';
+		$log_string_template = 'The login of user "%s" with IP address "%s" could not be checked due to problems with location service.';
 		$log_method = 'warning';
 		$this->doCheckTest ( $ip_address, $country_code, $this->once (),
 				$log_string_template, $log_method, $this->once () );
