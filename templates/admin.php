@@ -70,7 +70,7 @@ style ( 'geoblocker', 'admin' );
 				class="checkbox"
 				<?php if ($_['logWithUserName']) print_unescaped('checked="checked"'); ?>> <label
 				for="log-with-user-name">
-					<?php p($l->t('with User Name'))?></label>
+					<?php p($l->t('with username'))?></label>
 		</p>
 		<br />
 			<?php p($l->t('In addition, the login attempt can also be blocked'))?> <?php p($l->t('(in a future version)'))?>:<br />
