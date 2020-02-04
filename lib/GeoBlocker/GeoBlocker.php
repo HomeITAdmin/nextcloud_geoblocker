@@ -48,7 +48,7 @@ class GeoBlocker {
 				}
 			} elseif ($location === 'UNAVAILABLE') {
 				$log_string = $this->l->t ( 
-						'The login of user "%s" with IP address "%s" could not be checked due to problems with location serverive.',
+						'The login of user "%s" with IP address "%s" could not be checked due to problems with location service.',
 						array ($log_user,$log_address
 						) );
 				$this->logger->warning ( $log_string,
