@@ -11,8 +11,8 @@ style ( 'geoblocker', 'admin' );
 	<h2><?php p($l->t('GeoBlocker')); ?></h2>
 	<?php p($l->t('This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. ')); ?> <br />
 	<?php p($l->t('Login attempts from local network IP addresses are not blocked (or logged).')); ?> <br />
-	<?php p($l->t('Wrong Nextcloud configuration (especially in container) can lead to all access seems to come from local network IP address.')); ?> <br />
-	<?php p($l->t('If you are accessing from external network, this should be an external address: ')); print_unescaped($_['ipAddress'])  ?> <br />
+	<?php p($l->t('Wrong Nextcloud configuration (especially in container) can lead to all accesses seem to come from a local network IP address.')); ?> <br />
+	<?php p($l->t('If you are accessing from external network, this should be an external IP address: ')); print_unescaped($_['ipAddress'])  ?> <br />
 	<?php p($l->t('Determination of the country from IP address is only as good as the chosen service.')); ?> 
 	<div id="service">
 		<h3><?php p($l->t('Service')); ?></h3>
@@ -22,21 +22,21 @@ style ( 'geoblocker', 'admin' );
 		</select></label> <br /> <?php p($l->t('Status of the chosen service: ')); ?>
 			<?php
 			// TODO: Make dynamic when there is more then one service.
-			$service = new GeoIPLookup (new GeoIPLookupCmdWrapper());
+			$service = new GeoIPLookup ( new GeoIPLookupCmdWrapper () , $l);
 			p ( $l->t ( $service->getStatusString () ) );
 			?>
 	</div>
 	<div id="countrySelection">
 		<h3><?php p($l->t('Country Selection')); ?></h3>
+		<p><?php p($l->t('Selection mode'))?>:
 		<select name="choose-white-black-list" id="choose-white-black-list">
-			<option value="0"
-				<?php if (!$_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('Blacklisting'))?></option>
-			<option value="1"
-				<?php if ($_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('Whitelisting'))?></option>
-		</select> 
-			<?php p($l->t('the following entries'))?>:
-		
-			<div class="select2-container-multi">
+				<option value="0"
+					<?php if (!$_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('No country is chosen but the selected ones'))?></option>
+				<option value="1"
+					<?php if ($_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('All countries are chosen but the selected ones'))?></option>
+			</select>
+		</p>
+		<div class="select2-container-multi">
 				<?php include 'countries.php';?>
 			</div>
 		<p>
@@ -49,7 +49,7 @@ style ( 'geoblocker', 'admin' );
 	<div id="reaction">
 		<h3><?php p($l->t('Reaction')); ?></h3>
 		
-			<?php p($l->t('If a login attempt is detected from the blacklisted or not whitelisted countries, the attempted is logged with the following information (be aware of data protection issues)'))?>:<br />
+			<?php p($l->t('If a login attempt is detected from the blacklisted or not whitelisted countries, the attempt is logged with the following information (be aware of data protection issues)'))?>:<br />
 		<p id="logWithIpAddress">
 			<input type="checkbox" name="log-with-ip-address" id="log-with-ip-address"
 				class="checkbox"

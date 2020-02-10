@@ -3,11 +3,14 @@ declare(strict_types = 1)
 	;
 
 namespace OCA\GeoBlocker\LocalizationServices;
+use OCP\IL10N;
 
 class GeoIPLookup implements ILocalizationService {
 	private $cmd_wrapper;
-	public function __construct(GeoIPLookupCmdWrapper $cmd_wrapper) {
+	private $l;
+	public function __construct(GeoIPLookupCmdWrapper $cmd_wrapper, IL10N $l) {
 		$this->cmd_wrapper = $cmd_wrapper;
+		$this->l = $l;
 	}
 	public function getStatus(): bool {
 		$output = array();
@@ -30,9 +33,9 @@ class GeoIPLookup implements ILocalizationService {
 	}
 	public function getStatusString(): string {
 		if ($this->getStatus () === TRUE) {
-			return 'OK.  (Please make sure the databases are up to date. This is currently not checked here.)';
+			return $this->l->t('OK.  (Please make sure the databases are up to date. This is currently not checked here.)');
 		} else {
-			return 'ERROR: "geoiplookup" seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini.';
+			return $this->l->t('ERROR: "geoiplookup" seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini.');
 		}
 	}
 	public function getCountryCodeFromIP($ip_address): string {

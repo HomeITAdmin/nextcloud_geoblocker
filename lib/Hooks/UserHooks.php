@@ -34,7 +34,7 @@ class UserHooks {
 			// $ip_address = '2a02:2e0:3fe:1001:302::'; //DE
 
 			// TODO: Create depending on the configurated service the right service
-			$location_service = new GeoIPLookup ( new GeoIPLookupCmdWrapper () );
+			$location_service = new GeoIPLookup ( new GeoIPLookupCmdWrapper (), $this->l);
 
 			$geoblocker = new GeoBlocker ( $user, $this->logger, $this->config,
 					$this->l, $location_service );

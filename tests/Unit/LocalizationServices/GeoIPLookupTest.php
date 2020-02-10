@@ -9,11 +9,16 @@ use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
 
 class GeoIPLookupTest extends TestCase {
 	protected $cmd_wrapper;
+	protected $l;
 	private $geo_ip_lookup;
 	public function setUp(): void {
 		$this->cmd_wrapper = $this->getMockBuilder ( 
 				'OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper' )->getMock ();
-		$this->geo_ip_lookup = new GeoIPLookup ( $this->cmd_wrapper );
+		$this->l = $this->getMockBuilder ( 'OCP\IL10N' )->getMock ();
+		$this->l->method ( 't' )->will (
+				$this->returnCallback ( array ($this,'callbackLTJustRouteThrough'
+				) ) );
+		$this->geo_ip_lookup = new GeoIPLookup ( $this->cmd_wrapper, $this->l );
 	}
 	public function testIsValidStatusOk() {
 		$this->cmd_wrapper->method ( 'geoiplookup' )->will ( 
@@ -46,6 +51,7 @@ class GeoIPLookupTest extends TestCase {
 				$this->returnCallback ( 
 						array ($this,'callbackGeoIpLookup6Valid'
 						) ) );
+		
 		$result = 'OK.  (Please make sure the databases are up to date. This is currently not checked here.)';
 		$this->assertEquals ( $result, $this->geo_ip_lookup->getStatusString () );
 	}
@@ -192,6 +198,9 @@ class GeoIPLookupTest extends TestCase {
 			$return_var = 0;
 			return 'GeoIP Country V6 Edition: DE, Germany';
 		}
+	}
+	public function callbackLTJustRouteThrough(string $in): string {
+		return $in;
 	}
 }
 
