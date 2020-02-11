@@ -6,8 +6,6 @@ OC.L10N.register(
     "Service" : "Servei",
     "local" : "local",
     "default" : "predeterminat",
-    "Blacklisting" : "Llista negra",
-    "Whitelisting" : "Llista blanca",
     "Reaction" : "Reacció",
     "with username" : "amb usuari",
     "Andorra" : "Andorra",

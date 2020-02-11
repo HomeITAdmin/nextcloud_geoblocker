@@ -9,8 +9,6 @@ OC.L10N.register(
     "default" : "預設",
     "Status of the chosen service: " : "所選服務的狀態:",
     "Country Selection" : "城市選擇",
-    "Blacklisting" : "黑名單",
-    "Whitelisting" : "白名單",
     "(in a future version)" : "(在未來的版本)",
     "Andorra" : "安道爾",
     "Afghanistan" : "阿富汗",

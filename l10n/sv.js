@@ -11,8 +11,6 @@ OC.L10N.register(
     "default" : "standard",
     "Status of the chosen service: " : "Status för den valda tjänsten:",
     "Country Selection" : "Välj land",
-    "Blacklisting" : "Svartlistning",
-    "Whitelisting" : "Vitlistning",
     "The following countries were chosen: " : "Följande länder valdes:",
     "Reaction" : "Åtgärd",
     "with IP Address" : "med IP-adress",

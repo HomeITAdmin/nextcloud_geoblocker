@@ -10,7 +10,6 @@ OC.L10N.register(
     "default" : "predvolené",
     "Status of the chosen service: " : "Stav vybranej služby:",
     "Country Selection" : "Výber krajiny",
-    "the following entries" : "nasledujúce položky",
     "The following countries were chosen: " : "Boli vybrané nasledujúce krajiny:",
     "Reaction" : "Reakcia",
     "with IP Address" : "s IP adresou",
