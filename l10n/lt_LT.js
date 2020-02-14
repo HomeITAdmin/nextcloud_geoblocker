@@ -1,6 +1,8 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "(in a future version)" : "(būsimoje versijoje)",
+    "COUNTRY NOT FOUND" : "ŠALIS NERASTA",
     "Andorra" : "Andora",
     "United Arab Emirates" : "Jungtiniai Arabų Emyratai",
     "Afghanistan" : "Afganistanas",

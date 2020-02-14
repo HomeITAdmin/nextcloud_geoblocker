@@ -1,6 +1,14 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "\"%s\" IP adresinden giriş yapmış olan \"%s\" kullanıcısı konum servislerindeki sorun sebebi ile kontrol edilemiyor.",
+    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "\"%s\" Kullanıcısı geçersiz bir IP adresi \"%s\" ile giriş yapmıştır.",
+    "OK.  (Please make sure the databases are up to date. This is currently not checked here.)" : "Tamam. (Lütfen veritabanının güncel olduğundan emin olunuz. Bu şuan kontrol edilmiyor.)",
+    "GeoBlocker" : "GeoBlocker",
+    "Blocks user depending on the estimated country of thier IP address." : "IP adresinden tahmini tespit edilen ülkeye göre kullanıcıyı bloke eder.",
+    "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)" : "Bu arayüz kullanıcıların belirlenen ülkelerden giriş yapmasını engelleyen bir konum servisidir. (Erken Sürüm)",
+    "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. " : "Bu arayüz kullanıcıların belirlenen ülkelerden giriş yapmasını engelleyen bir konum servisidir.",
+    "Login attempts from local network IP addresses are not blocked (or logged)." : "Lokal Ağ'dan yapılan girişler engellenmez (yada kütük tutulmaz).",
     "Andorra" : "Andorra",
     "United Arab Emirates" : "Birleşik Arap Emirlikleri",
     "Afghanistan" : "Afganistan",
@@ -209,6 +217,7 @@ OC.L10N.register(
     "El Salvador" : "El Salvador",
     "Sint Maarten (Dutch part)" : "Sint Maarten (Hollanda Bölümü)",
     "Syrian Arab Republic" : "Suriye Arap Cumhuriyeti",
+    "Eswatini" : "Eswatini",
     "Turks and Caicos Islands" : "Turks ve Caicos Adaları",
     "Chad" : "Çad",
     "French Southern Territories" : "Fransız Güney Toprakları",
