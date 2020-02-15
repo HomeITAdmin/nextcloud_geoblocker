@@ -31,9 +31,9 @@ style ( 'geoblocker', 'admin' );
 		<p><?php p($l->t('Selection mode'))?>:
 		<select name="choose-white-black-list" id="choose-white-black-list">
 				<option value="0"
-					<?php if (!$_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('No country is chosen but the selected ones'))?></option>
+					<?php if (!$_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('No country is blocked but the selected ones'))?></option>
 				<option value="1"
-					<?php if ($_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('All countries are chosen but the selected ones'))?></option>
+					<?php if ($_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('All countries are blocked but the selected ones'))?></option>
 			</select>
 		</p>
 		<div class="select2-container-multi">
