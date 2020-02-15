@@ -40,7 +40,7 @@ style ( 'geoblocker', 'admin' );
 				<?php include 'countries.php';?>
 			</div>
 		<p>
-			<?php p($l->t('The following countries were selected: '));?> 
+			<?php p($l->t('The following countries were selected in the list above: '));?> 
 		</p>
 		<p id="countryList">
 			<?php p($_['countryList']) ?>
@@ -49,7 +49,8 @@ style ( 'geoblocker', 'admin' );
 	<div id="reaction">
 		<h3><?php p($l->t('Reaction')); ?></h3>
 		
-			<?php p($l->t('If a login attempt is detected from the blacklisted or not whitelisted countries, the attempt is logged with the following information (be aware of data protection issues)'))?>:<br />
+			<?php p($l->t('If a login attempt is detected from the chosen countries, the attempt is logged with the following information'));
+			p($l->t('( be aware of data protection issues depending on your logging strategy)'));?>:<br />
 		<p id="logWithIpAddress">
 			<input type="checkbox" name="log-with-ip-address" id="log-with-ip-address"
 				class="checkbox"
@@ -76,7 +77,7 @@ style ( 'geoblocker', 'admin' );
 			<?php p($l->t('In addition, the login attempt can also be blocked'))?> <?php p($l->t('(in a future version)'))?>:<br />
 		<p>
 			<input type="checkbox" name="blocking-active" id="blocking-active"
-				class="checkbox" value="1" disabled><label for="blocking-active"><?php p($l->t('Activate blocking of the login attempt from IPs of the specified countries.'))?></label><br />
+				class="checkbox" value="1" disabled><label for="blocking-active"><?php p($l->t('Activate blocking of the login attempt from IP adresses of the specified countries.'))?></label><br />
 		</p>
 	</div>
 </div>
