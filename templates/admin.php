@@ -40,7 +40,7 @@ style ( 'geoblocker', 'admin' );
 				<?php include 'countries.php';?>
 			</div>
 		<p>
-			<?php p($l->t('The following countries were chosen: '));?> 
+			<?php p($l->t('The following countries were selected: '));?> 
 		</p>
 		<p id="countryList">
 			<?php p($_['countryList']) ?>
