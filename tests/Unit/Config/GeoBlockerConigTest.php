@@ -11,6 +11,7 @@ class GeoBlockerConfigTest extends TestCase {
 	private $config;
 	private $geo_config;
 	public function setUp(): void {
+		parent::setUp();
 		$this->config = $this->getMockBuilder ( 'OCP\IConfig' )->getMock ();
 		$this->geo_config = new GeoBlockerConfig ( $this->config );
 	}

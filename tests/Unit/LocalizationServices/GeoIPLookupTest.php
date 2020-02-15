@@ -12,6 +12,7 @@ class GeoIPLookupTest extends TestCase {
 	protected $l;
 	private $geo_ip_lookup;
 	public function setUp(): void {
+		parent::setUp();
 		$this->cmd_wrapper = $this->getMockBuilder ( 
 				'OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper' )->getMock ();
 		$this->l = $this->getMockBuilder ( 'OCP\IL10N' )->getMock ();
