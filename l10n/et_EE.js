@@ -10,12 +10,10 @@ OC.L10N.register(
     "default" : "vaikimisi",
     "Status of the chosen service: " : "Valitud teenuse seis: ",
     "Country Selection" : "Riikide valik",
-    "The following countries were chosen: " : "Valiti järgmised riigid: ",
     "Reaction" : "Tegevus",
     "with IP Address" : "IP aadress",
     "with Country Code" : "riigikood",
     "In addition, the login attempt can also be blocked" : "Lisaks saab sisselogimiskatse ka blokeerida",
-    "(in a future version)" : "(tulevastes versioonides)",
-    "Activate blocking of the login attempt from IPs of the specified countries." : "Valitud riikide IP aadressidelt sisselogimiskatsete blokeerimine."
+    "(in a future version)" : "(tulevastes versioonides)"
 },
 "nplurals=2; plural=(n != 1);");
