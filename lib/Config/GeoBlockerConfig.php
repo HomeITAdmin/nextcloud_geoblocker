@@ -6,6 +6,7 @@ declare(strict_types = 1)
 namespace OCA\GeoBlocker\Config;
 
 use OCP\IConfig;
+use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 
 /**
  * Class GeoBlockerConfig
@@ -140,5 +141,42 @@ class GeoBlockerConfig {
 		} else {
 			return false;
 		}
+	}
+	/**
+	 * Whether the user name should appear in the logging
+	 *
+	 * @return bool
+	 */
+	public function getDoFakeAddress(): bool {
+		$doFakeAddress = $this->config->getAppValue ( 'geoblocker',
+				'doFakeAddress', '0' );
+		return $doFakeAddress === '1';
+	}
+	
+	/**
+	 * Set or unset if the user name should appear in the logging
+	 *
+	 * @param bool $logWithUserName
+	 */
+	public function setDoFakeAddress(bool $doFakeAddress) {
+		$value = $doFakeAddress === true ? '1' : '0';
+		$this->config->setAppValue ( 'geoblocker', 'doFakeAddress', $value );
+	}
+	
+	/**
+	 * Provides the fake IP address to be used for testing the blocking/logging
+	 *
+	 * @return string 
+	 */
+	public function getFakeAddress(): string {
+		$defaultFakeAddress = '127.0.0.1';
+		$fakeAddress = $this->config->getAppValue ( 'geoblocker',
+				'fakeAddress', $defaultFakeAddress );
+		if (! GeoBlocker::isIPAddressValid($fakeAddress)) {
+			$fakeAddress = $defaultFakeAddress;
+			$this->config->setAppValue ( 'geoblocker',
+					'fakeAddress', $defaultFakeAddress );
+		}
+		return $fakeAddress;
 	}
 }

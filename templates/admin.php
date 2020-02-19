@@ -1,6 +1,7 @@
 <?php
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper;
+use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 
 /** @var $l \OCP\IL10N */
 /** @var $_ array */
@@ -12,7 +13,13 @@ style ( 'geoblocker', 'admin' );
 	<?php p($l->t('This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. ')); ?> <br />
 	<?php p($l->t('Login attempts from local network IP addresses are not blocked (or logged).')); ?> <br />
 	<?php p($l->t('Wrong Nextcloud configuration (especially in container) can lead to all accesses seem to come from a local network IP address.')); ?> <br />
-	<?php p($l->t('If you are accessing from external network, this should be an external IP address: ')); print_unescaped($_['ipAddress'])  ?> <br />
+	<?php p($l->t('If you are accessing from external network, this should be an external IP address: ')); p($_['ipAddress']); p(' '); 
+	if (GeoBlocker::isIPAddressLocal($_['ipAddress'])) {
+		p($l->t('is local.'));
+	} else {
+		p($l->t('is external.'));
+	}
+		?> <br />
 	<?php p($l->t('Determination of the country from IP address is only as good as the chosen service.')); ?> 
 	<div id="service">
 		<h3><?php p($l->t('Service')); ?></h3>
@@ -76,8 +83,20 @@ style ( 'geoblocker', 'admin' );
 		<br />
 			<?php p($l->t('In addition, the login attempt can also be blocked'))?> <?php p($l->t('(in a future version)'))?>:<br />
 		<p>
-			<input type="checkbox" name="blocking-active" id="blocking-active"
-				class="checkbox" value="1" disabled><label for="blocking-active"><?php p($l->t('Activate blocking of the login attempt from IP adresses of the specified countries.'))?></label><br />
+			<input type="checkbox" name="blocking-active" id="blocking-active" class="checkbox" value="1" disabled>
+				<label for="blocking-active">
+					<?php p($l->t('Activate blocking of the login attempt from IP addresses of the specified countries.'))?>
+				</label><br />
 		</p>
+	</div>
+	<div id="test">
+		<h3><?php p($l->t('Test')); ?></h3>
+		<p id="doFakeAddress">
+			<input type="checkbox" name="do-fake-address" id="do-fake-address" class="checkbox"
+				<?php if ($_['doFakeAddress']) print_unescaped('checked="checked"'); ?>> 
+				<label for="do-fake-address">
+					<?php p($l->t('Next login attempt of user "%s" will be simulated to come from the following IP address:',$_['userID']))?></label>
+				<input type="text" name="fake-address" id="fake-address" value="<?php print_unescaped($_['fakeAddress'])?>" ><br />
+		</p>		
 	</div>
 </div>

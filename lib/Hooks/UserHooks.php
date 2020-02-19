@@ -28,10 +28,12 @@ class UserHooks {
 	}
 	public function register() {
 		$callback = function ($user) {
-			$ip_address = $this->request->getRemoteAddress ();
-			// TODO: Only for testing reasons override the address to fake access from different countries! In future give admin a better tool then that.
-			// $ip_address = '24.165.23.67'; //US
-			// $ip_address = '2a02:2e0:3fe:1001:302::'; //DE
+			if ($this->config->getDoFakeAddress()) {
+				$ip_address = $this->config->getFakeAddress();
+				$this->config->setDoFakeAddress(false);
+			} else {
+				$ip_address = $this->request->getRemoteAddress ();
+			}
 
 			// TODO: Create depending on the configurated service the right service
 			$location_service = new GeoIPLookup ( new GeoIPLookupCmdWrapper (), $this->l);

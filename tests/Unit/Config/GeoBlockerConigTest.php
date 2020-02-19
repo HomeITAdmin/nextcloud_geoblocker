@@ -11,7 +11,7 @@ class GeoBlockerConfigTest extends TestCase {
 	private $config;
 	private $geo_config;
 	public function setUp(): void {
-		parent::setUp();
+		parent::setUp ();
 		$this->config = $this->getMockBuilder ( 'OCP\IConfig' )->getMock ();
 		$this->geo_config = new GeoBlockerConfig ( $this->config );
 	}
@@ -141,12 +141,12 @@ class GeoBlockerConfigTest extends TestCase {
 	}
 	public function testIsCountryCodeInListOfChoosenCountriesFalseEmptyCountryListValid() {
 		$return_string = '';
-		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with (
+		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with ( 
 				$this->equalTo ( 'geoblocker' ),
-				$this->equalTo ( 'choosenCountries' ), $this->equalTo ( '' ) )->will (
-						$this->returnValue ( $return_string ) );
-				$this->assertFalse (
-						$this->geo_config->isCountryCodeInListOfChoosenCountries ( 'AQ' ) );
+				$this->equalTo ( 'choosenCountries' ), $this->equalTo ( '' ) )->will ( 
+				$this->returnValue ( $return_string ) );
+		$this->assertFalse ( 
+				$this->geo_config->isCountryCodeInListOfChoosenCountries ( 'AQ' ) );
 	}
 	public function testIsCountryCodeInListOfChoosenCountriesTrueValid() {
 		$return_string = 'AE, AF, AG, AI, AL,';
@@ -157,5 +157,54 @@ class GeoBlockerConfigTest extends TestCase {
 		$this->assertTrue ( 
 				$this->geo_config->isCountryCodeInListOfChoosenCountries ( 'AG' ) );
 	}
-
+	public function testIsGetDoFakeAddressFalseValid() {
+		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with ( 
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'doFakeAddress' ), $this->equalTo ( '0' ) )->will ( 
+				$this->returnValue ( '0' ) );
+		$this->assertFalse ( $this->geo_config->getDoFakeAddress () );
+	}
+	public function testIsGetDoFakeAddressTrueValid() {
+		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with ( 
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'doFakeAddress' ), $this->equalTo ( '0' ) )->will ( 
+				$this->returnValue ( '1' ) );
+		$this->assertTrue ( $this->geo_config->getDoFakeAddress () );
+	}
+	public function testIsSetDoFakeAddressFalseValid() {
+		$this->config->expects ( $this->once () )->method ( 'setAppValue' )->with ( 
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'doFakeAddress' ), $this->equalTo ( '0' ) );
+		$this->geo_config->setDoFakeAddress ( FALSE );
+	}
+	public function testIsSetDoFakeAddressTrueValid() {
+		$this->config->expects ( $this->once () )->method ( 'setAppValue' )->with ( 
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'doFakeAddress' ), $this->equalTo ( '1' ) );
+		$this->geo_config->setDoFakeAddress ( TRUE );
+	}
+	public function testIsGetFakeAddressValidAddressValid() {
+		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with ( 
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'fakeAddress' ), $this->equalTo ( '127.0.0.1' ) )->will ( 
+				$this->returnValue ( '24.165.23.67' ) );
+		$this->assertEquals ( '24.165.23.67',
+				$this->geo_config->getFakeAddress () );
+	}
+	public function testIsGetFakeAddressInvalidAddressValid() {
+		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with (
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'fakeAddress' ), $this->equalTo ( '127.0.0.1' ) )->will (
+						$this->returnValue ( '24.165.23.67.234' ) );
+				$this->assertEquals ( '127.0.0.1',
+						$this->geo_config->getFakeAddress () );
+	}
+	public function testIsGetFakeAddressEmptyAddressValid() {
+		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with (
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'fakeAddress' ), $this->equalTo ( '127.0.0.1' ) )->will (
+						$this->returnValue ( '' ) );
+				$this->assertEquals ( '127.0.0.1',
+						$this->geo_config->getFakeAddress () );
+	}
 }
