@@ -32,7 +32,6 @@ OC.L10N.register(
     "with username" : "με όνομα χρήστη",
     "In addition, the login attempt can also be blocked" : "Επιπλέον, η προσπάθεια σύνδεσης μπορεί επίσης να αποκλειστεί",
     "(in a future version)" : "(σε μελλοντική έκδοση)",
-    "Activate blocking of the login attempt from IP adresses of the specified countries." : "Ενεργοποιήστε το μπλοκάρισμα προσπαθειών σύνδεσης από διευθύνσεις IP συγκεκριμένων χωρών.",
     "COUNTRY NOT FOUND" : "Η ΧΩΡΑ ΔΕΝ ΒΡΕΘΗΚΕ",
     "Andorra" : "Ανδόρα",
     "United Arab Emirates" : "Ηνωμένα Αραβικά Εμιράτα",

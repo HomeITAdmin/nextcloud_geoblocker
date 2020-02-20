@@ -32,7 +32,6 @@ OC.L10N.register(
     "with username" : "con nombre de usuario",
     "In addition, the login attempt can also be blocked" : "Además, el intento de inicio de sesión también se puede bloquear",
     "(in a future version)" : "(en una versión futura)",
-    "Activate blocking of the login attempt from IP adresses of the specified countries." : "Activa el bloqueo de intentos de inicio de sesión desde direcciones IP de los países especificados, ",
     "COUNTRY NOT FOUND" : "PAÍS NO ENCONTRADO",
     "Andorra" : "Andorra",
     "United Arab Emirates" : "Emiratos Árabes Unidos",

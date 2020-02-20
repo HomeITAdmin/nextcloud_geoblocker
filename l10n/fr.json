@@ -30,7 +30,6 @@
     "with username" : "avec le nom d'utilisateur",
     "In addition, the login attempt can also be blocked" : "En complément, la tentative de connexion peut être bloquée.",
     "(in a future version)" : "(dans une prochaine version)",
-    "Activate blocking of the login attempt from IP adresses of the specified countries." : "Activer le blocage des tentatives de connexion depuis les adresses IP des pays spécifiés.",
     "COUNTRY NOT FOUND" : "PAYS NON TROUVÉ",
     "Andorra" : "Andorre",
     "United Arab Emirates" : "Émirats Arabes Unis",

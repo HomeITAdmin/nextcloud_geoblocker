@@ -1,6 +1,15 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "Gebruiker \"%s\" met IP-adres \"%s\" is ingelogd vanuit geblokkeerd land \"%s\".",
+    "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "De inlog van gebruiker \"%s\" met IP-adres \"%s\" kon niet gecontroleerd worden vanwege problemen met de locatieservice.",
+    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "Gebruiker \"%s\" is ingelogd met een ongeldig IP-adres \"%s\".",
+    "OK.  (Please make sure the databases are up to date. This is currently not checked here.)" : "OK. (Zorg ervoor dat de databases bijgewerkt zijn. Dit wordt op dit moment niet hier gecontroleerd.)",
+    "ERROR: \"geoiplookup\" seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "FOUT: het lijkt erop dat \"geoiplookup\" niet geïnstalleerd is op de host van de Nextcloudserver, dat het niet door de webserver bereikt kan worden of dat het verkeerd geconfigureerd is (is de database met IPv4 en IPv6 bereikbaar?!). Misschien is het gebruik van de php-functie exec() uitgeschakeld in php.ini.",
+    "GeoBlocker" : "GeoBlocker",
+    "Blocks user depending on the estimated country of thier IP address." : "Blokkeert een gebruiker op basis van het geschatte land van hun IP-adres.",
+    "local" : "lokaal",
+    "default" : "standaard",
     "Andorra" : "Andorra",
     "United Arab Emirates" : "Verenigde Arabische Emiraten",
     "Afghanistan" : "Afghanistan",

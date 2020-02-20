@@ -32,7 +32,6 @@ OC.L10N.register(
     "with username" : "s uživatelským jménem",
     "In addition, the login attempt can also be blocked" : "Krom toho může být pokus o přihlášení se zablokován",
     "(in a future version)" : "(v budoucí verzi)",
-    "Activate blocking of the login attempt from IP adresses of the specified countries." : "Aktivovat blokování pokusů o přihlášení z IP adres, pocházejících ze zadaných zemí.",
     "COUNTRY NOT FOUND" : "ZEMĚ NENALEZENA",
     "Andorra" : "Andorra",
     "United Arab Emirates" : "Spojené Arabské Emiráty",

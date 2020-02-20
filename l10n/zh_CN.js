@@ -30,7 +30,6 @@ OC.L10N.register(
     "with username" : "用户名为",
     "In addition, the login attempt can also be blocked" : "另外，登录尝试也可被阻止。",
     "(in a future version)" : "（在未来版本中）",
-    "Activate blocking of the login attempt from IP adresses of the specified countries." : "激活阻止来自指定国家/地区的IP地址的登录尝试。",
     "COUNTRY NOT FOUND" : "未找到国家",
     "Andorra" : "安道尔",
     "United Arab Emirates" : "阿拉伯联合酋长国",
