@@ -20,7 +20,6 @@ OC.L10N.register(
     "default" : "varsayılan",
     "Status of the chosen service: " : "Seçilmiş hizmetin durumu:",
     "Country Selection" : "Ülke Seçimi",
-    "Selection mode" : "Seçim kipi",
     "Reaction" : "Tepki",
     "with IP Address" : "IP adresi ile",
     "with Country Code" : "Ülke kodu ile",

@@ -22,7 +22,6 @@ OC.L10N.register(
     "default" : "výchozí",
     "Status of the chosen service: " : "Stav zvolené služby:",
     "Country Selection" : "Výběr země",
-    "Selection mode" : "Režim výběru",
     "No country is blocked but the selected ones" : "Nejsou blokovány žádné země vyjma těch vybraných",
     "All countries are blocked but the selected ones" : "Jsou blokovány všechny země vyjma těch vybraných",
     "The following countries were selected in the list above: " : "Ve výše uvedeném seznamu byly vybrány následující země:",

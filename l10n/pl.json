@@ -20,7 +20,6 @@
     "default" : "domyślny",
     "Status of the chosen service: " : "Status wybranej usługi:",
     "Country Selection" : "Wybór kraju",
-    "Selection mode" : "Tryb wyboru",
     "No country is blocked but the selected ones" : "Żaden kraj nie będzie zablokowany, oprócz wybranych",
     "All countries are blocked but the selected ones" : "Wszystkie kraje będą zablokowane, oprócz wybranych",
     "The following countries were selected in the list above: " : "Następujące kraje zostały wybrane z powyższej listy:",

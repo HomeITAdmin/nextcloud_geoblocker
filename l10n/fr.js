@@ -22,7 +22,6 @@ OC.L10N.register(
     "default" : "défaut",
     "Status of the chosen service: " : "Statut du service choisi:",
     "Country Selection" : "Choix du pays",
-    "Selection mode" : "Mode de sélection",
     "No country is blocked but the selected ones" : "Seuls les pays sélectionnés sont bloqués",
     "All countries are blocked but the selected ones" : "Tous les pays sont bloqués exceptés ceux sélectionnés",
     "The following countries were selected in the list above: " : "Les pays suivants ont été sélectionnés dans la liste ci-dessus :",

@@ -20,7 +20,6 @@
     "default" : "默认",
     "Status of the chosen service: " : "被选中服务的状态：",
     "Country Selection" : "国家选择",
-    "Selection mode" : "选择模式",
     "No country is blocked but the selected ones" : "除被选中的国家外，其它国家都不会被阻止。",
     "All countries are blocked but the selected ones" : "除了被选中的国家，其它国家都会被阻止",
     "The following countries were selected in the list above: " : "在上面的列表中选择了以下国家：",
