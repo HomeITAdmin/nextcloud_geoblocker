@@ -82,6 +82,7 @@ class GeoIPLookupTest extends TestCase {
 		$this->assertEquals ( $country_code,
 				$this->geo_ip_lookup->getCountryCodeFromIP ( $ip_address ) );
 
+		$country_code = 'US';
 		$ip_address = '24.165.23.67';
 		$this->assertEquals ( $country_code,
 				$this->geo_ip_lookup->getCountryCodeFromIP ( $ip_address ) );
@@ -180,10 +181,10 @@ class GeoIPLookupTest extends TestCase {
 			$return_var = 0;
 			return 'GeoIP Country Edition: IP Address not found';
 		} else {
-			$output = array ('GeoIP Country Edition: DE, Germany'
+			$output = array ('GeoIP Country Edition: US, United States'
 			);
 			$return_var = 0;
-			return 'GeoIP Country Edition: DE, Germany';
+			return 'GeoIP Country Edition: US, United States';
 		}
 	}
 	public function callbackGeoIpLookup6ValidIP(string $ip_address,

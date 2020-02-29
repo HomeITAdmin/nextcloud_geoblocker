@@ -35,25 +35,22 @@ style ( 'geoblocker', 'admin' );
 				<option value="1" <?php if (strcmp ( $_['chosenService'], '1' ) == 0) print_unescaped('selected="selected"')?>>MaxMind GeoIP2 (<?php p($l->t('local'))?>)</option>
 			</select>
 		</label> <br /> 
-		<?php p($l->t('Status of the chosen service: ')); ?>
-		<?php
-			// TODO: Make dynamic when there is more then one service.
-			switch ($_['chosenService']) {
-				case '0':
-					$service = new GeoIPLookup ( new GeoIPLookupCmdWrapper () , $l);
-					p ( $l->t ( $service->getStatusString () ) );
-					break;
-				case '1':
-					$service = new MaxMindGeoIP2 ($l);
-					p ( $l->t ( $service->getStatusString () ) );
-					break;
-				default:
-					p ( $l->t ( "Error: Invalid service is chosen. Please reselect a service in the list above." ) );
-			}
-			
-		?>
+			<?php p($l->t('Status of the chosen service: ')); ?>
+			<?php
+				switch ($_['chosenService']) {
+					case '0':
+						$service = new GeoIPLookup ( new GeoIPLookupCmdWrapper () , $l);
+						p ( $l->t ( $service->getStatusString () ) );
+						break;
+					case '1':
+						$service = new MaxMindGeoIP2 ($l);
+						p ( $l->t ( $service->getStatusString () ) );
+						break;
+					default:
+						p ( $l->t ( "Error: Invalid service is chosen. Please reselect a service in the list above." ) );
+				}
+			?>
 	</div>
-	
 	<h3><?php p($l->t('Country Selection')); ?></h3>
 	<div class="subsection">
 		<?php p($l->t('Choose the selection mode'))?>:

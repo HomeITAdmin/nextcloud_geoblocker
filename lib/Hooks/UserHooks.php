@@ -11,6 +11,7 @@ use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 use OCP\IL10N;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper;
+use OCA\GeoBlocker\LocalizationServices\MaxMindGeoIP2;
 
 class UserHooks {
 	private $userSession;
@@ -35,8 +36,16 @@ class UserHooks {
 				$ip_address = $this->request->getRemoteAddress ();
 			}
 
-			// TODO: Create depending on the configurated service the right service
-			$location_service = new GeoIPLookup ( new GeoIPLookupCmdWrapper (), $this->l);
+			switch ($this->config->getChosenService()) {
+				case '0':
+					$location_service = new GeoIPLookup ( new GeoIPLookupCmdWrapper () , $this->l);
+					break;
+				case '1':
+					$location_service = new MaxMindGeoIP2 ($this->l);
+					break;
+				default:
+					$location_service = new GeoIPLookup ( new GeoIPLookupCmdWrapper () , $this->l);
+			}
 
 			$geoblocker = new GeoBlocker ( $user, $this->logger, $this->config,
 					$this->l, $location_service );

@@ -52,25 +52,24 @@ $(document).ready(function() {
 			OCP.AppConfig.setValue('geoblocker', 'fakeAddress', '127.0.0.1');
 		}
 	});
-	$('#choose-service').click(function() {
+	$('#choose-service').change(function() {
 		OCP.AppConfig.setValue('geoblocker',
 				 'chosenService'
 				 , this.value);
+		//TODO: Replace by real Ajax
+		location.reload(); 
 	});
 	$('#choose-countries').click(function() {
 		var countryList = '';
 		for (var i = 0; i < this.options.length; i++) {
 			if (this.options[i].selected == true) {
 				countryList += this.options[i].value + ', ';
-				console.log(this.options[i].value);
-			} else {
-			}
+			} 
 		}
 		OCP.AppConfig.setValue('geoblocker',
 				 'choosenCountries'
 				 , countryList);
 		document.getElementById('countryList').innerHTML = countryList;
-		
 	});
 	$('#choose-white-black-list').click(function() {
 		OCP.AppConfig.setValue('geoblocker',
