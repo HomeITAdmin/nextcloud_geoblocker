@@ -111,6 +111,26 @@ class GeoBlockerConfig {
 		$this->config->setAppValue ( 'geoblocker', 'choosenWhiteBlackList',
 				$value );
 	}
+	
+	/**
+	 * Returns whichs location service is chosen.
+	 *
+	 * @return string
+	 */
+	public function getChosenService(): string {
+		$chosenService = $this->config->getAppValue ( 'geoblocker',
+				'chosenService', '0' );
+		return $chosenService;
+	}
+	/**
+	 * Sets the chosen service.
+	 *
+	 * @param bool $chosenService
+	 */
+	public function setChosenService(string $chosenService) {
+		$this->config->setAppValue ( 'geoblocker', 'chosenService',
+				$chosenService );
+	}
 
 	/**
 	 * Provide a string with all countries that are selected

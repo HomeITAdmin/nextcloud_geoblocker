@@ -1,6 +1,7 @@
 <?php
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper;
+use OCA\GeoBlocker\LocalizationServices\MaxMindGeoIP2;
 use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 
 /** @var $l \OCP\IL10N */
@@ -29,15 +30,27 @@ style ( 'geoblocker', 'admin' );
 	<div class="subsection">
 		<?php p($l->t('Choose the service you want to use to determine the country from the IP Address:')); ?> <br /> 
 		<label> 
-			<select name="choose-service">
-				<option selected="selected">Geoiplookup (<?php p($l->t('local'))?>, <?php p($l->t('default'))?>)</option>
+			<select name="choose-service" id="choose-service">
+				<option value="0" <?php if (strcmp ( $_['chosenService'], '0' ) == 0) print_unescaped('selected="selected"')?>>Geoiplookup (<?php p($l->t('local'))?>, <?php p($l->t('default'))?>)</option>
+				<option value="1" <?php if (strcmp ( $_['chosenService'], '1' ) == 0) print_unescaped('selected="selected"')?>>MaxMind GeoIP2 (<?php p($l->t('local'))?>)</option>
 			</select>
 		</label> <br /> 
 		<?php p($l->t('Status of the chosen service: ')); ?>
 		<?php
 			// TODO: Make dynamic when there is more then one service.
-			$service = new GeoIPLookup ( new GeoIPLookupCmdWrapper () , $l);
-			p ( $l->t ( $service->getStatusString () ) );
+			switch ($_['chosenService']) {
+				case '0':
+					$service = new GeoIPLookup ( new GeoIPLookupCmdWrapper () , $l);
+					p ( $l->t ( $service->getStatusString () ) );
+					break;
+				case '1':
+					$service = new MaxMindGeoIP2 ($l);
+					p ( $l->t ( $service->getStatusString () ) );
+					break;
+				default:
+					p ( $l->t ( "Error: Invalid service is chosen. Please reselect a service in the list above." ) );
+			}
+			
 		?>
 	</div>
 	

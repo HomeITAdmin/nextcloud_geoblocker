@@ -167,7 +167,7 @@ class GeoBlockerTest extends TestCase {
 		$country_code = 'INVALID_IP';
 		$log_string_template = 'The user "%s" logged in with an invalid IP address "%s".';
 		$log_method = 'warning';
-		$this->doCheckTest ( $ip_address, $country_code, $this->once (),
+		$this->doCheckTest ( $ip_address, $country_code, $this->never (),
 				$log_string_template, $log_method, $this->once () );
 	}
 	public function testIsUnavailableServiceLogged() {

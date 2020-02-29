@@ -207,4 +207,21 @@ class GeoBlockerConfigTest extends TestCase {
 				$this->assertEquals ( '127.0.0.1',
 						$this->geo_config->getFakeAddress () );
 	}
+	
+	public function testIsGetChosenServiceValid() {		
+		$this->config->expects ( $this->once () )->method ( 'getAppValue' )->with (
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'chosenService' ),
+				$this->equalTo ( '0' ) )->will ( $this->returnValue ( '1' ) );
+		$this->assertEquals('1', $this->geo_config->getChosenService() );
+	}
+	
+	public function testIsSetChosenServiceValid() {
+		$this->config->expects ( $this->once () )->method ( 'setAppValue' )->with (
+				$this->equalTo ( 'geoblocker' ),
+				$this->equalTo ( 'chosenService' ),
+				$this->equalTo ( '1' ) );
+		$this->geo_config->setChosenService ( '1' );
+	}
+	
 }

@@ -21,9 +21,11 @@ interface ILocalizationService {
 
 	/**
 	 * Returns the country code of the IP adresses as string of two characters, if it can be determind.
-	 * If the country is not found, it returns "AA" (Country Code for Country not found).
-	 * If the input wasn't a valid IP Adress it returns "INVALID_IP
+	 * If the country is not found, it returns "AA" (Country Code for "Country not found").
 	 * If the service is not usable, it returns "UNAVAILABLE"
+	 * When using the service it must be ensured by the caller, that a valid IP Address is given.
+	 *   So the location service can count on getting a valid IP.
+	 *   But if the services is checking it shall return "INVALID_IP" in case it happens.
 	 *
 	 * @param string $IPAdress
 	 *        	The IP Adress to check.

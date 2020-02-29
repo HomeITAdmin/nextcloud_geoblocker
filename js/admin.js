@@ -52,6 +52,11 @@ $(document).ready(function() {
 			OCP.AppConfig.setValue('geoblocker', 'fakeAddress', '127.0.0.1');
 		}
 	});
+	$('#choose-service').click(function() {
+		OCP.AppConfig.setValue('geoblocker',
+				 'chosenService'
+				 , this.value);
+	});
 	$('#choose-countries').click(function() {
 		var countryList = '';
 		for (var i = 0; i < this.options.length; i++) {

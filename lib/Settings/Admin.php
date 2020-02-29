@@ -36,7 +36,8 @@ class Admin implements ISettings {
 						'ipAddress' => $this->request->getRemoteAddress (),
 						'doFakeAddress' => $this->config->getDoFakeAddress (),
 						'userID' => $this->user_session->getUser()->getUID(),
-						'fakeAddress' => $this->config->getFakeAddress()
+						'fakeAddress' => $this->config->getFakeAddress(),
+						'chosenService'  => $this->config->getChosenService()
 				] );
 		return $response;
 	}
