@@ -1,9 +1,9 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "ولج المستخدم \"%s\"  باستخدام عنوان خاطئ \"%s\".",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "ولج المستخدم \"%s\"  باستخدام العنوان \"%s\" من البلد المحجوب \"%s\".",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "لا يمكن التحقق من ولوج المستخدم \"%s\" بالعنوان الشبكي \"%s\" بسبب مشاكل في خدمة المواقع.",
-    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "ولج المستخدم \"%s\"  باستخدام عنوان خاطئ \"%s\".",
     "GeoBlocker" : "الحاجب الجغرافي",
     "Blocks user depending on the estimated country of thier IP address." : "يحجب المستخدمين من دولة محددة بشكل تقريبي بواسطة العنوان الشبكي.",
     "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)" : "هذه هي الواجهة الأمامية لخدمات الحجب الجغرافي ، التي تسمح بحجب(الولوج حاليًا فقط!) من بلدان محددة مسبقة. (نسخه اولي)",

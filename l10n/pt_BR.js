@@ -1,9 +1,9 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "O usuário \"%s\" fez login com o endereço IP inválido \"%s\".",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "O usuário \"%s\" fez login com o endereço IP \"%s\" a partir do país bloqueado \"%s\".",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Não foi possível verificar o login do usuário \"%s\" com o endereço IP \"%s\" devido a problemas no serviço de localização.",
-    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "O usuário \"%s\" fez login com o endereço IP inválido \"%s\".",
     "OK.  (Please make sure the databases are up to date. This is currently not checked here.)" : "OK. (Verifique se os bancos de dados estão atualizados. No momento, isso não está marcado aqui.)",
     "ERROR: \"geoiplookup\" seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "ERRO: \"geoiplookup\" parece não estar instalado no host do servidor Nextcloud, inacessível para o servidor Web ou configurado incorretamente (o banco de dados para IPv4 e IPv6 está disponível?!). Talvez o uso da função php exec() esteja desabilitado no php.ini.",
     "GeoBlocker" : "GeoBlocker",

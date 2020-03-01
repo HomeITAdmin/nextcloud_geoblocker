@@ -1,7 +1,7 @@
 { "translations": {
+    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "Uživatel „%s“ se přihlásil(a) s neplatnou IP adresou „%s“.",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "Uživatel „%s“ se příhlásil(a) z IP adresy „%s“ z blokované země „%s“.",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Přihlášení uživatele „%s“ s IP adresou „%s“ se nepodařilo zkontrolovat kvůli problémům s lokační službou.",
-    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "Uživatel „%s“ se přihlásil(a) s neplatnou IP adresou „%s“.",
     "OK.  (Please make sure the databases are up to date. This is currently not checked here.)" : "OK. (Ověřte, že databáze jsou aktuální. To tu zatím není ověřováno.)",
     "ERROR: \"geoiplookup\" seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "CHYBA: na hostiteli Nexcloud serveru se nezdá být nainstalované „geoiplookup“, nebo není dosažitelné pro webový server, nebo je nesprávně nastavené (je k dispozici databáze pro IPv4 a IPv6?). Možná je v php.ini vypnuté používání funkce exec().",
     "GeoBlocker" : "Geoblokace",

@@ -1,9 +1,9 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "Ο χρήστης \"%s\" συνδέθηκε μη έγκυρη διεύθυνση IP \"%s\".",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "Ο χρήστης \"%s\" συνδέθηκε με διεύθυνση IP \"%s\" από την αποκλεισμένη χώρα \"%s\".",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Η σύνδεση του χρήστη \"%s\" με διεύθυνση IP \"%s\" δεν μπορεί να ελεγχθεί λόγω προβλημάτων ελέγχου της υπηρεσίας εντοπισμού.",
-    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "Ο χρήστης \"%s\" συνδέθηκε μη έγκυρη διεύθυνση IP \"%s\".",
     "OK.  (Please make sure the databases are up to date. This is currently not checked here.)" : "ΕΝΤΑΞΕΙ. (Βεβαιωθείτε ότι οι βάσεις δεδομένων είναι ενημερωμένες. Δεν δεν ελέγχονται από εδώ).",
     "ERROR: \"geoiplookup\" seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "Σφάλμα: Το \"geoiplookup\" φαίνεται να μην είναι εγκατεστημένο στον κεντρικό υπολογιστή Nextcloud ή δεν είναι προσβάσιμο για τον διακομιστή ιστού ή δεν είναι σωστά ρυθμισμένο (είναι διαθέσιμη η βάση δεδομένων για IPv4 και IPv6;). Ίσως η χρήση της λειτουργίας php exec() είναι απενεργοποιημένη στο php.ini.",
     "GeoBlocker" : "GeoBlocker",

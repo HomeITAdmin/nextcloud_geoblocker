@@ -1,9 +1,9 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "Użytkownik \"%s\" zalogował się z nieprawidłowym adresem IP \"%s\".",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "Użytkownik \"%s\" zalogował się przy użyciu adresu IP \"%s\" z zablokowanego kraju \"%s\".",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Nie można sprawdzić logowania użytkownika \"%s\" z adresem IP \"%s\" z powodu problemów z usługą lokalizacji.",
-    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "Użytkownik \"%s\" zalogował się z nieprawidłowym adresem IP \"%s\".",
     "OK.  (Please make sure the databases are up to date. This is currently not checked here.)" : "DOBRZE. (Upewnij się, że bazy danych są aktualne. Tutaj nie jest to sprawdzane).",
     "ERROR: \"geoiplookup\" seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "BŁĄD: Wydaje się, że \"geoiplookup\" może być nie zainstalowany na hoście serwera Nextcloud lub jest nieosiągalny dla serwera WWW, albo jest źle skonfigurowany (czy baza danych dla IPv4 i IPv6 jest dostępna?!). Może też być, że użycie exec() w funkcji php jest wyłączone w php.ini.",
     "GeoBlocker" : "Bloker Geograficzny",

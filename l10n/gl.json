@@ -1,7 +1,7 @@
 { "translations": {
+    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "O usuario «%s» accedeu co enderezo IP non válido «%s».",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "O usuario «%s» accedeu co enderezo IP «%s» do país bloqueado «%s».",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Non foi posíbel comprobar o acceso do usuario «%s» co enderezo IP «%s» por mor de haber problemas co servizo de localización.",
-    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "O usuario «%s» accedeu co enderezo IP non válido «%s».",
     "OK.  (Please make sure the databases are up to date. This is currently not checked here.)" : "Aceptar. (Asegúrese de que as bases de datos están actualizadas. Actualmente non se comproba aquí.)",
     "ERROR: \"geoiplookup\" seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "ERRO: Semella que «xeoiplookup» non está instalado no servidor do Nextcloud ou non é accesíbel para o servidor web ou está mal configurado (está dispoñíbel a base de datos para IPv4 e IPv6 ?!). Quizais estea desactivado o uso da función de PHP exec() en php.ini.",
     "GeoBlocker" : "GeoBlocker",

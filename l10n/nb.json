@@ -1,7 +1,7 @@
 { "translations": {
+    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "Brukeren \"%s\" har logget inn med en ugyldig IP addresse \"%s\".",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "Brukeren \"%s\" logget inn med IP addressen \"%s\" fra det blokkerte landet \"%s\".",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Innloggingen av brukeren \"%s\" med IP addresse \"%s\" kunne ikke sjekkes på grunn av problemer med lokasjonstjenesten.",
-    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "Brukeren \"%s\" har logget inn med en ugyldig IP addresse \"%s\".",
     "GeoBlocker" : "GeoBlocker",
     "Blocks user depending on the estimated country of thier IP address." : "Blokkerer brukere basert på hvilket land IP adressen tilhører.",
     "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)" : "Dette er front enden for geo lokaliseringstjeneste som muliggjør blokkerinng (foreløpig kun logging!) av innloggingsforsøk fra angitte land. (Tidlig versjon)",
