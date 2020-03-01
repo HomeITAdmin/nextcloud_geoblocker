@@ -1,7 +1,7 @@
 <?php
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper;
-use OCA\GeoBlocker\LocalizationServices\MaxMindGeoIP2;
+use OCA\GeoBlocker\LocalizationServices\MaxMindGeoLite2;
 use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 
 /** @var $l \OCP\IL10N */
@@ -34,7 +34,7 @@ style ( 'geoblocker', 'admin' );
 			<p class="subsection"><label> 
 				<select name="choose-service" id="choose-service">
 					<option value="0" <?php if (strcmp ( $_['chosenService'], '0' ) == 0) print_unescaped('selected="selected"')?>>Geoiplookup (<?php p($l->t('local'))?>, <?php p($l->t('default'))?>)</option>
-					<option value="1" <?php if (strcmp ( $_['chosenService'], '1' ) == 0) print_unescaped('selected="selected"')?>>MaxMind GeoIP2 (<?php p($l->t('local'))?>)</option>
+					<option value="1" <?php if (strcmp ( $_['chosenService'], '1' ) == 0) print_unescaped('selected="selected"')?>>MaxMind GeoLite2 (<?php p($l->t('local'))?>)</option>
 				</select>
 			</label> </p> 
 		
@@ -49,7 +49,7 @@ style ( 'geoblocker', 'admin' );
 							p ( $l->t ( $service->getStatusString () ) );
 							break;
 						case '1':
-							$service = new MaxMindGeoIP2 ($l);
+							$service = new MaxMindGeoLite2 ($l);
 							p ( $l->t ( $service->getStatusString () ) );
 							break;
 						default:

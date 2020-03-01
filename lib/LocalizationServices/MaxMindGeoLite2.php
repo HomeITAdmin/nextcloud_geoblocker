@@ -5,7 +5,7 @@ declare(strict_types = 1)
 namespace OCA\GeoBlocker\LocalizationServices;
 
 include __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' .
-		DIRECTORY_SEPARATOR . '3rdparty' . DIRECTORY_SEPARATOR . 'maxmind_geoip2' .
+		DIRECTORY_SEPARATOR . '3rdparty' . DIRECTORY_SEPARATOR . 'maxmind_geolite2' .
 		DIRECTORY_SEPARATOR . '' . 'geoip2.phar';
 
 use OCP\IL10N;
@@ -14,7 +14,7 @@ use MaxMind\Db\Reader\InvalidDatabaseException;
 use InvalidArgumentException;
 use GeoIp2\Exception\AddressNotFoundException;
 
-class MaxMindGeoIP2 implements ILocalizationService {
+class MaxMindGeoLite2 implements ILocalizationService {
 	private $l;
 	private $db_file_path = '/usr/share/GeoIP/GeoLite2-Country.mmdb';
 	public function __construct(IL10N $l) {
@@ -38,7 +38,7 @@ class MaxMindGeoIP2 implements ILocalizationService {
 		return FALSE;
 	}
 	public function getStatusString(): string {
-		$service_string = '"MaxMind GeoIP2": ';
+		$service_string = '"MaxMind GeoLite2": ';
 		if ($this->getStatus()) {			
 			return $service_string . $this->l->t ('OK.  (Please make sure the databases are up to date. This is currently not checked here.)' );
 		}

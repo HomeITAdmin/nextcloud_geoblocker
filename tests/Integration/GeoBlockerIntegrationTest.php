@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper;
-use OCA\GeoBlocker\LocalizationServices\MaxMindGeoIP2;
+use OCA\GeoBlocker\LocalizationServices\MaxMindGeoLite2;
 use PHPUnit\Framework\MockObject\Rule\InvokedCount as InvokedCountMatcher;
 
 class GeoblockerIntegrationTest extends TestCase {
@@ -113,9 +113,9 @@ class GeoblockerIntegrationTest extends TestCase {
 // 				$log_string_template, $log_method, $this->once (),
 // 				$isCountryInList );
 	}
-	public function testLoggingNotBlockedFromMaxmindGeoip2() {
+	public function testLoggingNotBlockedFromMaxmindGeoLite2() {
 		$this->mySetUp ();
-		$this->location_service = new MaxMindGeoIP2($this->l);
+		$this->location_service = new MaxMindGeoLite2($this->l);
 		
 		$this->geoblocker = new GeoBlocker ( $this->user, $this->logger,
 				$this->config, $this->l, $this->location_service );
@@ -132,9 +132,9 @@ class GeoblockerIntegrationTest extends TestCase {
 		// 		$this->doCheckTest ( $ip_address, $country_code, $this->once (),
 		// 				$log_string_template, $log_method, $this->never () );
 	}
-	public function testLoggingBlockedFromMaxmindGeoip2() {
+	public function testLoggingBlockedFromMaxmindGeoLite2() {
 		$this->mySetUp ();
-		$this->location_service = new MaxMindGeoIP2($this->l);
+		$this->location_service = new MaxMindGeoLite2($this->l);
 		
 		$this->geoblocker = new GeoBlocker ( $this->user, $this->logger,
 				$this->config, $this->l, $this->location_service );

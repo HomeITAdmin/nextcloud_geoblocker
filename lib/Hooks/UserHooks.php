@@ -11,7 +11,7 @@ use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 use OCP\IL10N;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper;
-use OCA\GeoBlocker\LocalizationServices\MaxMindGeoIP2;
+use OCA\GeoBlocker\LocalizationServices\MaxMindGeoLite2;
 
 class UserHooks {
 	private $userSession;
@@ -41,7 +41,7 @@ class UserHooks {
 					$location_service = new GeoIPLookup ( new GeoIPLookupCmdWrapper () , $this->l);
 					break;
 				case '1':
-					$location_service = new MaxMindGeoIP2 ($this->l);
+					$location_service = new MaxMindGeoLite2 ($this->l);
 					break;
 				default:
 					$location_service = new GeoIPLookup ( new GeoIPLookupCmdWrapper () , $this->l);

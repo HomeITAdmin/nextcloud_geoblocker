@@ -10,7 +10,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper;
-use OCA\GeoBlocker\LocalizationServices\MaxMindGeoIP2;
+use OCA\GeoBlocker\LocalizationServices\MaxMindGeoLite2;
 
 class ServiceController extends Controller {
 	private $config;
@@ -35,7 +35,7 @@ class ServiceController extends Controller {
 						new GeoIPLookupCmdWrapper (), $this->l );
 				break;
 			case '1' :
-				$location_service = new MaxMindGeoIP2 ( $this->l );
+				$location_service = new MaxMindGeoLite2 ( $this->l );
 				break;
 			default :
 				$location_service = new GeoIPLookup ( 

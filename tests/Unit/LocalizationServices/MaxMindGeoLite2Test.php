@@ -5,9 +5,9 @@ declare(strict_types = 1)
 namespace OCA\Geoblocker\Tests\Unit\LocalizationService;
 
 use PHPUnit\Framework\TestCase;
-use OCA\GeoBlocker\LocalizationServices\MaxMindGeoIP2;
+use OCA\GeoBlocker\LocalizationServices\MaxMindGeoLite2;
 
-class MaxMindGeoIP2Test extends TestCase {
+class MaxMindGeoLite2Test extends TestCase {
 	protected $l;
 	private $geo_ip_lookup;
 	public function setUp(): void {
@@ -16,7 +16,7 @@ class MaxMindGeoIP2Test extends TestCase {
 		$this->l->method ( 't' )->will (
 				$this->returnCallback ( array ($this,'callbackLTJustRouteThrough'
 				) ) );
-		$this->geo_ip_lookup = new MaxMindGeoIP2 ( $this->l );
+		$this->geo_ip_lookup = new MaxMindGeoLite2 ( $this->l );
 	}
 	public function testIsValidStatusOk() {
 // 		$this->cmd_wrapper->method ( 'geoiplookup' )->will ( 
