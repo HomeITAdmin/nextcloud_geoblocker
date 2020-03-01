@@ -53,7 +53,7 @@ class GeoIPLookupTest extends TestCase {
 						array ($this,'callbackGeoIpLookup6Valid'
 						) ) );
 		
-		$result = 'OK.  (Please make sure the databases are up to date. This is currently not checked here.)';
+		$result = '"Geoiplookup": OK.  (Please make sure the databases are up to date. This is currently not checked here.)';
 		$this->assertEquals ( $result, $this->geo_ip_lookup->getStatusString () );
 	}
 	public function testIsInvalidStatusStringOk() {
@@ -65,7 +65,7 @@ class GeoIPLookupTest extends TestCase {
 				$this->returnCallback ( 
 						array ($this,'callbackGeoIpLookup6Invalid'
 						) ) );
-		$result = 'ERROR: "geoiplookup" seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini.';
+		$result = '"Geoiplookup": ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini.';
 		$this->assertEquals ( $result, $this->geo_ip_lookup->getStatusString () );
 	}
 	public function testIsCountryCodeFromValidIpOk() {

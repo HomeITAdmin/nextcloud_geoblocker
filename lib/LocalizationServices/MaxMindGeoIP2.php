@@ -30,7 +30,7 @@ class MaxMindGeoIP2 implements ILocalizationService {
 			
 			try {
 				$reader->country('1.1.1.1');
-			} catch (AddressNotFoundException $e) {
+			} catch ( AddressNotFoundException $e) {
 				return FALSE;
 			}
 			return TRUE;
@@ -38,11 +38,12 @@ class MaxMindGeoIP2 implements ILocalizationService {
 		return FALSE;
 	}
 	public function getStatusString(): string {
+		$service_string = '"MaxMind GeoIP2": ';
 		if ($this->getStatus()) {			
-			return $this->l->t ('OK.  (Please make sure the databases are up to date. This is currently not checked here.)' );
+			return $service_string . $this->l->t ('OK.  (Please make sure the databases are up to date. This is currently not checked here.)' );
 		}
-		return $this->l->t ( 
-				'ERROR: "MaxMind GeoIP2" does not seem to be installed or database is not available at /usr/share/GeoIP/GeoLite2-Country.mmdb2.' );
+		return $service_string . $this->l->t ( 
+				'ERROR: Service does not seem to be installed correctly or database is not available at %s.', $this->db_file_path);
 	}
 	public function getCountryCodeFromIP($ip_address): string {
 // 		if ($this->getStatus ()) {

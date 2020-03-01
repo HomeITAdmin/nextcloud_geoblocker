@@ -57,7 +57,17 @@ $(document).ready(function() {
 				 'chosenService'
 				 , this.value);
 		//TODO: Replace by real Ajax
-		location.reload(); 
+		//location.reload();
+		
+		var baseUrl = OC.generateUrl('/apps/geoblocker');
+		$.ajax({
+		    url: baseUrl + '/service/' + this.value,
+		    type: 'GET'
+		}).done(function (response) {
+			document.getElementById('status-chosen-service').innerHTML=response;
+		}).fail(function (response, code) {
+			document.getElementById('status-chosen-service').innerHTML=t('geoblocker','Status of the service cannot be determinded.');
+		});
 	});
 	$('#choose-countries').click(function() {
 		var countryList = '';

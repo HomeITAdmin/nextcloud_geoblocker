@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper;
+use OCA\GeoBlocker\LocalizationServices\MaxMindGeoIP2;
 use PHPUnit\Framework\MockObject\Rule\InvokedCount as InvokedCountMatcher;
 
 class GeoblockerIntegrationTest extends TestCase {
@@ -69,7 +70,7 @@ class GeoblockerIntegrationTest extends TestCase {
 		), $args [1] );
 		return call_user_func_array ( 'sprintf', $sprintf_args );
 	}
-	public function testLoggingNotBlocked() {
+	public function testLoggingNotBlockedFromGeoiplookup() {
 		$this->mySetUp ();
 		$this->location_service = new GeoIPLookup ( 
 				new GeoIPLookupCmdWrapper (), $this->l );
@@ -89,7 +90,7 @@ class GeoblockerIntegrationTest extends TestCase {
 // 		$this->doCheckTest ( $ip_address, $country_code, $this->once (),
 // 				$log_string_template, $log_method, $this->never () );
 	}
-	public function testLoggingBlocked() {
+	public function testLoggingBlockedFromGeoiplookup() {
 		$this->mySetUp ();
 		$this->location_service = new GeoIPLookup ( 
 				new GeoIPLookupCmdWrapper (), $this->l );
@@ -111,5 +112,46 @@ class GeoblockerIntegrationTest extends TestCase {
 // 		$this->doCheckTest ( $ip_address, $country_code, $this->once (),
 // 				$log_string_template, $log_method, $this->once (),
 // 				$isCountryInList );
+	}
+	public function testLoggingNotBlockedFromMaxmindGeoip2() {
+		$this->mySetUp ();
+		$this->location_service = new MaxMindGeoIP2($this->l);
+		
+		$this->geoblocker = new GeoBlocker ( $this->user, $this->logger,
+				$this->config, $this->l, $this->location_service );
+		
+		$ip_address = '2a02:2e0:3fe:1001:302::';
+		$country_code = 'DE';
+		$log_string_template = '';
+		$log_method = 'warning';
+		$this->doCheckTest ( $ip_address, $country_code, $this->once (),
+				$log_string_template, $log_method, $this->never () );
+		
+		// 		$ip_address = '24.165.23.67';
+		// 		$country_code = 'US';
+		// 		$this->doCheckTest ( $ip_address, $country_code, $this->once (),
+		// 				$log_string_template, $log_method, $this->never () );
+	}
+	public function testLoggingBlockedFromMaxmindGeoip2() {
+		$this->mySetUp ();
+		$this->location_service = new MaxMindGeoIP2($this->l);
+		
+		$this->geoblocker = new GeoBlocker ( $this->user, $this->logger,
+				$this->config, $this->l, $this->location_service );
+		
+		$ip_address = '2a02:2e0:3fe:1001:302::';
+		$country_code = 'DE';
+		$log_string_template = 'The user "%s" logged in with IP address "%s" from blocked country "%s".';
+		$log_method = 'warning';
+		$isCountryInList = TRUE;
+		$this->doCheckTest ( $ip_address, $country_code, $this->once (),
+				$log_string_template, $log_method, $this->once (),
+				$isCountryInList );
+		
+		// 		$ip_address = '24.165.23.67';
+		// 		$country_code = 'US';
+		// 		$this->doCheckTest ( $ip_address, $country_code, $this->once (),
+		// 				$log_string_template, $log_method, $this->once (),
+		// 				$isCountryInList );
 	}
 }

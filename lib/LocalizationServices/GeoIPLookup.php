@@ -3,6 +3,7 @@ declare(strict_types = 1)
 	;
 
 namespace OCA\GeoBlocker\LocalizationServices;
+
 use OCP\IL10N;
 
 class GeoIPLookup implements ILocalizationService {
@@ -13,7 +14,7 @@ class GeoIPLookup implements ILocalizationService {
 		$this->l = $l;
 	}
 	public function getStatus(): bool {
-		$output = array();
+		$output = array ();
 		$return_val = 0;
 		$return_val2 = 0;
 		$location_raw1 = $this->cmd_wrapper->geoiplookup ( '127.0.0.1', $output,
@@ -32,14 +33,19 @@ class GeoIPLookup implements ILocalizationService {
 		}
 	}
 	public function getStatusString(): string {
+		$service_string = '"Geoiplookup": ';
 		if ($this->getStatus () === TRUE) {
-			return $this->l->t('OK.  (Please make sure the databases are up to date. This is currently not checked here.)');
+			return $service_string .
+					$this->l->t ( 
+							'OK.  (Please make sure the databases are up to date. This is currently not checked here.)' );
 		} else {
-			return $this->l->t('ERROR: "geoiplookup" seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini.');
+			return $service_string .
+					$this->l->t ( 
+							'ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini.' );
 		}
 	}
 	public function getCountryCodeFromIP($ip_address): string {
-		$output = array();
+		$output = array ();
 		$return_val = 0;
 		$location = "";
 
