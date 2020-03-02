@@ -66,7 +66,7 @@ $(document).ready(function() {
 		}).done(function (response) {
 			document.getElementById('status-chosen-service').innerHTML=response;
 		}).fail(function (response, code) {
-			document.getElementById('status-chosen-service').innerHTML=t('geoblocker','Status of the service cannot be determinded.');
+			document.getElementById('status-chosen-service').innerHTML=t('geoblocker','Status of the service cannot be determined.');
 		});
 	});
 	$('#choose-countries').click(function() {
