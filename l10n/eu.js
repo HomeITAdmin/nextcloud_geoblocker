@@ -1,6 +1,15 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "GeoBlocker" : "GeoBlocker",
+    "is local." : "lokala da.",
+    "is external." : "kanpokoa da.",
+    "Service" : "Zerbitzua",
+    "local" : "lokala",
+    "default" : "lehenetsia",
+    "Reaction" : "Erreakzioa",
+    "with IP Address" : "IP helbidearekin",
+    "Test" : "Proba",
     "Andorra" : "Andorra",
     "United Arab Emirates" : "Arabiar Emirerri Batuak",
     "Afghanistan" : "Afganistan",

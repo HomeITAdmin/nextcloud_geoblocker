@@ -5,7 +5,6 @@ OC.L10N.register(
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "用户 “%s” 使用一个被封锁的国家“%s”的 IP 地址“%s”登录。",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "由于位置服务出现的问题，无法检查 IP 地址为 “%s” 的用户 “%s”的登录。",
     "OK.  (Please make sure the databases are up to date. This is currently not checked here.)" : "好的。（请确保数据库是最新的，当前未在此处选中。）",
-    "ERROR: \"geoiplookup\" seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "错误：Nextcloud服务器的主机上似乎未安装“ geoiplookup”，Web服务器无法访问或配置错误（IPv4和IPv6的数据库是否可用？！）。也许在php.ini中禁用了php函数exec()的使用。",
     "GeoBlocker" : "地理阻止器",
     "Blocks user depending on the estimated country of thier IP address." : "根据其IP地址对应的国家来封锁用户。",
     "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)" : "这是地理定位服务的一个前端，允许阻止（目前仅是记录！）来自指定国家的登录尝试。（早期版本）",
