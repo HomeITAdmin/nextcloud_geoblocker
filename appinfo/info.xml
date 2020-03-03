@@ -5,7 +5,7 @@
     <name>GeoBlocker</name>
     <summary>Blocks user depending on the estimated country of thier IP address.</summary>
     <description>This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)</description>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
     <licence>agpl</licence>
     <author mail="homeitadmin@seypro.de" >HomeITAdmin</author>
     <namespace>GeoBlocker</namespace>
