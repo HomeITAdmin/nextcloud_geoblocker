@@ -1,4 +1,5 @@
 { "translations": {
+    "Status of the service cannot be determinded." : "Impossible de déterminer le statut du service.",
     "The user \"%s\" logged in with an invalid IP address \"%s\"." : "L'utilisateur \"%s\" est connecté avec une adresse IP non valable \"%s\".",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "L'utilisateur \"%s\" est connecté avec l'adresse IP \"%s\" depuis ce pays bloqué \"%s\".",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "La connexion de l'utilisateur \"%s\" avec l'adresse IP \"%s\" n'a pas pu être vérifiée à cause d'un problème avec le service de localisation.",
@@ -34,6 +35,7 @@
     "(in a future version)" : "(dans une prochaine version)",
     "Activate blocking of the login attempt from IP addresses of the specified countries." : "Activer le blocage des tentatives de connexion depuis les adresses IP des pays indiqués.",
     "Test" : "Test",
+    "Possibilities to test if the Geoblocker is working as expected:" : "Possibilités de tester si Geoblocker fonctionne correctement :",
     "Next login attempt of user \"%s\" will be simulated to come from the following IP address:" : "La prochaine tentative de connexion pour l'utilisateur \"%s\" simulera  l’utilisation de l'adresse IP suivante :",
     "COUNTRY NOT FOUND" : "PAYS NON TROUVÉ",
     "Andorra" : "Andorre",

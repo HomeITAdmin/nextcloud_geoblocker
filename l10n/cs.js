@@ -1,10 +1,13 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "Status of the service cannot be determinded." : "Stav služby se nedaří zjistit.",
     "The user \"%s\" logged in with an invalid IP address \"%s\"." : "Uživatel „%s“ se přihlásil(a) s neplatnou IP adresou „%s“.",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "Uživatel „%s“ se příhlásil(a) z IP adresy „%s“ z blokované země „%s“.",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Přihlášení uživatele „%s“ s IP adresou „%s“ se nepodařilo zkontrolovat kvůli problémům s lokační službou.",
     "OK.  (Please make sure the databases are up to date. This is currently not checked here.)" : "OK. (Ověřte, že databáze jsou aktuální. To tu zatím není ověřováno.)",
+    "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "CHYBA: zdá se, že služba není nainstalována na hostiteli Nextcloud serveru nebo není dosažitelná pro webový server nebo není správně nastavená (je k dispozici databáze pro IPv4 a IPv6?!). Možná je také v souboru s nastaveními php.ini vypnutá funkce exec().",
+    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "CHYBA: zdá se, že služba není nainstalována správně nebo není k dispozici databáze v %s.",
     "GeoBlocker" : "Geoblokace",
     "Blocks user depending on the estimated country of thier IP address." : "Blokování uživatelů závisí na odhadu země na základě jeho IP adresy.",
     "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)" : "Toto je nadstavba nad geolokačními službami, která umožňuje blokování (v tuto chvíli pouze zaznamenávání!) pokusů o přihlášení z určených zemí. (ranná verze)",
@@ -37,6 +40,7 @@ OC.L10N.register(
     "(in a future version)" : "(v budoucí verzi)",
     "Activate blocking of the login attempt from IP addresses of the specified countries." : "Aktivovat blokování pokusů o přihlášení z IP adres, pocházejících ze zadaných zemí.",
     "Test" : "Vyzkoušet",
+    "Possibilities to test if the Geoblocker is working as expected:" : "Možnosti jak vyzkoušet, zda Geoblocker funguje dle očekávání:",
     "Next login attempt of user \"%s\" will be simulated to come from the following IP address:" : "Příští pokus o přihlášení uživatele „%s“ bude simulován jako by přicházel z následující IP adresy:",
     "COUNTRY NOT FOUND" : "ZEMĚ NENALEZENA",
     "Andorra" : "Andorra",

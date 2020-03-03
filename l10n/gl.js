@@ -1,10 +1,13 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "Status of the service cannot be determinded." : "Non foi posíbel determinar o estado do servizo.",
     "The user \"%s\" logged in with an invalid IP address \"%s\"." : "O usuario «%s» accedeu co enderezo IP non válido «%s».",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "O usuario «%s» accedeu co enderezo IP «%s» do país bloqueado «%s».",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Non foi posíbel comprobar o acceso do usuario «%s» co enderezo IP «%s» por mor de haber problemas co servizo de localización.",
     "OK.  (Please make sure the databases are up to date. This is currently not checked here.)" : "Aceptar. (Asegúrese de que as bases de datos están actualizadas. Actualmente non se comproba aquí.)",
+    "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "ERRO: Semella que o servizo non está instalado no servidor do Nextcloud ou non é accesíbel para o servidor web ou está mal configurado (está dispoñíbel a base de datos para IPv4 e IPv6 ?!). Quizais estea desactivado o uso da función de PHP exec() en php.ini.",
+    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "ERROR: semella que o servizo non está instalado correctamente ou a base de datos non está dispoñíbel en %s.",
     "GeoBlocker" : "GeoBlocker",
     "Blocks user depending on the estimated country of thier IP address." : "Bloquea o usuario segundo o país estimado do seu enderezo IP.",
     "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)" : "Esta é unha interface para os servizos de localización xeográfica, que permite bloquear (actualmente só o rexistro!) os intentos de acceso dende países especificados. (Versión preliminar)",
@@ -37,6 +40,7 @@ OC.L10N.register(
     "(in a future version)" : "(nunha futura versión)",
     "Activate blocking of the login attempt from IP addresses of the specified countries." : "Activar o bloqueo do intento de inicio de sesión dende os enderezos IP dos países especificados.",
     "Test" : "Proba",
+    "Possibilities to test if the Geoblocker is working as expected:" : "Posibilidades de probar se o Geoblocker funciona como se espera:",
     "Next login attempt of user \"%s\" will be simulated to come from the following IP address:" : "O seguinte intento de inicio de sesión de «%s» vai ser simulado como procedente do seguinte enderezo IP:",
     "COUNTRY NOT FOUND" : "PAÍS NON ATOPADO",
     "Andorra" : "Andorra",

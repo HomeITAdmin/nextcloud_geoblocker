@@ -1,6 +1,7 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "Status of the service cannot be determinded." : "Не удаётся определить состояние службы.",
     "The user \"%s\" logged in with an invalid IP address \"%s\"." : "Вход в систему пользователя %s с неверным IP-адресом %s.",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "Вход в систему пользователя %s с IP-адресом %s из страны %s, находящейся в списке заблокированных",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Невозможно выполнить проверку входа пользователем %s c IP-адресом %s, служба определения местоположения не работает.",
