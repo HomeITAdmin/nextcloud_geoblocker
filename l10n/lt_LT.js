@@ -1,6 +1,7 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "Reaction" : "Reakcija",
     "(in a future version)" : "(būsimoje versijoje)",
     "COUNTRY NOT FOUND" : "ŠALIS NERASTA",
     "Andorra" : "Andora",

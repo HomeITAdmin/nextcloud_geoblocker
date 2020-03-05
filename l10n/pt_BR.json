@@ -1,4 +1,5 @@
 { "translations": {
+    "Status of the service cannot be determined." : "O status do serviço não pôde ser determinado.",
     "The user \"%s\" logged in with an invalid IP address \"%s\"." : "O usuário \"%s\" fez login com o endereço IP inválido \"%s\".",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "O usuário \"%s\" fez login com o endereço IP \"%s\" a partir do país bloqueado \"%s\".",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Não foi possível verificar o login do usuário \"%s\" com o endereço IP \"%s\" devido a problemas no serviço de localização.",

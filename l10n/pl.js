@@ -1,6 +1,7 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "Status of the service cannot be determined." : "Nie można ustalić statusu usługi.",
     "The user \"%s\" logged in with an invalid IP address \"%s\"." : "Użytkownik \"%s\" zalogował się z nieprawidłowym adresem IP \"%s\".",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "Użytkownik \"%s\" zalogował się przy użyciu adresu IP \"%s\" z zablokowanego kraju \"%s\".",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Nie można sprawdzić logowania użytkownika \"%s\" z adresem IP \"%s\" z powodu problemów z usługą lokalizacji.",
