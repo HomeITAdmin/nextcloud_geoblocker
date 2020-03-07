@@ -1,8 +1,10 @@
 { "translations": {
+    "Status of the service cannot be determined." : "Impossible de déterminer le statut du service.",
     "The user \"%s\" logged in with an invalid IP address \"%s\"." : "L'utilisateur \"%s\" est connecté avec une adresse IP non valable \"%s\".",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "L'utilisateur \"%s\" est connecté avec l'adresse IP \"%s\" depuis ce pays bloqué \"%s\".",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "La connexion de l'utilisateur \"%s\" avec l'adresse IP \"%s\" n'a pas pu être vérifiée à cause d'un problème avec le service de localisation.",
     "OK.  (Please make sure the databases are up to date. This is currently not checked here.)" : "OK. (Veuillez vérifier que les bases de données sont à jour, ce qui n'est pas vérifié automatiquement ici).",
+    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "ERREUR : Le service ne semble pas être installé correctement ou la base de données n’est pas disponible à %s.",
     "GeoBlocker" : "Bloqueur géographique",
     "Blocks user depending on the estimated country of thier IP address." : "Bloque un utilisateur en fonction du pays estimé par leur adresse IP.",
     "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)" : "Interface des services de géolocalisation, qui permet de bloquer (enregistrement uniquement pour le moment!) des tentatives de connexion provenant de pays spécifiques. (Version préliminaire)",
@@ -18,6 +20,7 @@
     "local" : "local",
     "default" : "défaut",
     "Status of the chosen service: " : "Statut du service choisi:",
+    "Error: Invalid service is chosen. Please reselect a service in the list above." : "Erreur : un service invalide a été choisi. Veuillez re-sélectionner un service dans la liste ci-dessus.",
     "Country Selection" : "Choix du pays",
     "Choose the selection mode" : "Choisissez le mode de sélection",
     "No country is blocked but the selected ones" : "Seuls les pays sélectionnés sont bloqués",
