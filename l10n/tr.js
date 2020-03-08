@@ -1,6 +1,7 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "Status of the service cannot be determined." : "Hizmet durumu belirlenemedi.",
     "The user \"%s\" logged in with an invalid IP address \"%s\"." : "\"%s\" kullanıcısı \"%s\" geçersiz IP adresinden oturum açtı.",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "Oturum açmış \"%s\" kullanıcısı, (\"%s\" IP adresinden) engellenmiş \"%s\" ülkesinden geliyor.",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Oturum açmış \"%s\" kullanıcısı, (\"%s\" IP adresinden) konum hizmetindeki sorunlar nedeniyle denetlenemedi.",
