@@ -1,6 +1,7 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "Status of the service cannot be determined." : "Stanja storitve ni mogoče določiti.",
     "GeoBlocker" : "GeoBlocker",
     "Service" : "Storitev",
     "local" : "krajevno",
