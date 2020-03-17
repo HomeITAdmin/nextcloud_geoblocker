@@ -1,6 +1,9 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "Status of the service cannot be determined." : "לא ניתן לפענח את מצב השירות.",
+    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "המשתמש „%s” נכנס עם כתובת IP שגויה „%s”.",
+    "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "המשתמש „%s” נכנס מכתובת ה־IP „%s” מהמדינה „%s” שנחסמה.",
     "United Arab Emirates" : "איחוד האמירויות הערביות",
     "Afghanistan" : "אפגניסטן",
     "Albania" : "אלבניה",
