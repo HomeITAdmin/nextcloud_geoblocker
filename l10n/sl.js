@@ -218,6 +218,7 @@ OC.L10N.register(
     "Thailand" : "Tajska",
     "Tajikistan" : "Tadžikistan",
     "Tokelau" : "Tokelau",
+    "Timor-Leste" : "Timor-Leste",
     "Turkmenistan" : "Turkmenistan",
     "Tunisia" : "Tunizija",
     "Tonga" : "Tonga",
