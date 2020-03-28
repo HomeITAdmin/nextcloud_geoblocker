@@ -19,7 +19,7 @@ There are serveral location services available. The app is only the frontend for
 #### Advantages
 - The lookup of the IP address is local, so probably faster and no external service get the information which IPs are loggin into the nextcloud instance.
 #### Disadvantages
-- Pricondition must be fullfilled
+- Precondition must be fullfilled
 - Installation efforts needed from the administrator
 
 ### MaxMind GeoLite2
@@ -29,6 +29,7 @@ There are serveral location services available. The app is only the frontend for
 - Download the file "geoip2.phar" to the folder "3rdparty/maxmind_geolite2/" inside the GeoBlocker app filder from the MaxMind GeoIP2 [release page](https://github.com/maxmind/GeoIP2-php/releases).
 - Download the latest country database to "/usr/share/GeoIP/GeoLite2-Country.mmdb". E.g.:
   - On Debian based systems: sudo apt-get install geoipupdate
+    - For this the "contrib" archiv must be activ.
   - Add the API key information to "/etc/GeoIP.conf" 
   - run "sudo geoipupdate"
 #### Advantages
