@@ -24,8 +24,6 @@
     "Error: Invalid service is chosen. Please reselect a service in the list above." : "Erro: Escolleuse un servizo non válido. Volva seleccionar un servizo da lista anterior.",
     "Country Selection" : "Selección do país",
     "Choose the selection mode" : "Escoller o modo de selección",
-    "No country is blocked but the selected ones" : "Non se bloqueou ningún país agás os seleccionados",
-    "All countries are blocked but the selected ones" : "Bloquéanse todos os países, agás os seleccionados",
     "Select countries from list" : "Seleccionar países da lista",
     "The following countries were selected in the list above: " : "Na lista anterior foron seleccionados os seguintes países:",
     "Reaction" : "Reacción",

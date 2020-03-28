@@ -24,8 +24,6 @@
     "Error: Invalid service is chosen. Please reselect a service in the list above." : "Erreur : un service invalide a été choisi. Veuillez re-sélectionner un service dans la liste ci-dessus.",
     "Country Selection" : "Choix du pays",
     "Choose the selection mode" : "Choisissez le mode de sélection",
-    "No country is blocked but the selected ones" : "Seuls les pays sélectionnés sont bloqués",
-    "All countries are blocked but the selected ones" : "Tous les pays sont bloqués exceptés ceux sélectionnés",
     "Select countries from list" : "Sélectionner les pays dans la liste",
     "The following countries were selected in the list above: " : "Les pays suivants ont été sélectionnés dans la liste ci-dessus :",
     "Reaction" : "Réaction",

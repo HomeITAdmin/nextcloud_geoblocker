@@ -8,8 +8,6 @@ OC.L10N.register(
     "Error: Invalid service is chosen. Please reselect a service in the list above." : "Klaida: Pasirinkta neteisinga tarnyba. Aukščiau esančiame sąraše iš naujo pasirinkite tarnybą.",
     "Country Selection" : "Šalių pasirinkimas",
     "Choose the selection mode" : "Pasirinkite pasirinkimo veikseną",
-    "No country is blocked but the selected ones" : "Neblokuojamos jokios šalys, išskyrus pažymėtąsias",
-    "All countries are blocked but the selected ones" : "Blokuojamos visos šalys, išskyrus pažymėtąsias",
     "Reaction" : "Reakcija",
     "(in a future version)" : "(būsimoje versijoje)",
     "COUNTRY NOT FOUND" : "ŠALIS NERASTA",

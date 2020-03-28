@@ -26,8 +26,6 @@ OC.L10N.register(
     "Error: Invalid service is chosen. Please reselect a service in the list above." : "Ошибка: выбрана недействительная служба. Повторите выбор из списка, расположенного выше.",
     "Country Selection" : "Выбор стран",
     "Choose the selection mode" : "Режим работы:",
-    "No country is blocked but the selected ones" : "Блокировать только выбранные страны",
-    "All countries are blocked but the selected ones" : "Не блокировать только выбранные страны",
     "Select countries from list" : "Выберите стран из стписка",
     "The following countries were selected in the list above: " : "Выбраны следующие страны:",
     "Reaction" : "Действия",

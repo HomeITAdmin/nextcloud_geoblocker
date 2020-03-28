@@ -26,8 +26,6 @@ OC.L10N.register(
     "Error: Invalid service is chosen. Please reselect a service in the list above." : "Σφάλμα: Επιλέχθηκε λάθος υπηρεσία. Παρακαλώ επιλέξτε ξανά υπηρεσία από την παρακάτω λίστα.",
     "Country Selection" : "Επιλογή Χώρας",
     "Choose the selection mode" : "Επιλογή κατάσταση επιλογής",
-    "No country is blocked but the selected ones" : "Δεν μπλοκάρεται καμιά χώρα εκτός από την επιλεγμένη",
-    "All countries are blocked but the selected ones" : "Μπλοκάρονται όλες οι χώρες εκτός από τις επιλεγμένες",
     "Select countries from list" : "Επιλογή χωρών από λίστα",
     "The following countries were selected in the list above: " : "Οι παρακάτω χώρες που επελέγησαν όπως παραπάνω λίστα:",
     "Reaction" : "Αντίδραση",

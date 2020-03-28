@@ -26,8 +26,6 @@ OC.L10N.register(
     "Error: Invalid service is chosen. Please reselect a service in the list above." : "Hata: Seçilmiş hizmet geçersiz. Lütfen yukarıdaki listeden yeniden bir hizmet seçin.",
     "Country Selection" : "Ülke Seçimi",
     "Choose the selection mode" : "Seçim kipini seçin",
-    "No country is blocked but the selected ones" : "Seçilmişler dışındaki hiç bir ülke engellenmez",
-    "All countries are blocked but the selected ones" : "Seçilmişler dışındaki tüm ülkeler engellenir",
     "Select countries from list" : "Listeden ülkeleri seçin",
     "The following countries were selected in the list above: " : "Aşağıdaki ülkeler yukarıdaki listeden seçilmiş:",
     "Reaction" : "Tepki",

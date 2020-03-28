@@ -19,8 +19,6 @@ OC.L10N.register(
     "default" : "zadano",
     "Status of the chosen service: " : "Status odabrane usluge: ",
     "Country Selection" : "Odabir države",
-    "No country is blocked but the selected ones" : "Blokiraju se samo odabrane države",
-    "All countries are blocked but the selected ones" : "Blokiraju se sve države osim odabranih",
     "The following countries were selected in the list above: " : "Odabrane su sljedeće države s gornjeg popisa: ",
     "Reaction" : "Reakcija",
     "If a login attempt is detected from the chosen countries, the attempt is logged with the following information" : "Ako je otkriven pokušaj prijave iz odabranih država, zabilježit će se sljedeće informacije o tom pokušaju",
