@@ -26,6 +26,8 @@ OC.L10N.register(
     "Error: Invalid service is chosen. Please reselect a service in the list above." : "Chyba: Zvolena neplatná služba. Znovu vyberte službu z výše uvedeného seznamu.",
     "Country Selection" : "Výběr země",
     "Choose the selection mode" : "Zvolte režim výběru",
+    "No country is blocked but the selected ones (blacklist)" : "Není blokována žádná země kromě těch, které jste označili (blacklist)",
+    "All countries are blocked but the selected ones (whitelist)" : "Blokovány jsou všechny země kromě těch, které jste označili (whitelist)",
     "Select countries from list" : "Vyberte země ze seznamu",
     "The following countries were selected in the list above: " : "Ve výše uvedeném seznamu byly vybrány následující země:",
     "Reaction" : "Reakce",
