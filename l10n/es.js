@@ -26,6 +26,8 @@ OC.L10N.register(
     "Error: Invalid service is chosen. Please reselect a service in the list above." : "Error: Se ha elegido un servicio no válido. Vuelva a seleccionar un servicio en la lista anterior.",
     "Country Selection" : "Selección del país",
     "Choose the selection mode" : "Elija el modo de funcionamiento",
+    "No country is blocked but the selected ones (blacklist)" : "Ningún país está bloqueado excepto los seleccionados (lista negra)",
+    "All countries are blocked but the selected ones (whitelist)" : "Todos los países bloqueados excepto los seleccionados (lista blanca)",
     "Select countries from list" : "Seleccione países de la lista",
     "The following countries were selected in the list above: " : "Los siguientes paises fueron seleccionados en la lista anterior: ",
     "Reaction" : "Reacción",
