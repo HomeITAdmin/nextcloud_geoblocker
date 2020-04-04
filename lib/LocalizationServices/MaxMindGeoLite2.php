@@ -16,7 +16,7 @@ use GeoIp2\Exception\AddressNotFoundException;
 
 class MaxMindGeoLite2 implements ILocalizationService {
 	private $l;
-	private $db_file_path = '/usr/share/GeoIP/GeoLite2-Country.mmdb';
+	private $db_file_path = '/var/lib/GeoIP/GeoLite2-Country.mmdb';
 	public function __construct(IL10N $l) {
 		$this->l = $l;
 	}

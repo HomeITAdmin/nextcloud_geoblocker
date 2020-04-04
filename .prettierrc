@@ -1,0 +1,8 @@
+{
+	"phpVersion": "7.4",
+	"printWidth": 80,
+	"tabWidth": 4,
+	"useTabs": true,
+	"endOfLine": "lf",
+	"braceStyle": "1tbs"
+}

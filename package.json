@@ -1,0 +1,9 @@
+{
+  "name": "geoblocker",
+  "description": "GeoBlocker dependencies",
+  "version": "0.0.0",
+  "devDependencies": {
+    "prettier": "*",
+    "@prettier/plugin-php": "*"
+  }
+}

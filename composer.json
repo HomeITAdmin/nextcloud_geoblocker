@@ -1,15 +1,9 @@
 {
-    "name": "GeoBlocker",
-    "description": "GeoBlocker App",
-    "type": "project",
-    "license": "AGPL",
-    "authors": [
-        {
-            "name": "ddd"
-        }
-    ],
-    "require": {},
-    "require-dev": {
-        "phpunit/phpunit": "^8.5"
-    }
+  "name": "me/geoblocker",
+  "description": "GeoBlocker dependencies",
+  "type": "project",
+  "require": {},
+  "require-dev": {
+    "phpunit/phpunit": "^9.0"
+  }
 }
