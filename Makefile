@@ -40,13 +40,14 @@
 #    },
 
 app_name=$(notdir $(CURDIR))
-build_tools_directory=$(CURDIR)/build/tools
-source_build_directory=$(CURDIR)/build/artifacts/source
+build_dir=$(CURDIR)/build
+build_tools_directory=$(build_dir)/tools
+source_build_directory=$(build_dir)/artifacts/source
 source_package_name=$(source_build_directory)/$(app_name)
-appstore_build_directory=$(CURDIR)/build/artifacts/appstore
-appstore_package_name=$(appstore_build_directory)/$(app_name)
+cert_dir=$(build_dir)/cert
 npm=$(shell which npm 2> /dev/null)
 composer=$(shell which composer 2> /dev/null)
+version=0.3.0
 
 all: build
 
@@ -85,15 +86,17 @@ endif
 .PHONY: npm
 npm:
 ifeq (,$(wildcard $(CURDIR)/package.json))
-	cd js && $(npm) run build
+	cd js && $(npm) build
 else
-	npm run build
+	npm build
 endif
 
 # Removes the appstore build
 .PHONY: clean
 clean:
-	rm -rf ./build
+	rm -rf $(build_tools_directory)
+	rm -rf $(source_build_directory)
+	rm -rf $(build_dir)/$(app_name)-*.tar.gz
 
 # Same as clean but also removes dependencies installed by composer, bower and
 # npm
@@ -123,33 +126,37 @@ source:
 	--exclude="../$(app_name)/*.log" \
 	--exclude="../$(app_name)/js/*.log" \
 
+.PHONY: release
+release: appstore create-tag
+
+.PHONY: create-tag
+create-tag:
+	git tag -s -a v$(version) -m "Tagging the $(version) release."
+	git push origin v$(version)
+
 # Builds the source package for the app store, ignores php and js tests
 .PHONY: appstore
 appstore:
-	rm -rf $(appstore_build_directory)
-	mkdir -p $(appstore_build_directory)
-	tar cvzf $(appstore_package_name).tar.gz ../$(app_name) \
+	tar cvz \
 	--exclude-vcs \
 	--exclude="../$(app_name)/build" \
 	--exclude="../$(app_name)/tests" \
 	--exclude="../$(app_name)/Makefile" \
-	--exclude="../$(app_name)/*.log" \
-	--exclude="../$(app_name)/phpunit*xml" \
+	--exclude="../$(app_name)/phpunit*.xml" \
 	--exclude="../$(app_name)/composer.*" \
-	--exclude="../$(app_name)/js/node_modules" \
-	--exclude="../$(app_name)/js/tests" \
-	--exclude="../$(app_name)/js/test" \
-	--exclude="../$(app_name)/js/*.log" \
-	--exclude="../$(app_name)/js/package.json" \
-	--exclude="../$(app_name)/js/bower.json" \
-	--exclude="../$(app_name)/js/karma.*" \
-	--exclude="../$(app_name)/js/protractor.*" \
-	--exclude="../$(app_name)/package.json" \
-	--exclude="../$(app_name)/bower.json" \
-	--exclude="../$(app_name)/karma.*" \
-	--exclude="../$(app_name)/protractor\.*" \
+	--exclude="../$(app_name)/package*.json" \
 	--exclude="../$(app_name)/.*" \
-	--exclude="../$(app_name)/js/.*" \
+	--exclude="../$(app_name)/runtest.sh" \
+	--exclude="../$(app_name)/helper_scripts" \
+	--exclude="../$(app_name)/3rdparty/*/*" \
+	--exclude="../$(app_name)/3rdparty/.*" \
+	--exclude="../$(app_name)/vendor" \
+	--exclude="../$(app_name)/node_modules" \
+	-f $(build_dir)/$(app_name)-$(version).tar.gz ../$(app_name)
+	@if [ -f $(cert_dir)/$(app_name).key ]; then \
+		echo "Signing package…"; \
+		openssl dgst -sha512 -sign $(cert_dir)/$(app_name).key $(build_dir)/$(app_name)-$(version).tar.gz | openssl base64; \
+	fi
 
 .PHONY: test
 test: composer
