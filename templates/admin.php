@@ -1,8 +1,7 @@
 <?php
-use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
-use OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper;
-use OCA\GeoBlocker\LocalizationServices\MaxMindGeoLite2;
 use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
+use function PHPUnit\Framework\isInstanceOf;
+use OCA\GeoBlocker\LocalizationServices\IDatabaseDate;
 
 /** @var $l \OCP\IL10N */
 /** @var $_ array */
@@ -32,6 +31,7 @@ style ( 'geoblocker', 'admin' );
 			<?php p($l->t('Choose the service you want to use to determine the country from the IP Address:')); ?> <br />
 		</p> 
 			<p class="subsection"><label> 
+			<!-- 			Todo: Mapping of values to service should be only coded in the factory-->
 				<select name="choose-service" id="choose-service">
 					<option value="0" <?php if (strcmp ( $_['chosenService'], '0' ) == 0) print_unescaped('selected="selected"')?>>Geoiplookup (<?php p($l->t('local'))?>, <?php p($l->t('default'))?>)</option>
 					<option value="1" <?php if (strcmp ( $_['chosenService'], '1' ) == 0) print_unescaped('selected="selected"')?>>MaxMind GeoLite2 (<?php p($l->t('local'))?>)</option>
@@ -41,22 +41,22 @@ style ( 'geoblocker', 'admin' );
 		<p>
 		<?php p($l->t('Status of the chosen service: ')); ?>
 		</p>
-			<p class="subsection" id="status-chosen-service">
-				<?php
-					switch ($_['chosenService']) {
-						case '0':
-							$service = new GeoIPLookup ( new GeoIPLookupCmdWrapper () , $l);
-							p ( $l->t ( $service->getStatusString () ) );
-							break;
-						case '1':
-							$service = new MaxMindGeoLite2 ($l);
-							p ( $l->t ( $service->getStatusString () ) );
-							break;
-						default:
-							p ( $l->t ( "Error: Invalid service is chosen. Please reselect a service in the list above." ) );
-					}
-				?>
-			</p>
+			<div class="subsection">
+				<p  id="status-chosen-service">
+					<?php p ( $l->t ($_['localizationService']->getStatusString() ) );?>
+				</p>			
+				
+				<!-- 			Todo: Use Factory as clear interface -->
+				<?php $show_db_date = $_['localizationService'] instanceof IDatabaseDate;
+						if ($show_db_date) { $print_string = 'style="display:block"';}
+						else { $print_string = 'style="display:none"'; }?>						
+					<div class="subsection" id="date-database" <?php print_unescaped($print_string);?> >
+						<?php p($l->t('Date of the database: '));?>						
+						<p class="subsection" id="date-database-string" >
+							<?php if ($show_db_date) { p ( $l->t ($_['localizationService']->getDatabaseDate() ) ); } ?>
+						</p>		
+					</div>
+		</div>
 	</div>
 	<h3><?php p($l->t('Country Selection')); ?></h3>
 	<div class="subsection">

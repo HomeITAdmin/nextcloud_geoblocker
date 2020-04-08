@@ -8,39 +8,45 @@ use OCP\IL10N;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
-use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
-use OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper;
-use OCA\GeoBlocker\LocalizationServices\MaxMindGeoLite2;
+use OCA\GeoBlocker\LocalizationServices\IDatabaseDate;
+use OCA\GeoBlocker\LocalizationServices\LocalizationServiceFactory;
 
 class ServiceController extends Controller {
 	private $config;
 	private $l;
+	private $location_service_factory;
 	public function __construct(string $AppName, IRequest $request,
 			IConfig $config, IL10N $l) {
-		parent::__construct ( $AppName, $request );
-		$this->config = new GeoBlockerConfig ( $config );
+		parent::__construct($AppName, $request);
+		$this->config = new GeoBlockerConfig($config);
 		$this->l = $l;
+		$this->location_service_factory = new LocalizationServiceFactory(
+				$this->config, $this->l);
 	}
 
 	/**
 	 *
 	 * @NoAdminRequired
-	 * 
+	 *
 	 * @param int $id
 	 */
 	public function status(int $id) {
-		switch ($id) {
-			case '0' :
-				$location_service = new GeoIPLookup ( 
-						new GeoIPLookupCmdWrapper (), $this->l );
-				break;
-			case '1' :
-				$location_service = new MaxMindGeoLite2 ( $this->l );
-				break;
-			default :
-				$location_service = new GeoIPLookup ( 
-						new GeoIPLookupCmdWrapper (), $this->l );
+		$location_service = $this->location_service_factory->getLocationServiceByID(
+				$id);
+		return new DataResponse($location_service->getStatusString());
+	}
+	public function hasDBDate(int $id) {
+		$location_service = $this->location_service_factory->getLocationServiceByID(
+				$id);
+		return new DataResponse($location_service instanceof IDatabaseDate);
+	}
+	public function getDBDate(int $id) {
+		$location_service = $this->location_service_factory->getLocationServiceByID(
+				$id);
+		if ($location_service instanceof IDatabaseDate) {
+			return new DataResponse($location_service->getDatabaseDate());
+		} else {
+			return new DataResponse($this->l->t("No database Date available."));
 		}
-		return new DataResponse ( $location_service->getStatusString () );
 	}
 }

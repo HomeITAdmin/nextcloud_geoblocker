@@ -56,18 +56,38 @@ $(document).ready(function() {
 		OCP.AppConfig.setValue('geoblocker',
 				 'chosenService'
 				 , this.value);
-		//TODO: Replace by real Ajax
-		//location.reload();
 		
 		var baseUrl = OC.generateUrl('/apps/geoblocker');
 		$.ajax({
-		    url: baseUrl + '/service/' + this.value,
+		    url: baseUrl + '/service/status/' + this.value,
 		    type: 'GET'
 		}).done(function (response) {
 			document.getElementById('status-chosen-service').innerHTML=response;
 		}).fail(function (response, code) {
 			document.getElementById('status-chosen-service').innerHTML=t('geoblocker','Status of the service cannot be determined.');
 		});
+		
+		$.ajax({
+		    url: baseUrl + '/service/hasDBDate/' + this.value,
+		    type: 'GET'
+		}).done(function (response) {
+			if (response) {				
+				$.ajax({
+				    url: baseUrl + '/service/getDBDate/' + this.value,
+				    type: 'GET'
+				}).done(function (response) {
+					document.getElementById('date-database').style.display='block';
+					document.getElementById('date-database-string').innerHTML=response;
+				}).fail(function (response, code) {
+					document.getElementById('date-database').style.display='none';
+				});
+			} else {
+				document.getElementById('date-database').style.display='none';
+			}
+		}).fail(function (response, code) {
+			document.getElementById('date-database').style.display='none';
+		});
+		
 	});
 	$('#choose-countries').click(function() {
 		var countryList = '';
