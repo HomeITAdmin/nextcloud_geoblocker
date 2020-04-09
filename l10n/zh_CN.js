@@ -23,7 +23,6 @@ OC.L10N.register(
     "local" : "本地",
     "default" : "默认",
     "Status of the chosen service: " : "被选中服务的状态：",
-    "Error: Invalid service is chosen. Please reselect a service in the list above." : "错误：选择了无效服务。请重新选择上面列表中的服务。",
     "Country Selection" : "国家选择",
     "Choose the selection mode" : "选取选择模式",
     "Select countries from list" : "从列表中选择国家/地区",

@@ -21,7 +21,6 @@
     "local" : "local",
     "default" : "défaut",
     "Status of the chosen service: " : "Statut du service choisi:",
-    "Error: Invalid service is chosen. Please reselect a service in the list above." : "Erreur : un service invalide a été choisi. Veuillez re-sélectionner un service dans la liste ci-dessus.",
     "Country Selection" : "Choix du pays",
     "Choose the selection mode" : "Choisissez le mode de sélection",
     "No country is blocked but the selected ones (blacklist)" : "Aucun pays n'est bloqué sauf ceux sélectionnés (liste noire)",

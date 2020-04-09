@@ -23,7 +23,6 @@ OC.L10N.register(
     "local" : "τοπικά",
     "default" : "προεπιλογή",
     "Status of the chosen service: " : "Κατάσταση της επιλεγμένης υπηρεσίας:",
-    "Error: Invalid service is chosen. Please reselect a service in the list above." : "Σφάλμα: Επιλέχθηκε λάθος υπηρεσία. Παρακαλώ επιλέξτε ξανά υπηρεσία από την παρακάτω λίστα.",
     "Country Selection" : "Επιλογή Χώρας",
     "Choose the selection mode" : "Επιλογή κατάσταση επιλογής",
     "No country is blocked but the selected ones (blacklist)" : "Δεν μπλοκάρεται καμιά χώρα εκτός από την επιλεγμένη (λίστα μπλοκαρισμένων)",

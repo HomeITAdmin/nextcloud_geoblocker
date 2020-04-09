@@ -23,7 +23,6 @@ OC.L10N.register(
     "local" : "lokalno",
     "default" : "zadano",
     "Status of the chosen service: " : "Status odabrane usluge: ",
-    "Error: Invalid service is chosen. Please reselect a service in the list above." : "Pogreška: odabran je pogrešan servis. Odaberite drugi servis s gornjeg popisa.",
     "Country Selection" : "Odabir države",
     "Choose the selection mode" : "Odaberite način biranja",
     "Select countries from list" : "Odaberite države s popisa",

@@ -23,7 +23,6 @@ OC.L10N.register(
     "local" : "místní",
     "default" : "výchozí",
     "Status of the chosen service: " : "Stav zvolené služby:",
-    "Error: Invalid service is chosen. Please reselect a service in the list above." : "Chyba: Zvolena neplatná služba. Znovu vyberte službu z výše uvedeného seznamu.",
     "Country Selection" : "Výběr země",
     "Choose the selection mode" : "Zvolte režim výběru",
     "No country is blocked but the selected ones (blacklist)" : "Není blokována žádná země kromě těch, které jste označili (blacklist)",

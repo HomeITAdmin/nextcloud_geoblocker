@@ -23,7 +23,6 @@ OC.L10N.register(
     "local" : "локальная",
     "default" : "по умолчанию",
     "Status of the chosen service: " : "Состояние выбранной службы:",
-    "Error: Invalid service is chosen. Please reselect a service in the list above." : "Ошибка: выбрана недействительная служба. Повторите выбор из списка, расположенного выше.",
     "Country Selection" : "Выбор стран",
     "Choose the selection mode" : "Режим работы:",
     "No country is blocked but the selected ones (blacklist)" : "Блокировать только выбранные страны (чёрный список)",

@@ -23,7 +23,6 @@ OC.L10N.register(
     "local" : "local",
     "default" : "predeterminado",
     "Status of the chosen service: " : "Estado do servizo escollido:",
-    "Error: Invalid service is chosen. Please reselect a service in the list above." : "Erro: Escolleuse un servizo non válido. Volva seleccionar un servizo da lista anterior.",
     "Country Selection" : "Selección do país",
     "Choose the selection mode" : "Escoller o modo de selección",
     "No country is blocked but the selected ones (blacklist)" : "Non se bloqueou ningún país agás os seleccionados (lista negra)",

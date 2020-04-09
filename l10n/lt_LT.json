@@ -3,7 +3,6 @@
     "local" : "vietinė",
     "default" : "numatytoji",
     "Status of the chosen service: " : "Pasirinktos tarnybos būsena: ",
-    "Error: Invalid service is chosen. Please reselect a service in the list above." : "Klaida: Pasirinkta neteisinga tarnyba. Aukščiau esančiame sąraše iš naujo pasirinkite tarnybą.",
     "Country Selection" : "Šalių pasirinkimas",
     "Choose the selection mode" : "Pasirinkite pasirinkimo veikseną",
     "Reaction" : "Reakcija",
