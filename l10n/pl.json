@@ -23,7 +23,7 @@
     "local" : "lokalny",
     "default" : "domyślny",
     "Status of the chosen service: " : "Status wybranej usługi:",
-    "Date of the database: " : "Dane z bazy danych:",
+    "Date of the database: " : "Dane z bazy danych: ",
     "Country Selection" : "Wybór kraju",
     "Choose the selection mode" : "Wybierz tryb wyboru",
     "No country is blocked but the selected ones (blacklist)" : "Żaden kraj nie będzie zablokowany, oprócz wybranych (czarna lista)",
