@@ -45,7 +45,7 @@ class Admin implements ISettings {
 					'userID' => $this->user_session->getUser()->getUID(),
 					'fakeAddress' => $this->config->getFakeAddress(),
 					'chosenService' => $this->config->getChosenService(),
-					'localizationService' => $localizationServiceFactory->getLocationService()
+					'localizationServiceFactory' => $localizationServiceFactory
 				]);
 		return $response;
 	}

@@ -1,3 +1,5 @@
+var last_used_service_id = 0;
+
 $(document).ready(function() {
 	$('#log-with-ip-address').click(function() {
 		var value = '0';
@@ -52,14 +54,35 @@ $(document).ready(function() {
 			OCP.AppConfig.setValue('geoblocker', 'fakeAddress', '127.0.0.1');
 		}
 	});
-	$('#choose-service').change(function() {
-		OCP.AppConfig.setValue('geoblocker',
-				 'chosenService'
-				 , this.value);
+	
+	$('#database-path-string').change(function() {
+		var path = this.value;
+		service_id = last_used_service_id;
 		
 		var baseUrl = OC.generateUrl('/apps/geoblocker');
 		$.ajax({
-		    url: baseUrl + '/service/status/' + this.value,
+		    url: baseUrl + '/service/getUniqueServiceString/' + service_id,
+		    type: 'GET'
+		}).done(function (response) {
+			OCP.AppConfig.setValue('geoblocker', response+'_DatabaseFileLocation', path);
+			setTimeout(function () {
+					$('#choose-service').change();
+		    	}, 1000);
+			
+		}).fail(function (response, code) {
+			console.error('Cannot save database file location!')
+		});
+	});
+	$('#choose-service').change(function() {
+		var service_id = this.value;
+		last_used_service_id = service_id;
+		OCP.AppConfig.setValue('geoblocker',
+				 'chosenService'
+				 , service_id);
+		
+		var baseUrl = OC.generateUrl('/apps/geoblocker');
+		$.ajax({
+		    url: baseUrl + '/service/status/' + service_id,
 		    type: 'GET'
 		}).done(function (response) {
 			document.getElementById('status-chosen-service').innerHTML=response;
@@ -68,27 +91,60 @@ $(document).ready(function() {
 		});
 		
 		$.ajax({
-		    url: baseUrl + '/service/hasDBDate/' + this.value,
+		    url: baseUrl + '/service/hasDatabaseDate/' + service_id,
 		    type: 'GET'
 		}).done(function (response) {
 			if (response) {				
 				$.ajax({
-				    url: baseUrl + '/service/getDBDate/' + this.value,
+				    url: baseUrl + '/service/getDatabaseDate/' + service_id,
 				    type: 'GET'
 				}).done(function (response) {
-					document.getElementById('date-database').style.display='block';
-					document.getElementById('date-database-string').innerHTML=response;
+					document.getElementById('database-date').style.display='block';
+					document.getElementById('database-date-string').innerHTML=response;
 				}).fail(function (response, code) {
-					document.getElementById('date-database').style.display='none';
+					document.getElementById('database-date').style.display='none';
 				});
 			} else {
-				document.getElementById('date-database').style.display='none';
+				document.getElementById('database-date').style.display='none';
 			}
 		}).fail(function (response, code) {
-			document.getElementById('date-database').style.display='none';
-		});
+			document.getElementById('database-date').style.display='none';
+		});		
 		
+		$.ajax({
+		    url: baseUrl + '/service/hasConfigurationOption/' + service_id,
+		    type: 'GET'
+		}).done(function (response) {
+			if (response) {
+				document.getElementById('service-config').style.display='block';
+				$.ajax({
+				    url: baseUrl + '/service/hasDatabaseFileLocation/' + service_id,
+				    type: 'GET'
+				}).done(function (response) {
+					if (response) {
+						$.ajax({
+						    url: baseUrl + '/service/getDatabaseFileLocation/' + service_id,
+						    type: 'GET'
+						}).done(function (response) {
+							document.getElementById('database-path').style.display='block';
+							document.getElementById('database-path-string').value=response;
+						}).fail(function (response, code) {
+							document.getElementById('database-path').style.display='none';
+						});
+					} else {
+						document.getElementById('database-path').style.display='none';
+					}
+				}).fail(function (response, code) {
+					document.getElementById('database-path').style.display='none';
+				});
+			} else {
+				document.getElementById('service-config').style.display='none';
+			}
+		}).fail(function (response, code) {
+			document.getElementById('service-config').style.display='none';
+		});
 	});
+	$('#choose-service').change();
 	$('#choose-countries').click(function() {
 		var countryList = '';
 		for (var i = 0; i < this.options.length; i++) {

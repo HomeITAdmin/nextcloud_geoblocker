@@ -19,4 +19,11 @@ class GeoIPLookupCmdWrapper {
 		}
 		return $ret;
 	}
+	public function getFullDateString(array &$output , int &$return_var ):String {
+		$ret = exec ( 'geoiplookup -v 0.0.0.0', $output, $return_var);
+		if ($ret == null) {
+			$ret = "Null";
+		}
+		return $ret;
+	}
 }

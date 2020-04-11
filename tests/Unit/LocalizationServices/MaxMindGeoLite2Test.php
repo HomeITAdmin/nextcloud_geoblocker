@@ -50,7 +50,7 @@ class MaxMindGeoLite2Test extends TestCase {
 // 						array ($this,'callbackGeoIpLookup6Valid'
 // 						) ) );
 		
-		$result = '"MaxMind GeoLite2": OK.  (Please make sure the databases are up to date. This is currently not checked here.)';
+		$result = '"MaxMind GeoLite2": OK.';
 		$this->assertEquals ( $result, $this->geo_ip_lookup->getStatusString () );
 	}
 // 	public function testIsInvalidStatusStringOk() {

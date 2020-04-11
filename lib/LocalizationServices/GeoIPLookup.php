@@ -9,11 +9,12 @@ use OCP\IL10N;
 class GeoIPLookup implements ILocalizationService, IDatabaseDate {
 	private $cmd_wrapper;
 	private $l;
-	private $db_file_path = "/usr/share/GeoIP/GeoIP.dat";
+
 	public function __construct(GeoIPLookupCmdWrapper $cmd_wrapper, IL10N $l) {
 		$this->cmd_wrapper = $cmd_wrapper;
 		$this->l = $l;
 	}
+
 	public function getStatus(): bool {
 		$output = [];
 		$return_val = 0;
@@ -33,18 +34,18 @@ class GeoIPLookup implements ILocalizationService, IDatabaseDate {
 			return false;
 		}
 	}
+
 	public function getStatusString(): string {
 		$service_string = '"Geoiplookup": ';
 		if ($this->getStatus() === true) {
-			return $service_string .
-					$this->l->t(
-							'OK.  (Please make sure the databases are up to date. This is currently not checked here.)');
+			return $service_string . $this->l->t('OK.');
 		} else {
 			return $service_string .
 					$this->l->t(
 							'ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini.');
 		}
 	}
+
 	public function getCountryCodeFromIP($ip_address): string {
 		$output = [];
 		$return_val = 0;
@@ -70,8 +71,9 @@ class GeoIPLookup implements ILocalizationService, IDatabaseDate {
 			$location = 'AA'; // Country not found
 		} else {
 			$matches = [];
-			preg_match('/^GeoIP .*Edition: (..),.*/', $location_raw, $matches);
-			if ($matches[1] === "") {
+			$count_matches = preg_match('/^GeoIP .*Edition: (..),.*/',
+					$location_raw, $matches);
+			if ($count_matches != 1) {
 				$location = 'INVALID';
 			} else {
 				$location = $matches[1];
@@ -79,13 +81,31 @@ class GeoIPLookup implements ILocalizationService, IDatabaseDate {
 		}
 		return $location;
 	}
+
 	public function getDatabaseDate(): string {
-		// TODO: Replace dummy implementation
-		$db_file_date = filemtime($this->db_file_path);
-		if ($db_file_date === false) {
-			return $this->l->t("Date of the database cannot be determined!");
-		}else {
-			return date("Y-m-d",$db_file_date);
+		$output = [];
+		$return_val = 0;
+		$date_string = $this->l->t("Date of the database cannot be determined!");
+
+		$this->cmd_wrapper->getFullDateString($output, $return_val);
+
+		if ($return_val == 0) {
+			$matches = array();
+			foreach ($output as $line) {
+				$match = [];
+				$count_matches = preg_match(
+						'/^GeoIP .*Edition: GEO-.*FREE (\d{8}) Build/', $line,
+						$match);
+				if ($count_matches > 0) {
+					$matches[] = $match[1];
+				}
+			}
+			if (count($matches) > 0) {
+				$split = str_split(min($matches), 2);
+				$date_string = $split[0] . $split[1] . '-' . $split[2] . '-' .
+						$split[3];
+			}			
 		}
+		return $date_string;
 	}
 }

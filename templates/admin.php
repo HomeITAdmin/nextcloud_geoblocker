@@ -1,12 +1,11 @@
 <?php
 use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
-use function PHPUnit\Framework\isInstanceOf;
-use OCA\GeoBlocker\LocalizationServices\IDatabaseDate;
 
 /** @var $l \OCP\IL10N */
 /** @var $_ array */
 script ( 'geoblocker', 'admin' );
 style ( 'geoblocker', 'admin' );
+$loading = $l->t('Loading').'...';
 ?>
 <div id="geoblocker" class="section">
 	<h2><?php p($l->t('GeoBlocker')); ?></h2>
@@ -31,10 +30,17 @@ style ( 'geoblocker', 'admin' );
 			<?php p($l->t('Choose the service you want to use to determine the country from the IP Address:')); ?> <br />
 		</p> 
 			<p class="subsection"><label> 
-			<!-- 			Todo: Mapping of values to service should be only coded in the factory-->
 				<select name="choose-service" id="choose-service">
-					<option value="0" <?php if (strcmp ( $_['chosenService'], '0' ) == 0) print_unescaped('selected="selected"')?>>Geoiplookup (<?php p($l->t('local'))?>, <?php p($l->t('default'))?>)</option>
-					<option value="1" <?php if (strcmp ( $_['chosenService'], '1' ) == 0) print_unescaped('selected="selected"')?>>MaxMind GeoLite2 (<?php p($l->t('local'))?>)</option>
+					<?php 
+						$service_overview = $_['localizationServiceFactory']->getLocationServiceOverview();
+						$value = 0;
+						foreach ($service_overview as $service_name => $chosen_service) {
+							print_unescaped('<option value="'.$value.'" ');
+							if ($chosen_service) print_unescaped('selected="selected" ');
+							print_unescaped('>'.$service_name.'</option>');
+							$value = $value +1;
+						}
+					?>
 				</select>
 			</label> </p> 
 		
@@ -42,21 +48,23 @@ style ( 'geoblocker', 'admin' );
 		<?php p($l->t('Status of the chosen service: ')); ?>
 		</p>
 			<div class="subsection">
-				<p  id="status-chosen-service">
-					<?php p ( $l->t ($_['localizationService']->getStatusString() ) );?>
-				</p>			
-				
-				<!-- 			Todo: Use Factory as clear interface -->
-				<?php $show_db_date = $_['localizationService'] instanceof IDatabaseDate;
-						if ($show_db_date) { $print_string = 'style="display:block"';}
-						else { $print_string = 'style="display:none"'; }?>						
-					<div class="subsection" id="date-database" <?php print_unescaped($print_string);?> >
-						<?php p($l->t('Date of the database: '));?>						
-						<p class="subsection" id="date-database-string" >
-							<?php if ($show_db_date) { p ( $l->t ($_['localizationService']->getDatabaseDate() ) ); } ?>
-						</p>		
-					</div>
+				<p  id="status-chosen-service"><?php p($loading); ?></p>		
+				<div class="subsection" id="database-date" style="display:none" >
+					<?php p($l->t('Date of the database: '));?>						
+					<p class="subsection" id="database-date-string" ><?php p($loading); ?></p>		
+				</div>	
+			</div>
+		<!-- New-Begin -->
+		<div id="service-config" style="display:none">
+			<p>
+			<?php p($l->t('Configuration of the chosen service: ')); ?>
+			</p>			
+			<div class="subsection" id="database-path" style="display:none" >
+				<?php p($l->t('Location of the database: '));?>						
+				<input class="path-input" type="text" size="50" id="database-path-string" value="<?php p($loading); ?>" >		
+			</div>	
 		</div>
+		<!-- New-End -->
 	</div>
 	<h3><?php p($l->t('Country Selection')); ?></h3>
 	<div class="subsection">
@@ -145,3 +153,4 @@ style ( 'geoblocker', 'admin' );
 	</div>
 
 </div>
+

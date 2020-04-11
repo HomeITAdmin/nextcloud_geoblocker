@@ -2,13 +2,13 @@
 
 namespace OCA\GeoBlocker\LocalizationServices;
 
-interface IDatabasePath {
+interface IDatabaseFileLocation {
 	/**
 	 * return the Path, where the database is stored.
 	 *
 	 * @return string
 	 */
-	public function getDatabasePath(): string;
+	public function getDatabaseFileLocation(): string;
 
 	/**
 	 * set the Path, where the database is stored
@@ -16,5 +16,5 @@ interface IDatabasePath {
 	 * @param
 	 *        	string
 	 */
-	public function setDatabasePath(string $path);
+	public function setDatabaseFileLocation(string $path);
 }
