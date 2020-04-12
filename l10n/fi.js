@@ -1,8 +1,8 @@
 OC.L10N.register(
     "geoblocker",
     {
-    "Service" : "Palvelu",
     "default" : "oletus",
+    "Service" : "Palvelu",
     "Country Selection" : "Maavalinta",
     "Austria" : "Itävalta",
     "Belgium" : "Belgia",

@@ -1,9 +1,9 @@
 { "translations": {
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "L'usuari \"%s\" ha entrat amb l'adreça IP \"%s\" del país bloquejat \"%s\".",
-    "GeoBlocker" : "GeoBlocker",
-    "Service" : "Servei",
     "local" : "local",
     "default" : "predeterminat",
+    "GeoBlocker" : "GeoBlocker",
+    "Service" : "Servei",
     "Reaction" : "Reacció",
     "with username" : "amb usuari",
     "Andorra" : "Andorra",

@@ -1,12 +1,13 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "local" : "lokala",
+    "default" : "lehenetsia",
     "GeoBlocker" : "GeoBlocker",
+    "Loading" : "Kargatzen",
     "is local." : "lokala da.",
     "is external." : "kanpokoa da.",
     "Service" : "Zerbitzua",
-    "local" : "lokala",
-    "default" : "lehenetsia",
     "Reaction" : "Erreakzioa",
     "with IP Address" : "IP helbidearekin",
     "Test" : "Proba",

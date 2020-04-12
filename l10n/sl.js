@@ -2,10 +2,11 @@ OC.L10N.register(
     "geoblocker",
     {
     "Status of the service cannot be determined." : "Stanja storitve ni mogoče določiti.",
-    "GeoBlocker" : "GeoBlocker",
-    "Service" : "Storitev",
     "local" : "krajevno",
     "default" : "privzeto",
+    "GeoBlocker" : "GeoBlocker",
+    "Loading" : "Poteka nalaganje ...",
+    "Service" : "Storitev",
     "Country Selection" : "Izbor države",
     "Andorra" : "Andora",
     "United Arab Emirates" : "Združeni Arabski Emirati",

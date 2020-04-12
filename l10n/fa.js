@@ -1,6 +1,7 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "Loading" : "در حال بار گزاری",
     "United Arab Emirates" : "امارات متحده عربی",
     "Afghanistan" : "افغانستان",
     "Albania" : "آلبانی",
