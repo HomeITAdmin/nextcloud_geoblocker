@@ -1,8 +1,10 @@
 { "translations": {
     "Status of the service cannot be determined." : "Не удаётся определить состояние службы.",
+    "Database file location not available!" : "Расположение файла базы данных недоступно!",
     "The user \"%s\" logged in with an invalid IP address \"%s\"." : "Вход в систему пользователя %s с неверным IP-адресом %s.",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "Вход в систему пользователя %s с IP-адресом %s из страны %s, находящейся в списке заблокированных",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Невозможно выполнить проверку входа пользователем %s c IP-адресом %s, служба определения местоположения не работает.",
+    "OK." : "OK.",
     "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "Ошибка: служба не установлена в системе, в которой выполняется Nextcloud, недоступна для веб-сервера или неверно настроена. Проверьте доступность баз данных адресов IPv4 и IPv6, а также не включено ли блокирование функции PHP  exec() в файле «php.ini».",
     "local" : "локальная",
     "default" : "по умолчанию",
@@ -21,6 +23,7 @@
     "Service" : "Служба",
     "Choose the service you want to use to determine the country from the IP Address:" : "Выберите службу сопоставления страны IP-адресу:",
     "Status of the chosen service: " : "Состояние выбранной службы:",
+    "Location of the database: " : "Расположение базы данных:",
     "Country Selection" : "Выбор стран",
     "Choose the selection mode" : "Режим работы:",
     "No country is blocked but the selected ones (blacklist)" : "Блокировать только выбранные страны (чёрный список)",

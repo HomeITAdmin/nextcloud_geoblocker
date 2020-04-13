@@ -5,6 +5,7 @@ OC.L10N.register(
     "local" : "local",
     "default" : "predeterminat",
     "GeoBlocker" : "GeoBlocker",
+    "Loading" : "Carregant",
     "Service" : "Servei",
     "Reaction" : "Reacció",
     "with username" : "amb usuari",

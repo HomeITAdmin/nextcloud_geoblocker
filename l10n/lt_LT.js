@@ -4,6 +4,7 @@ OC.L10N.register(
     "Status of the service cannot be determined." : "Nepavyksta nustatyti tarnybos būsenos.",
     "local" : "vietinė",
     "default" : "numatytoji",
+    "Loading" : "Įkeliama",
     "Status of the chosen service: " : "Pasirinktos tarnybos būsena: ",
     "Country Selection" : "Šalių pasirinkimas",
     "Choose the selection mode" : "Pasirinkite pasirinkimo veikseną",

@@ -1,6 +1,7 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "Loading" : "Indlæser",
     "Andorra" : "Andorra",
     "Afghanistan" : "Afghanistan",
     "Albania" : "Albanien",

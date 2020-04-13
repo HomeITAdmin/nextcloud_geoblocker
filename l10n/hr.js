@@ -12,6 +12,7 @@ OC.L10N.register(
     "GeoBlocker" : "GeoBlocker",
     "Blocks user depending on the estimated country of thier IP address." : "Blokira korisnika ovisno o pretpostavljenoj državi iz koje potječe njegova IP adresa.",
     "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)" : "Radi se o ulaznom sustavu geolokacijskih usluga koji omogućuje blokiranje (trenutno samo bilježenje!) pokušaja prijava iz određenih država. (Rana inačica)",
+    "Loading" : "Učitavanje",
     "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. " : "Radi se o ulaznom sustavu geolokacijskih usluga koji omogućuje blokiranje (trenutno samo bilježenje!) pokušaja prijava iz određenih država. ",
     "Login attempts from local network IP addresses are not blocked (or logged)." : "Ne blokiraju se (niti bilježe) pokušaji prijave s IP adresa iz lokalne mreže.",
     "Wrong Nextcloud configuration (especially in container) can lead to all accesses seem to come from a local network IP address." : "Pogrešna konfiguracija Nextclouda (posebno u kontejneru) može dovesti do situacije u kojoj se čini kao da sva pristupanja dolaze s IP adrese iz lokalne mreže.",

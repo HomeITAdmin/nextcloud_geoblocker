@@ -2,6 +2,7 @@ OC.L10N.register(
     "geoblocker",
     {
     "default" : "oletus",
+    "Loading" : "Ladataan",
     "Service" : "Palvelu",
     "Country Selection" : "Maavalinta",
     "Austria" : "Itävalta",
