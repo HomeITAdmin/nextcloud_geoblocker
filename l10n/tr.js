@@ -5,6 +5,7 @@ OC.L10N.register(
     "The user \"%s\" logged in with an invalid IP address \"%s\"." : "\"%s\" kullanıcısı \"%s\" geçersiz IP adresinden oturum açtı.",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "Oturum açmış \"%s\" kullanıcısı, (\"%s\" IP adresinden) engellenmiş \"%s\" ülkesinden geliyor.",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Oturum açmış \"%s\" kullanıcısı, (\"%s\" IP adresinden) konum hizmetindeki sorunlar nedeniyle denetlenemedi.",
+    "OK." : "Tamam",
     "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "HATA: Hizmet Nextcloud kurulumununun bulunduğu sunucu üzerine kurulmamış gibi görünüyor ya da hatalı olarak yapılandırılmış (IPv4 ve IPv6 için veritabanı var mı?). PHP exec() işlevinin yürütülmesi php.ini içinde devre dışı bırakılmış olabilir.",
     "Date of the database cannot be determined!" : "Veritabanının tarihi belirlenemedi!",
     "local" : "yerel",
