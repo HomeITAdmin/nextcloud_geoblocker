@@ -24,6 +24,7 @@
     "Choose the service you want to use to determine the country from the IP Address:" : "Choisissez le service que vous voulez utiliser pour déterminer le pays en fonction de l'adresse IP:",
     "Status of the chosen service: " : "Statut du service choisi:",
     "Date of the database: " : "Date de la base de données :",
+    "Configuration of the chosen service: " : "Configuration du service choisis :",
     "Location of the database: " : "Emplacement de la base de données :",
     "Country Selection" : "Choix du pays",
     "Choose the selection mode" : "Choisissez le mode de sélection",
