@@ -1,5 +1,7 @@
 { "translations": {
     "Status of the service cannot be determined." : "Impossible de déterminer le statut du service.",
+    "No database date available." : "Aucune date de base de données n'est disponible.",
+    "Database file location not available!" : "L'emplacement du fichier de la base de données n'est pas disponible !",
     "The user \"%s\" logged in with an invalid IP address \"%s\"." : "L'utilisateur \"%s\" est connecté avec une adresse IP non valable \"%s\".",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "L'utilisateur \"%s\" est connecté avec l'adresse IP \"%s\" depuis ce pays bloqué \"%s\".",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "La connexion de l'utilisateur \"%s\" avec l'adresse IP \"%s\" n'a pas pu être vérifiée à cause d'un problème avec le service de localisation.",
