@@ -101,6 +101,7 @@ OC.L10N.register(
     "Morocco" : "Мароко",
     "Montenegro" : "Црна Гора",
     "Madagascar" : "Мадагаскар",
+    "North Macedonia" : "Македонија",
     "Mali" : "Мали",
     "Myanmar" : "Мјанмар",
     "Mongolia" : "Монголија",
