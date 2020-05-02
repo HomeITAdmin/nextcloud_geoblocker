@@ -2,6 +2,7 @@ OC.L10N.register(
     "geoblocker",
     {
     "Status of the service cannot be determined." : "Не удаётся определить состояние службы.",
+    "No database date available." : "Данные из баз данных недоступны.",
     "Database file location not available!" : "Расположение файла базы данных недоступно!",
     "The user \"%s\" logged in with an invalid IP address \"%s\"." : "Вход в систему пользователя %s с неверным IP-адресом %s.",
     "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "Вход в систему пользователя %s с IP-адресом %s из страны %s, находящейся в списке заблокированных",
