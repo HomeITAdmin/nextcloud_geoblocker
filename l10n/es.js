@@ -29,7 +29,7 @@ OC.L10N.register(
     "Status of the chosen service: " : "Estado del servicio elegido: ",
     "Date of the database: " : "Fecha de la base de datos: ",
     "Configuration of the chosen service: " : "Configuración del servicio elegido: ",
-    "Location of the database: " : "Localización de la base de datos:",
+    "Location of the database: " : "Ubicación de la base de datos:",
     "Country Selection" : "Selección del país",
     "Choose the selection mode" : "Elija el modo de funcionamiento",
     "No country is blocked but the selected ones (blacklist)" : "Ningún país está bloqueado excepto los seleccionados (lista negra)",
