@@ -7,6 +7,14 @@ Determination of the country from IP address is only as good as the chosen servi
 
 You can activate the latest release version of the app in the "Apps" configuration section of your Nextcloud server when logged in as administrator.
 
+## General hints for installation
+
+As for other blocking apps like brute force protection it is important, that the actual IP address from the client is reaching the app and not the address from something inbetween.
+
+One commone source of problems are reverse proxys. Make sure that it is correctly configured to forward the clients IP address as header. You may have to add "trusted_proxies" and "forwarded_for_headers" setting to your Nextcloud config.
+
+A second source of problems are container environments like Docker. Here also the right configuration for these config variables should help. It can make the configuration easier, if you make sure that the containers always have the same internal IP addresses.
+
 ## How to activate the location services
 There are serveral location services available. The app is only the frontend for the location service, so the services need to be installed by the administrator correctly, that the app can work correctly.
 
