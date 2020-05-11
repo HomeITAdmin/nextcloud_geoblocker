@@ -32,12 +32,13 @@ There are serveral location services available. The app is only the frontend for
     - For this the "contrib" archiv must be activ.
   - Add the API key information to "/etc/GeoIP.conf" 
   - run "sudo geoipupdate"
-- For Docker user: See #20 how to use a seperate container to do the update of the database.
+- For Docker user: See [#20](https://github.com/HomeITAdmin/nextcloud_geoblocker/issues/20) how to use a seperate container to do the update of the database.
 #### Advantages
 - The lookup of the IP address is local, so probably faster and no external service get the information which IPs are loggin into the nextcloud instance.
 #### Disadvantages
 - API key needed
 - Installation efforts needed from the administrator
+
 
 ## Personal remark
 Besides the hopefully helpful functionality of the app, it is a learning project for Open Source, Nextcloud App API, PHP, Javascript, HTML, CSS, Clean Coding and Github for me. All kind of feedback, constructive crtiticism and contributions are highly welcome. 
