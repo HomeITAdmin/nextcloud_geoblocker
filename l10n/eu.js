@@ -9,6 +9,7 @@ OC.L10N.register(
     "is local." : "lokala da.",
     "is external." : "kanpokoa da.",
     "Service" : "Zerbitzua",
+    "Choose the selection mode" : "Aukeratu hautaketa modua",
     "Select countries from list" : "Aukeratu herrialdeak zerrendatik",
     "Reaction" : "Erreakzioa",
     "with IP Address" : "IP helbidearekin",
