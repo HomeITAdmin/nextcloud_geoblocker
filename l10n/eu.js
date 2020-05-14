@@ -9,6 +9,7 @@ OC.L10N.register(
     "is local." : "lokala da.",
     "is external." : "kanpokoa da.",
     "Service" : "Zerbitzua",
+    "Location of the database: " : "Datu-basearen kokalekua:",
     "Choose the selection mode" : "Aukeratu hautaketa modua",
     "Select countries from list" : "Aukeratu herrialdeak zerrendatik",
     "Reaction" : "Erreakzioa",
