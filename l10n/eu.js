@@ -16,6 +16,7 @@ OC.L10N.register(
     "with IP Address" : "IP helbidearekin",
     "with username" : "erabiltzaile-izenarekin",
     "Test" : "Proba",
+    "COUNTRY NOT FOUND" : "EZ DA HERRIALDEA AURKITU",
     "Andorra" : "Andorra",
     "United Arab Emirates" : "Arabiar Emirerri Batuak",
     "Afghanistan" : "Afganistan",

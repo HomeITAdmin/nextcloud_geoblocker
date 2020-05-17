@@ -284,7 +284,7 @@ OC.L10N.register(
     "United States of America" : "Estados Unidos de America",
     "Uruguay" : "Uruguai",
     "Uzbekistan" : "Usbequistán",
-    "Holy See" : "Cidade do Vaticano",
+    "Holy See" : "Santa Sé",
     "Saint Vincent and the Grenadines" : "San Vicente e as Grenadinas",
     "Venezuela (Bolivarian Republic of)" : "Venezuela (república bolivriana de)",
     "Virgin Islands (British)" : "Illas Virxes, Británicas",
