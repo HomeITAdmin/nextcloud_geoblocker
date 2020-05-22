@@ -47,6 +47,15 @@ There are serveral location services available. The app is only the frontend for
 - API key needed
 - Installation efforts needed from the administrator
 
+## Fail2ban
+Until the blocking feature is implemented you can achive some blocking by using fail2ban, relying on the logging feature. Make sure that at least the IP address is included in the logging and the logging time is correct. The following parameters should help to create the filter for fail2ban in English: 
+
+```
+datepattern = %%Y-%%m-%%dT%%H:%%M:%%S
+failregex = ^.*The user .+ logged in with IP address \\"<HOST>.+  from blocked country .+$
+```
+
+Defining the jail is then straight forward. For "maxretry" only 1 makes sense to be as close to a blocking of the login as possible. But the first request is maybe not blocked still.
 
 ## Personal remark
 Besides the hopefully helpful functionality of the app, it is a learning project for Open Source, Nextcloud App API, PHP, Javascript, HTML, CSS, Clean Coding and Github for me. All kind of feedback, constructive crtiticism and contributions are highly welcome. 
