@@ -113,7 +113,7 @@ class GeoblockerIntegrationTest extends TestCase {
 	}
 	public function testLoggingNotBlockedFromMaxmindGeoLite2() {
 		$this->mySetUp();
-		$this->location_service = new MaxMindGeoLite2($this->l);
+		$this->location_service = new MaxMindGeoLite2($this->config, $this->l);
 
 		$this->geoblocker = new GeoBlocker($this->user, $this->logger,
 				$this->config, $this->l, $this->location_service);
@@ -132,7 +132,7 @@ class GeoblockerIntegrationTest extends TestCase {
 	}
 	public function testLoggingBlockedFromMaxmindGeoLite2() {
 		$this->mySetUp();
-		$this->location_service = new MaxMindGeoLite2($this->l);
+		$this->location_service = new MaxMindGeoLite2($this->config, $this->l);
 
 		$this->geoblocker = new GeoBlocker($this->user, $this->logger,
 				$this->config, $this->l, $this->location_service);

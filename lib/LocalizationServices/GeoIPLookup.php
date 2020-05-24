@@ -74,7 +74,7 @@ class GeoIPLookup implements ILocalizationService, IDatabaseDate {
 			$count_matches = preg_match('/^GeoIP .*Edition: (..),.*/',
 					$location_raw, $matches);
 			if ($count_matches != 1) {
-				$location = 'INVALID';
+				$location = 'UNAVAILABLE';
 			} else {
 				$location = $matches[1];
 			}

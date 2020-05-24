@@ -5,20 +5,28 @@ declare(strict_types = 1)
 namespace OCA\GeoBlocker\LocalizationServices;
 
 use OCP\IL10N;
+use OCP\IDbConnection;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
 
 class LocalizationServiceFactory {
 	private $l;
 	private $config;
+	private $count_ids = 3;
+	private $db;
 
-	public function __construct(GeoBlockerConfig $config, IL10N $l) {
+	public function __construct(GeoBlockerConfig $config, IL10N $l,
+			IDbConnection $db) {
 		$this->l = $l;
 		$this->config = $config;
+		$this->db = $db;
+	}
+
+	public function getCurrentLocationServiceID() {
+		return intval($this->config->getChosenService());
 	}
 
 	public function getLocationService() {
-		return $this->getLocationServiceByID(
-				intval($this->config->getChosenService()));
+		return $this->getLocationServiceByID($this->getCurrentLocationServiceID());
 	}
 
 	public function getLocationServiceByID(int $id) {
@@ -30,6 +38,10 @@ class LocalizationServiceFactory {
 			case '1':
 				$location_service = new MaxMindGeoLite2($this->config, $this->l);
 				break;
+			case '2':
+				$location_service = new RIRData($this->l, $this->db, $this->config);
+				break;
+			// Add new location Service here and increase $count_ids
 			default:
 				$location_service = new GeoIPLookup(new GeoIPLookupCmdWrapper(),
 						$this->l);
@@ -38,18 +50,37 @@ class LocalizationServiceFactory {
 	}
 
 	public function getLocationServiceOverview(): array {
+		// $current_service = $this->config->getChosenService();
+		// $geoiplookup = 'Geoiplookup (' . $this->l->t('local') . ') (' .
+		// $this->l->t('default') . ')';
+		// $maxmind_geolite2 = 'MaxMind GeoLite2 (' . $this->l->t('local') . ')';
+		// $rir_data = 'RIR Data (' . $this->l->t('local') . ')';
+		// // Add new location Service here
+		// $overview = array($geoiplookup => ($current_service == 0),
+		// $maxmind_geolite2 => ($current_service == 1),
+		// $rir_data => ($current_service == 2));
+		// // Add new location Service here
 		$current_service = $this->config->getChosenService();
-		$geoiplookup = 'Geoiplookup (' . $this->l->t('local') . ') (' .
-				$this->l->t('default') . ')';
-		$maxmind_geolite2 = 'MaxMind GeoLite2 (' . $this->l->t('local') . ')';
-		$overview = array($geoiplookup => ($current_service == 0),
-			$maxmind_geolite2 => ($current_service == 1));
+		$overview = array();
+		for ($i = 0; $i < $this->count_ids; $i ++) {
+			$location_service = $this->getLocationServiceByID($i);
+			$service_string = (new \ReflectionClass($location_service))->getShortName();
+			if ($location_service instanceof IDatabaseDate ||
+					$location_service instanceof IDatabaseFileLocation) {
+				$service_string .= ' (' . $this->l->t('local') . ')';
+			}
+			if ($i == 0) {
+				$service_string .= '  (' . $this->l->t('default') . ')';
+			}
+			$overview[$service_string] = ($current_service == $i);
+		}
+
 		return $overview;
 	}
 
 	public function hasDatabaseDate(): bool {
-		$location_service = $this->getLocationService();
-		return $location_service instanceof IDatabaseDate;
+		$id = $this->getCurrentLocationServiceID();
+		return $this->hasDatabaseDateByID($id);
 	}
 
 	public function hasDatabaseDateByID(int $id): bool {
@@ -58,12 +89,35 @@ class LocalizationServiceFactory {
 	}
 
 	public function hasDatabaseFileLocation(): bool {
-		$location_service = $this->getLocationService();
-		return $location_service instanceof IDatabaseFileLocation;
+		$id = $this->getCurrentLocationServiceID();
+		return $this->hasDatabaseFileLocationByID($id);
 	}
 
 	public function hasDatabaseFileLocationByID(int $id): bool {
 		$location_service = $this->getLocationServiceByID($id);
 		return $location_service instanceof IDatabaseFileLocation;
+	}
+
+	public function hasDatabaseUpdate(): bool {
+		$id = $this->getCurrentLocationServiceID();
+		return $this->hasDatabaseUpdateByID($id);
+	}
+
+	public function hasDatabaseUpdateByID(int $id): bool {
+		$location_service = $this->getLocationServiceByID($id);
+		return $location_service instanceof IDatabaseUpdate;
+	}
+	
+	public function updateDatabase(): bool {
+		$id = $this->getCurrentLocationServiceID();
+		return $this->updateDatabaseByID($id);
+	}
+	
+	public function updateDatabaseByID(int $id): bool {
+		if ($this->hasDatabaseUpdateByID($id)) {
+			$location_service = $this->getLocationServiceByID($id);
+			$location_service->updateDatabase();
+		}
+		return true;
 	}
 }

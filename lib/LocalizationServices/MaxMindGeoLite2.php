@@ -79,9 +79,9 @@ class MaxMindGeoLite2 implements ILocalizationService, IDatabaseDate,
 	public function getDatabaseDate(): string {
 		$db_file_date = filemtime($this->database_file_location);
 		if ($db_file_date == null || $db_file_date === false) {
-			return $this->l->t("Date of the database cannot be determined!");
+			return $this->l->t('Date of the database cannot be determined!');
 		} else {
-			return date("Y-m-d", $db_file_date);
+			return date('Y-m-d', $db_file_date);
 		}
 	}
 

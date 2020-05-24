@@ -54,7 +54,6 @@ $loading = $l->t('Loading').'...';
 					<p class="subsection" id="database-date-string" ><?php p($loading); ?></p>		
 				</div>	
 			</div>
-		<!-- New-Begin -->
 		<div id="service-config" style="display:none">
 			<p>
 			<?php p($l->t('Configuration of the chosen service: ')); ?>
@@ -62,9 +61,12 @@ $loading = $l->t('Loading').'...';
 			<div class="subsection" id="database-path" style="display:none" >
 				<?php p($l->t('Location of the database: '));?>						
 				<input class="path-input" type="text" size="50" id="database-path-string" value="<?php p($loading); ?>" >		
+			</div>			
+			<div class="subsection" id="database-update" style="display:none" >	
+				<input class="button-input" type="button" id="database-update-button" value="<?php p($l->t('Update Database')) ?>" >		
 			</div>	
 		</div>
-		<!-- New-End -->
+		
 	</div>
 	<h3><?php p($l->t('Country Selection')); ?></h3>
 	<div class="subsection">

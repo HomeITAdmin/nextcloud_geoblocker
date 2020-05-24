@@ -137,6 +137,18 @@ $(document).ready(function() {
 				}).fail(function (response, code) {
 					document.getElementById('database-path').style.display='none';
 				});
+				$.ajax({
+				    url: baseUrl + '/service/hasDatabaseUpdate/' + service_id,
+				    type: 'GET'
+				}).done(function (response) {
+					if (response) {
+						document.getElementById('database-update').style.display='block';
+					} else {
+						document.getElementById('database-update').style.display='none';
+					}
+				}).fail(function (response, code) {
+					document.getElementById('database-update').style.display='none';
+				});
 			} else {
 				document.getElementById('service-config').style.display='none';
 			}
@@ -161,5 +173,17 @@ $(document).ready(function() {
 		OCP.AppConfig.setValue('geoblocker',
 				 'choosenWhiteBlackList'
 				 , this.value);		
+	});
+	$('#database-update-button').click(function() {
+		service_id = last_used_service_id;
+		var baseUrl = OC.generateUrl('/apps/geoblocker');
+		$.ajax({
+		    url: baseUrl + '/service/updateDatabase/' + service_id,
+		    type: 'GET'
+		}).done(function (response) {
+			console.log('Update started sucessfully.');
+		}).fail(function (response, code) {
+			console.error('Update not started.');
+		});
 	});
 });

@@ -9,6 +9,7 @@ use OCP\ILogger;
 use OCP\IRequest;
 use OCP\IUserSession;
 use OCP\IL10N;
+use OCP\IDbConnection;
 use OCA\GeoBlocker\LocalizationServices\LocalizationServiceFactory;
 
 class Admin implements ISettings {
@@ -22,18 +23,21 @@ class Admin implements ISettings {
 	private $user_session;
 	/** @var IL10N */
 	private $l;
+	/** @var IDBConnection */
+	private $db;
 	public function __construct(GeoBlockerConfig $config, ILogger $logger,
-			IRequest $request, IUserSession $user_session, IL10N $l) {
+			IRequest $request, IUserSession $user_session, IL10N $l, IDbConnection $db) {
 		$this->config = $config;
 		$this->logger = $logger;
 		$this->request = $request;
 		$this->user_session = $user_session;
 		$this->l = $l;
+		$this->db = $db;
 	}
 	public function getForm() {
 		$response = new TemplateResponse('geoblocker', 'admin');
 		$localizationServiceFactory = new LocalizationServiceFactory(
-				$this->config, $this->l);
+				$this->config, $this->l, $this->db);
 		$response->setParams(
 				['logWithIpAddress' => $this->config->getLogWithIpAddress(),
 					'logWithCountryCode' => $this->config->getLogWithCountryCode(),

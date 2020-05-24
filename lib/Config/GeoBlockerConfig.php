@@ -10,7 +10,8 @@ use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 class GeoBlockerConfig {
 
 	/** @var IConfig */
-	private $config;
+	//TODO: Change back to private
+	public  $config;
 
 	public function __construct(IConfig $config) {
 		$this->config = $config;

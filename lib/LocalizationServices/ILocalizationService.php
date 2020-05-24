@@ -23,13 +23,14 @@ interface ILocalizationService {
 	 * Returns the country code of the IP adresses as string of two characters, if it can be determind.
 	 * If the country is not found, it returns "AA" (Country Code for "Country not found").
 	 * If the service is not usable, it returns "UNAVAILABLE"
-	 * When using the service it must be ensured by the caller, that a valid IP Address is given.
+	 * When using the service it must be ensured by the caller, that a valid IP address is given.
 	 *   So the location service can count on getting a valid IP.
-	 *   But if the services is checking it shall return "INVALID_IP" in case it happens.
+	 *   But if the services is checking it shall return "INVALID_IP" in case it indentifies an invalid IP.
 	 *
 	 * @param string $IPAdress
 	 *        	The IP Adress to check.
 	 * @return string
 	 */
 	public function getCountryCodeFromIP(string $IPAddress): string;
+	
 }

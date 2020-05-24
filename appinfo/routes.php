@@ -14,6 +14,10 @@ return [
 		['name' => 'service#getDatabaseFileLocation',
 			'url' => '/service/getDatabaseFileLocation/{id}','verb' => 'GET'],
 		['name' => 'service#getUniqueServiceString',
-			'url' => '/service/getUniqueServiceString/{id}','verb' => 'GET']]];
+			'url' => '/service/getUniqueServiceString/{id}','verb' => 'GET'],
+		['name' => 'service#hasDatabaseUpdate',
+			'url' => '/service/hasDatabaseUpdate/{id}','verb' => 'GET'],
+		['name' => 'service#updateDatabase',
+			'url' => '/service/updateDatabase/{id}','verb' => 'GET']]];
 		
 		

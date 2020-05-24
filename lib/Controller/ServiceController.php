@@ -5,6 +5,7 @@ namespace OCA\GeoBlocker\Controller;
 use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IL10N;
+use OCP\IDbConnection;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
@@ -13,23 +14,19 @@ use OCA\GeoBlocker\LocalizationServices\LocalizationServiceFactory;
 class ServiceController extends Controller {
 	private $config;
 	private $l;
+	private $db;
 	private $location_service_factory;
 
 	public function __construct(string $AppName, IRequest $request,
-			IConfig $config, IL10N $l) {
+			IConfig $config, IL10N $l, IDbConnection $db) {
 		parent::__construct($AppName, $request);
 		$this->config = new GeoBlockerConfig($config);
 		$this->l = $l;
+		$this->db = $db;
 		$this->location_service_factory = new LocalizationServiceFactory(
-				$this->config, $this->l);
+				$this->config, $this->l, $this->db);
 	}
 
-	/**
-	 *
-	 * @NoAdminRequired
-	 *
-	 * @param int $id
-	 */
 	public function status(int $id) {
 		$location_service = $this->location_service_factory->getLocationServiceByID(
 				$id);
@@ -54,7 +51,8 @@ class ServiceController extends Controller {
 	public function hasConfigurationOption(int $id) {
 		return new DataResponse(
 				$this->location_service_factory->hasDatabaseFileLocationByID(
-						$id));
+						$id) ||
+				$this->location_service_factory->hasDatabaseUpdateByID($id));
 	}
 
 	public function hasDatabaseFileLocation(int $id) {
@@ -74,11 +72,23 @@ class ServiceController extends Controller {
 					$this->l->t("Database file location not available!"));
 		}
 	}
-	
+
 	public function getUniqueServiceString(int $id) {
 		$location_service = $this->location_service_factory->getLocationServiceByID(
 				$id);
-		return new DataResponse((new \ReflectionClass($location_service))->getShortName());
-// 		return new DataResponse('MaxMindGeoLite2');
+		return new DataResponse(
+				(new \ReflectionClass($location_service))->getShortName());
+	}
+
+	public function hasDatabaseUpdate(int $id) {
+		return new DataResponse(
+				$this->location_service_factory->hasDatabaseUpdateByID($id));
+		;
+	}
+
+	public function updateDatabase(int $id) {
+		return new DataResponse(
+				$this->location_service_factory->updateDatabaseByID($id));
+		;
 	}
 }
