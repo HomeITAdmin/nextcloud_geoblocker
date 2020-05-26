@@ -1,6 +1,7 @@
-[![GitHub](https://img.shields.io/github/license/homeitadmin/nextcloud_geoblocker)](https://github.com/HomeITAdmin/nextcloud_geoblocker/blob/master/COPYING)
-[![GitHub All Releases](https://img.shields.io/github/downloads/homeitadmin/nextcloud_geoblocker/total)](https://github.com/HomeITAdmin/nextcloud_geoblocker/releases)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/homeitadmin/nextcloud_geoblocker)](https://github.com/HomeITAdmin/nextcloud_geoblocker/releases)
 [![GitHub Releases](https://img.shields.io/github/downloads/homeitadmin/nextcloud_geoblocker/latest/total)](https://github.com/HomeITAdmin/nextcloud_geoblocker/releases)
+[![GitHub All Releases](https://img.shields.io/github/downloads/homeitadmin/nextcloud_geoblocker/total)](https://github.com/HomeITAdmin/nextcloud_geoblocker/releases)
+[![GitHub](https://img.shields.io/github/license/homeitadmin/nextcloud_geoblocker)](https://github.com/HomeITAdmin/nextcloud_geoblocker/blob/master/COPYING)
 
 # Nextcloud Geoblocker App
 This is a server side app for a nextcloud instance (https://nextcloud.com/).
