@@ -1,3 +1,7 @@
+[![GitHub](https://img.shields.io/github/license/homeitadmin/nextcloud_geoblocker)](https://github.com/HomeITAdmin/nextcloud_geoblocker/blob/master/COPYING)
+[![GitHub All Releases](https://img.shields.io/github/downloads/homeitadmin/nextcloud_geoblocker/total)](https://github.com/HomeITAdmin/nextcloud_geoblocker/releases)
+[![GitHub Releases](https://img.shields.io/github/downloads/homeitadmin/nextcloud_geoblocker/latest/total)](https://github.com/HomeITAdmin/nextcloud_geoblocker/releases)
+
 # Nextcloud Geoblocker App
 This is a server side app for a nextcloud instance (https://nextcloud.com/).
 This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries.
