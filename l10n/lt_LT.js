@@ -8,6 +8,7 @@ OC.L10N.register(
     "Date of the database cannot be determined!" : "Nepavyksta nustatyti duomenų bazės datos!",
     "local" : "vietinė",
     "default" : "numatytoji",
+    "ERROR: Something is missing." : "KLAIDA: Kažko trūksta.",
     "Loading" : "Įkeliama",
     "Status of the chosen service: " : "Pasirinktos tarnybos būsena: ",
     "Date of the database: " : "Duomenų bazės data: ",
