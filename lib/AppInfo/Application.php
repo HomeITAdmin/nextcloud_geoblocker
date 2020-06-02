@@ -10,12 +10,7 @@ class Application extends App {
 	public function __construct(array $urlParams = array()) {
 		parent::__construct('geoblocker', $urlParams);
 
-		$container = $this->getContainer();
-
-		/**
-		 * Controllers
-		 */
-		$container->registerService('UserHooks',
+		$this->getContainer()->registerService('UserHooks',
 				function ($c) {
 					return new UserHooks(
 							$c->query('ServerContainer')->getUserSession(),
@@ -26,4 +21,9 @@ class Application extends App {
 							$c->query('ServerContainer')->getDatabaseConnection());
 				});
 	}
+	
+	public function register(): void {
+		$this->getContainer()->query('UserHooks')->register();
+	}
+	
 }
