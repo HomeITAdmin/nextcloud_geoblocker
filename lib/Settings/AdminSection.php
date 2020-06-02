@@ -48,6 +48,6 @@ class AdminSection implements IIconSection {
 	}
 	
 	public function getIcon() {
-		return $this->url->imagePath('core', 'actions/settings-dark.svg');
+		return $this->url->imagePath('geoblocker', 'blocking-dark.svg');
 	}
 }
