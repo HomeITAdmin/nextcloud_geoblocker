@@ -100,14 +100,13 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		if (! $this->getStatus()) {
 			return 'UNAVAILABLE';
 		}
-		
-		//TODO: Length check is missing !!! IPv4 not working!!!
+
 		if (filter_var($ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-			$db_entry = $this->rir_service_mapper->getEntityFromIPv4(
+			$db_entry = $this->rir_service_mapper->getCountryCodeFromIpv4(
 					$this->ipv4String2Int64($ip_address));
 			return $db_entry->getCountryCode();
 		} elseif (filter_var($ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-			$db_entry = $this->rir_service_mapper->getEntityFromIPv6(
+			$db_entry = $this->rir_service_mapper->getCountryCodeFromIpv6(
 					$this->ipv6String2Int64($ip_address));
 			return $db_entry->getCountryCode();
 		} else {
@@ -129,7 +128,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		error_log('Enter updateDatabase');
 		$status_id = $this->getStatusId();
 
-		//TODO: all RIPEs, Refactor
+		// TODO: all RIPEs, Refactor
 		if ($status_id == RIRStatus::DB_Not_Initialized) {
 			$this->setStatusId(RIRStatus::DB_Initilazing);
 			$rir_data_handle = fopen(
