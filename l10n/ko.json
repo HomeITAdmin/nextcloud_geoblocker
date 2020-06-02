@@ -1,0 +1,25 @@
+{ "translations": {
+    "No database date available." : "데이터베이스 사용할 수 없음",
+    "default" : "기본값",
+    "Loading" : "불러오는 중",
+    "Andorra" : "안도라",
+    "Afghanistan" : "아프가니스탄",
+    "Anguilla" : "앵귈라",
+    "Albania" : "알바니아",
+    "Angola" : "앙골라",
+    "Antarctica" : "남극",
+    "Argentina" : "아르헨티나",
+    "American Samoa" : "미국령 사모아",
+    "Austria" : "오스트리아",
+    "Australia" : "오스트레일리아",
+    "Åland Islands" : "올란드 제도",
+    "Brazil" : "브라질",
+    "Bhutan" : "부탄",
+    "Canada" : "캐나다",
+    "China" : "중국",
+    "Algeria" : "알제리",
+    "Japan" : "일본",
+    "Korea (Democratic People's Republic of)" : "조선민주주의인민공화국(북한)",
+    "Singapore" : "싱가포르"
+},"pluralForm" :"nplurals=1; plural=0;"
+}
