@@ -12,13 +12,12 @@ use OCA\GeoBlocker\Db\RIRServiceDBEntity;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
 use Exception;
 
-// use OCA\GeoBlocker\Db\RIRServiceDBEntity;
 abstract class RIRStatus {
-	const DB_Not_Initialized = 0;
-	const DB_Initilazing = 1;
-	const DB_Error = 2;
-	const DB_OK = 3;
-	const DB_Updating = 4;
+	public const kDbNotInitialized = 0;
+	public const kDbInitilazing = 1;
+	public const kDbError = 2;
+	public const kDbOk = 3;
+	public const kDbUpdating = 4;
 }
 class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	private $l;
@@ -70,7 +69,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	}
 
 	public function getStatus(): bool {
-		if ($this->getStatusId() == RIRStatus::DB_OK) {
+		if ($this->getStatusId() == RIRStatus::kDbOk) {
 			return true;
 		}
 		return false;
@@ -80,21 +79,21 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		$service_string = '"RIR Data": ';
 		$status_id = $this->getStatusId();
 
-		if ($status_id == RIRStatus::DB_OK) {
+		if ($status_id == RIRStatus::kDbOk) {
 			return $service_string . $this->l->t('OK.');
-		} elseif ($status_id == RIRStatus::DB_Not_Initialized) {
+		} elseif ($status_id == RIRStatus::kDbNotInitialized) {
 			return $service_string .
 					$this->l->t(
 							'ERROR: The database is not initialized. Please run update.');
-		} elseif ($status_id == RIRStatus::DB_Initilazing) {
+		} elseif ($status_id == RIRStatus::kDbInitilazing) {
 			return $service_string .
 					$this->l->t(
 							'ERROR: The database is currently initializing. Please wait until update is finished. This may take several minutes.');
-		} elseif ($status_id == RIRStatus::DB_Error) {
+		} elseif ($status_id == RIRStatus::kDbError) {
 			return $service_string .
 					$this->l->t(
 							'ERROR: The database is corrupted. Please run update again.');
-		} elseif ($status_id == RIRStatus::DB_Updating) {
+		} elseif ($status_id == RIRStatus::kDbUpdating) {
 			return $service_string .
 					$this->l->t(
 							'ERROR: The database is currently updating. Please wait until update is finished. This may take several minutes.');
@@ -124,7 +123,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		$db_date = $this->getDatabaseDateImpl();
 		if ($db_date == '') {
 			$status_id = $this->getStatusId();
-			if ($status_id == RIRStatus::DB_OK) {
+			if ($status_id == RIRStatus::kDbOk) {
 				return $this->l->t('Date of the database cannot be determined!');
 			} else {
 				return $this->l->t('No database available!');
@@ -164,7 +163,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 						}
 					}
 				} catch (Exception $e) {
-					$this->setStatusId(RIRStatus::DB_Error);
+					$this->setStatusId(RIRStatus::kDbError);
 					return false;
 				} finally {
 					fclose($rir_data_handle);
@@ -177,7 +176,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 
 	private function eraseDatabase() {
 		if (! $this->rir_service_mapper->eraseAllDatabaseEntries()) {
-			$this->setStatusId(RIRStatus::DB_Error);
+			$this->setStatusId(RIRStatus::kDbError);
 			return false;
 		} else {
 			$this->resetDatabaseDateImpl();
@@ -185,45 +184,30 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		}
 	}
 
-	private function checkAllowURLFOpen() {
-		return ini_get('allow_url_fopen');
+	private function checkAllowURLFOpen(): bool {
+		return ini_get('allow_url_fopen') === '1';
 	}
 
-	private function checkGMP() {
-		if (function_exists('gmp_import') && function_exists('gmp_intval')) {
-			return true;
-		}
-		return false;
+	private function checkGMP(): bool {
+		return function_exists('gmp_import') && function_exists('gmp_intval');
 	}
 
 	public function updateDatabase(): bool {
-		error_log('Enter updateDatabase');
 		$status_id = $this->getStatusId();
 
-		error_log('Status: ' . strval($status_id));
-
-		// $this->eraseDatabase();
-		// $this->setStatusId(RIRStatus::DB_Not_Initialized);
-		// return false;
-
-		// error_log('URL: ' . strval($this->checkAllowURLFOpen()));
-		// error_log('GMP: ' . strval($this->checkGMP()));
-
-		// return false;
-
-		if ($status_id == RIRStatus::DB_Not_Initialized ||
-				$status_id == RIRStatus::DB_Error) {
-			$this->setStatusId(RIRStatus::DB_Initilazing);
+		if ($status_id == RIRStatus::kDbNotInitialized ||
+				$status_id == RIRStatus::kDbError) {
+			$this->setStatusId(RIRStatus::kDbInitilazing);
 			if (! $this->eraseDatabase()) {
 				return false;
 			}
 			if (! $this->fillDatabase()) {
 				return false;
 			}
-			$this->setStatusId(RIRStatus::DB_OK);
+			$this->setStatusId(RIRStatus::kDbOk);
 			return true;
-		} elseif ($status_id == RIRStatus::DB_OK) {
-			$this->setStatusId(RIRStatus::DB_Updating);
+		} elseif ($status_id == RIRStatus::kDbOk) {
+			$this->setStatusId(RIRStatus::kDbUpdating);
 			error_log('Erasing the database!');
 			if (! $this->eraseDatabase()) {
 				error_log('Error during erasing the database!');
@@ -234,9 +218,48 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 				error_log('Error during filling the database!');
 				return false;
 			}
-			$this->setStatusId(RIRStatus::DB_OK);
+			$this->setStatusId(RIRStatus::kDbOk);
 			return true;
 		}
 		return false;
+	}
+
+	public function getDatabaseUpdateStatus(): LocationServiceUpdateStatus {
+		if ($this->checkAllowURLFOpen() && $this->checkGMP()) {
+			$status_id = $this->getStatusId();
+			if ($status_id == RIRStatus::kDbInitilazing ||
+					$status_id == RIRStatus::kDbUpdating) {
+				return LocationServiceUpdateStatus::kUpdating;
+			} else {
+				return LocationServiceUpdateStatus::kUpdatePossible;
+			}
+		} else {
+			return LocationServiceUpdateStatus::kUpdateNotPossible;
+		}
+	}
+
+	public function getDatabaseUpdateStatusString(): string {
+		switch ($this->getDatabaseUpdateStatus()) {
+			case LocationServiceUpdateStatus::kUpdateNotPossible:
+				if (! $this->checkAllowURLFOpen()) {
+					return $this->l->t(
+							'Update not possible: "allow_url_fopen" needs to be allowed in php.ini.');
+				}
+				if (! $this->checkGMP()) {
+					return $this->l->t(
+							'Update not possible: PHP GMP Extension needs to be installed.');
+				}
+				break;
+			case LocationServiceUpdateStatus::kUpdatePossible:
+				return $this->l->t('Update possible.');
+				break;
+			case LocationServiceUpdateStatus::kUpdating:
+				return $this->l->t('Update running.');
+				break;
+			default:
+				return $this->l->t(
+						'Update in undefined state. Please complain to the developer.');
+				break;
+		}
 	}
 }

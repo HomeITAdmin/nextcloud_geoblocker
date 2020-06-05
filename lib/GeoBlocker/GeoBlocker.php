@@ -15,7 +15,7 @@ class GeoBlocker {
 	private $config;
 	private $l;
 	private $location_service;
-	public static $country_not_found_code = 'AA';
+	public const kCountryNotFoundCode = 'AA';
 
 	public function __construct(String $user, ILogger $logger,
 			GeoBlockerConfig $config, IL10N $l,

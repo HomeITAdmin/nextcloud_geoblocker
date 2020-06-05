@@ -69,9 +69,9 @@ class RIRServiceMapper extends QBMapper {
 					$db_entry->getBeginIpRange() + $db_entry->getLengthIpRange()) {
 				return $db_entry->getCountryCode();
 			}
-			return GeoBlocker::$country_not_found_code;
+			return GeoBlocker::kCountryNotFoundCode;
 		} catch (DoesNotExistException $e) {
-			return GeoBlocker::$country_not_found_code;
+			return GeoBlocker::kCountryNotFoundCode;
 		}
 	}
 }
