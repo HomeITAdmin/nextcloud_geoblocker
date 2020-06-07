@@ -62,9 +62,15 @@ $loading = $l->t('Loading').'...';
 				<?php p($l->t('Location of the database: '));?>						
 				<input class="path-input" type="text" size="50" id="database-path-string" value="<?php p($loading); ?>" >		
 			</div>			
+<!-- 			in work begin -->
 			<div class="subsection" id="database-update" style="display:none" >	
-				<input class="button-input" type="button" id="database-update-button" value="<?php p($l->t('Update Database')) ?>" >		
+				<input class="button-input" type="button" id="database-update-button" value="<?php p($l->t('Update Database')) ?>" disabled>
+				<p class="subsection">
+					<span id="database-update-string-prefix"><?php p($loading); ?></span> 
+					<span id="database-update-string"><?php p($loading); ?></span>
+				</p>
 			</div>	
+<!-- 			in work end -->
 		</div>
 		
 	</div>

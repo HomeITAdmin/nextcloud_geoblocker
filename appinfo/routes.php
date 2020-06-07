@@ -18,6 +18,11 @@ return [
 		['name' => 'service#hasDatabaseUpdate',
 			'url' => '/service/hasDatabaseUpdate/{id}','verb' => 'GET'],
 		['name' => 'service#updateDatabase',
-			'url' => '/service/updateDatabase/{id}','verb' => 'GET']]];
+			'url' => '/service/updateDatabase/{id}','verb' => 'GET'],
+		['name' => 'service#getDatabaseUpdateStatus',
+			'url' => '/service/getDatabaseUpdateStatus/{id}','verb' => 'GET'],
+		['name' => 'service#getDatabaseUpdateStatusString',
+			'url' => '/service/getDatabaseUpdateStatusString/{id}',
+			'verb' => 'GET']]];
 		
 		

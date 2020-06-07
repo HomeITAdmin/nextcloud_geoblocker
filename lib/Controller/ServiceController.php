@@ -91,4 +91,28 @@ class ServiceController extends Controller {
 				$this->location_service_factory->updateDatabaseByID($id));
 		;
 	}
+
+	public function getDatabaseUpdateStatus(int $id) {
+		$location_service = $this->location_service_factory->getLocationServiceByID(
+				$id);
+		if ($this->hasDatabaseUpdate($id)) {
+			return new DataResponse(
+					$location_service->getDatabaseUpdateStatus());
+		} else {
+			return new DataResponse(
+					$this->l->t("Update Status not available!"));
+		}
+	}
+	
+	public function getDatabaseUpdateStatusString(int $id) {
+		$location_service = $this->location_service_factory->getLocationServiceByID(
+				$id);
+		if ($this->hasDatabaseUpdate($id)) {
+			return new DataResponse(
+					$location_service->getDatabaseUpdateStatusString());
+		} else {
+			return new DataResponse(
+					$this->l->t("Update Status not available!"));
+		}
+	}
 }

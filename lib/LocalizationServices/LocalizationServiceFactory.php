@@ -26,7 +26,8 @@ class LocalizationServiceFactory {
 	}
 
 	public function getLocationService() {
-		return $this->getLocationServiceByID($this->getCurrentLocationServiceID());
+		return $this->getLocationServiceByID(
+				$this->getCurrentLocationServiceID());
 	}
 
 	public function getLocationServiceByID(int $id) {
@@ -39,7 +40,8 @@ class LocalizationServiceFactory {
 				$location_service = new MaxMindGeoLite2($this->config, $this->l);
 				break;
 			case '2':
-				$location_service = new RIRData($this->l, $this->db, $this->config);
+				$location_service = new RIRData($this->l, $this->db,
+						$this->config);
 				break;
 			// Add new location Service here and increase $count_ids
 			default:
@@ -50,16 +52,6 @@ class LocalizationServiceFactory {
 	}
 
 	public function getLocationServiceOverview(): array {
-		// $current_service = $this->config->getChosenService();
-		// $geoiplookup = 'Geoiplookup (' . $this->l->t('local') . ') (' .
-		// $this->l->t('default') . ')';
-		// $maxmind_geolite2 = 'MaxMind GeoLite2 (' . $this->l->t('local') . ')';
-		// $rir_data = 'RIR Data (' . $this->l->t('local') . ')';
-		// // Add new location Service here
-		// $overview = array($geoiplookup => ($current_service == 0),
-		// $maxmind_geolite2 => ($current_service == 1),
-		// $rir_data => ($current_service == 2));
-		// // Add new location Service here
 		$current_service = $this->config->getChosenService();
 		$overview = array();
 		for ($i = 0; $i < $this->count_ids; $i ++) {
@@ -107,12 +99,12 @@ class LocalizationServiceFactory {
 		$location_service = $this->getLocationServiceByID($id);
 		return $location_service instanceof IDatabaseUpdate;
 	}
-	
+
 	public function updateDatabase(): bool {
 		$id = $this->getCurrentLocationServiceID();
 		return $this->updateDatabaseByID($id);
 	}
-	
+
 	public function updateDatabaseByID(int $id): bool {
 		if ($this->hasDatabaseUpdateByID($id)) {
 			$location_service = $this->getLocationServiceByID($id);

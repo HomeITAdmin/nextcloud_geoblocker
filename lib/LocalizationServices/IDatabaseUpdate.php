@@ -20,15 +20,15 @@ interface IDatabaseUpdate {
 	/**
 	 * Returns the status of the update functionality of the location service
 	 *
-	 * @return LocationServiceUpdateStatus
+	 * @return int (LocationServiceUpdateStatus)
 	 */
-	public function getDatabaseUpdateStatus() : LocationServiceUpdateStatus;
+	public function getDatabaseUpdateStatus() : int;
 	
 	/**
 	 * Returns a status string describing the current status of the update. If:
 	 *  - Status == kUpdateNotPossible: Why is the update not possible and what needs to be done to change this.
-	 *  - Status == kUpdatePossible: "Update possible.".
-	 *  - Status == kUpdating: "Update running.". If wanted additional information about what is currently happening can be provided. 
+	 *  - Status == kUpdatePossible: Not relevant, string will we ignored.
+	 *  - Status == kUpdating: If wanted additional information about what is currently happening can be provided otherwise return "". 
 	 *
 	 * @return string
 	 */

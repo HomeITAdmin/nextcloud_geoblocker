@@ -69,7 +69,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	}
 
 	public function getStatus(): bool {
-		if ($this->getStatusId() == RIRStatus::kDbOk) {
+		if ($this->getStatusId() == RIRStatus::kDbOk && $this->checkGMP()) {
 			return true;
 		}
 		return false;
@@ -77,26 +77,32 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 
 	public function getStatusString(): string {
 		$service_string = '"RIR Data": ';
+		$service_string_error = $service_string . $this->l->t('ERROR: ');
 		$status_id = $this->getStatusId();
 
 		if ($status_id == RIRStatus::kDbOk) {
-			return $service_string . $this->l->t('OK.');
+			if ($this->checkGMP()) {
+				return $service_string . $this->l->t('OK.');
+			} else {
+				return $service_string_error .
+						$this->l->t('PHP GMP Extension needs to be installed.');
+			}
 		} elseif ($status_id == RIRStatus::kDbNotInitialized) {
-			return $service_string .
+			return $service_string_error .
 					$this->l->t(
-							'ERROR: The database is not initialized. Please run update.');
+							'The database is not initialized. Please run update.');
 		} elseif ($status_id == RIRStatus::kDbInitilazing) {
-			return $service_string .
+			return $service_string_error .
 					$this->l->t(
-							'ERROR: The database is currently initializing. Please wait until update is finished. This may take several minutes.');
+							'The database is currently initializing. Please wait until update is finished. This may take several minutes.');
 		} elseif ($status_id == RIRStatus::kDbError) {
-			return $service_string .
+			return $service_string_error .
 					$this->l->t(
-							'ERROR: The database is corrupted. Please run update again.');
+							'The database is corrupted. Please run update again.');
 		} elseif ($status_id == RIRStatus::kDbUpdating) {
-			return $service_string .
+			return $service_string_error .
 					$this->l->t(
-							'ERROR: The database is currently updating. Please wait until update is finished. This may take several minutes.');
+							'The database is currently updating. Please wait until update is finished. This may take several minutes.');
 		}
 		return $service_string . $this->l->t('ERROR: Something is missing.');
 	}
@@ -224,7 +230,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		return false;
 	}
 
-	public function getDatabaseUpdateStatus(): LocationServiceUpdateStatus {
+	public function getDatabaseUpdateStatus(): int {
 		if ($this->checkAllowURLFOpen() && $this->checkGMP()) {
 			$status_id = $this->getStatusId();
 			if ($status_id == RIRStatus::kDbInitilazing ||
@@ -243,18 +249,18 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 			case LocationServiceUpdateStatus::kUpdateNotPossible:
 				if (! $this->checkAllowURLFOpen()) {
 					return $this->l->t(
-							'Update not possible: "allow_url_fopen" needs to be allowed in php.ini.');
+							'"allow_url_fopen" needs to be allowed in php.ini.');
 				}
 				if (! $this->checkGMP()) {
 					return $this->l->t(
-							'Update not possible: PHP GMP Extension needs to be installed.');
+							'PHP GMP Extension needs to be installed.');
 				}
 				break;
 			case LocationServiceUpdateStatus::kUpdatePossible:
-				return $this->l->t('Update possible.');
+				return '';
 				break;
 			case LocationServiceUpdateStatus::kUpdating:
-				return $this->l->t('Update running.');
+				return '';
 				break;
 			default:
 				return $this->l->t(
