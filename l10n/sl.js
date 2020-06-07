@@ -8,6 +8,7 @@ OC.L10N.register(
     "Loading" : "Poteka nalaganje ...",
     "Service" : "Storitev",
     "Country Selection" : "Izbor države",
+    "(in a future version)" : "(v prihodnji različici)",
     "Andorra" : "Andora",
     "United Arab Emirates" : "Združeni Arabski Emirati",
     "Afghanistan" : "Afganistan",
