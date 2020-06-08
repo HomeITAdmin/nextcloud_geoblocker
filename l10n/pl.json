@@ -12,6 +12,8 @@
     "default" : "domyślny",
     "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "BŁĄD: Usługa nie została poprawnie zainstalowana lub baza danych jest niedostępna w %s.",
     "ERROR: Something is missing." : "BŁĄD: czegoś brakuje.",
+    "No database available!" : "Brak dostępnej bazy danych!",
+    "Update in undefined state. Please complain to the developer." : "Aktualizacja w stanie nieokreślonym. Zgłoś problem do programisty.",
     "GeoBlocker" : "Bloker Geograficzny",
     "Blocks user depending on the estimated country of thier IP address." : "Blokuje użytkownika w zależności od wykrytego kraju jego adresu IP.",
     "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)" : "Jest to interfejs dla usług lokalizacji geograficznej, który umożliwia blokowanie (obecnie tylko logowanie!) prób logowania z określonych krajów. (Wczesna wersja).",

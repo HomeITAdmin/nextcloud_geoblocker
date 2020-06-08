@@ -14,6 +14,8 @@ OC.L10N.register(
     "default" : "défaut",
     "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "ERREUR : Le service ne semble pas être installé correctement ou la base de données n’est pas disponible à %s.",
     "ERROR: Something is missing." : "ERREUR : Il manque quelque chose.",
+    "No database available!" : "Pas de base de données disponible !",
+    "Update in undefined state. Please complain to the developer." : "Mise à jour dans un état indéfini. S'il vous plaît, plaignez-vous au développeur.",
     "GeoBlocker" : "Bloqueur géographique",
     "Blocks user depending on the estimated country of thier IP address." : "Bloque un utilisateur en fonction du pays estimé par leur adresse IP.",
     "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)" : "Interface des services de géolocalisation, qui permet de bloquer (enregistrement uniquement pour le moment!) des tentatives de connexion provenant de pays spécifiques. (Version préliminaire)",
