@@ -21,7 +21,7 @@
     "The database is not initialized. Please run update." : "Die Datenbank ist nicht initialisiert. Bitte die Aktualisierung erneut ausführen.",
     "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "Die Datenbank wird gerade initialisiert. Bitte abwarten, bis die Aktualisierung abgeschlossen ist. Dies kann einige Minuten dauern.",
     "The database is corrupted. Please run update again." : "Die Datenbank ist beschädigt. Bitte die Aktualisierung erneut ausführen.",
-    "The database is currently updating. Please wait until update is finished. This may take several minutes." : "Die Datenbank wird gerade initialisiert. Bitte abwarten, bis die Aktualisierung abgeschlossen ist. Dies kann einige Minuten dauern.",
+    "The database is currently updating. Please wait until update is finished. This may take several minutes." : "Die Datenbank wird gerade aktualisiert. Bitte warten, bis die Aktualisierung abgeschlossen ist. Dies kann einige Minuten dauern.",
     "ERROR: Something is missing." : "Fehler: Etwas fehlt.",
     "No database available!" : "Keine Datenbank vorhanden!",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "\"allow_url_fopen\" muss in php.ini zugelassen werden.",
