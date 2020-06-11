@@ -107,19 +107,19 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		return $service_string . $this->l->t('ERROR: Something is missing.');
 	}
 
-	public function getCountryCodeFromIP($ip_address): string {
+	public function getCountryCodeFromIP(string $ip_address): string {
 		if (! $this->getStatus()) {
 			return 'UNAVAILABLE';
 		}
 
 		if (filter_var($ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-			$db_entry = $this->rir_service_mapper->getCountryCodeFromIpv4(
+			$cc = $this->rir_service_mapper->getCountryCodeFromIpv4(
 					RIRServiceMapper::ipv4String2Int64($ip_address));
-			return $db_entry->getCountryCode();
+			return $cc;
 		} elseif (filter_var($ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-			$db_entry = $this->rir_service_mapper->getCountryCodeFromIpv6(
+			$cc = $this->rir_service_mapper->getCountryCodeFromIpv6(
 					RIRServiceMapper::ipv6String2Int64($ip_address));
-			return $db_entry->getCountryCode();
+			return $cc;
 		} else {
 			return 'INVALID_IP';
 		}
@@ -199,6 +199,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	}
 
 	public function updateDatabase(): bool {
+		// TODO: Availability of the service during Update
 		$status_id = $this->getStatusId();
 
 		if ($status_id == RIRStatus::kDbNotInitialized ||
