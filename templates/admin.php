@@ -107,6 +107,7 @@ $loading = $l->t('Loading').'...';
 	<div class="subsection">
 		<p>
 			<?php p($l->t('If a login attempt is detected from the chosen countries, the attempt is logged with the following information'));
+				p(' ');
 				p($l->t('( be aware of data protection issues depending on your logging strategy)'));?>:
 		</p>
 		

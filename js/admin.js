@@ -101,6 +101,7 @@ function delayedUpdateDatabaseStatus(service_id){
 		if (last_used_service_id == service_id) {
 			updateDatabaseUpdateStatus(service_id);
 			updateServiceStatus(service_id);
+			updateDatabaseUpdate(service_id);
 		}
 	}, 10000);
 	
