@@ -47,6 +47,7 @@ class Version000300Date20200413202844 extends SimpleMigrationStep {
 			$table->addColumn('is_ip_v6', 'boolean', ['notnull' => true]);
 			$table->addColumn('country_code', 'string',
 					['notnull' => true,'length' => 2]);
+			$table->addColumn('version', 'integer', ['notnull' => true]);
 
 			$table->setPrimaryKey(['id']);
 		}
@@ -62,10 +63,5 @@ class Version000300Date20200413202844 extends SimpleMigrationStep {
 	 */
 	public function postSchemaChange(IOutput $output, Closure $schemaClosure,
 			array $options) {
-// 		$query = $this->db->getQueryBuilder();
-// 		$query->insert('geoblocker_services')->values(
-// 				array('service' => 'rir_data','status' => 0,
-// 					'last_update' => 'CURRENT_TIMESTAMP()'));
-// 		$query->execute();
 	}
 }
