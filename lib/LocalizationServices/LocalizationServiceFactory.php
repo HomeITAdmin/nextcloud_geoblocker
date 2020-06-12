@@ -40,8 +40,8 @@ class LocalizationServiceFactory {
 				$location_service = new MaxMindGeoLite2($this->config, $this->l);
 				break;
 			case '2':
-				$location_service = new RIRData($this->l, $this->db,
-						$this->config);
+				$location_service = new RIRData($this->db, $this->config,
+						$this->l);
 				break;
 			// Add new location Service here and increase $count_ids
 			default:

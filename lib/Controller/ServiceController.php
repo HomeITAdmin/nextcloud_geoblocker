@@ -99,11 +99,10 @@ class ServiceController extends Controller {
 			return new DataResponse(
 					$location_service->getDatabaseUpdateStatus());
 		} else {
-			return new DataResponse(
-					$this->l->t("Update Status not available!"));
+			return new DataResponse($this->l->t("Update Status not available!"));
 		}
 	}
-	
+
 	public function getDatabaseUpdateStatusString(int $id) {
 		$location_service = $this->location_service_factory->getLocationServiceByID(
 				$id);
@@ -111,8 +110,7 @@ class ServiceController extends Controller {
 			return new DataResponse(
 					$location_service->getDatabaseUpdateStatusString());
 		} else {
-			return new DataResponse(
-					$this->l->t("Update Status not available!"));
+			return new DataResponse($this->l->t("Update Status not available!"));
 		}
 	}
 }

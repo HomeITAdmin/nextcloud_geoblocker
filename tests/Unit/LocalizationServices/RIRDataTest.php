@@ -15,17 +15,19 @@ class RIRDataTest extends TestCase {
 
 	public function setUp(): void {
 		parent::setUp();
-		$tmp_config = $this->getMockBuilder ( 'OCP\IConfig' )->getMock ();
-		$this->config = $this->getMockBuilder (
-				'OCA\GeoBlocker\Config\GeoBlockerConfig' )->setConstructorArgs (
-						[ $tmp_config
-						] )->getMock ();
+		$tmp_config = $this->getMockBuilder('OCP\IConfig')->getMock();
+		$this->config = $this->getMockBuilder(
+				'OCA\GeoBlocker\Config\GeoBlockerConfig')->setConstructorArgs(
+				[$tmp_config])->getMock();
 		$this->db = $this->getMockBuilder('OCP\IDbConnection')->getMock();
-		$this->l = $this->getMockBuilder('OCP\IL10N')->getMock();		
+		$this->l = $this->getMockBuilder('OCP\IL10N')->getMock();
 		$this->l->method('t')->will(
-				$this->returnCallback(
-						array($this,'callbackLTJustRouteThrough')));
-		$this->rir_data = new RIRData($this->l,$this->db,$this->config);
+				$this->returnCallback(array($this,'callbackLTJustRouteThrough')));
+		$this->rir_data = new RIRData($this->db, $this->config, $this->l);
+	}
+
+	public function testDummy() {
+		$this->assertTrue(true);
 	}
 
 	public function callbackLTJustRouteThrough(string $in): string {

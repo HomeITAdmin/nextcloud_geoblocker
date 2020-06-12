@@ -10,8 +10,7 @@ use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 class GeoBlockerConfig {
 
 	/** @var IConfig */
-	//TODO: Change back to private
-	public  $config;
+	private $config;
 
 	public function __construct(IConfig $config) {
 		$this->config = $config;
@@ -68,7 +67,8 @@ class GeoBlockerConfig {
 	}
 
 	public function setChosenService(string $chosen_service) {
-		$this->config->setAppValue('geoblocker', 'chosenService', $chosen_service);
+		$this->config->setAppValue('geoblocker', 'chosenService',
+				$chosen_service);
 	}
 
 	public function getChoosenCountriesByString(): string {
@@ -111,14 +111,25 @@ class GeoBlockerConfig {
 		return $fake_address;
 	}
 
-	public function getDatabaseFileLocation(string $unique_service_string): string {		
+	public function getDatabaseFileLocation(string $unique_service_string): string {
 		$database_file_location = $this->config->getAppValue('geoblocker',
-				$unique_service_string . '_DatabaseFileLocation', '');		
+				$unique_service_string . '_DatabaseFileLocation', '');
 		return $database_file_location;
 	}
-	
-	public function setDatabaseFileLocation(string $database_file_location,string $unique_service_string) {
+
+	public function setDatabaseFileLocation(string $database_file_location,
+			string $unique_service_string) {
 		$this->config->setAppValue('geoblocker',
-				$unique_service_string . '_DatabaseFileLocation', $database_file_location);
+				$unique_service_string . '_DatabaseFileLocation',
+				$database_file_location);
+	}
+
+	public function getServiceSpecificConfigValue(string $name,
+			string $default_value): string {
+		return $this->config->getAppValue('geoblocker', $name, $default_value);
+	}
+
+	public function setServiceSpecificConfigValue(string $name, string $value) {
+		$this->config->setAppValue('geoblocker', $name, $value);
 	}
 }

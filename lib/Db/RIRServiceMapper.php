@@ -23,15 +23,6 @@ class RIRServiceMapper extends QBMapper {
 		return gmp_intval($gmp_ip + PHP_INT_MIN);
 	}
 
-	// TODO: Not correct, but correct enough for the momemt;
-	static public function ipv6Int642String(int $ip): string {
-		$gmp_ip = gmp_init($ip);
-		// $gmp_ip = ($gmp_ip - PHP_INT_MIN) * 2 * -PHP_INT_MIN;
-		$gmp_ip = $gmp_ip - PHP_INT_MIN;
-
-		return inet_ntop(pack('A16', gmp_export($gmp_ip)));
-	}
-
 	public function eraseAllDatabaseEntries() {
 		$qb = $this->db->getQueryBuilder();
 		try {
@@ -73,5 +64,12 @@ class RIRServiceMapper extends QBMapper {
 		} catch (DoesNotExistException $e) {
 			return GeoBlocker::kCountryNotFoundCode;
 		}
+	}
+
+	public function getNumberOfEntries(): int {
+		$qb = $this->db->getQueryBuilder();
+		$qb->select($qb->func()->count())->from($this->getTableName());	
+		$res = $this->findOneQuery($qb);
+		return intval($res['COUNT(*)']);
 	}
 }

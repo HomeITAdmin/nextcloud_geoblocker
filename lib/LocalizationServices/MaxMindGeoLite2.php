@@ -22,7 +22,6 @@ class MaxMindGeoLite2 implements ILocalizationService, IDatabaseDate,
 	private $database_file_location;
 	private $unique_service_string;
 
-	// TODO: Load db_file from config
 	public function __construct(GeoBlockerConfig $config, IL10N $l) {
 		$this->l = $l;
 		$this->config = $config;

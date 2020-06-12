@@ -43,7 +43,6 @@ class GeoBlocker {
 	}
 
 	public function check(String $ip_address): void {
-		// TODO: How can I be sure, that the localization service is using the same country list then I do?
 		if ($this->isIPAddressValid($ip_address)) {
 			if (! $this->isIPAddressLocal($ip_address)) {
 
@@ -105,7 +104,6 @@ class GeoBlocker {
 	 * @return bool
 	 */
 	public static function isIPAddressLocal(String $ip_address): bool {
-		// TODO: Is this exactly what I want?
 		if (GeoBlocker::isIPAddressValid($ip_address)) {
 			if (filter_var($ip_address, FILTER_VALIDATE_IP,
 					FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {

@@ -4,13 +4,12 @@ declare(strict_types = 1)
 
 namespace OCA\GeoBlocker\LocalizationServices;
 
+use Exception;
 use OCP\IL10N;
 use OCP\IDbConnection;
-// use OCA\GeoBlocker\Db\ServiceMapper;
 use OCA\GeoBlocker\Db\RIRServiceMapper;
 use OCA\GeoBlocker\Db\RIRServiceDBEntity;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
-use Exception;
 
 abstract class RIRStatus {
 	public const kDbNotInitialized = 0;
@@ -31,10 +30,11 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		'afrinic' => 'ftp://ftp.afrinic.net/pub/stats/afrinic/delegated-afrinic-latest',
 		'apnic' => 'ftp://ftp.apnic.net/pub/stats/apnic/delegated-apnic-latest',
 		'lacnic' => 'ftp://ftp.lacnic.net/pub/stats/lacnic/delegated-lacnic-latest');
+	private const kServiceStatusName = 'rir_data_service_status';
+	private const kDatabaseDateName = 'rir_data_db_date';
 
-	// TODO: Change order
-	public function __construct(IL10N $l, IDbConnection $db,
-			GeoBlockerConfig $config) {
+	public function __construct(IDbConnection $db, GeoBlockerConfig $config,
+			IL10N $l) {
 		$this->l = $l;
 		$this->db = $db;
 		$this->rir_service_mapper = new RIRServiceMapper($db);
@@ -42,30 +42,29 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	}
 
 	private function getStatusId(): int {
-		// TODO: Typo in name
 		return intval(
-				$this->config->config->getAppValue('geoblocker',
-						'rir_datat_service_status', '0'));
+				$this->config->getServiceSpecificConfigValue(
+						RIRData::kServiceStatusName, '0'));
 	}
 
 	private function setStatusId(int $id) {
-		// TODO: Typo in name
-		$this->config->config->setAppValue('geoblocker',
-				'rir_datat_service_status', $id);
+		$this->config->setServiceSpecificConfigValue(
+				RIRData::kServiceStatusName, strval($id));
 	}
 
 	private function getDatabaseDateImpl(): string {
-		return $this->config->config->getAppValue('geoblocker',
-				'rir_data_db_date', '');
+		return $this->config->getServiceSpecificConfigValue(
+				RIRData::kDatabaseDateName, '');
 	}
 
 	private function setDatabaseDateImpl() {
-		$this->config->config->setAppValue('geoblocker', 'rir_data_db_date',
+		$this->config->getServiceSpecificConfigValue(RIRData::kDatabaseDateName,
 				date("Y-m-d"));
 	}
 
 	private function resetDatabaseDateImpl() {
-		$this->config->config->setAppValue('geoblocker', 'rir_data_db_date', '');
+		$this->config->getServiceSpecificConfigValue(RIRData::kDatabaseDateName,
+				'');
 	}
 
 	public function getStatus(): bool {
@@ -76,35 +75,36 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	}
 
 	public function getStatusString(): string {
-		$service_string = '"RIR Data": ';
-		$service_string_error = $service_string . $this->l->t('ERROR: ');
+		$service_string = '"RIR Data":';
+		$service_string_error = $service_string . ' ' . $this->l->t('ERROR:');
 		$status_id = $this->getStatusId();
 
 		if ($status_id == RIRStatus::kDbOk) {
 			if ($this->checkGMP()) {
-				return $service_string . $this->l->t('OK.');
+				return $service_string . ' ' . $this->l->t('OK.');
 			} else {
-				return $service_string_error .
+				return $service_string_error . ' ' .
 						$this->l->t('PHP GMP Extension needs to be installed.');
 			}
 		} elseif ($status_id == RIRStatus::kDbNotInitialized) {
-			return $service_string_error .
+			return $service_string_error . ' ' .
 					$this->l->t(
 							'The database is not initialized. Please run update.');
 		} elseif ($status_id == RIRStatus::kDbInitilazing) {
-			return $service_string_error .
+			return $service_string_error . ' ' .
 					$this->l->t(
 							'The database is currently initializing. Please wait until update is finished. This may take several minutes.');
 		} elseif ($status_id == RIRStatus::kDbError) {
-			return $service_string_error .
+			return $service_string_error . ' ' .
 					$this->l->t(
 							'The database is corrupted. Please run update again.');
 		} elseif ($status_id == RIRStatus::kDbUpdating) {
-			return $service_string_error .
+			return $service_string_error . ' ' .
 					$this->l->t(
 							'The database is currently updating. Please wait until update is finished. This may take several minutes.');
 		}
-		return $service_string . $this->l->t('ERROR: Something is missing.');
+		return $service_string_error . ' ' .
+				$this->l->t('Something is missing.');
 	}
 
 	public function getCountryCodeFromIP(string $ip_address): string {
@@ -139,6 +139,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	}
 
 	private function fillDatabase(): bool {
+		// TODO: If internet connection is missing, everything seems ok, but no entries to db are done. 
 		foreach ($this->rir_ftps as $rir_name => $rir_url) {
 			$rir_data_handle = fopen($rir_url, 'r');
 			if ($rir_data_handle != FALSE) {
@@ -199,7 +200,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	}
 
 	public function updateDatabase(): bool {
-		// TODO: Availability of the service during Update
+		// TODO: Prepare working during Update by already define a version column in the database.
 		$status_id = $this->getStatusId();
 
 		if ($status_id == RIRStatus::kDbNotInitialized ||
@@ -215,14 +216,10 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 			return true;
 		} elseif ($status_id == RIRStatus::kDbOk) {
 			$this->setStatusId(RIRStatus::kDbUpdating);
-			error_log('Erasing the database!');
 			if (! $this->eraseDatabase()) {
-				error_log('Error during erasing the database!');
 				return false;
 			}
-			error_log('Filling the database!');
 			if (! $this->fillDatabase()) {
-				error_log('Error during filling the database!');
 				return false;
 			}
 			$this->setStatusId(RIRStatus::kDbOk);
@@ -261,12 +258,21 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 				return '';
 				break;
 			case LocationServiceUpdateStatus::kUpdating:
-				return '';
+				return $this->l->t('Current number of entries:') . ' ' .
+						strval($this->rir_service_mapper->getNumberOfEntries());
 				break;
 			default:
 				return $this->l->t(
 						'Update in undefined state. Please complain to the developer.');
 				break;
 		}
+	}
+
+	public function resetDatabase(): bool {
+		if (! $this->eraseDatabase()) {
+			return false;
+		}
+		$this->setStatusId(RIRStatus::kDbNotInitialized);
+		return true;
 	}
 }

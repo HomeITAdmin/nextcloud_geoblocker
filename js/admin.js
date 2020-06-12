@@ -96,6 +96,15 @@ function updateStatusToStringPrefix(status){
 	return string_begin;
 }
 
+function delayedUpdateDatabaseStatus(service_id){
+	setTimeout(function () {
+		if (last_used_service_id == service_id) {
+			updateDatabaseUpdateStatus(service_id);
+		}
+	}, 10000);
+	
+}
+
 function updateDatabaseUpdateStatus(service_id){
 	$.ajax({
 	    url: baseUrl + '/service/getDatabaseUpdateStatus/' + service_id,
@@ -105,6 +114,9 @@ function updateDatabaseUpdateStatus(service_id){
 			document.getElementById('database-update-button').disabled=false;
 		} else {
 			document.getElementById('database-update-button').disabled=true;
+			if (response == 2) {
+				delayedUpdateDatabaseStatus(service_id);
+			}
 		}
 		updateDatabaseUpdateStatusString(service_id, response);
 	}).fail(function (response, code) {
@@ -148,6 +160,12 @@ function updateConfigurationOptions(service_id) {
 	}).fail(function (response, code) {
 		document.getElementById('service-config').style.display='none';
 	});
+}
+
+function updateAllServiceInformation(service_id){
+	updateServiceStatus(service_id);		
+	updateDatabaseDate(service_id);		
+	updateConfigurationOptions(service_id);		
 }
 
 function fakeAdressAction(checked) {
@@ -221,11 +239,7 @@ $(document).ready(function() {
 				 'chosenService'
 				 , service_id);
 		
-		updateServiceStatus(service_id);
-		
-		updateDatabaseDate(service_id);
-		
-		updateConfigurationOptions(service_id);		
+		updateAllServiceInformation(service_id);		
 	});
 	$('#choose-service').change();
 	$('#choose-countries').click(function() {
@@ -252,9 +266,12 @@ $(document).ready(function() {
 		    url: baseUrl + '/service/updateDatabase/' + service_id,
 		    type: 'GET'
 		}).done(function (response) {
-			console.log('Update started sucessfully.');
+			console.log('Update sucessful.');
 		}).fail(function (response, code) {
-			console.error('Update not started.');
+			console.error('Update not sucessful.');
 		});
+		setTimeout(function () {
+			updateAllServiceInformation(service_id);
+    	}, 1000);
 	});
 });
