@@ -1,24 +1,34 @@
 <?xml version="1.0"?>
-<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
-    <id>geoblocker</id>
-    <name>GeoBlocker</name>
-    <summary>Blocks user depending on the estimated country of thier IP address.</summary>
-    <description>This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)</description>
-    <version>0.3.0</version>
-    <licence>agpl</licence>
-    <author mail="homeitadmin@seypro.de" >HomeITAdmin</author>
-    <namespace>GeoBlocker</namespace>
-    <category>security</category>
-    <website>https://github.com/HomeITAdmin/nextcloud_geoblocker/</website>
-    <bugs>https://github.com/HomeITAdmin/nextcloud_geoblocker/issues</bugs>
-    
-    <dependencies>
-        <nextcloud min-version="17" max-version="18"/>
-    </dependencies>
-    
-    <settings>
-      <admin>OCA\GeoBlocker\Settings\Admin</admin>
-      <admin-section>OCA\GeoBlocker\Settings\AdminSection</admin-section>
-    </settings>
+<info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+	<id>geoblocker</id>
+	<name>GeoBlocker</name>
+	<summary>Blocks user depending on the estimated country of thier IP address.</summary>
+	<description><![CDATA[This is a front end to geo localization services, that allows blocking (currently only logging is possible!) of login attempts from specified countries. (Early Version)
+	
+	Countries can be specified using whitelisting or blacklisting.
+	
+	Currently available localization services are:
+	- Geoiplookup (local programm on the host)
+	- MaxMind GeoLite2 (local database accessed via PHP API)
+	- Data from Reginal Internet Registries (Nextcloud SQL Database build up with data downloaded from the RIRs FTP servers)
+	
+	For help how to set the services up please have a look at the Github repository (homepage on the right side).]]></description>
+	<version>0.3.0</version>
+	<licence>agpl</licence>
+	<author mail="homeitadmin@seypro.de">HomeITAdmin</author>
+	<namespace>GeoBlocker</namespace>
+	<category>security</category>
+	<website>https://github.com/HomeITAdmin/nextcloud_geoblocker/</website>
+	<bugs>https://github.com/HomeITAdmin/nextcloud_geoblocker/issues</bugs>
+	<screenshot>https://raw.githubusercontent.com/HomeITAdmin/nextcloud_geoblocker/master/img/1.PNG</screenshot>
+
+	<dependencies>
+		<nextcloud min-version="17" max-version="18" />
+	</dependencies>
+
+	<settings>
+		<admin>OCA\GeoBlocker\Settings\Admin</admin>
+		<admin-section>OCA\GeoBlocker\Settings\AdminSection</admin-section>
+	</settings>
 </info>
