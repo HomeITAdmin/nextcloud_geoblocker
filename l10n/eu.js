@@ -4,7 +4,6 @@ OC.L10N.register(
     "OK." : "Ongi.",
     "local" : "lokala",
     "default" : "lehenetsia",
-    "ERROR: Something is missing." : "ERROREA: zerbait falta da.",
     "GeoBlocker" : "GeoBlocker",
     "Loading" : "Kargatzen",
     "is local." : "lokala da.",

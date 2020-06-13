@@ -13,7 +13,6 @@
     "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "POGREŠKA: čini se da servis nije ispravno instaliran ili nije dostupna baza podataka na %s.",
     "GeoBlocker" : "GeoBlocker",
     "Blocks user depending on the estimated country of thier IP address." : "Blokira korisnika ovisno o pretpostavljenoj državi iz koje potječe njegova IP adresa.",
-    "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)" : "Radi se o ulaznom sustavu geolokacijskih usluga koji omogućuje blokiranje (trenutno samo bilježenje!) pokušaja prijava iz određenih država. (Rana inačica)",
     "Loading" : "Učitavanje",
     "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. " : "Radi se o ulaznom sustavu geolokacijskih usluga koji omogućuje blokiranje (trenutno samo bilježenje!) pokušaja prijava iz određenih država. ",
     "Login attempts from local network IP addresses are not blocked (or logged)." : "Ne blokiraju se (niti bilježe) pokušaji prijave s IP adresa iz lokalne mreže.",

@@ -9,7 +9,6 @@
     "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "错误：服务未正确安装或在%s的数据库不可用。",
     "GeoBlocker" : "地理阻止器",
     "Blocks user depending on the estimated country of thier IP address." : "根据其IP地址对应的国家来封锁用户。",
-    "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)" : "这是地理定位服务的一个前端，允许阻止（目前仅是记录！）来自指定国家的登录尝试。（早期版本）",
     "Loading" : "正在加载",
     "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. " : "这是地理定位服务的一个前端，它允许阻止（目前仅是记录！）来自指定国家的登录尝试。",
     "Login attempts from local network IP addresses are not blocked (or logged)." : "来自本地网络的IP地址的登录尝试不会被阻止（或记录）。",

@@ -8,7 +8,6 @@ OC.L10N.register(
     "default" : "standard",
     "GeoBlocker" : "GeoBlocker",
     "Blocks user depending on the estimated country of thier IP address." : "Blokkerer brukere basert på hvilket land IP adressen tilhører.",
-    "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)" : "Dette er front enden for geo lokaliseringstjeneste som muliggjør blokkerinng (foreløpig kun logging!) av innloggingsforsøk fra angitte land. (Tidlig versjon)",
     "Loading" : "Laster",
     "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. " : "Dette er front enden for geo lokaliseringstjeneste som muliggjør blokkerinng (foreløpig kun logging!) av innloggingsforsøk fra angitte land.",
     "Login attempts from local network IP addresses are not blocked (or logged)." : "Innlogginsforsøk fra lokalnettverkets IP adresser blir ikke blokkert (eller logget).",

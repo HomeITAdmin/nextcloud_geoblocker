@@ -13,7 +13,6 @@
     "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "Ошибка: на %s не установлена служба или недоступна база данных.",
     "GeoBlocker" : "Блокировка по положению",
     "Blocks user depending on the estimated country of thier IP address." : "Блокировка входа пользователей на основании определения страны по IP-адресу.",
-    "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. (Early Version)" : "Это оболочка к службам определения местоположения по IP-адресу, позволяющая в будущем блокировать, а в настоящее время только уведомлять о попытках входа из заданных стран. (Предварительная версия).",
     "Loading" : "Загружается",
     "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. " : "Это оболочка к службам определения местоположения по IP-адресу, позволяющая в будущем блокировать, а в настоящее время только уведомлять о попытках входа из заданных стран.",
     "Login attempts from local network IP addresses are not blocked (or logged)." : "Попытки входа из локальной сети сервера не блокируются (не отслеживаются).",
