@@ -142,6 +142,7 @@ appstore:
 	--exclude="../$(app_name)/build" \
 	--exclude="../$(app_name)/tests" \
 	--exclude="../$(app_name)/Makefile" \
+	--exclude="../$(app_name)/README.md" \
 	--exclude="../$(app_name)/phpunit*.xml" \
 	--exclude="../$(app_name)/composer.*" \
 	--exclude="../$(app_name)/package*.json" \
@@ -150,6 +151,7 @@ appstore:
 	--exclude="../$(app_name)/helper_scripts" \
 	--exclude="../$(app_name)/3rdparty/*/*" \
 	--exclude="../$(app_name)/3rdparty/.*" \
+	--exclude="../$(app_name)/l10n/.*" \
 	--exclude="../$(app_name)/vendor" \
 	--exclude="../$(app_name)/node_modules" \
 	-f $(build_dir)/$(app_name)-$(version).tar.gz ../$(app_name)
