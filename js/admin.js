@@ -97,11 +97,12 @@ function updateStatusToStringPrefix(status){
 }
 
 function delayedUpdateDatabaseStatus(service_id){
+	console.log("Test");
 	setTimeout(function () {
 		if (last_used_service_id == service_id) {
 			updateDatabaseUpdateStatus(service_id);
 			updateServiceStatus(service_id);
-			updateDatabaseUpdate(service_id);
+			updateDatabaseDate(service_id);
 		}
 	}, 10000);
 	
