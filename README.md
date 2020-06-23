@@ -52,7 +52,7 @@ There are serveral location services available. The app is only the frontend for
 - API key needed.
 - Installation efforts needed from the administrator.
 
-### Data from Regional Internet Registries (RIRs) (With Version 0.3.0)
+### Data from Regional Internet Registries (RIRs) (Beta)
 #### Precondition
 - PHP configuration "allow_url_fopen" must be true during the update process to download the information from the RIRs. This is configured in the php.ini.
 - Internet connection is needed during the update process to download the information from the RIRs.
