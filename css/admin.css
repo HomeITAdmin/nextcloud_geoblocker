@@ -3,10 +3,31 @@
 	background: initial;
 	padding-right: 12px !important;
 }
+
 .subsection {
 	margin-left: 12px;
-} 
+}
 
 .path-input {
 	width: 440px;
-} 
+}
+
+a:link {
+	color: blue;
+	text-decoration: underline;
+}
+
+a:visited {
+	color: blue;
+	text-decoration: underline;
+}
+
+a:hover {
+	color: lightblue;
+	text-decoration: none;
+}
+
+a:active {
+	color: lightblue;
+	text-decoration: underline;
+}
