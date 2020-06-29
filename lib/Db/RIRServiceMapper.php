@@ -45,8 +45,10 @@ class RIRServiceMapper extends QBMapper {
 	public function getCountryCodeIpImpl(int $ip, string $is_ip_v6): string {
 		$qb = $this->db->getQueryBuilder();
 
-		$expr1 = $qb->expr()->lte('begin_ip_range', strval($ip));
-		$expr2 = $qb->expr()->eq('is_ip_v6', $is_ip_v6);
+		$expr1 = $qb->expr()->lte('begin_ip_range',
+				$qb->createNamedParameter($ip));
+		$expr2 = $qb->expr()->eq('is_ip_v6',
+				$qb->createNamedParameter($is_ip_v6));
 
 		$qb->select('*')->from($this->getTableName())->where(
 				$qb->expr()->andX($expr1, $expr2));
@@ -68,7 +70,7 @@ class RIRServiceMapper extends QBMapper {
 
 	public function getNumberOfEntries(): int {
 		$qb = $this->db->getQueryBuilder();
-		$qb->select($qb->func()->count('*'))->from($this->getTableName());	
+		$qb->select($qb->func()->count('*'))->from($this->getTableName());
 		$res = $this->findOneQuery($qb);
 		return intval($res['COUNT(*)']);
 	}

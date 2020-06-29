@@ -124,8 +124,8 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 					$this->l->t(
 							'The database is currently updating. Please wait until update is finished. This may take several minutes.');
 		}
-		return $service_string_error . ' ' . $this->l->t(
-				'Something is missing.');
+		return $service_string_error . ' ' .
+				$this->l->t('Something is missing.');
 	}
 
 	public function getCountryCodeFromIP(string $ip_address): string {
