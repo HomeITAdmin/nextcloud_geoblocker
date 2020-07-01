@@ -43,6 +43,7 @@
     "is local." : "est local.",
     "is external." : "est externe.",
     "Determination of the country from IP address is only as good as the chosen service." : "La qualité de la détection du pays en fonction de l'adresse IP dépend du service choisi.",
+    "repository" : "dépôt",
     "Service" : "Service",
     "Choose the service you want to use to determine the country from the IP Address:" : "Choisissez le service que vous voulez utiliser pour déterminer le pays en fonction de l'adresse IP:",
     "Status of the chosen service: " : "Statut du service choisi:",
