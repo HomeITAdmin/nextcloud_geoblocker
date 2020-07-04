@@ -45,6 +45,7 @@ OC.L10N.register(
     "is local." : "est local.",
     "is external." : "est externe.",
     "Determination of the country from IP address is only as good as the chosen service." : "La qualité de la détection du pays en fonction de l'adresse IP dépend du service choisi.",
+    "For help how to setup the localization services, have a look into the Readme in the " : "Pour obtenir de l'aide sur la configuration des services de localisation, merci de consulter le Readme",
     "repository" : "dépôt",
     "Service" : "Service",
     "Choose the service you want to use to determine the country from the IP Address:" : "Choisissez le service que vous voulez utiliser pour déterminer le pays en fonction de l'adresse IP:",
