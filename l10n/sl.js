@@ -238,6 +238,7 @@ OC.L10N.register(
     "El Salvador" : "El Salvador",
     "Sint Maarten (Dutch part)" : "Sveti Martin (nizozemski del)",
     "Syrian Arab Republic" : "Sirska arabska republika",
+    "Eswatini" : "Esvatini",
     "Turks and Caicos Islands" : "Otoki Turks in Caicos",
     "Chad" : "Čad",
     "French Southern Territories" : "Francoski južni teritorij",
