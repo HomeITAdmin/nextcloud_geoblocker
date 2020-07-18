@@ -83,9 +83,9 @@ $loading = $l->t('Loading').'...';
 			<p class="subsection">
 				<select name="choose-white-black-list" id="choose-white-black-list">
 					<option value="0"
-						<?php if (!$_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('No country is blocked but the selected ones (blacklist)'))?></option>
+						<?php if (!$_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('No country is blocked but the selected ones (blocklist)'))?></option>
 					<option value="1"
-						<?php if ($_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('All countries are blocked but the selected ones (whitelist)'))?></option>
+						<?php if ($_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('All countries are blocked but the selected ones (allowlist)'))?></option>
 				</select> 
 			</p>
 			
