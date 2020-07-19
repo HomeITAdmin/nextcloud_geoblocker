@@ -57,8 +57,6 @@ OC.L10N.register(
     "Update Database" : "Aggiorna database",
     "Country Selection" : "Selezione nazione",
     "Choose the selection mode" : "Scegli la modalità di selezione",
-    "No country is blocked but the selected ones (blacklist)" : "Nessuna nazione è bloccata tranne quelle selezionate (lista nera)",
-    "All countries are blocked but the selected ones (whitelist)" : "Tutte le nazioni sono bloccate tranne quelle selezionate (lista bianca)",
     "Select countries from list" : "Seleziona le nazioni dall'elenco",
     "The following countries were selected in the list above: " : "Sono state selezionate le seguenti nazioni nell'elenco in alto:",
     "Reaction" : "Reazione",

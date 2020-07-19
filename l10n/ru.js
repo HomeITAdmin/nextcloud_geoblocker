@@ -31,8 +31,6 @@ OC.L10N.register(
     "Location of the database: " : "Расположение базы данных:",
     "Country Selection" : "Выбор стран",
     "Choose the selection mode" : "Режим работы:",
-    "No country is blocked but the selected ones (blacklist)" : "Блокировать только выбранные страны (чёрный список)",
-    "All countries are blocked but the selected ones (whitelist)" : "Не блокировать только выбранные страны (белый список)",
     "Select countries from list" : "Выберите стран из стписка",
     "The following countries were selected in the list above: " : "Выбраны следующие страны:",
     "Reaction" : "Действия",

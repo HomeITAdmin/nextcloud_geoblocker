@@ -57,8 +57,6 @@ OC.L10N.register(
     "Update Database" : "Aktualizovať databázu",
     "Country Selection" : "Výber krajiny",
     "Choose the selection mode" : "Zvoľte režim výberu",
-    "No country is blocked but the selected ones (blacklist)" : "Žiadna krajina nie je blokovaná okrem vybraných (čierna listina)",
-    "All countries are blocked but the selected ones (whitelist)" : "Všetky krajiny sú blokované okrem vybraných (biely zoznam)",
     "Select countries from list" : "Vyberte krajiny zo zoznamu",
     "The following countries were selected in the list above: " : "Z vyššie uvedeného zoznamu boli vybrané nasledujúce krajiny:",
     "Reaction" : "Reakcia",

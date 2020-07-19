@@ -29,8 +29,6 @@
     "Location of the database: " : "Lokacija baze podataka: ",
     "Country Selection" : "Odabir države",
     "Choose the selection mode" : "Odaberite način biranja",
-    "No country is blocked but the selected ones (blacklist)" : "Blokiraju se samo odabrane države (crna lista)",
-    "All countries are blocked but the selected ones (whitelist)" : "Blokiraju se sve države osim odabranih (bijela lista)",
     "Select countries from list" : "Odaberite države s popisa",
     "The following countries were selected in the list above: " : "Odabrane su sljedeće države s gornjeg popisa: ",
     "Reaction" : "Reakcija",

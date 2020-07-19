@@ -57,8 +57,6 @@ OC.L10N.register(
     "Update Database" : "Veritabanını Güncelle",
     "Country Selection" : "Ülke Seçimi",
     "Choose the selection mode" : "Seçim kipini seçin",
-    "No country is blocked but the selected ones (blacklist)" : "Seçilmişler dışındaki hiç bir ülke engellenmez (kara liste)",
-    "All countries are blocked but the selected ones (whitelist)" : "Seçilmişler dışındaki tüm ülkeler engellenir (beyaz liste)",
     "Select countries from list" : "Listeden ülkeleri seçin",
     "The following countries were selected in the list above: " : "Aşağıdaki ülkeler yukarıdaki listeden seçilmiş:",
     "Reaction" : "Tepki",

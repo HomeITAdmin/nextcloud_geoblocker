@@ -24,8 +24,6 @@ OC.L10N.register(
     "Status of the chosen service: " : "被选中服务的状态：",
     "Country Selection" : "国家选择",
     "Choose the selection mode" : "选取选择模式",
-    "No country is blocked but the selected ones (blacklist)" : "除被选中的国家外，其它国家都不会被阻止。（黑名单）",
-    "All countries are blocked but the selected ones (whitelist)" : "除了被选中的国家，其它国家都会被阻止。（白名单）",
     "Select countries from list" : "从列表中选择国家/地区",
     "The following countries were selected in the list above: " : "在上面的列表中选择了以下国家：",
     "Reaction" : "响应",

@@ -21,8 +21,6 @@
     "Location of the database: " : "מיקום מסד הנתונים:",
     "Country Selection" : "בחירת מדינות",
     "Choose the selection mode" : "אופן בחירה מועדף",
-    "No country is blocked but the selected ones (blacklist)" : "אף מדינה לא חסומה למעט הנבחרות (רשימת חסימה)",
-    "All countries are blocked but the selected ones (whitelist)" : "כל המדינות חסומות למעט הנבחרות (רשימת היתר)",
     "Select countries from list" : "נא לבחור ארצות מהרשימה",
     "Reaction" : "תגובה",
     "with IP Address" : "עם כתובת IP",

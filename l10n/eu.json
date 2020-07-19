@@ -11,8 +11,6 @@
     "Update Database" : "Eguneratu datu-basea",
     "Country Selection" : "Herrialde hautaketa",
     "Choose the selection mode" : "Aukeratu hautaketa modua",
-    "No country is blocked but the selected ones (blacklist)" : "Ez da herrialderik blokeatzen hautatuak izan ezik (zerrenda beltza)",
-    "All countries are blocked but the selected ones (whitelist)" : "Herrialde guztiak daude blokeatuta hautatuak izan ezik (zerrenda zuria)",
     "Select countries from list" : "Aukeratu herrialdeak zerrendatik",
     "Reaction" : "Erreakzioa",
     "with IP Address" : "IP helbidearekin",
