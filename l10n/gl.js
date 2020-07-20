@@ -57,6 +57,8 @@ OC.L10N.register(
     "Update Database" : "Actualizar a base de datos",
     "Country Selection" : "Selección do país",
     "Choose the selection mode" : "Escoller o modo de selección",
+    "No country is blocked but the selected ones (blocklist)" : "Non se bloqueou ningún país agás os seleccionados (lista de bloqueo)",
+    "All countries are blocked but the selected ones (allowlist)" : "Bloquéanse todos os países, agás os seleccionados (lista permitida)",
     "Select countries from list" : "Seleccionar países da lista",
     "The following countries were selected in the list above: " : "Na lista anterior foron seleccionados os seguintes países:",
     "Reaction" : "Reacción",
