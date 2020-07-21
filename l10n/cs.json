@@ -55,6 +55,8 @@
     "Update Database" : "Zaktualizovat databázi",
     "Country Selection" : "Výběr země",
     "Choose the selection mode" : "Zvolte režim výběru",
+    "No country is blocked but the selected ones (blocklist)" : "Není blokována žádná země kromě těch, které jste označili (blocklist)",
+    "All countries are blocked but the selected ones (allowlist)" : "Blokovány jsou všechny země kromě těch, které jste označili (allowlist)",
     "Select countries from list" : "Vyberte země ze seznamu",
     "The following countries were selected in the list above: " : "Ve výše uvedeném seznamu byly vybrány následující země:",
     "Reaction" : "Reakce",

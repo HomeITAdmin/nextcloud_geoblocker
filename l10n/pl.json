@@ -55,6 +55,8 @@
     "Update Database" : "Aktualizacja bazy danych",
     "Country Selection" : "Wybór kraju",
     "Choose the selection mode" : "Wybierz tryb wyboru",
+    "No country is blocked but the selected ones (blocklist)" : "Żaden kraj nie będzie zablokowany, oprócz wybranych (lista zablokowanych)",
+    "All countries are blocked but the selected ones (allowlist)" : "Wszystkie kraje będą zablokowane, oprócz wybranych (lista dozwolonych)",
     "Select countries from list" : "Wybierz kraje z listy",
     "The following countries were selected in the list above: " : "Następujące kraje zostały wybrane z powyższej listy:",
     "Reaction" : "Reakcja",

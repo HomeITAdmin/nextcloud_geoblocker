@@ -55,6 +55,8 @@
     "Update Database" : "Atualizar Banco de Dados",
     "Country Selection" : "Seleção de País",
     "Choose the selection mode" : "Escolher o modo de seleção",
+    "No country is blocked but the selected ones (blocklist)" : "Nenhum país está bloqueado, apenas os selecionados (lista de bloqueio)",
+    "All countries are blocked but the selected ones (allowlist)" : "Todos os países estão bloqueados, exceto os selecionados (lista de permissões)",
     "Select countries from list" : "Selecionar países da lista",
     "The following countries were selected in the list above: " : "Os seguintes países foram selecionados na lista acima:",
     "Reaction" : "Reação",
