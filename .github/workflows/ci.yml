@@ -18,5 +18,5 @@ jobs:
     - name: Markdown Linting Action
       uses: avto-dev/markdown-lint@v1.3.1
       with:
-        rules: /.github/workflows/markdown_rules
+        config: /.github/workflows/markdown_rules
         args: '*.md'
