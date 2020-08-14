@@ -61,13 +61,13 @@ Using the geoiolookip programm available on some linux distributions:
 Using the MaxMind GeoLite2 PHP API:
 
 - Precondition
-  - Free API key needed for 
+  - Free API key needed for
   [MaxMind GeoLite2](https://www.maxmind.com/en/geolite2/signup).
 - Installation
   - Download the file "geoip2.phar" to the folder "3rdparty/maxmind_geolite2/"
-  inside the GeoBlocker app folder from the MaxMind GeoIP2 
+  inside the GeoBlocker app folder from the MaxMind GeoIP2
   [release page](https://github.com/maxmind/GeoIP2-php/releases).
-  - Download the latest country database to 
+  - Download the latest country database to
   "/usr/share/GeoIP/GeoLite2-Country.mmdb". E.g.:
     - On Debian based systems: sudo apt-get install geoipupdate
       - For this the "contrib" archiv must be activ.
@@ -94,7 +94,7 @@ Using the information from the Regional Internet Registries (RIRs):
   information from the RIRs.
   - PHP GMP (GNU Multiple Precision) extension must be installed and activated all
   the time. It is needed for the update process and to assign IPs to countries
-  during login. Have a look in the 
+  during login. Have a look in the
   [PHP manual](https://www.php.net/manual/en/book.gmp.php).
 - Installation
   - No installastion outside from Nextcloud is needed on the host.
@@ -111,18 +111,18 @@ Using the information from the Regional Internet Registries (RIRs):
 ## Fail2ban
 
 Until the blocking feature is implemented you can achive some blocking by using
-fail2ban, relying on the logging feature. Make sure that at least the IP address is
-included in the logging and the logging time is correct. The following parameters
-should help to create the filter for fail2ban in English:
+fail2ban, relying on the logging feature. Make sure that at least the IP address
+is included in the logging and the logging time is correct. The following
+parameters should help to create the filter for fail2ban in English:
 
 ```cfg
 datepattern = %%Y-%%m-%%dT%%H:%%M:%%S
 failregex = ^.*The user .+ logged in with IP address \\"<HOST>.+  from blocked country .+$
 ```
 
-Defining the jail is then straight forward. For "maxretry" only 1 makes sense to be
-as close to a blocking of the login as possible. But the first request is maybe not
-blocked still.
+Defining the jail is then straight forward. For "maxretry" only 1 makes sense to
+be as close to a blocking of the login as possible. But the first request is
+maybe not blocked still.
 
 ## Personal remark
 
