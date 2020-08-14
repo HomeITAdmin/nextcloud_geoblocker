@@ -22,8 +22,8 @@ jobs:
         config: .github/lint/markdown-lint.yml
         args: '*.md'
         
-    - name: PHP Lint
-      uses: michaelw90/PHP-Lint@2.0.0    
+    - name: OSKAR-PHP-CS-Fixer
+      uses: OskarStark/php-cs-fixer-ga@2.16.4
     
     #- name: GitHub Action for PHPUnit
     #  uses: owenvoke/phpunit-action@v1.0.0
