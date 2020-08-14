@@ -16,13 +16,13 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Markdown Linting Action
-      #uses: avto-dev/markdown-lint@v1.3.1
-      uses: docker://avtodev/markdown-lint:v1.3.1
+      uses: avto-dev/markdown-lint@v1.3.1
+      #uses: docker://avtodev/markdown-lint:v1.3.1
       with:
         config: .github/lint/markdown-lint.yml
         args: '*.md'
         
-    - name: GitHub Action for PHPUnit
-      uses: owenvoke/phpunit-action@v1.0.0
-      with:
-        command: phpunit.all.xml
+    #- name: GitHub Action for PHPUnit
+    #  uses: owenvoke/phpunit-action@v1.0.0
+    #  with:
+    #    command: phpunit.all.xml
