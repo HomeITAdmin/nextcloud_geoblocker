@@ -1,0 +1,17 @@
+
+name: CI
+
+on:
+  workflow_dispatch:  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Markdown Linting Action
+      uses: avto-dev/markdown-lint@v1.3.1
+      with:
+        args: '*.md'
