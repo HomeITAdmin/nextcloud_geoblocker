@@ -21,3 +21,8 @@ jobs:
       with:
         config: .github/lint/markdown-lint.yml
         args: '*.md'
+        
+    - name: GitHub Action for PHPUnit
+      uses: owenvoke/phpunit-action@v1.0.0
+      with:
+        command: vendor/phpunit/phpunit/phpunit -c phpunit.all.xml
