@@ -6,14 +6,14 @@
 	<summary>Blocks user depending on the estimated country of thier IP address.</summary>
 	<description><![CDATA[This is a front end to geo localization services, that allows blocking (currently only logging is possible!) of login attempts from specified countries. (Early Version)
 
-Countries can be specified using whitelisting or blacklisting.
+Countries can be specified using allow or blocklisting.
 
 Currently available localization services are:
 - Geoiplookup (local programm on the host)
 - MaxMind GeoLite2 (local database accessed via PHP API)
-- Data from Reginal Internet Registries (Nextcloud SQL Database build up with data downloaded from the RIRs FTP servers)
+- Data from Reginal Internet Registries (Nextcloud SQL database build up with data downloaded from the RIRs FTP servers)
 
-For help how to set up the localization services please have a look at the Github repository (homepage on the right side).]]></description>
+For help how to set up the localization services please have a look at the GitHub repository (homepage on the right side).]]></description>
 	<version>0.3.2</version>
 	<licence>agpl</licence>
 	<author mail="homeitadmin@seypro.de">HomeITAdmin</author>
