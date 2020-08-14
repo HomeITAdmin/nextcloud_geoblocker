@@ -130,5 +130,3 @@ Besides the hopefully helpful functionality of the app, it is a learning project
 for Open Source, Nextcloud App API, PHP, Javascript, HTML, CSS, Clean Coding and
 Github for me. All kind of feedback, constructive crtiticism and contributions are
 highly welcome.
-
-<!-- markdownlint-configure-file { "MD013": { "code_blocks": false } } -->
