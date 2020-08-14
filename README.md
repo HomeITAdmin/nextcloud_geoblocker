@@ -46,7 +46,7 @@ Using the geoiolookip programm available on some linux distributions:
 Using the MaxMind GeoLite2 PHP API:
 
 - Precondition
-  - Free API key needed for MaxMind GeoLite2 from https://www.maxmind.com/en/geolite2/signup.
+  - Free API key needed for [MaxMind GeoLite2](ttps://www.maxmind.com/en/geolite2/signup).
 - Installation
   - Download the file "geoip2.phar" to the folder "3rdparty/maxmind_geolite2/" inside the GeoBlocker app folder from the MaxMind GeoIP2 [release page](https://github.com/maxmind/GeoIP2-php/releases).
   - Download the latest country database to "/usr/share/GeoIP/GeoLite2-Country.mmdb". E.g.:
@@ -83,7 +83,7 @@ Using the information from the Regional Internet Registries (RIRs):
 
 Until the blocking feature is implemented you can achive some blocking by using fail2ban, relying on the logging feature. Make sure that at least the IP address is included in the logging and the logging time is correct. The following parameters should help to create the filter for fail2ban in English:
 
-```
+```cfg
 datepattern = %%Y-%%m-%%dT%%H:%%M:%%S
 failregex = ^.*The user .+ logged in with IP address \\"<HOST>.+  from blocked country .+$
 ```
