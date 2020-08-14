@@ -19,5 +19,5 @@ jobs:
       #uses: avto-dev/markdown-lint@v1.3.1
       uses: docker://avtodev/markdown-lint:v1.3.1
       with:
-        config: ${{GITHUB_WORKSPACE}}/.github/lint/markdown-lint.yml
+        config: .github/lint/markdown-lint.yml
         args: '*.md'
