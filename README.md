@@ -30,23 +30,16 @@ There are serveral location services available. The app is only the frontend for
 
 Using the geoiolookip programm available on some linux distributions:
 
-#### Precondition
-
-- PHP must be allowed to use the exec() method. This is configured in the php.ini.
-
-#### Installation
-
-- The geoiplookup and geoiplookup6 commands must be installed on the nextloud host.
-  - On Debian based systems: sudo apt-get install geoip-bin geoip-database
-  
-#### Advantages
-
-- The lookup of the IP address is local, so probably faster and no external service get the information which IPs are loggin into the nextcloud instance.
-
-#### Disadvantages
-
-- Precondition must be fullfilled.
-- Installation efforts needed from the administrator.
+- Precondition
+  - PHP must be allowed to use the exec() method. This is configured in the php.ini.
+- Installation
+  - The geoiplookup and geoiplookup6 commands must be installed on the nextloud host.
+    - On Debian based systems: sudo apt-get install geoip-bin geoip-database
+- Advantages
+  - The lookup of the IP address is local, so probably faster and no external service get the information which IPs are loggin into the nextcloud instance.
+- Disadvantages
+  - Precondition must be fullfilled.
+  - Installation efforts needed from the administrator.
 
 ### MaxMind GeoLite2
 
@@ -59,47 +52,36 @@ Using the MaxMind GeoLite2 PHP API:
   - Download the latest country database to "/usr/share/GeoIP/GeoLite2-Country.mmdb". E.g.:
     - On Debian based systems: sudo apt-get install geoipupdate
       - For this the "contrib" archiv must be activ.
-    - Add the API key information to "/etc/GeoIP.conf" 
+    - Add the API key information to "/etc/GeoIP.conf"
     - run "sudo geoipupdate"
   - For Docker user: See [#20](https://github.com/HomeITAdmin/nextcloud_geoblocker/issues/20) how to use a seperate container to do the update of the database.
-
-#### Advantages
-
-- The lookup of the IP address is local, so probably faster and no external service get the information which IPs are loggin into the nextcloud instance.
-
-#### Disadvantages
-
-- API key needed.
-- Installation efforts needed from the administrator.
+- Advantages
+  - The lookup of the IP address is local, so probably faster and no external service get the information which IPs are loggin into the nextcloud instance.
+- Disadvantages
+  - API key needed.
+  - Installation efforts needed from the administrator.
 
 ### Data from Regional Internet Registries (RIRs) (Beta)
 
 Using the information from the Regional Internet Registries (RIRs):
 
-#### Precondition
-
-- PHP configuration "allow_url_fopen" must be true during the update process to download the information from the RIRs. This is configured in the php.ini.
-- Internet connection is needed during the update process to download the information from the RIRs.
-- PHP GMP (GNU Multiple Precision) extension must be installed and activated all the time. It is needed for the update process and to assign IPs to countries during login. Have a look [here](https://www.php.net/manual/en/book.gmp.php).
-
-#### Installation
-
-- No installastion outside from Nextcloud is needed on the host. 
-- When the update is started in the settings section, the data which country got which IP address ranges is downloaded from the RIRs FTP servers.
-
-#### Advantages
-
-- The lookup of the IP address is local, so probably faster and no external service get the information which IPs are loging into the nextcloud instance.
-- No installation needed.
-
-#### Disadvantages
-
-- Preconditions need to be fulfilled.
-- Currently not functional during update.
+- Precondition
+  - PHP configuration "allow_url_fopen" must be true during the update process to download the information from the RIRs. This is configured in the php.ini.
+  - Internet connection is needed during the update process to download the information from the RIRs.
+  - PHP GMP (GNU Multiple Precision) extension must be installed and activated all the time. It is needed for the update process and to assign IPs to countries during login. Have a look in the [PHP manual](https://www.php.net/manual/en/book.gmp.php).
+- Installation
+  - No installastion outside from Nextcloud is needed on the host.
+  - When the update is started in the settings section, the data which country got which IP address ranges is downloaded from the RIRs FTP servers.
+- Advantages
+  - The lookup of the IP address is local, so probably faster and no external service get the information which IPs are loging into the nextcloud instance.
+  - No installation needed.
+- Disadvantages
+  - Preconditions need to be fulfilled.
+  - Currently not functional during update.
 
 ## Fail2ban
 
-Until the blocking feature is implemented you can achive some blocking by using fail2ban, relying on the logging feature. Make sure that at least the IP address is included in the logging and the logging time is correct. The following parameters should help to create the filter for fail2ban in English: 
+Until the blocking feature is implemented you can achive some blocking by using fail2ban, relying on the logging feature. Make sure that at least the IP address is included in the logging and the logging time is correct. The following parameters should help to create the filter for fail2ban in English:
 
 ```
 datepattern = %%Y-%%m-%%dT%%H:%%M:%%S
@@ -110,4 +92,4 @@ Defining the jail is then straight forward. For "maxretry" only 1 makes sense to
 
 ## Personal remark
 
-Besides the hopefully helpful functionality of the app, it is a learning project for Open Source, Nextcloud App API, PHP, Javascript, HTML, CSS, Clean Coding and Github for me. All kind of feedback, constructive crtiticism and contributions are highly welcome. 
+Besides the hopefully helpful functionality of the app, it is a learning project for Open Source, Nextcloud App API, PHP, Javascript, HTML, CSS, Clean Coding and Github for me. All kind of feedback, constructive crtiticism and contributions are highly welcome.
