@@ -44,6 +44,7 @@ Using the geoiolookip programm available on some linux distributions:
 - The lookup of the IP address is local, so probably faster and no external service get the information which IPs are loggin into the nextcloud instance.
 
 #### Disadvantages
+
 - Precondition must be fullfilled.
 - Installation efforts needed from the administrator.
 
@@ -51,18 +52,16 @@ Using the geoiolookip programm available on some linux distributions:
 
 Using the MaxMind GeoLite2 PHP API:
 
-#### Precondition
-- Free API key needed for MaxMind GeoLite2 from https://www.maxmind.com/en/geolite2/signup.
-
-#### Installation 
-
-- Download the file "geoip2.phar" to the folder "3rdparty/maxmind_geolite2/" inside the GeoBlocker app folder from the MaxMind GeoIP2 [release page](https://github.com/maxmind/GeoIP2-php/releases).
-- Download the latest country database to "/usr/share/GeoIP/GeoLite2-Country.mmdb". E.g.:
-  - On Debian based systems: sudo apt-get install geoipupdate
-    - For this the "contrib" archiv must be activ.
-  - Add the API key information to "/etc/GeoIP.conf" 
-  - run "sudo geoipupdate"
-- For Docker user: See [#20](https://github.com/HomeITAdmin/nextcloud_geoblocker/issues/20) how to use a seperate container to do the update of the database.
+- Precondition
+  - Free API key needed for MaxMind GeoLite2 from https://www.maxmind.com/en/geolite2/signup.
+- Installation
+  - Download the file "geoip2.phar" to the folder "3rdparty/maxmind_geolite2/" inside the GeoBlocker app folder from the MaxMind GeoIP2 [release page](https://github.com/maxmind/GeoIP2-php/releases).
+  - Download the latest country database to "/usr/share/GeoIP/GeoLite2-Country.mmdb". E.g.:
+    - On Debian based systems: sudo apt-get install geoipupdate
+      - For this the "contrib" archiv must be activ.
+    - Add the API key information to "/etc/GeoIP.conf" 
+    - run "sudo geoipupdate"
+  - For Docker user: See [#20](https://github.com/HomeITAdmin/nextcloud_geoblocker/issues/20) how to use a seperate container to do the update of the database.
 
 #### Advantages
 
