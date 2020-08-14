@@ -23,7 +23,7 @@ jobs:
         args: '*.md'
         
     - name: PHP Lint
-      uses: michaelw90/PHP-Lint@2.0.1    
+      uses: michaelw90/PHP-Lint@2.0.0    
     
     #- name: GitHub Action for PHPUnit
     #  uses: owenvoke/phpunit-action@v1.0.0
