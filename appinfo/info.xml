@@ -6,7 +6,7 @@
 	<summary>Blocks user depending on the estimated country of thier IP address.</summary>
 	<description><![CDATA[This is a front end to geo localization services, that allows blocking (currently only logging is possible!) of login attempts from specified countries. (Early Version)
 
-Countries can be specified using allow or blocklisting.
+Countries can be specified using allowlisting or blocklisting.
 
 Currently available localization services are:
 - Geoiplookup (local programm on the host)
