@@ -14,7 +14,6 @@ Determination of the country from IP address is only as good as the chosen servi
 
 You can activate the latest release version of the app in the "Apps" configuration section of your Nextcloud server when logged in as administrator.
 
-
 ## General hints for installation
 
 As for other blocking apps like brute force protection it is important, that the actual IP address from the client is reaching the app and not the address from something inbetween.
@@ -23,12 +22,13 @@ One commone source of problems are reverse proxys. Make sure that it is correctl
 
 A second source of problems are container environments like Docker. Here also the right configuration for these config variables should help. It can make the configuration easier, if you make sure that the containers always have the same internal IP addresses.
 
-
 ## How to activate the location services
+
 There are serveral location services available. The app is only the frontend for the location service, so the services need to be installed by the administrator correctly, that the app can work correctly.
 
-
 ### Geoiplookup
+
+Using the geoiolookip programm available on some linux distributions:
 
 #### Precondition
 
@@ -47,8 +47,9 @@ There are serveral location services available. The app is only the frontend for
 - Precondition must be fullfilled.
 - Installation efforts needed from the administrator.
 
-
 ### MaxMind GeoLite2
+
+Using the MaxMind GeoLite2 PHP API:
 
 #### Precondition
 - Free API key needed for MaxMind GeoLite2 from https://www.maxmind.com/en/geolite2/signup.
@@ -72,8 +73,9 @@ There are serveral location services available. The app is only the frontend for
 - API key needed.
 - Installation efforts needed from the administrator.
 
-
 ### Data from Regional Internet Registries (RIRs) (Beta)
+
+Using the information from the Regional Internet Registries (RIRs):
 
 #### Precondition
 
@@ -96,7 +98,6 @@ There are serveral location services available. The app is only the frontend for
 - Preconditions need to be fulfilled.
 - Currently not functional during update.
 
-
 ## Fail2ban
 
 Until the blocking feature is implemented you can achive some blocking by using fail2ban, relying on the logging feature. Make sure that at least the IP address is included in the logging and the logging time is correct. The following parameters should help to create the filter for fail2ban in English: 
@@ -107,7 +108,6 @@ failregex = ^.*The user .+ logged in with IP address \\"<HOST>.+  from blocked c
 ```
 
 Defining the jail is then straight forward. For "maxretry" only 1 makes sense to be as close to a blocking of the login as possible. But the first request is maybe not blocked still.
-
 
 ## Personal remark
 
