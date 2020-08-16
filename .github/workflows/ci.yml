@@ -1,5 +1,5 @@
 
-name: CI
+name: Lint
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  Markdown:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,6 +21,40 @@ jobs:
       with:
         config: .github/lint/markdown-lint.yml
         args: '*.md'
+        
+  php:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-versions: ['7.2', '7.3', '7.4']
+
+    name: php${{ matrix.php-versions }} lint
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up php${{ matrix.php-versions }}
+        uses: shivammathur/setup-php@v1
+        with:
+          php-version: ${{ matrix.php-versions }}
+          coverage: none
+      - name: Lint
+        run: composer run lint
+
+  php-cs-fixer:
+    name: php-cs check
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Set up php
+      uses: shivammathur/setup-php@master
+      with:
+        php-version: 7.4
+        coverage: none
+    - name: Install dependencies
+      run: composer i
+    - name: Run coding standards check
+      run: composer run cs:check  
     
     #- name: GitHub Action for PHPUnit
     #  uses: owenvoke/phpunit-action@v1.0.0
