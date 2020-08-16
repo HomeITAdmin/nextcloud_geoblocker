@@ -4,7 +4,6 @@
 [![GitHub Releases](https://img.shields.io/github/downloads/homeitadmin/nextcloud_geoblocker/latest/total)](https://github.com/HomeITAdmin/nextcloud_geoblocker/releases)
 [![GitHub All Releases](https://img.shields.io/github/downloads/homeitadmin/nextcloud_geoblocker/total)](https://github.com/HomeITAdmin/nextcloud_geoblocker/releases)
 [![GitHub](https://img.shields.io/github/license/homeitadmin/nextcloud_geoblocker)](https://github.com/HomeITAdmin/nextcloud_geoblocker/blob/master/COPYING)
-![CI](https://github.com/HomeITAdmin/nextcloud_geoblocker/workflows/CI/badge.svg?branch=master)
 
 This is a server side app for a [nextcloud](https://nextcloud.com/) instance.
 This is a front end to geo localization services, that allows blocking
