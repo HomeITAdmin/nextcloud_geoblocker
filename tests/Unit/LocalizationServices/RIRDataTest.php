@@ -28,6 +28,9 @@ class RIRDataTest extends TestCase {
 
 	public function testDummy() {
 		$this->assertTrue(true);
+		$this->markTestIncomplete(
+				'This test has not been implemented yet.'
+				);
 	}
 
 	public function callbackLTJustRouteThrough(string $in): string {

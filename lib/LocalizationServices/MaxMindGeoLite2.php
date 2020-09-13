@@ -4,7 +4,7 @@ declare(strict_types = 1)
 
 namespace OCA\GeoBlocker\LocalizationServices;
 
-include __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' .
+@include __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' .
 		DIRECTORY_SEPARATOR . '3rdparty' . DIRECTORY_SEPARATOR .
 		'maxmind_geolite2' . DIRECTORY_SEPARATOR . '' . 'geoip2.phar';
 
@@ -62,15 +62,19 @@ class MaxMindGeoLite2 implements ILocalizationService, IDatabaseDate,
 	}
 
 	public function getCountryCodeFromIP($ip_address): string {
-		try {
-			$reader = new Reader($this->database_file_location);
+		if ($this->getStatus()) {
 			try {
-				$record = $reader->country($ip_address);
-			} catch (AddressNotFoundException $e) {
-				return 'AA';
+				$reader = new Reader($this->database_file_location);
+				try {
+					$record = $reader->country($ip_address);
+				} catch (AddressNotFoundException $e) {
+					return 'AA';
+				}
+				return $record->country->isoCode;
+			} catch (InvalidDatabaseException | InvalidArgumentException $e) {
+				return 'UNAVAILABLE';
 			}
-			return $record->country->isoCode;
-		} catch (InvalidDatabaseException | InvalidArgumentException $e) {
+		} else {
 			return 'UNAVAILABLE';
 		}
 	}
