@@ -8,3 +8,4 @@ composer.lock
 node_modules
 package-lock.json
 build/
+.php_cs.cache
