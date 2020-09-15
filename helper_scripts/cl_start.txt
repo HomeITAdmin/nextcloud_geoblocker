@@ -7,8 +7,7 @@ AI	Anguilla
 AL	Albania
 AM	Armenia
 AO	Angola
-AQ	Antarctica
-	
+AQ	Antarctica	
 AR	Argentina
 AS	American Samoa
 AT	Austria
@@ -29,16 +28,13 @@ BL	Saint Barthélemy
 BM	Bermuda
 BN	Brunei Darussalam
 BO	Bolivia (Plurinational State of)
-BQ	Bonaire, Sint Eustatius and Saba
-	
-	
+BQ	Bonaire, Sint Eustatius and Saba	
 BR	Brazil
 BS	Bahamas
 BT	Bhutan
 BV	Bouvet Island
 BW	Botswana
-BY	Belarus
-	
+BY	Belarus	
 BZ	Belize
 CA	Canada
 CC	Cocos (Keeling) Islands
@@ -59,8 +55,7 @@ CW	Curaçao
 CX	Christmas Island
 CY	Cyprus
 CZ	Czechia
-DE	Germany
-	
+DE	Germany	
 DJ	Djibouti
 DK	Denmark
 DM	Dominica
@@ -69,8 +64,7 @@ DZ	Algeria
 EC	Ecuador
 EE	Estonia
 EG	Egypt
-EH	Western Sahara
-	
+EH	Western Sahara	
 ER	Eritrea
 ES	Spain
 ET	Ethiopia
@@ -81,8 +75,7 @@ FM	Micronesia (Federated States of)
 FO	Faroe Islands
 FR	France
 GA	Gabon
-GB	United Kingdom of Great Britain and Northern Ireland
-	
+GB	United Kingdom of Great Britain and Northern Ireland	
 GD	Grenada
 GE	Georgia
 GF	French Guiana
@@ -189,8 +182,7 @@ PL	Poland
 PM	Saint Pierre and Miquelon
 PN	Pitcairn
 PR	Puerto Rico
-PS	Palestine, State of
-	
+PS	Palestine, State of	
 PT	Portugal
 PW	Palau
 PY	Paraguay
@@ -224,7 +216,6 @@ SZ	Eswatini
 TC	Turks and Caicos Islands
 TD	Chad
 TF	French Southern Territories
-	
 TG	Togo
 TH	Thailand
 TJ	Tajikistan
@@ -237,18 +228,14 @@ TR	Turkey
 TT	Trinidad and Tobago
 TV	Tuvalu
 TW	Taiwan, Province of China
-	
 TZ	Tanzania, United Republic of
 UA	Ukraine
-	
 UG	Uganda
 UM	United States Minor Outlying Islands
-	
 US	United States of America
 UY	Uruguay
 UZ	Uzbekistan
 VA	Holy See
-	
 VC	Saint Vincent and the Grenadines
 VE	Venezuela (Bolivarian Republic of)
 VG	Virgin Islands (British)
@@ -258,9 +245,7 @@ VU	Vanuatu
 WF	Wallis and Futuna
 WS	Samoa
 YE	Yemen
-	
 YT	Mayotte
 ZA	South Africa
 ZM	Zambia
 ZW	Zimbabwe
-
