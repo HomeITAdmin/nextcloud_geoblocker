@@ -2,7 +2,7 @@
 declare(strict_types = 1)
 	;
 
-namespace OCA\Geoblocker\Tests\Unit\LocalizationService;
+namespace OCA\GeoBlocker\Tests\Unit\LocalizationService;
 
 use PHPUnit\Framework\TestCase;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;

@@ -2,7 +2,7 @@
 declare(strict_types = 1)
 	;
 
-namespace OCA\Geoblocker\Tests\Integration;
+namespace OCA\GeoBlocker\Tests\Integration;
 
 use PHPUnit\Framework\TestCase;
 use OCA\GeoBlocker\GeoBlocker\GeoBlocker;

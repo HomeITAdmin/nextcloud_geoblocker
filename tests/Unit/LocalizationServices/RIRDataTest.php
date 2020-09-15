@@ -2,10 +2,10 @@
 declare(strict_types = 1)
 	;
 
-namespace OCA\Geoblocker\Tests\Unit\LocalizationService;
+namespace OCA\GeoBlocker\Tests\Unit\LocalizationService;
 
-use PHPUnit\Framework\TestCase;
 use OCA\GeoBlocker\LocalizationServices\RIRData;
+use PHPUnit\Framework\TestCase;
 
 class RIRDataTest extends TestCase {
 	protected $config;
@@ -22,20 +22,16 @@ class RIRDataTest extends TestCase {
 		$this->db = $this->getMockBuilder('OCP\IDbConnection')->getMock();
 		$this->l = $this->getMockBuilder('OCP\IL10N')->getMock();
 		$this->l->method('t')->will(
-				$this->returnCallback(array($this,'callbackLTJustRouteThrough')));
+				$this->returnCallback([$this,'callbackLTJustRouteThrough']));
 		$this->rir_data = new RIRData($this->db, $this->config, $this->l);
 	}
 
 	public function testDummy() {
 		$this->assertTrue(true);
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-				);
+		$this->markTestIncomplete('This test has not been implemented yet.');
 	}
 
 	public function callbackLTJustRouteThrough(string $in): string {
 		return $in;
 	}
 }
-
-?>
