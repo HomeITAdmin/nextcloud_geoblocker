@@ -2,11 +2,6 @@
 
 namespace OCA\GeoBlocker\LocalizationServices;
 
-abstract class LocationServiceUpdateStatus {
-	const kUpdateNotPossible = 0;
-	const kUpdatePossible = 1;
-	const kUpdating = 2;
-}
 interface IDatabaseUpdate {
 
 	/**
@@ -43,4 +38,9 @@ interface IDatabaseUpdate {
 	 * @return bool
 	 */
 	public function resetDatabase(): bool;
+}
+abstract class LocationServiceUpdateStatus {
+	const kUpdateNotPossible = 0;
+	const kUpdatePossible = 1;
+	const kUpdating = 2;
 }

@@ -2,7 +2,7 @@
 declare(strict_types = 1)
 	;
 
-namespace OCA\GeoBlocker\Tests\Unit\LocalizationService;
+namespace OCA\GeoBlocker\Tests\Unit\Db;
 
 use PHPUnit\Framework\TestCase;
 use OCA\GeoBlocker\Db\RIRServiceMapper;

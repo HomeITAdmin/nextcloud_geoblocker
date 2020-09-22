@@ -11,7 +11,7 @@ use OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper;
 use OCA\GeoBlocker\LocalizationServices\MaxMindGeoLite2;
 use PHPUnit\Framework\MockObject\Rule\InvokedCount as InvokedCountMatcher;
 
-class GeoblockerIntegrationTest extends TestCase {
+class GeoBlockerIntegrationTest extends TestCase {
 	protected $user;
 	protected $logger;
 	protected $config;

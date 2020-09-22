@@ -11,13 +11,6 @@ use OCA\GeoBlocker\Db\RIRServiceMapper;
 use OCA\GeoBlocker\Db\RIRServiceDBEntity;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
 
-abstract class RIRStatus {
-	public const kDbNotInitialized = 0;
-	public const kDbInitilazing = 1;
-	public const kDbError = 2;
-	public const kDbOk = 3;
-	public const kDbUpdating = 4;
-}
 class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	private $l;
 	private $rir_service_mapper;
@@ -342,4 +335,12 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		$this->setStatusId(RIRStatus::kDbNotInitialized);
 		return true;
 	}
+}
+
+abstract class RIRStatus {
+	public const kDbNotInitialized = 0;
+	public const kDbInitilazing = 1;
+	public const kDbError = 2;
+	public const kDbOk = 3;
+	public const kDbUpdating = 4;
 }
