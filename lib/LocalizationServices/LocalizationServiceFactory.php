@@ -108,7 +108,20 @@ class LocalizationServiceFactory {
 	public function updateDatabaseByID(int $id): bool {
 		if ($this->hasDatabaseUpdateByID($id)) {
 			$location_service = $this->getLocationServiceByID($id);
-			$location_service->updateDatabase();
+			return $location_service->updateDatabase();
+		}
+		return true;
+	}
+	
+	public function resetDatabase(): bool {
+		$id = $this->getCurrentLocationServiceID();
+		return $this->resetDatabaseByID($id);
+	}
+	
+	public function resetDatabaseByID(int $id): bool {
+		if ($this->hasDatabaseUpdateByID($id)) {
+			$location_service = $this->getLocationServiceByID($id);
+			return $location_service->resetDatabase();
 		}
 		return true;
 	}

@@ -29,7 +29,8 @@ For help how to set up the localization services please have a look at the GitHu
 	</dependencies>
 	
 	<commands>
-		<command>OCA\GeoBlocker\Command\RIRData\ResetDB</command>
+		<command>OCA\GeoBlocker\Command\LocalizationService\ResetDB</command>
+		<command>OCA\GeoBlocker\Command\LocalizationService\ListServices</command>
 	</commands>
 
 	<settings>

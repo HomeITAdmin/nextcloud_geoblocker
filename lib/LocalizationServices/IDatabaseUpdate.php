@@ -34,6 +34,7 @@ interface IDatabaseUpdate {
 	/**
 	 * Resets the Database and the service to an uninitialiced condition as if newly installed.
 	 * Returns true, if the reset was successful, otherwise false
+	 * After a succesful reset the service status must be false and the update status must not be kUdating.
 	 *
 	 * @return bool
 	 */
