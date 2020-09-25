@@ -22,7 +22,7 @@ $loading = $l->t('Loading').'...';
 			?> </p>
 			
 		<p><?php p($l->t('Determination of the country from IP address is only as good as the chosen service.')); ?></p> 
-		<p><?php p($l->t('For help how to setup the localization services, have a look into the Readme in the ')); ?><a href="https://github.com/HomeITAdmin/nextcloud_geoblocker/"><?php p($l->t('repository')); ?></a>.</p>
+		<p><?php p($l->t('For help how to setup the localization services, have a look into the Readme in the')); ?> <a href="https://github.com/HomeITAdmin/nextcloud_geoblocker/"><?php p($l->t('repository')); ?></a>.</p>
 	</div>
 	
 	<h3><?php p($l->t('Service')); ?></h3>
