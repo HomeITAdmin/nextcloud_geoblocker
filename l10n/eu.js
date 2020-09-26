@@ -45,7 +45,6 @@ OC.L10N.register(
     "is local." : "lokala da.",
     "is external." : "kanpokoa da.",
     "Determination of the country from IP address is only as good as the chosen service." : "IP helbideen herrialdeak ondo zehaztea, aukeratu den zerbitzuaren araberakoa izango da.",
-    "For help how to setup the localization services, have a look into the Readme in the " : "Kokatze zerbitzuak konfiguratzeko laguntza lortzeko, ikus Readme fitxategia hemen:",
     "repository" : "biltegia",
     "Service" : "Zerbitzua",
     "Choose the service you want to use to determine the country from the IP Address:" : "Aukeratu zein zerbitzu nahi duzun, IP helbidearen baitan herrialdea zehazteko:",

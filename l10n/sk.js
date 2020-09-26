@@ -46,7 +46,6 @@ OC.L10N.register(
     "is local." : "je miestna.",
     "is external." : "je externá.",
     "Determination of the country from IP address is only as good as the chosen service." : "Určenie krajiny z adresy IP je také dobré ako zvolená služba.",
-    "For help how to setup the localization services, have a look into the Readme in the " : "Ak potrebujete pomoc s nastavením lokalizačných služieb, prečítajte si súbor Readme v",
     "repository" : "úložisko",
     "Service" : "Služba",
     "Choose the service you want to use to determine the country from the IP Address:" : "Vyberte službu, ktorú chcete použiť na určenie krajiny z adresy IP:",

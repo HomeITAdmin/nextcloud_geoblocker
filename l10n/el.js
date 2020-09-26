@@ -46,7 +46,6 @@ OC.L10N.register(
     "is local." : "είναι τοπικά.",
     "is external." : "είναι εξωτερικά.",
     "Determination of the country from IP address is only as good as the chosen service." : "Ο προσδιορισμός της χώρας από τη διεύθυνση IP είναι τόσο καλός όσο και η επιλεγμένη υπηρεσία.",
-    "For help how to setup the localization services, have a look into the Readme in the " : "Για βοήθεια σχετικά με τον τρόπο ρύθμισης των υπηρεσιών εντοπισμού, ρίξτε μια ματιά στο Διαβάστε με στο",
     "repository" : "αποθετήριο",
     "Service" : "Υπηρεσία",
     "Choose the service you want to use to determine the country from the IP Address:" : "Επιλέξτε την υπηρεσία που θέλετε να χρησιμοποιήσετε για να προσδιορίσετε τη χώρα από τη διεύθυνση IP:",
