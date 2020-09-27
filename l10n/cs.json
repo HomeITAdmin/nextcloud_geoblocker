@@ -44,6 +44,7 @@
     "is local." : "je místní.",
     "is external." : "je vnější.",
     "Determination of the country from IP address is only as good as the chosen service." : "Zjišťování země na základě IP adresy je pouze tak dobré, jaká je pro to zvolená služba.",
+    "For help how to setup the localization services, have a look into the Readme in the" : "Pokyny k tomu, jak nastavit služby pro určování polohy, naleznete v souboru Readme v",
     "repository" : "repozitář",
     "Service" : "Služba",
     "Choose the service you want to use to determine the country from the IP Address:" : "Zvolte službu, kterou chcete použít pro zjištění země na základě IP adresy:",
