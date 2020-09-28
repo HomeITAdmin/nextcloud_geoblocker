@@ -7,6 +7,7 @@ namespace OCA\GeoBlocker\LocalizationServices;
 use OCP\IL10N;
 use OCP\IDbConnection;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
+use OCA\GeoBlocker\Db\RIRServiceMapper;
 
 class LocalizationServiceFactory {
 	private $l;
@@ -40,7 +41,7 @@ class LocalizationServiceFactory {
 				$location_service = new MaxMindGeoLite2($this->config, $this->l);
 				break;
 			case '2':
-				$location_service = new RIRData($this->db, $this->config,
+				$location_service = new RIRData(new RIRDataChecks(),  new RIRServiceMapper($this->db), $this->config,
 						$this->l);
 				break;
 			// Add new location Service here and increase $count_ids

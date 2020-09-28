@@ -1,9 +1,9 @@
 #!/bin/bash
 
 echo ""
-echo "<<<<<<<<<<<<<<< Unit Tests  >>>>>>>>>>>>>>>"
+echo "<<<<<<<<<<<<<<< Unit Tests + Code Coverage  >>>>>>>>>>>>>>>"
 echo ""
-vendor/phpunit/phpunit/phpunit -c phpunit.xml --testdox
+vendor/phpunit/phpunit/phpunit -c phpunit.xml --testdox --coverage-html build/coverage_report --coverage-filter lib/
 
 echo ""
 echo ""

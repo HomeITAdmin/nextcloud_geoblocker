@@ -6,7 +6,6 @@ namespace OCA\GeoBlocker\LocalizationServices;
 
 use Exception;
 use OCP\IL10N;
-use OCP\IDbConnection;
 use OCA\GeoBlocker\Db\RIRServiceMapper;
 use OCA\GeoBlocker\Db\RIRServiceDBEntity;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
@@ -14,7 +13,7 @@ use OCA\GeoBlocker\Config\GeoBlockerConfig;
 class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	private $l;
 	private $rir_service_mapper;
-	private $db;
+	private $rir_data_checks;
 	private $service_name = 'rir_data';
 	private $config;
 	private $rir_ftps = array(
@@ -23,15 +22,16 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		'afrinic' => 'ftp://ftp.afrinic.net/pub/stats/afrinic/delegated-afrinic-latest',
 		'apnic' => 'ftp://ftp.apnic.net/pub/stats/apnic/delegated-apnic-latest',
 		'lacnic' => 'ftp://ftp.lacnic.net/pub/stats/lacnic/delegated-lacnic-latest');
-	private const kServiceStatusName = 'rir_data_service_status';
-	private const kDatabaseDateName = 'rir_data_db_date';
-	private const kErrorMessageName = 'rir_data_error_message';
+	public const kServiceStatusName = 'rir_data_service_status';
+	public const kDatabaseDateName = 'rir_data_db_date';
+	public const kErrorMessageName = 'rir_data_error_message';
 
-	public function __construct(IDbConnection $db, GeoBlockerConfig $config,
+	public function __construct(RIRDataChecks $rir_data_checks,
+			RIRServiceMapper $rir_service_mapper, GeoBlockerConfig $config,
 			IL10N $l) {
+		$this->rir_data_checks = $rir_data_checks;
 		$this->l = $l;
-		$this->db = $db;
-		$this->rir_service_mapper = new RIRServiceMapper($db);
+		$this->rir_service_mapper = $rir_service_mapper;
 		$this->config = $config;
 	}
 
@@ -71,8 +71,21 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 				$error_message);
 	}
 
+	private function checkDBPlausibleAndSetToError(): bool {
+		if ($this->rir_service_mapper->getNumberOfEntries() > 0) {
+			return true;
+		} else {
+			$this->setDBToErrorStatus(
+					$this->l->t(
+							'No entries in the database. Please run update.'));
+			return false;
+		}
+	}
+
 	public function getStatus(): bool {
-		if ($this->getStatusId() == RIRStatus::kDbOk && $this->checkGMP()) {
+		if ($this->getStatusId() == RIRStatus::kDbOk &&
+				$this->rir_data_checks->checkGMP() &&
+				$this->checkDBPlausibleAndSetToError()) {
 			return true;
 		}
 		return false;
@@ -84,15 +97,12 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		$status_id = $this->getStatusId();
 
 		if ($status_id == RIRStatus::kDbOk &&
-				$this->rir_service_mapper->getNumberOfEntries() == 0) {
+				! $this->checkDBPlausibleAndSetToError()) {
 			$status_id = RIRStatus::kDbError;
-			$this->setErrorMessage(
-					$this->l->t(
-							'No entries in the database. Please run update.'));
 		}
 
 		if ($status_id == RIRStatus::kDbOk) {
-			if ($this->checkGMP()) {
+			if ($this->rir_data_checks->checkGMP()) {
 				return $service_string . ' ' . $this->l->t('OK.');
 			} else {
 				return $service_string_error . ' ' .
@@ -160,11 +170,10 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		;
 	}
 
-	private function errorDuringDatabaseFilling(string $error_message): bool {
+	private function setDBToErrorStatus(string $error_message) {
 		$this->setStatusId(RIRStatus::kDbError);
 		$this->setErrorMessage($error_message);
 		$this->resetDatabaseDateImpl();
-		return false;
 	}
 
 	private function fillDatabase(): bool {
@@ -203,20 +212,23 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 						}
 					}
 					if (! $at_least_one_entry) {
-						return $this->errorDuringDatabaseFilling(
+						$this->setDBToErrorStatus(
 								$this->l->t(
 										'RIR seems to have changed the file format.'));
+						return false;
 					}
 				} catch (Exception $e) {
-					return $this->errorDuringDatabaseFilling(
+					$this->setDBToErrorStatus(
 							$this->l->t('Exception caught during Update.'));
+					return false;
 				} finally {
 					fclose($rir_data_handle);
 				}
 			} else {
-				return $this->errorDuringDatabaseFilling(
+				$this->setDBToErrorStatus(
 						$this->l->t(
 								'Invalid file handle. Probably the internet connection got lost during the update.'));
+				return false;
 			}
 		}
 		$this->setDatabaseDateImpl();
@@ -231,30 +243,6 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 			$this->resetDatabaseDateImpl();
 			return true;
 		}
-	}
-
-	private function checkAllowURLFOpen(): bool {
-		return ini_get('allow_url_fopen') === '1';
-	}
-
-	private function checkGMP(): bool {
-		return function_exists('gmp_import') && function_exists('gmp_intval');
-	}
-
-	private function checkInternetConnection(): bool {
-		$connected = @fsockopen("www.example.com", 80);
-		if ($connected) {
-			$is_conn = true;
-			fclose($connected);
-		} else {
-			$is_conn = false;
-		}
-		return $is_conn;
-	}
-
-	private function checkAll(): bool {
-		return $this->checkAllowURLFOpen() && $this->checkGMP() &&
-				$this->checkInternetConnection();
 	}
 
 	public function updateDatabase(): bool {
@@ -290,7 +278,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 				$status_id == RIRStatus::kDbUpdating) {
 			return LocationServiceUpdateStatus::kUpdating;
 		} else {
-			if ($this->checkAll()) {
+			if ($this->rir_data_checks->checkAll()) {
 				return LocationServiceUpdateStatus::kUpdatePossible;
 			} else {
 				return LocationServiceUpdateStatus::kUpdateNotPossible;
@@ -301,15 +289,15 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	public function getDatabaseUpdateStatusString(): string {
 		switch ($this->getDatabaseUpdateStatus()) {
 			case LocationServiceUpdateStatus::kUpdateNotPossible:
-				if (! $this->checkAllowURLFOpen()) {
+				if (! $this->rir_data_checks->checkAllowURLFOpen()) {
 					return $this->l->t(
 							'"allow_url_fopen" needs to be allowed in php.ini.');
 				}
-				if (! $this->checkGMP()) {
+				if (! $this->rir_data_checks->checkGMP()) {
 					return $this->l->t(
 							'PHP GMP Extension needs to be installed.');
 				}
-				if (! $this->checkInternetConnection()) {
+				if (! $this->rir_data_checks->checkInternetConnection()) {
 					return $this->l->t(
 							'Internet connection needs to be available.');
 				}
@@ -336,7 +324,6 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		return true;
 	}
 }
-
 abstract class RIRStatus {
 	public const kDbNotInitialized = 0;
 	public const kDbInitilazing = 1;
