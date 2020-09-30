@@ -265,6 +265,93 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getCountryCodeFromIP($ip_address));
 	}
 
+	public function testIsGetDatabaseDateValidOk() {
+		$db_date = '2020-06-07';
+		$this->config->expects($this->exactly(2))->method(
+				'getServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo('0')],
+				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')])->willReturnOnConsecutiveCalls(
+				strval(RIRStatus::kDbOk), $db_date);
+		$this->rir_service_mapper->expects($this->once())->method(
+				'getNumberOfEntries')->willReturn(1000);
+
+		$this->assertEquals($db_date, $this->rir_data->getDatabaseDate());
+	}
+
+	public function testIsGetDatabaseDateInvalid1Ok() {
+		$this->config->expects($this->exactly(2))->method(
+				'getServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo('0')],
+				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')])->willReturnOnConsecutiveCalls(
+				strval(RIRStatus::kDbOk), '');
+		$this->rir_service_mapper->expects($this->never())->method(
+				'getNumberOfEntries');
+
+		$this->assertEquals('Date of the database cannot be determined!',
+				$this->rir_data->getDatabaseDate());
+	}
+
+	/**
+	 *
+	 * @dataProvider nonOkRirStatusProvider
+	 */
+	public function testIsGetDatabaseDateInvalid2Ok(int $rir_status) {
+		$this->config->expects($this->exactly(2))->method(
+				'getServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo('0')],
+				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')])->willReturnOnConsecutiveCalls(
+				strval($rir_status), '');
+		$this->rir_service_mapper->expects($this->never())->method(
+				'getNumberOfEntries');
+
+		$this->assertEquals('No database available!',
+				$this->rir_data->getDatabaseDate());
+	}
+
+	public function nonOkRirStatusProvider(): array {
+		return ["kDbError" => [RIRStatus::kDbError],
+			"kDbInitilazing" => [RIRStatus::kDbInitilazing],
+			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized],
+			"kDbUpdating" => [RIRStatus::kDbUpdating]];
+	}
+
+	/**
+	 *
+	 * @dataProvider nonOkRirStatusProvider
+	 */
+	public function testIsGetDatabaseDateInvalid3Ok(int $rir_status) {
+		$db_date = '2020-06-07';
+		$this->config->expects($this->exactly(2))->method(
+				'getServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo('0')],
+				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')])->willReturnOnConsecutiveCalls(
+				strval($rir_status), $db_date);
+		$this->rir_service_mapper->expects($this->never())->method(
+				'getNumberOfEntries');
+
+		$this->assertEquals('No database available!',
+				$this->rir_data->getDatabaseDate());
+	}
+
+	public function testIsGetDatabaseDateInvalid4Ok() {
+		$db_date = '2020-06-07';
+		$this->config->expects($this->exactly(2))->method(
+				'getServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo('0')],
+				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')])->willReturnOnConsecutiveCalls(
+				strval(RIRStatus::kDbOk), $db_date);
+		$this->rir_service_mapper->expects($this->once())->method(
+				'getNumberOfEntries')->willReturn(0);
+
+		$this->assertEquals('No database available!',
+				$this->rir_data->getDatabaseDate());
+	}
+
 	public function callbackLTJustRouteThrough(string $in): string {
 		return $in;
 	}

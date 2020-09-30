@@ -150,8 +150,8 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	}
 
 	public function getDatabaseDate(): string {
-		$db_date = $this->getDatabaseDateImpl();
 		$status_id = $this->getStatusId();
+		$db_date = $this->getDatabaseDateImpl();		
 		if ($db_date == '') {
 			if ($status_id == RIRStatus::kDbOk) {
 				return $this->l->t('Date of the database cannot be determined!');
@@ -167,7 +167,6 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 			}
 		}
 		return $this->l->t('No database available!');
-		;
 	}
 
 	private function setDBToErrorStatus(string $error_message) {
@@ -323,11 +322,4 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		$this->setStatusId(RIRStatus::kDbNotInitialized);
 		return true;
 	}
-}
-abstract class RIRStatus {
-	public const kDbNotInitialized = 0;
-	public const kDbInitilazing = 1;
-	public const kDbError = 2;
-	public const kDbOk = 3;
-	public const kDbUpdating = 4;
 }
