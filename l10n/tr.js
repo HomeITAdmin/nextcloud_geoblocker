@@ -46,6 +46,7 @@ OC.L10N.register(
     "is local." : "yerel.",
     "is external." : "dış.",
     "Determination of the country from IP address is only as good as the chosen service." : "IP adresinden ülke belirleme özelliğinin kalitesi seçilmiş hizmetin kalitesine göre değişir.",
+    "For help how to setup the localization services, have a look into the Readme in the" : "Hizmetlerin kurulumu ile ilgili yardım almak için şuradaki Readme bilgilerine bakabilirsiniz",
     "repository" : "depo",
     "Service" : "Hizmet",
     "Choose the service you want to use to determine the country from the IP Address:" : "IP adresinden ülkenin belirlenmesi için kullanılacak hizmeti seçin:",
