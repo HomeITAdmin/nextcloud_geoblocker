@@ -44,6 +44,7 @@
     "is local." : "es local.",
     "is external." : "es externo.",
     "Determination of the country from IP address is only as good as the chosen service." : "Determinar la procedencia de una dirección IP dependerá de lo bueno que sea el servicio elegido.",
+    "For help how to setup the localization services, have a look into the Readme in the" : "Para obtener ayuda sobre cómo configurar los servicios de localización, eche un vistazo al Léame en el ",
     "repository" : "repositorio",
     "Service" : "Servicio",
     "Choose the service you want to use to determine the country from the IP Address:" : "Elija el servicio que desea utilizar para determinar el país a partir de la dirección IP:",
