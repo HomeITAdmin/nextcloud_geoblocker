@@ -7,6 +7,7 @@ namespace OCA\GeoBlocker\Tests\Unit\LocalizationService;
 use OCA\GeoBlocker\Db\RIRServiceMapper;
 use OCA\GeoBlocker\LocalizationServices\RIRData;
 use OCA\GeoBlocker\LocalizationServices\RIRStatus;
+use OCA\GeoBlocker\Db\RIRServiceDBEntity;
 use PHPUnit\Framework\TestCase;
 
 class RIRDataTest extends TestCase {
@@ -16,6 +17,8 @@ class RIRDataTest extends TestCase {
 	protected $l;
 	private $rir_data;
 	private $error_message_not_enough_entries = 'No entries in the database. Please run update.';
+	private $rir_data_test_file = __DIR__ . DIRECTORY_SEPARATOR .
+			'test-rir-data.txt';
 
 	public function setUp(): void {
 		parent::setUp();
@@ -311,13 +314,6 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getDatabaseDate());
 	}
 
-	public function nonOkRirStatusProvider(): array {
-		return ["kDbError" => [RIRStatus::kDbError],
-			"kDbInitilazing" => [RIRStatus::kDbInitilazing],
-			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized],
-			"kDbUpdating" => [RIRStatus::kDbUpdating]];
-	}
-
 	/**
 	 *
 	 * @dataProvider nonOkRirStatusProvider
@@ -352,7 +348,90 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getDatabaseDate());
 	}
 
+	/**
+	 *
+	 * @dataProvider updateableRirStatusProvider
+	 */
+	public function testIsUpdateDatabaseSuccessOk(int $rir_status_before,
+			int $rir_status_inter) {
+		$this->config->expects($this->once())->method(
+				'getServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
+				strval($rir_status_before));
+		$this->rir_service_mapper->expects($this->once())->method(
+				'eraseAllDatabaseEntries')->willReturn(true);
+		$this->config->expects($this->exactly(4))->method(
+				'setServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo($rir_status_inter)],
+				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+				[$this->equalTo(RIRData::kDatabaseDateName),
+					$this->equalTo(date("Y-m-d"))],
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo(RIRStatus::kDbOk)]);
+
+		$this->setupAndCheckDbEntries();
+
+		$this->assertTrue($this->rir_data->updateDatabase());
+	}
+
 	public function callbackLTJustRouteThrough(string $in): string {
 		return $in;
+	}
+
+	public function nonOkRirStatusProvider(): array {
+		return ["kDbError" => [RIRStatus::kDbError],
+			"kDbInitilazing" => [RIRStatus::kDbInitilazing],
+			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized],
+			"kDbUpdating" => [RIRStatus::kDbUpdating]];
+	}
+
+	public function updateableRirStatusProvider(): array {
+		return ["kDbOk" => [RIRStatus::kDbOk,RIRStatus::kDbUpdating],
+			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized,
+				RIRStatus::kDbInitilazing]];
+	}
+
+	private function setupAndCheckDbEntries(): void {
+		$this->rir_data->setDataSource(
+				array('afrinic' => $this->rir_data_test_file));
+
+		$inputsV4 = ["afrinic|GH|ipv4|41.75.48.0|4096|20101111|allocated",
+			"afrinic|KE|ipv4|41.76.184.0|2048|20100701|allocated"];
+
+		$inputsV6 = ["afrinic|CI|ipv6|2001:42d8::|32|20171229|allocated",
+			"afrinic|AO|ipv6|2001:43f8:720::|48|20121025|assigned"];
+
+		$db_entries = array();
+
+		foreach ($inputsV4 as $input) {
+			$parts = explode('|', $input);
+			$db_entry = new RIRServiceDBEntity();
+			$db_entry->setBeginIpRange(
+					RIRServiceMapper::ipv4String2Int64($parts[3]));
+			$db_entry->setCountryCode($parts[1]);
+			$db_entry->setLengthIpRange($parts[4]);
+			$db_entry->setIsIpV6(false);
+			$db_entry->setVersion(0);
+			array_push($db_entries, $db_entry);
+		}
+
+		foreach ($inputsV6 as $input) {
+			$parts = explode('|', $input);
+			$db_entry = new RIRServiceDBEntity();
+			$db_entry->setBeginIpRange(
+					RIRServiceMapper::ipv6String2Int64($parts[3]));
+			$db_entry->setCountryCode($parts[1]);
+			$db_entry->setLengthIpRange(pow(2, 64 - intval($parts[4])));
+			$db_entry->setIsIpV6(true);
+			$db_entry->setVersion(0);
+			array_push($db_entries, $db_entry);
+		}
+
+		$this->rir_service_mapper->expects($this->exactly(4))->method('insert')->withConsecutive(
+				[$this->equalTo($db_entries[0])],
+				[$this->equalTo($db_entries[1])],
+				[$this->equalTo($db_entries[2])],
+				[$this->equalTo($db_entries[3])]);
 	}
 }

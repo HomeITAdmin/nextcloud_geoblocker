@@ -81,6 +81,10 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 			return false;
 		}
 	}
+	
+	public function setDataSource($rir_ftps) {
+		$this->rir_ftps = $rir_ftps;
+	}
 
 	public function getStatus(): bool {
 		if ($this->getStatusId() == RIRStatus::kDbOk &&
