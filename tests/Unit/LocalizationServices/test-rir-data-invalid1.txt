@@ -1,0 +1,10 @@
+2|afrinic|20201003|6899|00000000|20201003|00000
+afrinic|*|asn|*|2|summary
+afrinic|*|ipv4|*|2|summary
+afrinic|*|ipv6|*|2|summary
+afrinic|ZA|asn|1228|1
+afrinic|ZA|asn|1229|1
+afrinic|GH|ipv4|41.75.48.0|4096
+afrinic|KE|ipv4|41.76.184.0|2048
+afrinic|CI|ipv6|2001:42d8::|32
+afrinic|AO|ipv6|2001:43f8:720::|48

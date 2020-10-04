@@ -181,8 +181,12 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 
 	private function fillDatabase(): bool {
 		foreach ($this->rir_ftps as $rir_name => $rir_url) {
-			$rir_data_handle = fopen($rir_url, 'r');
-			if ($rir_data_handle != FALSE) {
+			try {
+				$rir_data_handle = fopen($rir_url, 'r');
+			} catch (Exception $e) {
+				$rir_data_handle = false;
+			}
+			if ($rir_data_handle != false) {
 				try {
 					$at_least_one_entry = false;
 					while (($line = fgets($rir_data_handle))) {
@@ -240,7 +244,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 
 	private function eraseDatabase() {
 		if (! $this->rir_service_mapper->eraseAllDatabaseEntries()) {
-			$this->setStatusId(RIRStatus::kDbError);
+			$this->setDBToErrorStatus('Problem during erasing the whole database occured.');
 			return false;
 		} else {
 			$this->resetDatabaseDateImpl();
