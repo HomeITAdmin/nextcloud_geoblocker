@@ -6,6 +6,7 @@ namespace OCA\GeoBlocker\Tests\Unit\LocalizationService;
 
 use Exception;
 use OCA\GeoBlocker\Db\RIRServiceMapper;
+use OCA\GeoBlocker\LocalizationServices\LocationServiceUpdateStatus;
 use OCA\GeoBlocker\LocalizationServices\RIRData;
 use OCA\GeoBlocker\LocalizationServices\RIRStatus;
 use OCA\GeoBlocker\Db\RIRServiceDBEntity;
@@ -40,25 +41,24 @@ class RIRDataTest extends TestCase {
 				$this->rir_service_mapper, $this->config, $this->l);
 	}
 
-	public function testIsValidStatusOk() {
+	public function testIsStatusTrueOk() {
 		$this->makeServiceValid();
 		$this->assertTrue($this->rir_data->getStatus());
 	}
 
-	public function testIsInvalidStatus1Ok() {
-		$this->rir_data_checks->expects($this->once())->method('checkGMP')->willReturn(
+	/**
+	 *
+	 * @dataProvider allRirStatusProvider
+	 * @dataProvider invalidRirStatusProvider
+	 */
+	public function testIsStatusFalse1Ok(int $rir_status) {
+		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				false);
-		$this->config->expects($this->exactly(5))->method(
+		$this->config->expects($this->once())->method(
 				'getServiceSpecificConfigValue')->with(
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
-				strval(RIRStatus::kDbNotInitialized),
-				strval(RIRStatus::kDbInitilazing), strval(RIRStatus::kDbError),
-				strval(RIRStatus::kDbUpdating), strval(RIRStatus::kDbOk));
+				strval($rir_status));
 
-		$this->assertFalse($this->rir_data->getStatus());
-		$this->assertFalse($this->rir_data->getStatus());
-		$this->assertFalse($this->rir_data->getStatus());
-		$this->assertFalse($this->rir_data->getStatus());
 		$this->assertFalse($this->rir_data->getStatus());
 	}
 
@@ -98,7 +98,7 @@ class RIRDataTest extends TestCase {
 				'getNumberOfEntries')->willReturn(1000);
 		$error_message = 'My last error message!';
 
-		$this->config->expects($this->exactly(6))->method(
+		$this->config->expects($this->exactly(7))->method(
 				'getServiceSpecificConfigValue')->withConsecutive(
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo('0')],
@@ -114,7 +114,7 @@ class RIRDataTest extends TestCase {
 				strval(RIRStatus::kDbNotInitialized),
 				strval(RIRStatus::kDbInitilazing), strval(RIRStatus::kDbError),
 				$error_message, strval(RIRStatus::kDbUpdating),
-				strval(RIRStatus::kDbOk));
+				strval(RIRStatus::kDbOk), strval(- 1));
 
 		$this->assertEquals(
 				'"RIR Data": ERROR: The database is not initialized. Please run update.',
@@ -130,6 +130,8 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getStatusString());
 		$this->assertEquals(
 				'"RIR Data": ERROR: PHP GMP Extension needs to be installed.',
+				$this->rir_data->getStatusString());
+		$this->assertEquals('"RIR Data": ERROR: Something is missing.',
 				$this->rir_data->getStatusString());
 	}
 
@@ -455,7 +457,7 @@ class RIRDataTest extends TestCase {
 
 		$this->rir_data->setDataSource(
 				array('afrinic' => $this->rir_data_test_file));
-		
+
 		$db_entry = new RIRServiceDBEntity();
 		$db_entry->setBeginIpRange(
 				RIRServiceMapper::ipv4String2Int64('41.75.48.0'));
@@ -501,8 +503,164 @@ class RIRDataTest extends TestCase {
 		$this->assertFalse($this->rir_data->updateDatabase());
 	}
 
+	public function testIsResetDatabaseSuccessOk() {
+		$this->config->expects($this->never())->method(
+				'getServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'));
+		$this->rir_service_mapper->expects($this->once())->method(
+				'eraseAllDatabaseEntries')->willReturn(true);
+		$this->config->expects($this->exactly(2))->method(
+				'setServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo(RIRStatus::kDbNotInitialized)]);
+
+		$this->assertTrue($this->rir_data->resetDatabase());
+	}
+
+	public function testIsResetDatabaseFailureOk() {
+		$this->config->expects($this->never())->method(
+				'getServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'));
+		$this->rir_service_mapper->expects($this->once())->method(
+				'eraseAllDatabaseEntries')->willReturn(false);
+		$this->config->expects($this->exactly(3))->method(
+				'setServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo(RIRStatus::kDbError)],
+				[$this->equalTo(RIRData::kErrorMessageName),
+					$this->equalTo(
+							'Problem during erasing the whole database occured.')],
+				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+
+		$this->assertFalse($this->rir_data->resetDatabase());
+	}
+
+	/**
+	 *
+	 * @dataProvider databaseUpdatingStatus
+	 */
+	public function testIsGetDatabaseUpdateStatusUpdatingOk(int $rir_status) {
+		$this->config->expects($this->once())->method(
+				'getServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
+				strval($rir_status));
+
+		$this->assertEquals(LocationServiceUpdateStatus::kUpdating,
+				$this->rir_data->getDatabaseUpdateStatus());
+	}
+
+	/**
+	 *
+	 * @dataProvider databaseNotUpdatingStatus
+	 */
+	public function testIsGetDatabaseUpdateStatusUpdateNotPossibleOk(
+			int $rir_status) {
+		$this->config->expects($this->once())->method(
+				'getServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
+				strval($rir_status));
+
+		$this->rir_data_checks->expects($this->once())->method('checkAll')->willReturn(
+				false);
+
+		$this->assertEquals(LocationServiceUpdateStatus::kUpdateNotPossible,
+				$this->rir_data->getDatabaseUpdateStatus());
+	}
+
+	/**
+	 *
+	 * @dataProvider databaseNotUpdatingStatus
+	 */
+	public function testIsGetDatabaseUpdateStatusUpdatePossibleOk(
+			int $rir_status) {
+		$this->config->expects($this->once())->method(
+				'getServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
+				strval($rir_status));
+
+		$this->rir_data_checks->expects($this->once())->method('checkAll')->willReturn(
+				true);
+
+		$this->assertEquals(LocationServiceUpdateStatus::kUpdatePossible,
+				$this->rir_data->getDatabaseUpdateStatus());
+	}
+
+	/**
+	 *
+	 * @dataProvider databaseUpdatingStatus
+	 */
+	public function testIsGetDatabaseUpdateStatusStringUpdatingOk(
+			int $rir_status) {
+		$this->config->expects($this->once())->method(
+				'getServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
+				strval($rir_status));
+
+		$number_of_entries = 55;
+		$this->rir_service_mapper->expects($this->once())->method(
+				'getNumberOfEntries')->willReturn($number_of_entries);
+
+		$this->assertEquals(
+				'Current number of entries: ' . strval($number_of_entries),
+				$this->rir_data->getDatabaseUpdateStatusString());
+	}
+
+	/**
+	 *
+	 * @dataProvider databaseNotUpdatingStatusStings
+	 */
+	public function testIsGetDatabaseUpdateStatusStringUpdateNotPossibleOk(
+			int $rir_status, bool $ret1, bool $ret2, bool $ret3, string $msg) {
+		$this->config->expects($this->once())->method(
+				'getServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
+				strval($rir_status));
+
+		$this->rir_data_checks->expects($this->once())->method('checkAll')->willReturn(
+				false);
+		$this->rir_data_checks->expects($this->atMost(1))->method(
+				'checkAllowURLFOpen')->willReturn($ret1);
+		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
+				$ret2);
+		$this->rir_data_checks->expects($this->atMost(1))->method(
+				'checkInternetConnection')->willReturn($ret3);
+
+		$this->assertEquals($msg,
+				$this->rir_data->getDatabaseUpdateStatusString());
+	}
+
+	/**
+	 *
+	 * @dataProvider databaseNotUpdatingStatus
+	 */
+	public function testIsGetDatabaseUpdateStatusStringUpdatePossibleOk(
+			int $rir_status) {
+		$this->config->expects($this->once())->method(
+				'getServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
+				strval($rir_status));
+
+		$this->rir_data_checks->expects($this->once())->method('checkAll')->willReturn(
+				true);
+
+		$this->assertEquals('', $this->rir_data->getDatabaseUpdateStatusString());
+	}
+
 	public function callbackLTJustRouteThrough(string $in): string {
 		return $in;
+	}
+
+	public function allRirStatusProvider(): array {
+		return ["kDbError" => [RIRStatus::kDbError],
+			"kDbInitilazing" => [RIRStatus::kDbInitilazing],
+			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized],
+			"kDbUpdating" => [RIRStatus::kDbUpdating],
+			"kDbOk" => [RIRStatus::kDbOk]];
+	}
+
+	public function invalidRirStatusProvider(): array {
+		return ["invalid" => [- 1]];
 	}
 
 	public function nonOkRirStatusProvider(): array {
@@ -539,8 +697,51 @@ class RIRDataTest extends TestCase {
 
 		foreach ($states as $state_key => $state_value) {
 			foreach ($files as $file_key => $file_value) {
-				array_push($state_value, $file_value[0]);
-				$ret[$state_key . '_' . $file_key] = $state_value;
+				$ret_val = $state_value;
+				array_push($ret_val, $file_value[0]);
+				$ret[$state_key . '_' . $file_key] = $ret_val;
+			}
+		}
+
+		return $ret;
+	}
+
+	public function databaseUpdatingStatus(): array {
+		return ["kDbInitilazing" => [RIRStatus::kDbInitilazing],
+			"kDbUpdating" => [RIRStatus::kDbUpdating]];
+	}
+
+	public function databaseNotUpdatingStatus(): array {
+		return ["kDbError" => [RIRStatus::kDbError],
+			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized],
+			"kDbOk" => [RIRStatus::kDbOk]];
+	}
+
+	public function databaseNotUpdatingStatusStings(): array {
+		$ret = [];
+
+		$states = ["kDbError" => [RIRStatus::kDbError],
+			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized],
+			"kDbOk" => [RIRStatus::kDbOk]];
+
+		$other = [
+			"checkAllowURLFOpen" => [false,true,true,
+				'"allow_url_fopen" needs to be allowed in php.ini.'],
+			"checkGMP" => [true,false,true,
+				'PHP GMP Extension needs to be installed.'],
+			"checkInternetConnection" => [true,true,false,
+				'Internet connection needs to be available.'],
+			"shouldNotHappen" => [true,true,true,
+				'']];
+
+		foreach ($states as $state_key => $state_value) {
+			foreach ($other as $other_key => $other_value) {
+				$ret_val = $state_value;
+				array_push($ret_val, $other_value[0]);
+				array_push($ret_val, $other_value[1]);
+				array_push($ret_val, $other_value[2]);
+				array_push($ret_val, $other_value[3]);
+				$ret[$state_key . '_' . $other_key] = $ret_val;
 			}
 		}
 

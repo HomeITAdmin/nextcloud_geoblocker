@@ -308,7 +308,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 					return $this->l->t(
 							'Internet connection needs to be available.');
 				}
-				break;
+				return '';
 			case LocationServiceUpdateStatus::kUpdatePossible:
 				return '';
 				break;
@@ -317,9 +317,11 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 						strval($this->rir_service_mapper->getNumberOfEntries());
 				break;
 			default:
+				// @codeCoverageIgnoreStart
 				return $this->l->t(
 						'Update in undefined state. Please complain to the developer.');
 				break;
+				// @codeCoverageIgnoreEnd
 		}
 	}
 
