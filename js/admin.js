@@ -210,6 +210,20 @@ $(document).ready(function() {
 		}
 		OCP.AppConfig.setValue('geoblocker', 'logWithUserName', value);
 	});
+	$('#delaying-active').click(function() {
+		var value = '0';
+		if (this.checked) {
+			value = '1';
+		}
+		OCP.AppConfig.setValue('geoblocker', 'delayIpAddress', value);
+	});
+	$('#blocking-active').click(function() {
+		var value = '0';
+		if (this.checked) {
+			value = '1';
+		}
+		OCP.AppConfig.setValue('geoblocker', 'blockIpAddress', value);
+	});
 	$('#do-fake-address').click(function() {
 		fakeAdressAction(this.checked);
 	});

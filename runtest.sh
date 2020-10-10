@@ -3,7 +3,7 @@
 echo ""
 echo "<<<<<<<<<<<<<<< Unit Tests + Code Coverage  >>>>>>>>>>>>>>>"
 echo ""
-vendor/phpunit/phpunit/phpunit -c phpunit.xml --testdox --coverage-html build/coverage_report --coverage-filter lib/
+vendor/phpunit/phpunit/phpunit -c phpunit.xml --testdox --coverage-html build/coverage_report_unit --coverage-filter lib/
 
 echo ""
 echo ""
@@ -15,4 +15,4 @@ echo ""
 echo ""
 echo "<<<<<<<<<<<<<<< Integration Tests >>>>>>>>>>>>>>>"
 echo ""
-vendor/phpunit/phpunit/phpunit -c phpunit.integration.xml --testdox
+vendor/phpunit/phpunit/phpunit -c phpunit.integration.xml --testdox --coverage-html build/coverage_report_integration --coverage-filter lib/

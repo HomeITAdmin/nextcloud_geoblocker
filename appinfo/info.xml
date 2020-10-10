@@ -4,7 +4,7 @@
 	<id>geoblocker</id>
 	<name>GeoBlocker</name>
 	<summary>Blocks user depending on the estimated country of thier IP address.</summary>
-	<description><![CDATA[This is a front end to geo localization services, that allows blocking (currently only logging is possible!) of login attempts from specified countries. (Early Version)
+	<description><![CDATA[This is a front end to geo localization services, that allows blocking (beta), delaying (beta) and logging of login attempts from specified countries.
 
 Countries can be specified using allowlisting or blocklisting.
 

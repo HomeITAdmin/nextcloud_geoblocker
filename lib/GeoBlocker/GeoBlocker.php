@@ -30,7 +30,7 @@ class GeoBlocker {
 	private function createInvalidIPLogString(string $log_user,
 			string $log_address): string {
 		return $this->l->t(
-				'The user "%s" logged in with an invalid IP address "%s".',
+				'The user "%s" attempt to login with an invalid IP address "%s".',
 				array($log_user,$log_address));
 	}
 
@@ -42,23 +42,44 @@ class GeoBlocker {
 		$this->logger->error($log_string, array('app' => 'geoblocker'));
 	}
 
-	public function check(String $ip_address): void {
+	public function isIpAddressBlocked(String $ip_address): bool {
+		$block_ip_address = false;
 		if ($this->isIPAddressValid($ip_address)) {
 			if (! $this->isIPAddressLocal($ip_address)) {
 
 				$location = $this->location_service->getCountryCodeFromIP(
 						$ip_address);
 
-				$log_user = $this->config->getLogWithUserName() ? $this->user : 'NOT_SHOWN_IN_LOG';
-				$log_location = $this->config->getLogWithCountryCode() ? $location : 'NOT_SHOWN_IN_LOG';
-				$log_address = $this->config->getLogWithIpAddress() ? $ip_address : 'NOT_SHOWN_IN_LOG';
+				$log_user = $this->config->getLogWithUserName() ? $this->user : $this->l->t(
+						'NOT_SHOWN_IN_LOG');
+				$log_location = $this->config->getLogWithCountryCode() ? $location : $this->l->t(
+						'NOT_SHOWN_IN_LOG');
+				$log_address = $this->config->getLogWithIpAddress() ? $ip_address : $this->l->t(
+						'NOT_SHOWN_IN_LOG');
 
 				if ($location !== 'INVALID_IP' && $location !== 'UNAVAILABLE') {
 					if ($this->config->isCountryCodeInListOfChoosenCountries(
 							$location) xor $this->config->getUseWhiteListing()) {
 						$log_string = $this->l->t(
-								'The user "%s" logged in with IP address "%s" from blocked country "%s".',
+								'The user "%s" attempt to login with IP address "%s" from blocked country "%s".',
 								array($log_user,$log_address,$log_location));
+						$any_reaction = false;
+						if ($this->config->getDelayIpAddress()) {
+							usleep(30 * 1000000);
+							$log_string .= ' ' . $this->l->t(
+									'Login is delayed.');
+							$any_reaction = true;
+						}
+						if ($this->config->getBlockIpAddress()) {
+							$block_ip_address = true;
+							$log_string .= ' ' . $this->l->t(
+									'Login is blocked.');
+							$any_reaction = true;
+						}
+						if (! $any_reaction) {
+							$log_string .= ' ' .
+									$this->l->t('No reaction is activated.');
+						}
 						$this->logEvent($log_string);
 					}
 				} elseif ($location === 'UNAVAILABLE') {
@@ -84,6 +105,7 @@ class GeoBlocker {
 					$log_address);
 			$this->logEvent($log_string);
 		}
+		return $block_ip_address;
 	}
 
 	public static function isIPAddressValid(String $ip_address): bool {

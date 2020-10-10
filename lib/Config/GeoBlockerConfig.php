@@ -48,7 +48,29 @@ class GeoBlockerConfig {
 		$value = $log_with_user_name === true ? '1' : '0';
 		$this->config->setAppValue('geoblocker', 'logWithUserName', $value);
 	}
+	
+	public function getDelayIpAddress(): bool {
+		$delay_ip_address = $this->config->getAppValue('geoblocker',
+				'delayIpAddress', '0');
+		return $delay_ip_address === '1';
+	}
+	
+	public function setDelayIpAddress(bool $delay_ip_address) {
+		$value = $delay_ip_address === true ? '1' : '0';
+		$this->config->setAppValue('geoblocker', 'delayIpAddress', $value);
+	}
 
+	public function getBlockIpAddress(): bool {
+		$block_ip_address = $this->config->getAppValue('geoblocker',
+				'blockIpAddress', '0');
+		return $block_ip_address === '1';
+	}
+	
+	public function setBlockIpAddress(bool $block_ip_address) {
+		$value = $block_ip_address === true ? '1' : '0';
+		$this->config->setAppValue('geoblocker', 'blockIpAddress', $value);
+	}
+	
 	public function getUseWhiteListing(): bool {
 		$log_with_user_name = $this->config->getAppValue('geoblocker',
 				'choosenWhiteBlackList', '0');

@@ -6,8 +6,8 @@
 [![GitHub](https://img.shields.io/github/license/homeitadmin/nextcloud_geoblocker)](https://github.com/HomeITAdmin/nextcloud_geoblocker/blob/master/COPYING)
 
 This is a server side app for a [nextcloud](https://nextcloud.com/) instance.
-This is a front end to geo localization services, that allows blocking
-(currently only logging!) of login attempts from specified countries.
+This is a front end to geo localization services, that allows blocking (beta) 
+delaying (beta) and logging of login attempts from specified countries.
 Login attempts from local network IP addresses are not blocked (or logged).
 Wrong Nextcloud configuration (especially in container) can lead to all access
 seems to come from local network IP address.
@@ -109,7 +109,7 @@ Using the information from the Regional Internet Registries (RIRs):
 
 ## Fail2ban
 
-Until the blocking feature is implemented you can achive some blocking by using
+Alternatively to the blocking in the app, you can achive some blocking by using
 fail2ban, relying on the logging feature. Make sure that at least the IP address
 is included in the logging and the logging time is correct. The following
 parameters should help to create the filter for fail2ban in English:

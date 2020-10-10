@@ -18,23 +18,26 @@ class GeoBlockerIntegrationTest extends TestCase {
 	protected $l;
 	protected $location_service;
 	protected $geoblocker;
+
 	public function setUp(): void {
 		parent::setUp();
 	}
+
 	private function mySetUp(): void {
 		$this->user = 'admin';
 		$this->logger = $this->getMockBuilder('OCP\ILogger')->getMock();
 		$tmp_config = $this->getMockBuilder('OCP\IConfig')->getMock();
 		$this->config = $this->getMockBuilder(
 				'OCA\GeoBlocker\Config\GeoBlockerConfig')->setConstructorArgs(
-				[$tmp_config
-				])->getMock();
+				[$tmp_config])->getMock();
 		$this->l = $this->getMockBuilder('OCP\IL10N')->getMock();
 	}
+
 	private function doCheckTest(String $ip_address, String $country_code,
 			InvokedCountMatcher $invokerLocationService,
 			String $log_string_template, String $log_method,
-			InvokedCountMatcher $invokerLogging, bool $isCountryInList = FALSE,
+			InvokedCountMatcher $invokerLogging, bool $blocking_active = TRUE,
+			bool $expect_blocking = FALSE, bool $isCountryInList = FALSE,
 			bool $useWhiteListing = FALSE, bool $logWithUserName = TRUE,
 			bool $logWithCountryCode = TRUE, bool $logWithIPAdress = TRUE) {
 		$log_string = sprintf($log_string_template, $this->user, $ip_address,
@@ -53,22 +56,31 @@ class GeoBlockerIntegrationTest extends TestCase {
 				$this->returnValue($isCountryInList));
 		$this->config->method('getUseWhiteListing')->with()->will(
 				$this->returnValue($useWhiteListing));
+		$this->config->method('getDelayIpAddress')->with()->will(
+				$this->returnValue(false));
+		$this->config->method('getBlockIpAddress')->with()->will(
+				$this->returnValue($blocking_active));
 		$this->l->method('t')->will(
-				$this->returnCallback(array($this,'defaultTranslate'
-				)));
+				$this->returnCallback(array($this,'defaultTranslate')));
 		$this->logger->expects($invokerLogging)->method($log_method)->with(
 				$this->equalTo($log_string),
-				$this->equalTo(array('app' => 'geoblocker'
-				)));
-		$this->geoblocker->check($ip_address);
+				$this->equalTo(array('app' => 'geoblocker')));
+		$this->assertEquals($expect_blocking,
+				$this->geoblocker->isIpAddressBlocked($ip_address));
 	}
+
 	public function defaultTranslate() {
 		$args = func_get_args();
-		$sprintf_args = array_merge(array($args[0]
-		), $args[1]);
+		$sprintf_args = array_merge(array($args[0]), $args[1]);
 		return call_user_func_array('sprintf', $sprintf_args);
 	}
-	public function testLoggingNotBlockedFromGeoiplookup() {
+
+	/**
+	 *
+	 * @dataProvider ipCountryListProvider
+	 */
+	public function testLoginNotBlockedFromGeoiplookup(string $ip_address,
+			string $country_code) {
 		$this->mySetUp();
 		$this->location_service = new GeoIPLookup(new GeoIPLookupCmdWrapper(),
 				$this->l);
@@ -76,19 +88,18 @@ class GeoBlockerIntegrationTest extends TestCase {
 		$this->geoblocker = new GeoBlocker($this->user, $this->logger,
 				$this->config, $this->l, $this->location_service);
 
-		$ip_address = '2a02:2e0:3fe:1001:302::';
-		$country_code = 'DE';
 		$log_string_template = '';
 		$log_method = 'warning';
 		$this->doCheckTest($ip_address, $country_code, $this->once(),
 				$log_string_template, $log_method, $this->never());
-
-		// $ip_address = '24.165.23.67';
-		// $country_code = 'US';
-		// $this->doCheckTest ( $ip_address, $country_code, $this->once (),
-		// $log_string_template, $log_method, $this->never () );
 	}
-	public function testLoggingBlockedFromGeoiplookup() {
+	
+	/**
+	 *
+	 * @dataProvider ipCountryListProvider
+	 */
+	public function testLoginBlockedFromGeoiplookup(string $ip_address,
+			string $country_code) {
 		$this->mySetUp();
 		$this->location_service = new GeoIPLookup(new GeoIPLookupCmdWrapper(),
 				$this->l);
@@ -96,60 +107,54 @@ class GeoBlockerIntegrationTest extends TestCase {
 		$this->geoblocker = new GeoBlocker($this->user, $this->logger,
 				$this->config, $this->l, $this->location_service);
 
-		$ip_address = '2a02:2e0:3fe:1001:302::';
-		$country_code = 'DE';
-		$log_string_template = 'The user "%s" logged in with IP address "%s" from blocked country "%s".';
+		$log_string_template = 'The user "%s" attempt to login with IP address "%s" from blocked country "%s". Login is blocked.';
 		$log_method = 'warning';
 		$isCountryInList = TRUE;
 		$this->doCheckTest($ip_address, $country_code, $this->once(),
-				$log_string_template, $log_method, $this->once(),
+				$log_string_template, $log_method, $this->once(), true, true,
 				$isCountryInList);
-
-		// $ip_address = '24.165.23.67';
-		// $country_code = 'US';
-		// $this->doCheckTest ( $ip_address, $country_code, $this->once (),
-		// $log_string_template, $log_method, $this->once (),
-		// $isCountryInList );
 	}
-	public function testLoggingNotBlockedFromMaxmindGeoLite2() {
+
+	/**
+	 *
+	 * @dataProvider ipCountryListProvider
+	 */
+	public function testLoginNotBlockedFromMaxmindGeoLite2(string $ip_address,
+			string $country_code) {
 		$this->mySetUp();
 		$this->location_service = new MaxMindGeoLite2($this->config, $this->l);
 
 		$this->geoblocker = new GeoBlocker($this->user, $this->logger,
 				$this->config, $this->l, $this->location_service);
 
-		$ip_address = '2a02:2e0:3fe:1001:302::';
-		$country_code = 'DE';
 		$log_string_template = '';
 		$log_method = 'warning';
 		$this->doCheckTest($ip_address, $country_code, $this->once(),
 				$log_string_template, $log_method, $this->never());
-
-		// $ip_address = '24.165.23.67';
-		// $country_code = 'US';
-		// $this->doCheckTest ( $ip_address, $country_code, $this->once (),
-		// $log_string_template, $log_method, $this->never () );
 	}
-	public function testLoggingBlockedFromMaxmindGeoLite2() {
+
+	/**
+	 *
+	 * @dataProvider ipCountryListProvider
+	 */
+	public function testLoginBlockedFromMaxmindGeoLite2(string $ip_address,
+			string $country_code) {
 		$this->mySetUp();
 		$this->location_service = new MaxMindGeoLite2($this->config, $this->l);
 
 		$this->geoblocker = new GeoBlocker($this->user, $this->logger,
 				$this->config, $this->l, $this->location_service);
 
-		$ip_address = '2a02:2e0:3fe:1001:302::';
-		$country_code = 'DE';
-		$log_string_template = 'The user "%s" logged in with IP address "%s" from blocked country "%s".';
+		$log_string_template = 'The user "%s" attempt to login with IP address "%s" from blocked country "%s". Login is blocked.';
 		$log_method = 'warning';
 		$isCountryInList = TRUE;
 		$this->doCheckTest($ip_address, $country_code, $this->once(),
-				$log_string_template, $log_method, $this->once(),
+				$log_string_template, $log_method, $this->once(), true, true,
 				$isCountryInList);
+	}
 
-		// $ip_address = '24.165.23.67';
-		// $country_code = 'US';
-		// $this->doCheckTest ( $ip_address, $country_code, $this->once (),
-		// $log_string_template, $log_method, $this->once (),
-		// $isCountryInList );
+	public function ipCountryListProvider(): array {
+		return ["ip_v6" => ['2a02:2e0:3fe:1001:302::','DE'],
+			"ip_v4" => ['24.165.23.67','US']];
 	}
 }

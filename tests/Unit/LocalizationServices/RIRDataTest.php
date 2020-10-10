@@ -62,7 +62,23 @@ class RIRDataTest extends TestCase {
 		$this->assertFalse($this->rir_data->getStatus());
 	}
 
-	public function testIsInvalidStatus2Ok() {
+	/**
+	 *
+	 * @dataProvider nonOkRirStatusProvider
+	 * @dataProvider invalidRirStatusProvider
+	 */
+	public function testIsStatusFalse2Ok(int $rir_status) {
+		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
+				false);
+		$this->config->expects($this->once())->method(
+				'getServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
+				strval($rir_status));
+
+		$this->assertFalse($this->rir_data->getStatus());
+	}
+
+	public function testIsStatusFalse3Ok() {
 		$this->rir_data_checks->expects($this->once())->method('checkGMP')->willReturn(
 				true);
 		$this->config->expects($this->once())->method(
@@ -731,8 +747,7 @@ class RIRDataTest extends TestCase {
 				'PHP GMP Extension needs to be installed.'],
 			"checkInternetConnection" => [true,true,false,
 				'Internet connection needs to be available.'],
-			"shouldNotHappen" => [true,true,true,
-				'']];
+			"shouldNotHappen" => [true,true,true,'']];
 
 		foreach ($states as $state_key => $state_value) {
 			foreach ($other as $other_key => $other_value) {

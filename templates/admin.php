@@ -10,8 +10,8 @@ $loading = $l->t('Loading').'...';
 <div id="geoblocker" class="section">
 	<h2><?php p($l->t('GeoBlocker')); ?></h2>
 	<div class="subsection">
-		<p><?php p($l->t('This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. ')); ?> </p>
-		<p><?php p($l->t('Login attempts from local network IP addresses are not blocked (or logged).')); ?> </p>
+		<p><?php p($l->t('This is a front end to geo localization services, that allows blocking (beta), delaying (beta) and logging of login attempts from specified countries. ')); ?> </p>
+		<p><?php p($l->t('Login attempts from local network IP addresses are not reacted on at all.')); ?> </p>
 		<p><?php p($l->t('Wrong Nextcloud configuration (especially in container) can lead to all accesses seem to come from a local network IP address.')); ?> </p>
 		<p><?php p($l->t('If you are accessing from external network, this should be an external IP address: ')); p($_['ipAddress']); p(' '); 
 		if (GeoBlocker::isIPAddressLocal($_['ipAddress'])) {
@@ -62,8 +62,7 @@ $loading = $l->t('Loading').'...';
 			<div class="subsection" id="database-path" style="display:none" >
 				<?php p($l->t('Location of the database: '));?>						
 				<input class="path-input" type="text" size="50" id="database-path-string" value="<?php p($loading); ?>" >		
-			</div>			
-<!-- 			in work begin -->
+			</div>	
 			<div class="subsection" id="database-update" style="display:none" >	
 				<input class="button-input" type="button" id="database-update-button" value="<?php p($l->t('Update Database')) ?>" disabled>
 				<p class="subsection">
@@ -71,7 +70,6 @@ $loading = $l->t('Loading').'...';
 					<span id="database-update-string"><?php p($loading); ?></span>
 				</p>
 			</div>	
-<!-- 			in work end -->
 		</div>
 		
 	</div>
@@ -127,21 +125,33 @@ $loading = $l->t('Loading').'...';
 						<?php p($l->t('with Country Code'))?></label><br/>
 			</p>
 			<p class="subsection">	
-				<input type="checkbox" name="log-with-user-name" id="log-with-user-name"
-					class="checkbox"
-					<?php if ($_['logWithUserName']) print_unescaped('checked="checked"'); ?>> <label
-					for="log-with-user-name">
-						<?php p($l->t('with username'))?></label><br/>
+				<input type="checkbox" name="log-with-user-name" id="log-with-user-name" class="checkbox" 
+					<?php if ($_['logWithUserName']) print_unescaped('checked="checked"'); ?>> 
+					<label for="log-with-user-name">
+						<?php p($l->t('with username'))?>
+					</label>
 			</p>
 		
 		<br/>
 		<p>
-			<?php p($l->t('In addition, the login attempt can also be blocked'))?> <?php p($l->t('(in a future version)'))?>:
+			<?php p($l->t('In addition, the login attempt can also be delayed and blocked'))?> <?php p($l->t('(beta version)'))?>:
 		</p>
 			<p class="subsection">
-				<input type="checkbox" name="blocking-active" id="blocking-active" class="checkbox" value="1" disabled>
+				<input type="checkbox" name="delaying-active" id="delaying-active" class="checkbox" 
+					<?php if ($_['delayIpAddress']) print_unescaped('checked="checked"'); ?>>
+					<label for="delaying-active">
+						<?php p($l->t('Activate delaying of login attempts from IP addresses of the specified countries.')); 
+							p(' '); 
+							p($l->t('(Delaying is enforced for 30s before password check.)'))?>
+					</label>
+			</p>
+			<p class="subsection">
+				<input type="checkbox" name="blocking-active" id="blocking-active" class="checkbox"  
+					<?php if ($_['blockIpAddress']) print_unescaped('checked="checked"'); ?>>
 					<label for="blocking-active">
-						<?php p($l->t('Activate blocking of the login attempt from IP addresses of the specified countries.'))?>
+						<?php p($l->t('Activate blocking of login attempts from IP addresses of the specified countries.')); 
+							p(' '); 
+							p($l->t('(Blocking is enforced after password check!)'))?>
 					</label>
 			</p>
 		
