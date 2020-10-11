@@ -134,7 +134,7 @@ $loading = $l->t('Loading').'...';
 		
 		<br/>
 		<p>
-			<?php p($l->t('In addition, the login attempt can also be delayed and blocked'))?> <?php p($l->t('(beta version)'))?>:
+			<?php p($l->t('In addition, the login attempt can also be delayed and blocked.'))?> <?php p($l->t('(beta version)'))?>:
 		</p>
 			<p class="subsection">
 				<input type="checkbox" name="delaying-active" id="delaying-active" class="checkbox" 
