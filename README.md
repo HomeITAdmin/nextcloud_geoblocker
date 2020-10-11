@@ -7,7 +7,7 @@
 
 This is a server side app for a [nextcloud](https://nextcloud.com/) instance.
 This is a front end to geo localization services, that allows blocking (beta in
-0.4.0) delaying (beta in 0.4.0) and logging of login attempts from specified
+0.4.0), delaying (beta in 0.4.0) and logging of login attempts from specified
 countries.
 Login attempts from local network IP addresses are not blocked (or logged).
 Wrong Nextcloud configuration (especially in container) can lead to all access
