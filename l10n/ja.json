@@ -1,7 +1,6 @@
 { "translations": {
     "Blocks user depending on the estimated country of thier IP address." : "IPアドレスによって推定された国に応じてユーザーをブロックします．",
     "Loading" : "読み込み中",
-    "This is a front end to geo localization services, that allows blocking (currently only logging!) of login attempts from specified countries. " : "これはフロントエンドのジオロケーションサービスで、指定された国からのログイン試行のブロック（現在はロギングのみ）をします．",
     "Andorra" : "アンドラ",
     "United Arab Emirates" : "アラブ首長国連邦",
     "Afghanistan" : "アフガニスタン",

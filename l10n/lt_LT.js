@@ -15,7 +15,6 @@ OC.L10N.register(
     "Country Selection" : "Šalių pasirinkimas",
     "Choose the selection mode" : "Pasirinkite pasirinkimo veikseną",
     "Reaction" : "Reakcija",
-    "(in a future version)" : "(būsimoje versijoje)",
     "COUNTRY NOT FOUND" : "ŠALIS NERASTA",
     "Andorra" : "Andora",
     "United Arab Emirates" : "Jungtiniai Arabų Emyratai",

@@ -1,16 +1,13 @@
 OC.L10N.register(
     "geoblocker",
     {
-    "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "用戶 %s 以 IP 地址 %s 從被封鎖的國家 %s 登入了。",
     "local" : "本地",
     "default" : "預設",
     "Blocks user depending on the estimated country of thier IP address." : "以其 IP 位址大約所在的國家封鎖用戶。",
     "Loading" : "載入中",
-    "Login attempts from local network IP addresses are not blocked (or logged)." : "透過內部 IP 登入不會被封鎖 (或記錄)。",
     "Service" : "服務",
     "Status of the chosen service: " : "所選服務的狀態:",
     "Country Selection" : "城市選擇",
-    "(in a future version)" : "(在未來的版本)",
     "Andorra" : "安道爾",
     "Afghanistan" : "阿富汗",
     "Antigua and Barbuda" : "安提瓜和巴布達",

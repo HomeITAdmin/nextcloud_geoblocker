@@ -4,8 +4,6 @@
     "Update possible. " : "Päivitys mahdollinen.",
     "Update running. " : "Päivitys meneillään.",
     "No database date available." : "Tietokannan päiväys ei ole saatavilla.",
-    "The user \"%s\" logged in with an invalid IP address \"%s\"." : "Käyttäjä \"%s\" kirjautui virheellisellä IP-osoitteella \"%s\".",
-    "The user \"%s\" logged in with IP address \"%s\" from blocked country \"%s\"." : "Käyttäjä \"%s\" kirjautui IP-osoitteella \"%s\" estetystä maasta \"%s\".",
     "OK." : "OK.",
     "Date of the database cannot be determined!" : "Tietokannan päiväystä ei voitu määrittää!",
     "local" : "paikallinen",
