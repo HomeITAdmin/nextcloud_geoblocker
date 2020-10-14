@@ -13,6 +13,7 @@ OC.L10N.register(
     "The user \"%s\" attempt to login with IP address \"%s\" from blocked country \"%s\"." : "Uživatel \"%s\" se pokouší o přihlášení z IP adresy \"%s\" z blokované země \"%s\".",
     "Login is delayed." : "Přihlášení je zpožděno.",
     "Login is blocked." : "Přihlášení je zablokováno.",
+    "No reaction is activated." : "Není aktivována žádná reakce.",
     "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Přihlášení uživatele „%s“ s IP adresou „%s“ se nepodařilo zkontrolovat kvůli problémům s lokační službou.",
     "OK." : "OK.",
     "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "CHYBA: zdá se, že služba není nainstalována na hostiteli Nextcloud serveru nebo není dosažitelná pro webový server nebo není správně nastavená (je k dispozici databáze pro IPv4 a IPv6?!). Možná je také v souboru s nastaveními php.ini vypnutá funkce exec().",
