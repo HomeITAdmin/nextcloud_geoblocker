@@ -69,6 +69,7 @@
     "with IP Address" : "La dirección IP",
     "with Country Code" : "El Código Postal",
     "with username" : "El nombre de usuario",
+    "In addition, the login attempt can also be delayed and blocked" : "Además, el intento de entrada puede ser retrasado o bloqueado",
     "Test" : "Prueba",
     "Possibilities to test if the Geoblocker is working as expected:" : "Opciones para probar si el Geoblocker está funcionando como se espera:",
     "Next login attempt of user \"%s\" will be simulated to come from the following IP address:" : "El próximo intento de inicio del usuario \"%s\" se simulará que proviene desde la siguiente dirección IP:",
