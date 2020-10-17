@@ -48,13 +48,13 @@ class GeoBlockerConfig {
 		$value = $log_with_user_name === true ? '1' : '0';
 		$this->config->setAppValue('geoblocker', 'logWithUserName', $value);
 	}
-	
+
 	public function getDelayIpAddress(): bool {
 		$delay_ip_address = $this->config->getAppValue('geoblocker',
 				'delayIpAddress', '0');
 		return $delay_ip_address === '1';
 	}
-	
+
 	public function setDelayIpAddress(bool $delay_ip_address) {
 		$value = $delay_ip_address === true ? '1' : '0';
 		$this->config->setAppValue('geoblocker', 'delayIpAddress', $value);
@@ -65,12 +65,12 @@ class GeoBlockerConfig {
 				'blockIpAddress', '0');
 		return $block_ip_address === '1';
 	}
-	
+
 	public function setBlockIpAddress(bool $block_ip_address) {
 		$value = $block_ip_address === true ? '1' : '0';
 		$this->config->setAppValue('geoblocker', 'blockIpAddress', $value);
 	}
-	
+
 	public function getUseWhiteListing(): bool {
 		$log_with_user_name = $this->config->getAppValue('geoblocker',
 				'choosenWhiteBlackList', '0');
@@ -131,6 +131,15 @@ class GeoBlockerConfig {
 					$default_fake_address);
 		}
 		return $fake_address;
+	}
+
+	public function getFakeAddressUser(): string {
+		$user = $this->config->getAppValue('geoblocker', 'fakeAddressUser', '');
+		return $user;
+	}
+
+	public function setFakeAddressUser(string $user) {
+		$this->config->setAppValue('geoblocker', 'fakeAddressUser', $user);
 	}
 
 	public function getDatabaseFileLocation(string $unique_service_string): string {

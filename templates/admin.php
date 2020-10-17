@@ -170,6 +170,9 @@ $loading = $l->t('Loading').'...';
 				</label>
 			<input type="text" name="fake-address" id="fake-address" value="<?php print_unescaped($_['fakeAddress'])?>" >
 		</p>
+		<div style="display:none">
+			<input type="text" name="fake-address-user" id="fake-address-user" value="<?php print_unescaped($_['userID'])?>" readonly>
+		</div>
 	</div>
 
 </div>

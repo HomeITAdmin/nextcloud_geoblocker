@@ -46,7 +46,7 @@ class UserHooks {
 	}
 
 	private function checkGeoIpBlocking($user) {
-		if ($this->config->getDoFakeAddress()) {
+		if ($this->config->getDoFakeAddress() && $this->config->getFakeAddressUser() == $user) {
 			$ip_address = $this->config->getFakeAddress();
 			$this->config->setDoFakeAddress(false);
 		} else {

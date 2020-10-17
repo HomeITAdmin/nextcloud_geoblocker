@@ -177,6 +177,7 @@ function fakeAdressAction(checked) {
 		value = '1';
 	}
 	OCP.AppConfig.setValue('geoblocker', 'doFakeAddress', value);
+	OCP.AppConfig.setValue('geoblocker', 'fakeAddressUser', document.getElementById('fake-address-user').value);
 	
 	var checkinput = new RegExp("^[a-f0-9.:]{6,39}$");
 	var fake = document.getElementById('fake-address').value;
