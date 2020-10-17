@@ -71,7 +71,6 @@ OC.L10N.register(
     "with IP Address" : "co enderezo IP",
     "with Country Code" : "co código de país",
     "with username" : "co nome de usuario",
-    "In addition, the login attempt can also be delayed and blocked" : "Ademais, tamén se pode atrasar e bloquear o intento de inicio de sesión",
     "(beta version)" : "(versión beta)",
     "Activate delaying of login attempts from IP addresses of the specified countries." : "Activar o atraso do intento de inicio de sesión dende os enderezos IP dos países especificados.",
     "(Delaying is enforced for 30s before password check.)" : "(O atraso aplícase durante 30 segs. antes da comprobación do contrasinal.)",

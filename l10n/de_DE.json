@@ -69,7 +69,6 @@
     "with IP Address" : "mit IP-Adresse",
     "with Country Code" : "mit Länderkennung",
     "with username" : "mit Benutzername",
-    "In addition, the login attempt can also be delayed and blocked" : "Darüber hinaus kann der Anmeldeversuch auch verzögert und blockiert werden",
     "(beta version)" : "(Beta-Version)",
     "Activate delaying of login attempts from IP addresses of the specified countries." : "Verzögerung der Anmeldung von IP-Adressen der angegebenen Länder aktivieren.",
     "(Delaying is enforced for 30s before password check.)" : "(Die Verzögerung wird 30 Sekunden lang erzwungen, bevor das Passwort überprüft wird.)",
