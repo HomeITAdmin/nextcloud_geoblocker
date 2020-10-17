@@ -16,6 +16,7 @@ class GeoBlocker {
 	private $l;
 	private $location_service;
 	public const kCountryNotFoundCode = 'AA';
+	private const kNotShownString = 'NOT_SHOWN_IN_LOG';
 
 	public function __construct(String $user, ILogger $logger,
 			GeoBlockerConfig $config, IL10N $l,
@@ -29,9 +30,9 @@ class GeoBlocker {
 
 	private function createInvalidIPLogString(string $log_user,
 			string $log_address): string {
-		return $this->l->t(
+		return sprintf(
 				'The user "%s" attempt to login with an invalid IP address "%s".',
-				array($log_user,$log_address));
+				$log_user, $log_address);
 	}
 
 	private function logEvent(string $log_string): void {
@@ -50,42 +51,36 @@ class GeoBlocker {
 				$location = $this->location_service->getCountryCodeFromIP(
 						$ip_address);
 
-				$log_user = $this->config->getLogWithUserName() ? $this->user : $this->l->t(
-						'NOT_SHOWN_IN_LOG');
-				$log_location = $this->config->getLogWithCountryCode() ? $location : $this->l->t(
-						'NOT_SHOWN_IN_LOG');
-				$log_address = $this->config->getLogWithIpAddress() ? $ip_address : $this->l->t(
-						'NOT_SHOWN_IN_LOG');
+				$log_user = $this->config->getLogWithUserName() ? $this->user : $this::kNotShownString;
+				$log_location = $this->config->getLogWithCountryCode() ? $location : $this::kNotShownString;
+				$log_address = $this->config->getLogWithIpAddress() ? $ip_address : $this::kNotShownString;
 
 				if ($location !== 'INVALID_IP' && $location !== 'UNAVAILABLE') {
 					if ($this->config->isCountryCodeInListOfChoosenCountries(
 							$location) xor $this->config->getUseWhiteListing()) {
-						$log_string = $this->l->t(
+						$log_string = sprintf(
 								'The user "%s" attempt to login with IP address "%s" from blocked country "%s".',
-								array($log_user,$log_address,$log_location));
+								$log_user, $log_address, $log_location);
 						$any_reaction = false;
 						if ($this->config->getDelayIpAddress()) {
 							usleep(30 * 1000000);
-							$log_string .= ' ' . $this->l->t(
-									'Login is delayed.');
+							$log_string .= ' Login is delayed.';
 							$any_reaction = true;
 						}
 						if ($this->config->getBlockIpAddress()) {
 							$block_ip_address = true;
-							$log_string .= ' ' . $this->l->t(
-									'Login is blocked.');
+							$log_string .= ' Login is blocked.';
 							$any_reaction = true;
 						}
 						if (! $any_reaction) {
-							$log_string .= ' ' .
-									$this->l->t('No reaction is activated.');
+							$log_string .= ' No reaction is activated.';
 						}
 						$this->logEvent($log_string);
 					}
 				} elseif ($location === 'UNAVAILABLE') {
-					$log_string = $this->l->t(
+					$log_string = sprintf(
 							'The login of user "%s" with IP address "%s" could not be checked due to problems with location service.',
-							array($log_user,$log_address));
+							$log_user, $log_address);
 					$this->logEvent($log_string);
 				} elseif ($location === 'INVALID_IP') {
 					$log_string = $this->createInvalidIPLogString($log_user,
