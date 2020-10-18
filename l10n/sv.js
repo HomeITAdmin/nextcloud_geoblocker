@@ -1,7 +1,6 @@
 OC.L10N.register(
     "geoblocker",
     {
-    "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "Inloggning av användare \"%s\" med IP-adress \"%s\" kunde inte kontrolleras p.g.a. problem med platstjänsten.",
     "local" : "lokal",
     "default" : "standard",
     "GeoBlocker" : "GeoBlocker",

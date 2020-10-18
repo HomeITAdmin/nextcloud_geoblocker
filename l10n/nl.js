@@ -9,7 +9,6 @@ OC.L10N.register(
     "No database date available." : "Geen database datum beschikbaar",
     "Database file location not available!" : "De bestandslocatie van de database is niet beschikbaar!",
     "Update Status not available!" : "Update Status niet beschikbaar!",
-    "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "De inlog van gebruiker \"%s\" met IP-adres \"%s\" kon niet gecontroleerd worden vanwege problemen met de locatieservice.",
     "OK." : "OK.",
     "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "FOUT: Service lijkt niet te zijn geïnstalleerd op de host van de Nextcloudserver, of kan niet door de webserver bereikt worden of dat is verkeerd geconfigureerd (is de database met IPv4 en IPv6 bereikbaar?!). Misschien is het gebruik van de php-functie exec() uitgeschakeld in php.ini.",
     "Date of the database cannot be determined!" : "Datum van de database kan niet worden bepaald!",

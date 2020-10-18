@@ -1,7 +1,6 @@
 OC.L10N.register(
     "geoblocker",
     {
-    "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "A \"%s\" felhasználó belépése a \"%s\" IP címmel nem lehet ellenőrizni a helymeghatározó szolgáltatás problémája miatt.",
     "local" : "helyi",
     "default" : "alapértelmezett",
     "GeoBlocker" : "GeoBlocker",

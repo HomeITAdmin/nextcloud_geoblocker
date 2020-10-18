@@ -1,7 +1,6 @@
 OC.L10N.register(
     "geoblocker",
     {
-    "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "لا يمكن التحقق من ولوج المستخدم \"%s\" بالعنوان الشبكي \"%s\" بسبب مشاكل في خدمة المواقع.",
     "local" : "محلي",
     "default" : "الافتراضي",
     "GeoBlocker" : "الحاجب الجغرافي",

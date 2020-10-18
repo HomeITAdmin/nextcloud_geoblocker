@@ -1,6 +1,5 @@
 { "translations": {
     "Status of the service cannot be determined." : "无法确定此服务的状态。",
-    "The login of user \"%s\" with IP address \"%s\" could not be checked due to problems with location service." : "由于位置服务出现的问题，无法检查 IP 地址为 “%s” 的用户 “%s”的登录。",
     "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "错误：Nextcloud服务器的主机上似乎未安装服务，Web服务器无法访问或配置错误（IPv4和IPv6的数据库是否可用？！）。也许在php.ini中php函数exec()的使用已被禁止。",
     "local" : "本地",
     "default" : "默认",
