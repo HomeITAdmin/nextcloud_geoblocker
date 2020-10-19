@@ -61,6 +61,8 @@ OC.L10N.register(
     "with IP Address" : "avec l'adresse IP",
     "with Country Code" : "avec le code pays",
     "with username" : "avec le nom d'utilisateur",
+    "In addition, the login attempt can also be delayed and blocked." : "En complément, la tentative de connexion peut aussi être retardée ou bloquée.",
+    "(beta version)" : "(version beta)",
     "Test" : "Test",
     "Possibilities to test if the Geoblocker is working as expected:" : "Possibilités de tester si Geoblocker fonctionne correctement :",
     "Next login attempt of user \"%s\" will be simulated to come from the following IP address:" : "La prochaine tentative de connexion pour l'utilisateur \"%s\" simulera  l’utilisation de l'adresse IP suivante :",
