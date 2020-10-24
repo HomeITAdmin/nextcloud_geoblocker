@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1)
 	;
 
@@ -18,7 +19,7 @@ class RIRServiceMapperTest extends TestCase {
 	}
 	
 	public function testIsIpv6String2Int64Correct() {
-		$ip = "::"; 
+		$ip = "::";
 		$this->assertEquals(-9223372036854775808, RIRServiceMapper::ipv6String2Int64($ip));
 		
 		$ip = "0:0:0:0::";
@@ -50,5 +51,3 @@ class RIRServiceMapperTest extends TestCase {
 		return $in;
 	}
 }
-
-?>

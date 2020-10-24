@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1)
 	;
 
@@ -16,7 +17,7 @@ class MaxMindGeoLite2MissingTest extends TestCase {
 		parent::setUp();
 		$this->l = $this->getMockBuilder('OCP\IL10N')->getMock();
 		$this->l->method('t')->will(
-				$this->returnCallback(array($this,'callbackLTJustRouteThrough')));
+				$this->returnCallback([$this,'callbackLTJustRouteThrough']));
 		$tmp_config = $this->getMockBuilder('OCP\IConfig')->getMock();
 		$this->config = $this->getMockBuilder(
 				'OCA\GeoBlocker\Config\GeoBlockerConfig')->setConstructorArgs(
@@ -41,5 +42,3 @@ class MaxMindGeoLite2MissingTest extends TestCase {
 		return $in;
 	}
 }
-
-?>

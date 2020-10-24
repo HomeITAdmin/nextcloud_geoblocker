@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1)
 	;
 
@@ -33,10 +34,10 @@ class GeoBlockerTest extends TestCase {
 	private function doCheckTest(String $ip_address, String $country_code,
 			InvokedCountMatcher $invoker_location_service,
 			String $log_string_template, String $log_method,
-			InvokedCountMatcher $invoker_logging, bool $blocking_active = TRUE,
-			bool $expect_blocking = FALSE, bool $is_country_in_list = FALSE,
-			bool $use_white_listing = FALSE, bool $log_with_user_name = TRUE,
-			bool $log_with_country_code = TRUE, bool $log_with_ip_address = TRUE) {
+			InvokedCountMatcher $invoker_logging, bool $blocking_active = true,
+			bool $expect_blocking = false, bool $is_country_in_list = false,
+			bool $use_white_listing = false, bool $log_with_user_name = true,
+			bool $log_with_country_code = true, bool $log_with_ip_address = true) {
 		$this->mySetUp();
 		$log_string = sprintf($log_string_template, $this->user, $ip_address,
 				$country_code);
@@ -59,17 +60,17 @@ class GeoBlockerTest extends TestCase {
 		$this->config->method('getBlockIpAddress')->with()->will(
 				$this->returnValue($blocking_active));
 		$this->l->method('t')->will(
-				$this->returnCallback(array($this,'defaultTranslate')));
+				$this->returnCallback([$this,'defaultTranslate']));
 		$this->logger->expects($invoker_logging)->method($log_method)->with(
 				$this->equalTo($log_string),
-				$this->equalTo(array('app' => 'geoblocker')));
+				$this->equalTo(['app' => 'geoblocker']));
 		$this->assertEquals($expect_blocking,
 				$this->geo_blocker->isIpAddressBlocked($ip_address));
 	}
 
 	public function defaultTranslate() {
 		$args = func_get_args();
-		$sprintf_args = array_merge(array($args[0]), $args[1]);
+		$sprintf_args = array_merge([$args[0]], $args[1]);
 		return call_user_func_array('sprintf', $sprintf_args);
 	}
 
@@ -78,7 +79,7 @@ class GeoBlockerTest extends TestCase {
 		$country_code = 'DE';
 		$log_string_template = 'The user "%s" attempt to login with IP address "%s" from blocked country "%s".';
 		$log_method = 'warning';
-		$isCountryInList = TRUE;
+		$isCountryInList = true;
 		$this->doCheckTest($ip_address, $country_code, $this->once(),
 				$log_string_template . " No reaction is activated.", $log_method,
 				$this->once(), false, false, $isCountryInList);
@@ -101,8 +102,8 @@ class GeoBlockerTest extends TestCase {
 		$country_code = 'DE';
 		$log_string_template = 'The user "%s" attempt to login with IP address "%s" from blocked country "%s".';
 		$log_method = 'warning';
-		$isCountryInList = FALSE;
-		$useWhiteListing = TRUE;
+		$isCountryInList = false;
+		$useWhiteListing = true;
 		$this->doCheckTest($ip_address, $country_code, $this->once(),
 				$log_string_template . " No reaction is activated.", $log_method,
 				$this->once(), false, false, $isCountryInList, $useWhiteListing);
@@ -143,8 +144,8 @@ class GeoBlockerTest extends TestCase {
 		$country_code = 'DE';
 		$log_string_template = '';
 		$log_method = 'warning';
-		$isCountryInList = TRUE;
-		$useWhiteListing = TRUE;
+		$isCountryInList = true;
+		$useWhiteListing = true;
 		$this->doCheckTest($ip_address, $country_code, $this->once(),
 				$log_string_template, $log_method, $this->never(), false, false,
 				$isCountryInList, $useWhiteListing);
@@ -218,25 +219,25 @@ class GeoBlockerTest extends TestCase {
 		$country_code = 'DE';
 		$log_string_template = 'The user "NOT_SHOWN_IN_LOG" attempt to login with IP address "NOT_SHOWN_IN_LOG" from blocked country "NOT_SHOWN_IN_LOG". Login is blocked.';
 		$log_method = 'warning';
-		$isCountryInList = TRUE;
-		$useWhiteListing = FALSE;
+		$isCountryInList = true;
+		$useWhiteListing = false;
 		$this->doCheckTest($ip_address, $country_code, $this->once(),
-				$log_string_template, $log_method, $this->once(), TRUE, TRUE,
-				$isCountryInList, $useWhiteListing, FALSE, FALSE, FALSE);
+				$log_string_template, $log_method, $this->once(), true, true,
+				$isCountryInList, $useWhiteListing, false, false, false);
 
 		$log_string_template = 'The user "%s" attempt to login with IP address "NOT_SHOWN_IN_LOG" from blocked country "NOT_SHOWN_IN_LOG". No reaction is activated.';
 		$this->doCheckTest($ip_address, $country_code, $this->once(),
-				$log_string_template, $log_method, $this->once(), FALSE, FALSE,
-				$isCountryInList, $useWhiteListing, TRUE, FALSE, FALSE);
+				$log_string_template, $log_method, $this->once(), false, false,
+				$isCountryInList, $useWhiteListing, true, false, false);
 
 		$log_string_template = 'The user "%s" attempt to login with IP address "%s" from blocked country "NOT_SHOWN_IN_LOG". Login is blocked.';
 		$this->doCheckTest($ip_address, $country_code, $this->once(),
-				$log_string_template, $log_method, $this->once(), TRUE, TRUE,
-				$isCountryInList, $useWhiteListing, TRUE, FALSE, TRUE);
+				$log_string_template, $log_method, $this->once(), true, true,
+				$isCountryInList, $useWhiteListing, true, false, true);
 
 		$log_string_template = 'The user "%s" attempt to login with IP address "%s" from blocked country "%s". No reaction is activated.';
 		$this->doCheckTest($ip_address, $country_code, $this->once(),
-				$log_string_template, $log_method, $this->once(), FALSE, FALSE,
-				$isCountryInList, $useWhiteListing, TRUE, TRUE, TRUE);
+				$log_string_template, $log_method, $this->once(), false, false,
+				$isCountryInList, $useWhiteListing, true, true, true);
 	}
 }

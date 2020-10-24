@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1)
 	;
 
@@ -16,12 +17,12 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	private $rir_data_checks;
 	private $service_name = 'rir_data';
 	private $config;
-	private $rir_ftps = array(
+	private $rir_ftps = [
 		'ripencc' => 'ftp://ftp.ripe.net/pub/stats/ripencc/delegated-ripencc-latest',
 		'arin' => 'ftp://ftp.arin.net/pub/stats/arin/delegated-arin-extended-latest',
 		'afrinic' => 'ftp://ftp.afrinic.net/pub/stats/afrinic/delegated-afrinic-latest',
 		'apnic' => 'ftp://ftp.apnic.net/pub/stats/apnic/delegated-apnic-latest',
-		'lacnic' => 'ftp://ftp.lacnic.net/pub/stats/lacnic/delegated-lacnic-latest');
+		'lacnic' => 'ftp://ftp.lacnic.net/pub/stats/lacnic/delegated-lacnic-latest'];
 	public const kServiceStatusName = 'rir_data_service_status';
 	public const kDatabaseDateName = 'rir_data_db_date';
 	public const kErrorMessageName = 'rir_data_error_message';
@@ -155,7 +156,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 
 	public function getDatabaseDate(): string {
 		$status_id = $this->getStatusId();
-		$db_date = $this->getDatabaseDateImpl();		
+		$db_date = $this->getDatabaseDateImpl();
 		if ($db_date == '') {
 			if ($status_id == RIRStatus::kDbOk) {
 				return $this->l->t('Date of the database cannot be determined!');

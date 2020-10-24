@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1)
 	;
 
@@ -54,7 +55,7 @@ class LocalizationServiceFactory {
 
 	public function getLocationServiceOverview(): array {
 		$current_service = $this->config->getChosenService();
-		$overview = array();
+		$overview = [];
 		for ($i = 0; $i < $this->count_ids; $i ++) {
 			$location_service = $this->getLocationServiceByID($i);
 			$service_string = (new \ReflectionClass($location_service))->getShortName();

@@ -41,7 +41,7 @@ interface IDatabaseUpdate {
 	public function resetDatabase(): bool;
 }
 abstract class LocationServiceUpdateStatus {
-	const kUpdateNotPossible = 0;
-	const kUpdatePossible = 1;
-	const kUpdating = 2;
+	public const kUpdateNotPossible = 0;
+	public const kUpdatePossible = 1;
+	public const kUpdating = 2;
 }

@@ -1,4 +1,5 @@
 <?php
+
 return [
 	'routes' => [
 		['name' => 'service#status','url' => '/service/status/{id}',
@@ -24,5 +25,3 @@ return [
 		['name' => 'service#getDatabaseUpdateStatusString',
 			'url' => '/service/getDatabaseUpdateStatusString/{id}',
 			'verb' => 'GET']]];
-		
-		

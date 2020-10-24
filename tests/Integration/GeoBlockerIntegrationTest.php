@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1)
 	;
 
@@ -36,10 +37,10 @@ class GeoBlockerIntegrationTest extends TestCase {
 	private function doCheckTest(String $ip_address, String $country_code,
 			InvokedCountMatcher $invokerLocationService,
 			String $log_string_template, String $log_method,
-			InvokedCountMatcher $invokerLogging, bool $blocking_active = TRUE,
-			bool $expect_blocking = FALSE, bool $isCountryInList = FALSE,
-			bool $useWhiteListing = FALSE, bool $logWithUserName = TRUE,
-			bool $logWithCountryCode = TRUE, bool $logWithIPAdress = TRUE) {
+			InvokedCountMatcher $invokerLogging, bool $blocking_active = true,
+			bool $expect_blocking = false, bool $isCountryInList = false,
+			bool $useWhiteListing = false, bool $logWithUserName = true,
+			bool $logWithCountryCode = true, bool $logWithIPAdress = true) {
 		$log_string = sprintf($log_string_template, $this->user, $ip_address,
 				$country_code);
 		// $this->location_service->expects ( $invokerLocationService )->method (
@@ -61,17 +62,17 @@ class GeoBlockerIntegrationTest extends TestCase {
 		$this->config->method('getBlockIpAddress')->with()->will(
 				$this->returnValue($blocking_active));
 		$this->l->method('t')->will(
-				$this->returnCallback(array($this,'defaultTranslate')));
+				$this->returnCallback([$this,'defaultTranslate']));
 		$this->logger->expects($invokerLogging)->method($log_method)->with(
 				$this->equalTo($log_string),
-				$this->equalTo(array('app' => 'geoblocker')));
+				$this->equalTo(['app' => 'geoblocker']));
 		$this->assertEquals($expect_blocking,
 				$this->geoblocker->isIpAddressBlocked($ip_address));
 	}
 
 	public function defaultTranslate() {
 		$args = func_get_args();
-		$sprintf_args = array_merge(array($args[0]), $args[1]);
+		$sprintf_args = array_merge([$args[0]], $args[1]);
 		return call_user_func_array('sprintf', $sprintf_args);
 	}
 
@@ -109,7 +110,7 @@ class GeoBlockerIntegrationTest extends TestCase {
 
 		$log_string_template = 'The user "%s" attempt to login with IP address "%s" from blocked country "%s". Login is blocked.';
 		$log_method = 'warning';
-		$isCountryInList = TRUE;
+		$isCountryInList = true;
 		$this->doCheckTest($ip_address, $country_code, $this->once(),
 				$log_string_template, $log_method, $this->once(), true, true,
 				$isCountryInList);
@@ -147,7 +148,7 @@ class GeoBlockerIntegrationTest extends TestCase {
 
 		$log_string_template = 'The user "%s" attempt to login with IP address "%s" from blocked country "%s". Login is blocked.';
 		$log_method = 'warning';
-		$isCountryInList = TRUE;
+		$isCountryInList = true;
 		$this->doCheckTest($ip_address, $country_code, $this->once(),
 				$log_string_template, $log_method, $this->once(), true, true,
 				$isCountryInList);

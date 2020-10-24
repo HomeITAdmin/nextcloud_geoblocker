@@ -6,8 +6,7 @@ use OCP\AppFramework\App;
 use OCA\GeoBlocker\Hooks\UserHooks;
 
 class Application extends App {
-
-	public function __construct(array $urlParams = array()) {
+	public function __construct(array $urlParams = []) {
 		parent::__construct('geoblocker', $urlParams);
 
 		$this->getContainer()->registerService('UserHooks',
@@ -25,5 +24,4 @@ class Application extends App {
 	public function register(): void {
 		$this->getContainer()->query('UserHooks')->register();
 	}
-	
 }

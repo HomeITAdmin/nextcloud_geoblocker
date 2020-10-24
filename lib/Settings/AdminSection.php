@@ -34,7 +34,7 @@ class AdminSection implements IIconSection {
 	 * @return string
 	 */
 	public function getName() {
-		return $this->l->t ( 'GeoBlocker' );
+		return $this->l->t('GeoBlocker');
 	}
 
 	/**

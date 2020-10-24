@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1)
 	;
 
@@ -15,7 +16,9 @@ use MaxMind\Db\Reader\InvalidDatabaseException;
 use InvalidArgumentException;
 use GeoIp2\Exception\AddressNotFoundException;
 
-class MaxMindGeoLite2 implements ILocalizationService, IDatabaseDate,
+class MaxMindGeoLite2 implements
+	ILocalizationService,
+	IDatabaseDate,
 		IDatabaseFileLocation {
 	private $l;
 	private $config;
@@ -28,8 +31,9 @@ class MaxMindGeoLite2 implements ILocalizationService, IDatabaseDate,
 		$this->unique_service_string = (new \ReflectionClass($this))->getShortName();
 		$this->database_file_location = $this->config->getDatabaseFileLocation(
 				$this->unique_service_string);
-		if ($this->database_file_location == '')
+		if ($this->database_file_location == '') {
 			$this->database_file_location = '/var/lib/GeoIP/GeoLite2-Country.mmdb';
+		}
 	}
 
 	public function getStatus(): bool {
@@ -37,17 +41,17 @@ class MaxMindGeoLite2 implements ILocalizationService, IDatabaseDate,
 			try {
 				$reader = new Reader($this->database_file_location);
 			} catch (InvalidDatabaseException | InvalidArgumentException $e) {
-				return FALSE;
+				return false;
 			}
 
 			try {
 				$reader->country('1.1.1.1');
 			} catch (AddressNotFoundException $e) {
-				return FALSE;
+				return false;
 			}
-			return TRUE;
+			return true;
 		}
-		return FALSE;
+		return false;
 	}
 
 	public function getStatusString(): string {

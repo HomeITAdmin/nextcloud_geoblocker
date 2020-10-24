@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1)
 	;
 
@@ -90,7 +91,7 @@ class GeoIPLookup implements ILocalizationService, IDatabaseDate {
 		$this->cmd_wrapper->getFullDateString($output, $return_val);
 
 		if ($return_val == 0) {
-			$matches = array();
+			$matches = [];
 			foreach ($output as $line) {
 				$match = [];
 				$count_matches = preg_match(
@@ -104,7 +105,7 @@ class GeoIPLookup implements ILocalizationService, IDatabaseDate {
 				$split = str_split(min($matches), 2);
 				$date_string = $split[0] . $split[1] . '-' . $split[2] . '-' .
 						$split[3];
-			}			
+			}
 		}
 		return $date_string;
 	}

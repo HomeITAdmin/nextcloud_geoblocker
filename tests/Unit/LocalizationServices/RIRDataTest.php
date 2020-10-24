@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1)
 	;
 
@@ -472,7 +473,7 @@ class RIRDataTest extends TestCase {
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
 
 		$this->rir_data->setDataSource(
-				array('afrinic' => $this->rir_data_test_file));
+				['afrinic' => $this->rir_data_test_file]);
 
 		$db_entry = new RIRServiceDBEntity();
 		$db_entry->setBeginIpRange(
@@ -785,7 +786,7 @@ class RIRDataTest extends TestCase {
 
 	private function setupAndCheckDbEntriesCalled(): void {
 		$this->rir_data->setDataSource(
-				array('afrinic' => $this->rir_data_test_file));
+				['afrinic' => $this->rir_data_test_file]);
 
 		$inputsV4 = ["afrinic|GH|ipv4|41.75.48.0|4096|20101111|allocated",
 			"afrinic|KE|ipv4|41.76.184.0|2048|20100701|allocated"];
@@ -793,7 +794,7 @@ class RIRDataTest extends TestCase {
 		$inputsV6 = ["afrinic|CI|ipv6|2001:42d8::|32|20171229|allocated",
 			"afrinic|AO|ipv6|2001:43f8:720::|48|20121025|assigned"];
 
-		$db_entries = array();
+		$db_entries = [];
 
 		foreach ($inputsV4 as $input) {
 			$parts = explode('|', $input);
@@ -827,7 +828,7 @@ class RIRDataTest extends TestCase {
 	}
 
 	private function setupAndCheckDbEntriesNotCalled(string $file): void {
-		$this->rir_data->setDataSource(array('afrinic' => $file));
+		$this->rir_data->setDataSource(['afrinic' => $file]);
 		$this->rir_service_mapper->expects($this->never())->method('insert');
 	}
 

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1)
 	;
 
@@ -103,7 +104,7 @@ class GeoBlockerConfig {
 		$countries = $this->config->getAppValue('geoblocker', 'choosenCountries',
 				'');
 		$cc_short = substr($cc, 0, 2);
-		if (strpos($countries, $cc_short) !== FALSE) {
+		if (strpos($countries, $cc_short) !== false) {
 			return true;
 		} else {
 			return false;

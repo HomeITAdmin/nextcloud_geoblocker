@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1)
 	;
 
@@ -36,18 +37,17 @@ class GeoBlocker {
 	}
 
 	private function logEvent(string $log_string): void {
-		$this->logger->warning($log_string, array('app' => 'geoblocker'));
+		$this->logger->warning($log_string, ['app' => 'geoblocker']);
 	}
 
 	private function logError(string $log_string): void {
-		$this->logger->error($log_string, array('app' => 'geoblocker'));
+		$this->logger->error($log_string, ['app' => 'geoblocker']);
 	}
 
 	public function isIpAddressBlocked(String $ip_address): bool {
 		$block_ip_address = false;
 		if ($this->isIPAddressValid($ip_address)) {
 			if (! $this->isIPAddressLocal($ip_address)) {
-
 				$location = $this->location_service->getCountryCodeFromIP(
 						$ip_address);
 
@@ -89,7 +89,7 @@ class GeoBlocker {
 				} else {
 					$this->logger->error(
 							"This shouldn't have happen. This line should never be reached.",
-							array('app' => 'geoblocker'));
+							['app' => 'geoblocker']);
 				}
 			}
 		} else {
@@ -105,9 +105,9 @@ class GeoBlocker {
 
 	public static function isIPAddressValid(String $ip_address): bool {
 		if (filter_var($ip_address, FILTER_VALIDATE_IP)) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -124,12 +124,12 @@ class GeoBlocker {
 		if (GeoBlocker::isIPAddressValid($ip_address)) {
 			if (filter_var($ip_address, FILTER_VALIDATE_IP,
 					FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
-				return FALSE;
+				return false;
 			} else {
-				return TRUE;
+				return true;
 			}
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 }

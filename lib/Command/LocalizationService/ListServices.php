@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types = 1)
 	;
 
 namespace OCA\GeoBlocker\Command\LocalizationService;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use OCA\GeoBlocker\LocalizationServices\LocalizationServiceFactory;
@@ -35,7 +35,7 @@ class ListServices extends Command {
 				$info_string .= " [Active]";
 			}
 			$info_string .= "\n";
-			++$i;			
+			++$i;
 		}
 		$info_string .= "</info>";
 		$output->writeln($info_string);

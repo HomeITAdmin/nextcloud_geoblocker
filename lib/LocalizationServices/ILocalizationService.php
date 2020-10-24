@@ -32,5 +32,4 @@ interface ILocalizationService {
 	 * @return string
 	 */
 	public function getCountryCodeFromIP(string $IPAddress): string;
-	
 }

@@ -3,8 +3,8 @@ use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 
 /** @var $l \OCP\IL10N */
 /** @var $_ array */
-script ( 'geoblocker', 'admin' );
-style ( 'geoblocker', 'admin' );
+script('geoblocker', 'admin');
+style('geoblocker', 'admin');
 $loading = $l->t('Loading').'...';
 ?>
 <div id="geoblocker" class="section">
@@ -13,12 +13,12 @@ $loading = $l->t('Loading').'...';
 		<p><?php p($l->t('This is a front end to geo localization services, that allows blocking (beta), delaying (beta) and logging of login attempts from specified countries. ')); ?> </p>
 		<p><?php p($l->t('Login attempts from local network IP addresses are not reacted on at all.')); ?> </p>
 		<p><?php p($l->t('Wrong Nextcloud configuration (especially in container) can lead to all accesses seem to come from a local network IP address.')); ?> </p>
-		<p><?php p($l->t('If you are accessing from external network, this should be an external IP address: ')); p($_['ipAddress']); p(' '); 
+		<p><?php p($l->t('If you are accessing from external network, this should be an external IP address: ')); p($_['ipAddress']); p(' ');
 		if (GeoBlocker::isIPAddressLocal($_['ipAddress'])) {
 			p($l->t('is local.'));
 		} else {
 			p($l->t('is external.'));
-		} 
+		}
 			?> </p>
 			
 		<p><?php p($l->t('Determination of the country from IP address is only as good as the chosen service.')); ?></p> 
@@ -32,12 +32,14 @@ $loading = $l->t('Loading').'...';
 		</p> 
 			<p class="subsection"><label> 
 				<select name="choose-service" id="choose-service">
-					<?php 
+					<?php
 						$service_overview = $_['localizationServiceFactory']->getLocationServiceOverview();
 						$value = 0;
 						foreach ($service_overview as $service_name => $chosen_service) {
 							print_unescaped('<option value="'.$value.'" ');
-							if ($chosen_service) print_unescaped('selected="selected" ');
+							if ($chosen_service) {
+								print_unescaped('selected="selected" ');
+							}
 							print_unescaped('>'.$service_name.'</option>');
 							$value = $value +1;
 						}
@@ -81,9 +83,13 @@ $loading = $l->t('Loading').'...';
 			<p class="subsection">
 				<select name="choose-white-black-list" id="choose-white-black-list">
 					<option value="0"
-						<?php if (!$_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('No country is blocked but the selected ones (blocklist)'))?></option>
+						<?php if (!$_['chosenBlackWhiteList']) {
+						print_unescaped('selected="selected"');
+					} ?>><?php p($l->t('No country is blocked but the selected ones (blocklist)'))?></option>
 					<option value="1"
-						<?php if ($_['chosenBlackWhiteList']) print_unescaped('selected="selected"'); ?>><?php p($l->t('All countries are blocked but the selected ones (allowlist)'))?></option>
+						<?php if ($_['chosenBlackWhiteList']) {
+						print_unescaped('selected="selected"');
+					} ?>><?php p($l->t('All countries are blocked but the selected ones (allowlist)'))?></option>
 				</select> 
 			</p>
 			
@@ -113,20 +119,26 @@ $loading = $l->t('Loading').'...';
 			<p class="subsection">
 				<input type="checkbox" name="log-with-ip-address" id="log-with-ip-address"
 					class="checkbox"
-					<?php if ($_['logWithIpAddress']) print_unescaped('checked="checked"'); ?>>
+					<?php if ($_['logWithIpAddress']) {
+					print_unescaped('checked="checked"');
+				} ?>>
 				<label for="log-with-ip-address">
 						<?php p($l->t('with IP Address'))?></label>
 			</p>
 			<p class="subsection">
 				<input type="checkbox" name="log-with-country-code"
 					id="log-with-country-code" class="checkbox"
-					<?php if ($_['logWithCountryCode']) print_unescaped('checked="checked"'); ?>>
+					<?php if ($_['logWithCountryCode']) {
+					print_unescaped('checked="checked"');
+				} ?>>
 				<label for="log-with-country-code">
 						<?php p($l->t('with Country Code'))?></label><br/>
 			</p>
 			<p class="subsection">	
 				<input type="checkbox" name="log-with-user-name" id="log-with-user-name" class="checkbox" 
-					<?php if ($_['logWithUserName']) print_unescaped('checked="checked"'); ?>> 
+					<?php if ($_['logWithUserName']) {
+					print_unescaped('checked="checked"');
+				} ?>> 
 					<label for="log-with-user-name">
 						<?php p($l->t('with username'))?>
 					</label>
@@ -138,19 +150,23 @@ $loading = $l->t('Loading').'...';
 		</p>
 			<p class="subsection">
 				<input type="checkbox" name="delaying-active" id="delaying-active" class="checkbox" 
-					<?php if ($_['delayIpAddress']) print_unescaped('checked="checked"'); ?>>
+					<?php if ($_['delayIpAddress']) {
+					print_unescaped('checked="checked"');
+				} ?>>
 					<label for="delaying-active">
-						<?php p($l->t('Activate delaying of login attempts from IP addresses of the specified countries.')); 
-							p(' '); 
+						<?php p($l->t('Activate delaying of login attempts from IP addresses of the specified countries.'));
+							p(' ');
 							p($l->t('(Delaying is enforced for 30s before password check.)'))?>
 					</label>
 			</p>
 			<p class="subsection">
 				<input type="checkbox" name="blocking-active" id="blocking-active" class="checkbox"  
-					<?php if ($_['blockIpAddress']) print_unescaped('checked="checked"'); ?>>
+					<?php if ($_['blockIpAddress']) {
+								print_unescaped('checked="checked"');
+							} ?>>
 					<label for="blocking-active">
-						<?php p($l->t('Activate blocking of login attempts from IP addresses of the specified countries.')); 
-							p(' '); 
+						<?php p($l->t('Activate blocking of login attempts from IP addresses of the specified countries.'));
+							p(' ');
 							p($l->t('(Blocking is enforced after password check!)'))?>
 					</label>
 			</p>
@@ -164,7 +180,9 @@ $loading = $l->t('Loading').'...';
 		</p>
 		<p class="subsection">
 			<input type="checkbox" name="do-fake-address" id="do-fake-address" class="checkbox"
-				<?php if ($_['doFakeAddress']) print_unescaped('checked="checked"'); ?>> 
+				<?php if ($_['doFakeAddress']) {
+								print_unescaped('checked="checked"');
+							} ?>> 
 				<label for="do-fake-address">
 					<?php p($l->t('Next login attempt of user "%s" will be simulated to come from the following IP address:',$_['userID']))?>
 				</label>

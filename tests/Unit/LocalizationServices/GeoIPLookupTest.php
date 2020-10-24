@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1)
 	;
 
@@ -19,35 +20,35 @@ class GeoIPLookupTest extends TestCase {
 		$this->l = $this->getMockBuilder('OCP\IL10N')->getMock();
 		$this->l->method('t')->will(
 				$this->returnCallback(
-						array($this,'callbackLTJustRouteThrough')));
+						[$this,'callbackLTJustRouteThrough']));
 		$this->geo_ip_lookup = new GeoIPLookup($this->cmd_wrapper, $this->l);
 	}
 
 	public function testIsValidStatusOk() {
 		$this->cmd_wrapper->method('geoiplookup')->will(
-				$this->returnCallback(array($this,'callbackGeoIpLookupValid')));
+				$this->returnCallback([$this,'callbackGeoIpLookupValid']));
 		$this->cmd_wrapper->method('geoiplookup6')->will(
 				$this->returnCallback(
-						array($this,'callbackGeoIpLookup6Valid')));
+						[$this,'callbackGeoIpLookup6Valid']));
 		$this->assertTrue($this->geo_ip_lookup->getStatus());
 	}
 
 	public function testIsInvalidStatusOk() {
 		$this->cmd_wrapper->method('geoiplookup')->will(
 				$this->returnCallback(
-						array($this,'callbackGeoIpLookupInvalid')));
+						[$this,'callbackGeoIpLookupInvalid']));
 		$this->cmd_wrapper->method('geoiplookup6')->will(
 				$this->returnCallback(
-						array($this,'callbackGeoIpLookup6Invalid')));
+						[$this,'callbackGeoIpLookup6Invalid']));
 		$this->assertFalse($this->geo_ip_lookup->getStatus());
 	}
 
 	public function testIsValidStatusStringOk() {
 		$this->cmd_wrapper->method('geoiplookup')->will(
-				$this->returnCallback(array($this,'callbackGeoIpLookupValid')));
+				$this->returnCallback([$this,'callbackGeoIpLookupValid']));
 		$this->cmd_wrapper->method('geoiplookup6')->will(
 				$this->returnCallback(
-						array($this,'callbackGeoIpLookup6Valid')));
+						[$this,'callbackGeoIpLookup6Valid']));
 
 		$result = '"Geoiplookup": OK.';
 		$this->assertEquals($result, $this->geo_ip_lookup->getStatusString());
@@ -56,10 +57,10 @@ class GeoIPLookupTest extends TestCase {
 	public function testIsInvalidStatusStringOk() {
 		$this->cmd_wrapper->method('geoiplookup')->will(
 				$this->returnCallback(
-						array($this,'callbackGeoIpLookupInvalid')));
+						[$this,'callbackGeoIpLookupInvalid']));
 		$this->cmd_wrapper->method('geoiplookup6')->will(
 				$this->returnCallback(
-						array($this,'callbackGeoIpLookup6Invalid')));
+						[$this,'callbackGeoIpLookup6Invalid']));
 		$result = '"Geoiplookup": ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini.';
 		$this->assertEquals($result, $this->geo_ip_lookup->getStatusString());
 	}
@@ -67,10 +68,10 @@ class GeoIPLookupTest extends TestCase {
 	public function testIsCountryCodeFromValidIpOk() {
 		$this->cmd_wrapper->method('geoiplookup')->will(
 				$this->returnCallback(
-						array($this,'callbackGeoIpLookupValidIP')));
+						[$this,'callbackGeoIpLookupValidIP']));
 		$this->cmd_wrapper->method('geoiplookup6')->will(
 				$this->returnCallback(
-						array($this,'callbackGeoIpLookup6ValidIP')));
+						[$this,'callbackGeoIpLookup6ValidIP']));
 		$ip_address = '2a02:2e0:3fe:1001:302::';
 		$country_code = 'DE';
 		$this->assertEquals($country_code,
@@ -85,11 +86,11 @@ class GeoIPLookupTest extends TestCase {
 	public function testIsCountryCodeFromInvalidIp1Ok() {
 		$this->cmd_wrapper->expects($this->once())->method('geoiplookup')->with(
 				'127.0.0.1')->will(
-				$this->returnCallback(array($this,'callbackGeoIpLookupValid')));
+				$this->returnCallback([$this,'callbackGeoIpLookupValid']));
 		$this->cmd_wrapper->expects($this->once())->method('geoiplookup6')->with(
 				'fe80::')->will(
 				$this->returnCallback(
-						array($this,'callbackGeoIpLookup6Valid')));
+						[$this,'callbackGeoIpLookup6Valid']));
 		$ip_address = '291.133.564.12';
 		$this->assertEquals('INVALID_IP',
 				$this->geo_ip_lookup->getCountryCodeFromIP($ip_address));
@@ -98,11 +99,11 @@ class GeoIPLookupTest extends TestCase {
 	public function testIsCountryCodeFromInvalidIp2Ok() {
 		$this->cmd_wrapper->expects($this->once())->method('geoiplookup')->with(
 				'127.0.0.1')->will(
-				$this->returnCallback(array($this,'callbackGeoIpLookupValid')));
+				$this->returnCallback([$this,'callbackGeoIpLookupValid']));
 		$this->cmd_wrapper->expects($this->once())->method('geoiplookup6')->with(
 				'fe80::')->will(
 				$this->returnCallback(
-						array($this,'callbackGeoIpLookup6Valid')));
+						[$this,'callbackGeoIpLookup6Valid']));
 		$ip_address = 'aöerb03s';
 		$this->assertEquals('INVALID_IP',
 				$this->geo_ip_lookup->getCountryCodeFromIP($ip_address));
@@ -111,11 +112,11 @@ class GeoIPLookupTest extends TestCase {
 	public function testIsCountryCodeFromInvalidIp3Ok() {
 		$this->cmd_wrapper->expects($this->once())->method('geoiplookup')->with(
 				'127.0.0.1')->will(
-				$this->returnCallback(array($this,'callbackGeoIpLookupValid')));
+				$this->returnCallback([$this,'callbackGeoIpLookupValid']));
 		$this->cmd_wrapper->expects($this->once())->method('geoiplookup6')->with(
 				'fe80::')->will(
 				$this->returnCallback(
-						array($this,'callbackGeoIpLookup6Valid')));
+						[$this,'callbackGeoIpLookup6Valid']));
 		$ip_address = '2a023:2e0:3fe:1001:302::';
 		$this->assertEquals('INVALID_IP',
 				$this->geo_ip_lookup->getCountryCodeFromIP($ip_address));
@@ -125,11 +126,11 @@ class GeoIPLookupTest extends TestCase {
 		$this->cmd_wrapper->expects($this->once())->method('geoiplookup')->with(
 				'127.0.0.1')->will(
 				$this->returnCallback(
-						array($this,'callbackGeoIpLookupInvalid')));
+						[$this,'callbackGeoIpLookupInvalid']));
 		$this->cmd_wrapper->expects($this->once())->method('geoiplookup6')->with(
 				'fe80::')->will(
 				$this->returnCallback(
-						array($this,'callbackGeoIpLookup6Invalid')));
+						[$this,'callbackGeoIpLookup6Invalid']));
 		$ip_address = '2a02:2e0:3fe:1001:302::';
 		$this->assertEquals('UNAVAILABLE',
 				$this->geo_ip_lookup->getCountryCodeFromIP($ip_address));
@@ -139,11 +140,11 @@ class GeoIPLookupTest extends TestCase {
 		$this->cmd_wrapper->expects($this->once())->method('geoiplookup')->with(
 				'127.0.0.1')->will(
 				$this->returnCallback(
-						array($this,'callbackGeoIpLookupNonsense')));
+						[$this,'callbackGeoIpLookupNonsense']));
 		$this->cmd_wrapper->expects($this->once())->method('geoiplookup6')->with(
 				'fe80::')->will(
 				$this->returnCallback(
-						array($this,'callbackGeoIpLookup6Nonsense')));
+						[$this,'callbackGeoIpLookup6Nonsense']));
 		$ip_address = '2a02:2e0:3fe:1001:302::';
 		$this->assertEquals('UNAVAILABLE',
 				$this->geo_ip_lookup->getCountryCodeFromIP($ip_address));
@@ -151,42 +152,42 @@ class GeoIPLookupTest extends TestCase {
 
 	public function callbackGeoIpLookupInvalid(string $ip_address,
 			array &$output, int &$return_var): String {
-		$output = array();
+		$output = [];
 		$return_var = - 1;
 		return 'Command not found';
 	}
 
 	public function callbackGeoIpLookup6Invalid(string $ip_address,
 			array &$output, int &$return_var): String {
-		$output = array();
+		$output = [];
 		$return_var = - 1;
 		return 'Command not found';
 	}
 
 	public function callbackGeoIpLookupNonsense(string $ip_address,
 			array &$output, int &$return_var): String {
-		$output = array();
+		$output = [];
 		$return_var = - 1;
 		return 'Nonsense';
 	}
 
 	public function callbackGeoIpLookup6Nonsense(string $ip_address,
 			array &$output, int &$return_var): String {
-		$output = array();
+		$output = [];
 		$return_var = - 1;
 		return 'Nonsense';
 	}
 
 	public function callbackGeoIpLookupValid(string $ip_address, array &$output,
 			int &$return_var): String {
-		$output = array('GeoIP Country Edition: IP Address not found');
+		$output = ['GeoIP Country Edition: IP Address not found'];
 		$return_var = 0;
 		return 'GeoIP Country Edition: IP Address not found';
 	}
 
 	public function callbackGeoIpLookup6Valid(string $ip_address, array &$output,
 			int &$return_var): String {
-		$output = array('GeoIP Country V6 Edition: IP Address not found');
+		$output = ['GeoIP Country V6 Edition: IP Address not found'];
 		$return_var = 0;
 		return 'GeoIP Country V6 Edition: IP Address not found';
 	}
@@ -194,11 +195,11 @@ class GeoIPLookupTest extends TestCase {
 	public function callbackGeoIpLookupValidIP(string $ip_address,
 			array &$output, int &$return_var): String {
 		if ($ip_address === '127.0.0.1') {
-			$output = array('GeoIP Country Edition: IP Address not found');
+			$output = ['GeoIP Country Edition: IP Address not found'];
 			$return_var = 0;
 			return 'GeoIP Country Edition: IP Address not found';
 		} else {
-			$output = array('GeoIP Country Edition: US, United States');
+			$output = ['GeoIP Country Edition: US, United States'];
 			$return_var = 0;
 			return 'GeoIP Country Edition: US, United States';
 		}
@@ -207,11 +208,11 @@ class GeoIPLookupTest extends TestCase {
 	public function callbackGeoIpLookup6ValidIP(string $ip_address,
 			array &$output, int &$return_var): String {
 		if ($ip_address === 'fe80::') {
-			$output = array('GeoIP Country V6 Edition: IP Address not found');
+			$output = ['GeoIP Country V6 Edition: IP Address not found'];
 			$return_var = 0;
 			return 'GeoIP Country V6 Edition: IP Address not found';
 		} else {
-			$output = array('GeoIP Country V6 Edition: DE, Germany');
+			$output = ['GeoIP Country V6 Edition: DE, Germany'];
 			$return_var = 0;
 			return 'GeoIP Country V6 Edition: DE, Germany';
 		}
@@ -221,5 +222,3 @@ class GeoIPLookupTest extends TestCase {
 		return $in;
 	}
 }
-
-?>

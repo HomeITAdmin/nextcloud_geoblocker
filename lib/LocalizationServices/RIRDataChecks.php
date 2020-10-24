@@ -1,11 +1,11 @@
 <?php
+
 declare(strict_types = 1)
 	;
 
 namespace OCA\GeoBlocker\LocalizationServices;
 
-
-class RIRDataChecks  {
+class RIRDataChecks {
 	public function checkAllowURLFOpen(): bool {
 		return ini_get('allow_url_fopen') === '1';
 	}
