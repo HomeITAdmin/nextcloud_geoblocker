@@ -51,6 +51,7 @@ OC.L10N.register(
     "with IP Address" : "z naslovom IP",
     "with Country Code" : "s kodo države",
     "with username" : "z uporabniškim imenom",
+    "(beta version)" : "(različica beta)",
     "Test" : "Preizkus",
     "Next login attempt of user \"%s\" will be simulated to come from the following IP address:" : "Naslednji poskus prijave uporabnika »%s« bo navidezno poslan iz naslova IP:",
     "COUNTRY NOT FOUND" : "DRŽAVE NI MOGOČE NAJTI",
