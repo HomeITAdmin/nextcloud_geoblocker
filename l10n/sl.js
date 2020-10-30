@@ -48,6 +48,7 @@ OC.L10N.register(
     "All countries are blocked but the selected ones (allowlist)" : "Blokirane so vse, razen iz branih držav (beli seznam).",
     "Select countries from list" : "Izbor držav s seznama",
     "The following countries were selected in the list above: " : "Na seznamu zgoraj so bile izbrane navedene države:",
+    "Reaction" : "Odziv",
     "with IP Address" : "z naslovom IP",
     "with Country Code" : "s kodo države",
     "with username" : "z uporabniškim imenom",
