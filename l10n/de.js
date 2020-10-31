@@ -209,7 +209,7 @@ OC.L10N.register(
     "Lithuania" : "Litauen",
     "Luxembourg" : "Luxemburg",
     "Latvia" : "Lettland",
-    "Libya" : "Lybien",
+    "Libya" : "Libyen",
     "Morocco" : "Marokko",
     "Monaco" : "Monaco",
     "Moldova, Republic of" : "Moldawien (Republik)",
