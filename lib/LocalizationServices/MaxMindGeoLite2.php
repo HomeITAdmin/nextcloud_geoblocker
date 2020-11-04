@@ -84,7 +84,10 @@ class MaxMindGeoLite2 implements
 	}
 
 	public function getDatabaseDate(): string {
-		$db_file_date = filemtime($this->database_file_location);
+		$db_file_date = false;
+		if (file_exists($this->database_file_location)) {
+			$db_file_date = filemtime($this->database_file_location);
+		}
 		if ($db_file_date == null || $db_file_date === false) {
 			return $this->l->t('Date of the database cannot be determined!');
 		} else {
