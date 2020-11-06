@@ -67,9 +67,9 @@ Using the MaxMind GeoLite2 PHP API:
   - Download the file "geoip2.phar" to the folder "3rdparty/maxmind_geolite2/"
   inside the GeoBlocker app folder from the MaxMind GeoIP2
   [release page](https://github.com/maxmind/GeoIP2-php/releases).
-  - Download the latest country database to
-  "/usr/share/GeoIP/GeoLite2-Country.mmdb". E.g.:
-    - On Debian based systems: sudo apt-get install geoipupdate
+  - Download the latest country database E.g.:
+    - On Debian based systems the database gets downloaded to "/var/lib/GeoIP/GeoLite2-Country.mmdb" by: 
+      - sudo apt-get install geoipupdate
       - For this the "contrib" archiv must be activ.
     - Add the API key information to "/etc/GeoIP.conf"
     - run "sudo geoipupdate"
