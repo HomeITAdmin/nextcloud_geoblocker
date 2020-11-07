@@ -65,7 +65,9 @@ Using the MaxMind GeoLite2 PHP API:
   [MaxMind GeoLite2](https://www.maxmind.com/en/geolite2/signup).
 - Installation
   - Download the file "geoip2.phar" to the folder "3rdparty/maxmind_geolite2/"
-  inside the GeoBlocker app folder from the MaxMind GeoIP2
+  inside the GeoBlocker app folder (the folder should already exist under
+  "$NEXTCLOUD_ROOT$/custom_apps/geoblocker/3rdparty/maxmind_geolite2/")
+  from the MaxMind GeoIP2
   [release page](https://github.com/maxmind/GeoIP2-php/releases).
   - Download the latest country database E.g.:
     - On Debian based systems the database gets downloaded to
