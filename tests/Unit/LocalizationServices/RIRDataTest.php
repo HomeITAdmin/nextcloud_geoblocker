@@ -217,31 +217,35 @@ class RIRDataTest extends TestCase {
 		$this->assertStringStartsWith($result, $this->rir_data->getStatusString());
 	}
 
-	//TODO: IP Provider
-	public function testIsCountryCodeFromValidIpOk() {
-		$this->makeServiceValid();
+	/**
+	 *
+	 * @dataProvider validIpProvider
+	 */
+	public function testIsCountryCodeFromValidIpOk(string $ip_address, bool $ip_v6,
+			string $country_code, string $version, string $rir_status) {
+		$this->makeServiceValid($version, $rir_status);
 
-		$ip_address = '2a02:2e0:3fe:1001:302::';
-		$country_code = 'DE';
-		$this->rir_service_mapper->expects($this->once())->method(
+		if ($ip_v6) {
+			$this->rir_service_mapper->expects($this->once())->method(
 				'getCountryCodeFromIpv6')->with(
-				RIRServiceMapper::ipv6String2Int64($ip_address))->willReturn(
-				$country_code);
-		$this->assertEquals($country_code,
-				$this->rir_data->getCountryCodeFromIP($ip_address));
-
-		$country_code = 'US';
-		$ip_address = '24.165.23.67';
-		$this->rir_service_mapper->expects($this->once())->method(
+					$this->equalTo(RIRServiceMapper::ipv6String2Int64($ip_address)), $this->equalTo($version))
+				->willReturn($country_code);
+		} else {
+			$this->rir_service_mapper->expects($this->once())->method(
 				'getCountryCodeFromIpv4')->with(
-				RIRServiceMapper::ipv4String2Int64($ip_address))->willReturn(
-				$country_code);
+					$this->equalTo(RIRServiceMapper::ipv4String2Int64($ip_address)), $this->equalTo($version))
+				->willReturn($country_code);
+		}
 		$this->assertEquals($country_code,
 				$this->rir_data->getCountryCodeFromIP($ip_address));
 	}
 
-	public function testIsCountryCodeFromInvalidIpOk() {
-		$this->makeServiceValid();
+	/**
+	 *
+	 * @dataProvider invalidIpProvider
+	 */
+	public function testIsCountryCodeFromInvalidIpOk(string $ip_address, string $version, string $rir_status) {
+		$this->makeServiceValid($version, $rir_status);
 
 		$this->rir_service_mapper->expects($this->never())->method(
 				'getCountryCodeFromIpv6');
@@ -249,13 +253,6 @@ class RIRDataTest extends TestCase {
 				'getCountryCodeFromIpv4');
 
 		$country_code = 'INVALID_IP';
-		$ip_address = 'asdfes';
-		$this->assertEquals($country_code,
-				$this->rir_data->getCountryCodeFromIP($ip_address));
-		$ip_address = '2342552';
-		$this->assertEquals($country_code,
-				$this->rir_data->getCountryCodeFromIP($ip_address));
-		$ip_address = '24.165.523.67';
 		$this->assertEquals($country_code,
 				$this->rir_data->getCountryCodeFromIP($ip_address));
 	}
@@ -750,6 +747,44 @@ class RIRDataTest extends TestCase {
 		$this->assertFalse($this->rir_data->updateDatabase());
 	}
 
+	/**
+	 *
+	 * @dataProvider updateableRirStatusProvider
+	 */
+	public function testIsUpdateDatabaseErrorEntriesAlreadyExistOk(int $rir_status_before,
+			int $rir_status_inter) {
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
+			[RIRData::kDbVersionName, '0', '1']
+		];
+		$this->config->expects($this->atLeast(1))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+
+		$this->rir_service_mapper->expects($this->once())->method('getNumberOfEntries')
+			->with($this->equalTo('0'))
+			->willReturn(55);
+		
+		
+		$this->rir_service_mapper->expects($this->never())->method(
+			'eraseAllDatabaseEntries');
+		$this->config->expects($this->exactly(4))->method(
+			'setServiceSpecificConfigValue')->withConsecutive(
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo($rir_status_inter)],
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo(RIRStatus::kDbError)],
+			[$this->equalTo(RIRData::kErrorMessageName),
+				$this->equalTo(
+						'Database contains old version information. Reset the database using the command line tool.')],
+			[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+	
+
+		$this->setupAndCheckDbEntriesNotCalled(
+				__DIR__ . DIRECTORY_SEPARATOR . 'file-does-not-exist.txt');
+
+		$this->assertFalse($this->rir_data->updateDatabase());
+	}
+
 	public function testIsResetDatabaseSuccessOk() {
 		$this->config->expects($this->never())->method(
 				'getServiceSpecificConfigValue')->with(
@@ -939,6 +974,32 @@ class RIRDataTest extends TestCase {
 			"kDbUpdating" => [RIRStatus::kDbUpdating]];
 	}
 
+	public function validIpProvider(): array {
+		return [ ['2a02:2e0:3fe:1001:302::', true, 'DE', '0', strval(RIRStatus::kDbOk)],
+			['24.165.23.67', false, 'US', '0', strval(RIRStatus::kDbOk)],
+			['2a02:2e0:3fe:1001:302::', true, 'DE', '1', strval(RIRStatus::kDbOk)],
+			['24.165.23.67', false, 'US', '1', strval(RIRStatus::kDbOk)],
+			['2a02:2e0:3fe:1001:302::', true, 'DE', '0', strval(RIRStatus::kDbUpdating)],
+			['24.165.23.67', false, 'US', '0', strval(RIRStatus::kDbUpdating)],
+			['2a02:2e0:3fe:1001:302::', true, 'DE', '1', strval(RIRStatus::kDbUpdating)],
+			['24.165.23.67', false, 'US', '1', strval(RIRStatus::kDbUpdating)]];
+	}
+
+	public function invalidIpProvider(): array {
+		return [['asdfes', '0', strval(RIRStatus::kDbOk)],
+			['2342552', '0', strval(RIRStatus::kDbOk)],
+			['24.165.523.67', '0', strval(RIRStatus::kDbOk)],
+			['asdfes', '1', strval(RIRStatus::kDbOk)],
+			['2342552', '1', strval(RIRStatus::kDbOk)],
+			['24.165.523.67', '1', strval(RIRStatus::kDbOk)],
+			['asdfes', '0', strval(RIRStatus::kDbUpdating)],
+			['2342552', '0', strval(RIRStatus::kDbUpdating)],
+			['24.165.523.67', '0', strval(RIRStatus::kDbUpdating)],
+			['asdfes', '1', strval(RIRStatus::kDbUpdating)],
+			['2342552', '1', strval(RIRStatus::kDbUpdating)],
+			['24.165.523.67', '1', strval(RIRStatus::kDbUpdating)],];
+	}
+
 	public function updateableRirStatusAndInvalidFilesProvider(): array {
 		$ret = [];
 
@@ -1013,15 +1074,15 @@ class RIRDataTest extends TestCase {
 				[$this->equalTo(RIRData::kDatabaseDateName),'']);
 	}
 
-	private function makeServiceValid() {
+	private function makeServiceValid(string $version, string $rir_status) {
 		$this->rir_data_checks->expects($this->atLeastOnce())->method(
 				'checkGMP')->willReturn(true);
 		$this->rir_service_mapper->expects($this->atLeastOnce())->method(
 				'getNumberOfEntries')->willReturn(100);
 
 		$ret_map = [
-			[RIRData::kServiceStatusName, '0', strval(RIRStatus::kDbOk)],
-			[RIRData::kDbVersionName, '0', '0']
+			[RIRData::kServiceStatusName, '0', $rir_status],
+			[RIRData::kDbVersionName, '0', $version]
 		];
 		$this->config->expects($this->atLeast(2))->method(
 					'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));

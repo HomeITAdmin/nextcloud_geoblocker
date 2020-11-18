@@ -87,15 +87,6 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		$this->config->setServiceSpecificConfigValue(RIRData::kDbVersionName, strval($version));
 	}
 
-	private function resetCurrentDbVersion() {
-		$this->setCurrentDbVersion(0);
-	}
-
-	private function toggleDbVersion() {
-		$new_version = ($this->getCurrentDbVersion + 1) % 2;
-		$this->setCurrentDbVersion($new_version);
-	}
-
 	private function checkDBPlausibleAndSetToError(): bool {
 		if ($this->checkIfEntriesForVersionExists($this->getCurrentDbVersion())) {
 			return true;
@@ -312,6 +303,9 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 			$before_version = $this->getCurrentDbVersion();
 			$after_version = $this->getOtherDbVersion();
 			if ($this->checkIfEntriesForVersionExists($after_version)) {
+				$this->setDBToErrorStatus(
+					$this->l->t(
+							'Database contains old version information. Reset the database using the command line tool.'));
 				return false;
 			}
 			if (! $this->fillDatabase($after_version)) {
