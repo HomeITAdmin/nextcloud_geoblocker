@@ -11,10 +11,15 @@ use OCP\IL10N;
 use OCA\GeoBlocker\LocalizationServices\ILocalizationService;
 
 class GeoBlocker {
+	/** @var String */
 	private $user;
+	/** @var ILogger */
 	private $logger;
+	/** @var GeoBlockerConfig */
 	private $config;
+	/** @var IL10N */
 	private $l;
+	/** @var ILocalizationService */
 	private $location_service;
 	public const kCountryNotFoundCode = 'AA';
 	private const kNotShownString = 'NOT_SHOWN_IN_LOG';

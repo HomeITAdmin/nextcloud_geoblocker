@@ -42,25 +42,21 @@ class RIRDataTest extends TestCase {
 				$this->rir_service_mapper, $this->config, $this->l);
 	}
 
-	public function testIsStatusTrueOk() {
-		$this->makeServiceValid();
-		$this->assertTrue($this->rir_data->getStatus());
-	}
-
 	/**
 	 *
-	 * @dataProvider allRirStatusProvider
-	 * @dataProvider invalidRirStatusProvider
+	 * @dataProvider okRirStatusProvider
 	 */
-	public function testIsStatusFalse1Ok(int $rir_status) {
-		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
-				false);
-		$this->config->expects($this->once())->method(
-				'getServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
-				strval($rir_status));
-
-		$this->assertFalse($this->rir_data->getStatus());
+	public function testIsStatusTrueOk(int $rir_status) {
+		$this->rir_data_checks->expects($this->Once())->method(
+			'checkGMP')->willReturn(true);
+		$this->config->expects($this->exactly(2))->method(
+			'getServiceSpecificConfigValue')->withConsecutive([
+				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0')]
+			,[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')])->willReturnOnConsecutiveCalls(
+			strval($rir_status), '0');
+		$this->rir_service_mapper->expects($this->Once())->method(
+			'getNumberOfEntries')->willReturn(100);
+		$this->assertTrue($this->rir_data->getStatus());
 	}
 
 	/**
@@ -68,111 +64,160 @@ class RIRDataTest extends TestCase {
 	 * @dataProvider nonOkRirStatusProvider
 	 * @dataProvider invalidRirStatusProvider
 	 */
-	public function testIsStatusFalse2Ok(int $rir_status) {
+	public function testIsStatusFalseOkForNonOkRirStatus(int $rir_status) {
+		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
+				true);
+		$this->config->expects($this->once())->method(
+				'getServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
+				strval($rir_status));
+		$this->rir_service_mapper->expects($this->atMost(1))->method(
+					'getNumberOfEntries')->willReturn(100);
+
+		$this->assertFalse($this->rir_data->getStatus());
+	}
+
+	/**
+	 *
+	 * @dataProvider allRirStatusProvider
+	 * @dataProvider invalidRirStatusProvider
+	 */
+	public function testIsStatusFalseOkForCheckGmpNotOk(int $rir_status) {
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				false);
 		$this->config->expects($this->once())->method(
 				'getServiceSpecificConfigValue')->with(
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
 				strval($rir_status));
+		$this->rir_service_mapper->expects($this->atMost(1))->method(
+					'getNumberOfEntries')->willReturn(100);
 
 		$this->assertFalse($this->rir_data->getStatus());
 	}
 
-	public function testIsStatusFalse3Ok() {
-		$this->rir_data_checks->expects($this->once())->method('checkGMP')->willReturn(
+	/**
+	 *
+	 * @dataProvider allRirStatusProvider
+	 * @dataProvider invalidRirStatusProvider
+	 */
+	public function testIsStatusFalseOkForNoEntriesInDb(int $rir_status) {
+		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				true);
-		$this->config->expects($this->once())->method(
-				'getServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
-				strval(RIRStatus::kDbOk));
-		$this->rir_service_mapper->expects($this->once())->method(
+		$this->rir_service_mapper->expects($this->atMost(1))->method(
 				'getNumberOfEntries')->willReturn(0);
 
-		$this->checkSetDBToErrorState($this->error_message_not_enough_entries);
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '0']
+		];
+		
+		$this->config->expects($this->atLeast(1))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+		
+		if ($rir_status == RIRStatus::kDbOk || $rir_status == RIRStatus::kDbUpdating) {
+			$this->checkSetDBToErrorState($this->error_message_not_enough_entries);
+		}
 
 		$this->assertFalse($this->rir_data->getStatus());
 	}
 
-	public function testIsValidStatusStringOk() {
+	/**
+	 *
+	 * @dataProvider okRirStatusProvider
+	 */
+	public function testIsValidStatusStringOk(int $rir_status) {
 		$this->rir_data_checks->expects($this->once())->method('checkGMP')->willReturn(
 				true);
-		$this->config->expects($this->once())->method(
-				'getServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
-				strval(RIRStatus::kDbOk));
+		$this->config->expects($this->exactly(2))->method(
+			'getServiceSpecificConfigValue')->withConsecutive([
+				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0')]
+			,[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')])->willReturnOnConsecutiveCalls(
+			strval($rir_status), '0');
 		$this->rir_service_mapper->expects($this->once())->method(
 				'getNumberOfEntries')->willReturn(1000);
 
-		$result = '"RIR Data": OK.';
-		$this->assertEquals($result, $this->rir_data->getStatusString());
+		$result = '"RIR Data": OK';
+		$this->assertStringStartsWith($result, $this->rir_data->getStatusString());
 	}
 
-	public function testIsInvalidStatusString1Ok() {
-		$this->rir_data_checks->expects($this->once())->method('checkGMP')->willReturn(
-				false);
-		$this->rir_service_mapper->expects($this->once())->method(
+	/**
+	 *
+	 * @dataProvider nonOkRirStatusProvider
+	 * @dataProvider invalidRirStatusProvider
+	 */
+	public function testIsErrorStatusStringOkForNonOkRirStatus(int $rir_status) {
+		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
+				true);
+		$this->rir_service_mapper->expects($this->atMost(1))->method(
 				'getNumberOfEntries')->willReturn(1000);
 		$error_message = 'My last error message!';
 
-		$this->config->expects($this->exactly(7))->method(
-				'getServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo('0')],
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo('0')],
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo('0')],
-				[$this->equalTo(RIRData::kErrorMessageName),$this->equalTo('')],
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo('0')],
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo('0')])->willReturnOnConsecutiveCalls(
-				strval(RIRStatus::kDbNotInitialized),
-				strval(RIRStatus::kDbInitilazing), strval(RIRStatus::kDbError),
-				$error_message, strval(RIRStatus::kDbUpdating),
-				strval(RIRStatus::kDbOk), strval(- 1));
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '0'],
+			[RIRData::kErrorMessageName, '', $error_message]
+		];
 
-		$this->assertEquals(
-				'"RIR Data": ERROR: The database is not initialized. Please run update.',
-				$this->rir_data->getStatusString());
-		$this->assertEquals(
-				'"RIR Data": ERROR: The database is currently initializing. Please wait until update is finished. This may take several minutes.',
-				$this->rir_data->getStatusString());
-		$this->assertEquals(
-				'"RIR Data": ERROR: The database is corrupted. Please run update again. Last error message: ' .
-				$error_message, $this->rir_data->getStatusString());
-		$this->assertEquals(
-				'"RIR Data": ERROR: The database is currently updating. Please wait until update is finished. This may take several minutes.',
-				$this->rir_data->getStatusString());
-		$this->assertEquals(
-				'"RIR Data": ERROR: PHP GMP Extension needs to be installed.',
-				$this->rir_data->getStatusString());
-		$this->assertEquals('"RIR Data": ERROR: Something is missing.',
-				$this->rir_data->getStatusString());
+		$this->config->expects($this->atLeast(1))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+
+		$result = '"RIR Data": ERROR';
+		$this->assertStringStartsWith($result, $this->rir_data->getStatusString());
 	}
 
-	public function testIsInvalidStatusString2Ok() {
+	/**
+	 *
+	 * @dataProvider allRirStatusProvider
+	 * @dataProvider invalidRirStatusProvider
+	 */
+	public function testIsErrorStatusStringOkforCheckGmpNotOk(int $rir_status) {
+		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
+				false);
+		$this->rir_service_mapper->expects($this->atMost(1))->method(
+				'getNumberOfEntries')->willReturn(1000);
+		$error_message = 'My last error message!';
+
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '0'],
+			[RIRData::kErrorMessageName, '', $error_message]
+		];
+
+		$this->config->expects($this->atLeast(1))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+
+		$result = '"RIR Data": ERROR';
+		$this->assertStringStartsWith($result, $this->rir_data->getStatusString());
+	}
+
+	/**
+	 *
+	 * @dataProvider allRirStatusProvider
+	 * @dataProvider invalidRirStatusProvider
+	 */
+	public function testIsInvalidStatusStringOkForNoEntriesInDb(int $rir_status) {
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				true);
-		$this->rir_service_mapper->expects($this->once())->method(
+		$this->rir_service_mapper->expects($this->atMost(1))->method(
 				'getNumberOfEntries')->willReturn(0);
 
-		$this->config->expects($this->exactly(2))->method(
-				'getServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo('0')],
-				[$this->equalTo(RIRData::kErrorMessageName),$this->equalTo('')])->willReturnOnConsecutiveCalls(
-				strval(RIRStatus::kDbOk),
-				$this->error_message_not_enough_entries);
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '0'],
+			[RIRData::kErrorMessageName, '', $this->error_message_not_enough_entries]
+		];
+		$this->config->expects($this->atLeast(1))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
 
-		$this->checkSetDBToErrorState($this->error_message_not_enough_entries);
+		if ($rir_status == RIRStatus::kDbOk || $rir_status == RIRStatus::kDbUpdating) {
+			$this->checkSetDBToErrorState($this->error_message_not_enough_entries);
+		}
 
-		$result = '"RIR Data": ERROR: The database is corrupted. Please run update again. Last error message: ' .
-				$this->error_message_not_enough_entries;
-		$this->assertEquals($result, $this->rir_data->getStatusString());
+		$result = '"RIR Data": ERROR';
+		$this->assertStringStartsWith($result, $this->rir_data->getStatusString());
 	}
 
+	//TODO: IP Provider
 	public function testIsCountryCodeFromValidIpOk() {
 		$this->makeServiceValid();
 
@@ -215,15 +260,22 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getCountryCodeFromIP($ip_address));
 	}
 
-	public function testIsCountryCodeFromValidIpWithUnavailableService1Ok() {
-		$this->rir_data_checks->expects($this->once())->method('checkGMP')->willReturn(
+	/**
+	 *
+	 * @dataProvider allRirStatusProvider
+	 * @dataProvider invalidRirStatusProvider
+	 */
+	public function testIsCountryCodeFromValidIpWithCheckGmpNotOkServiceOk(int $rir_status) {
+		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				false);
-		$this->config->expects($this->exactly(5))->method(
-				'getServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
-				strval(RIRStatus::kDbNotInitialized),
-				strval(RIRStatus::kDbInitilazing), strval(RIRStatus::kDbError),
-				strval(RIRStatus::kDbUpdating), strval(RIRStatus::kDbOk));
+		$this->rir_service_mapper->expects($this->atMost(1))->method(
+			'getNumberOfEntries')->willReturn(120);
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '1']
+		];
+		$this->config->expects($this->atLeast(1))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
 
 		$this->rir_service_mapper->expects($this->never())->method(
 				'getCountryCodeFromIpv6');
@@ -234,64 +286,106 @@ class RIRDataTest extends TestCase {
 		$country_code = 'UNAVAILABLE';
 		$this->assertEquals($country_code,
 				$this->rir_data->getCountryCodeFromIP($ip_address));
-		$this->assertEquals($country_code,
-				$this->rir_data->getCountryCodeFromIP($ip_address));
-		$ip_address = '24.165.23.67';
-		$this->assertEquals($country_code,
-				$this->rir_data->getCountryCodeFromIP($ip_address));
-		$this->assertEquals($country_code,
-				$this->rir_data->getCountryCodeFromIP($ip_address));
-		$this->assertEquals($country_code,
-				$this->rir_data->getCountryCodeFromIP($ip_address));
 	}
 
-	public function testIsCountryCodeFromValidIpWithUnavailableService2Ok() {
-		$this->rir_data_checks->expects($this->once())->method('checkGMP')->willReturn(
+	/**
+	 *
+	 * @dataProvider allRirStatusProvider
+	 * @dataProvider invalidRirStatusProvider
+	 */
+	public function testIsCountryCodeFromValidIpWithNoEntriesInDbServiceOk(int $rir_status) {
+		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				true);
-		$this->config->expects($this->once())->method(
-				'getServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
-				strval(RIRStatus::kDbOk));
-		$this->rir_service_mapper->expects($this->once())->method(
-				'getNumberOfEntries')->willReturn(0);
+		$this->rir_service_mapper->expects($this->atMost(1))->method(
+			'getNumberOfEntries')->willReturn(0);
 
-		$this->checkSetDBToErrorState($this->error_message_not_enough_entries);
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '1']
+		];
+		$this->config->expects($this->atLeast(1))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+		
+		
+		if ($rir_status == RIRStatus::kDbOk || $rir_status == RIRStatus::kDbUpdating) {
+			$this->checkSetDBToErrorState($this->error_message_not_enough_entries);
+		}
 
 		$this->rir_service_mapper->expects($this->never())->method(
 				'getCountryCodeFromIpv6');
 		$this->rir_service_mapper->expects($this->never())->method(
 				'getCountryCodeFromIpv4');
 
-		$ip_address = '2a02:2e0:3fe:1001:302::';
+		$ip_address = '24.165.23.67';
 		$country_code = 'UNAVAILABLE';
 		$this->assertEquals($country_code,
 				$this->rir_data->getCountryCodeFromIP($ip_address));
 	}
 
-	public function testIsGetDatabaseDateValidOk() {
+	/**
+	 *
+	 * @dataProvider nonOkRirStatusProvider
+	 * @dataProvider invalidRirStatusProvider
+	 */
+	public function testIsCountryCodeFromValidIpWithNonOkStatus(int $rir_status) {
+		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
+				true);
+		$this->rir_service_mapper->expects($this->atMost(1))->method(
+			'getNumberOfEntries')->willReturn(120);
+
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '1']
+		];
+		$this->config->expects($this->atLeast(1))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+		
+		
+		$this->rir_service_mapper->expects($this->never())->method(
+				'getCountryCodeFromIpv6');
+		$this->rir_service_mapper->expects($this->never())->method(
+				'getCountryCodeFromIpv4');
+
+		$ip_address = '24.165.23.67';
+		$country_code = 'UNAVAILABLE';
+		$this->assertEquals($country_code,
+				$this->rir_data->getCountryCodeFromIP($ip_address));
+	}
+
+	/**
+	 *
+	 * @dataProvider okRirStatusProvider
+	 */
+	public function testIsGetDatabaseDateValidOk(int $rir_status) {
 		$db_date = '2020-06-07';
-		$this->config->expects($this->exactly(2))->method(
-				'getServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo('0')],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')])->willReturnOnConsecutiveCalls(
-				strval(RIRStatus::kDbOk), $db_date);
 		$this->rir_service_mapper->expects($this->once())->method(
 				'getNumberOfEntries')->willReturn(1000);
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '1'],
+			[RIRData::kDatabaseDateName, '', $db_date]
+		];
+		$this->config->expects($this->atLeast(2))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
 
 		$this->assertEquals($db_date, $this->rir_data->getDatabaseDate());
 	}
 
-	public function testIsGetDatabaseDateInvalid1Ok() {
-		$this->config->expects($this->exactly(2))->method(
-				'getServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo('0')],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')])->willReturnOnConsecutiveCalls(
-				strval(RIRStatus::kDbOk), '');
+	/**
+	 *
+	 * @dataProvider okRirStatusProvider
+	 */
+	public function testIsGetDatabaseDateInvalidForNoSavedDateAndOKStatusOk(int $rir_status) {
 		$this->rir_service_mapper->expects($this->never())->method(
 				'getNumberOfEntries');
-
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '1'],
+			[RIRData::kDatabaseDateName, '', '']
+		];
+		$this->config->expects($this->atLeast(2))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+		
 		$this->assertEquals('Date of the database cannot be determined!',
 				$this->rir_data->getDatabaseDate());
 	}
@@ -299,16 +393,18 @@ class RIRDataTest extends TestCase {
 	/**
 	 *
 	 * @dataProvider nonOkRirStatusProvider
+	 * @dataProvider invalidRirStatusProvider
 	 */
-	public function testIsGetDatabaseDateInvalid2Ok(int $rir_status) {
-		$this->config->expects($this->exactly(2))->method(
-				'getServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo('0')],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')])->willReturnOnConsecutiveCalls(
-				strval($rir_status), '');
+	public function testIsGetDatabaseDateInvalidForNoSavedDateAndNonOkStatusOk(int $rir_status) {
 		$this->rir_service_mapper->expects($this->never())->method(
 				'getNumberOfEntries');
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '1'],
+			[RIRData::kDatabaseDateName, '', '']
+		];
+		$this->config->expects($this->atLeast(2))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
 
 		$this->assertEquals('No database available!',
 				$this->rir_data->getDatabaseDate());
@@ -317,32 +413,19 @@ class RIRDataTest extends TestCase {
 	/**
 	 *
 	 * @dataProvider nonOkRirStatusProvider
+	 * @dataProvider invalidRirStatusProvider
 	 */
-	public function testIsGetDatabaseDateInvalid3Ok(int $rir_status) {
+	public function testIsGetDatabaseDateInvalidForNonOKStatusOk(int $rir_status) {
 		$db_date = '2020-06-07';
-		$this->config->expects($this->exactly(2))->method(
-				'getServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo('0')],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')])->willReturnOnConsecutiveCalls(
-				strval($rir_status), $db_date);
 		$this->rir_service_mapper->expects($this->never())->method(
-				'getNumberOfEntries');
-
-		$this->assertEquals('No database available!',
-				$this->rir_data->getDatabaseDate());
-	}
-
-	public function testIsGetDatabaseDateInvalid4Ok() {
-		$db_date = '2020-06-07';
-		$this->config->expects($this->exactly(2))->method(
-				'getServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo('0')],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')])->willReturnOnConsecutiveCalls(
-				strval(RIRStatus::kDbOk), $db_date);
-		$this->rir_service_mapper->expects($this->once())->method(
-				'getNumberOfEntries')->willReturn(0);
+			'getNumberOfEntries');
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '0'],
+			[RIRData::kDatabaseDateName, '', $db_date]
+		];
+		$this->config->expects($this->atLeast(2))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
 
 		$this->assertEquals('No database available!',
 				$this->rir_data->getDatabaseDate());
@@ -350,23 +433,79 @@ class RIRDataTest extends TestCase {
 
 	/**
 	 *
-	 * @dataProvider updateableRirStatusProvider
+	 * @dataProvider allRirStatusProvider
+	 * @dataProvider invalidRirStatusProvider
 	 */
-	public function testIsUpdateDatabaseSuccessOk(int $rir_status_before,
+	public function testIsGetDatabaseDateInvalidForNoEntryInDbOk(int $rir_status) {
+		$db_date = '2020-06-07';
+		$this->rir_service_mapper->expects($this->atMost(1))->method(
+				'getNumberOfEntries')->willReturn(0);
+
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '0'],
+			[RIRData::kDatabaseDateName, '', $db_date]
+		];
+		$this->config->expects($this->atLeast(2))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+
+		$this->assertEquals('No database available!',
+				$this->rir_data->getDatabaseDate());
+	}
+
+	/**
+	 *
+	 * @dataProvider initializableRirStatusProvider
+	 */
+	public function testIsUpdateDatabaseSuccessForInitializableOk(int $rir_status_before,
 			int $rir_status_inter) {
-		$this->config->expects($this->once())->method(
-				'getServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
-				strval($rir_status_before));
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
+			[RIRData::kDbVersionName, '0', '0']
+		];
+		$this->config->expects($this->atLeast(1))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
 		$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
-		$this->config->expects($this->exactly(4))->method(
+		$this->config->expects($this->exactly(5))->method(
 				'setServiceSpecificConfigValue')->withConsecutive(
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo($rir_status_inter)],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
 				[$this->equalTo(RIRData::kDatabaseDateName),
 					$this->equalTo(date("Y-m-d"))],
+				[$this->equalTo(RIRData::kDbVersionName),$this->equalTo('0')],
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo(RIRStatus::kDbOk)]);
+
+		$this->setupAndCheckDbEntriesCalled();
+
+		$this->assertTrue($this->rir_data->updateDatabase());
+	}
+
+	/**
+	 *
+	 * @dataProvider updateableRirStatusProvider
+	 */
+	public function testIsUpdateDatabaseSuccessForUpdateableOk(int $rir_status_before,
+			int $rir_status_inter) {
+		$this->config->expects($this->exactly(4))->method(
+				'getServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0')],
+				[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')],
+				[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')],
+				[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')])
+				->willReturnOnConsecutiveCalls(strval($rir_status_before), '1', '1', '0');
+		$this->rir_service_mapper->expects($this->once())->method(
+				'eraseAllDatabaseEntries')->willReturn(true);
+		$this->config->expects($this->exactly(4))->method(
+				'setServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo($rir_status_inter)],
+				[$this->equalTo(RIRData::kDatabaseDateName),
+					$this->equalTo(date("Y-m-d"))],
+				[$this->equalTo(RIRData::kDbVersionName),
+					$this->equalTo('0')],
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo(RIRStatus::kDbOk)]);
 
@@ -395,14 +534,16 @@ class RIRDataTest extends TestCase {
 
 	/**
 	 *
-	 * @dataProvider updateableRirStatusProvider
+	 * @dataProvider initializableRirStatusProvider
 	 */
-	public function testIsUpdateDatabaseFailure1Ok(int $rir_status_before,
+	public function testIsUpdateDatabaseErrorDuringErasingForInitializableOk(int $rir_status_before,
 			int $rir_status_inter) {
-		$this->config->expects($this->once())->method(
-				'getServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
-				strval($rir_status_before));
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
+			[RIRData::kDbVersionName, '0', '1']
+		];
+		$this->config->expects($this->atLeast(1))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
 		$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(false);
 		$this->config->expects($this->exactly(4))->method(
@@ -423,17 +564,68 @@ class RIRDataTest extends TestCase {
 
 	/**
 	 *
+	 * @dataProvider updateableRirStatusProvider
+	 */
+	public function testIsUpdateDatabaseErrorDuringErasingForUpdateableOk(int $rir_status_before,
+			int $rir_status_inter) {
+		$this->config->expects($this->exactly(3))->method(
+			'getServiceSpecificConfigValue')->withConsecutive(
+			[$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0')],
+			[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')],
+			[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')])
+			->willReturnOnConsecutiveCalls(strval($rir_status_before), '1', '1');
+		$this->rir_service_mapper->expects($this->once())->method(
+				'eraseAllDatabaseEntries')->willReturn(false);
+		$this->config->expects($this->exactly(6))->method(
+				'setServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo($rir_status_inter)],
+				[$this->equalTo(RIRData::kDatabaseDateName),
+					$this->equalTo(date("Y-m-d"))],
+				[$this->equalTo(RIRData::kDbVersionName),
+					$this->equalTo('0')],
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo(RIRStatus::kDbError)],
+				[$this->equalTo(RIRData::kErrorMessageName),
+					$this->equalTo(
+							'Problem during erasing the whole database occured.')],
+				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]
+				);
+
+		$this->setupAndCheckDbEntriesCalled();
+
+		$this->assertFalse($this->rir_data->updateDatabase());
+	}
+
+	/**
+	 *
 	 * @dataProvider updateableRirStatusAndInvalidFilesProvider
 	 */
-	public function testIsUpdateDatabaseFailure2Ok(int $rir_status_before,
+	public function testIsUpdateDatabaseErrorRirFormatOk(int $rir_status_before,
 			int $rir_status_inter, string $file) {
-		$this->config->expects($this->once())->method(
-				'getServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
-				strval($rir_status_before));
-		$this->rir_service_mapper->expects($this->once())->method(
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
+			[RIRData::kDbVersionName, '0', '0']
+		];
+		$this->config->expects($this->atLeast(1))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+		
+		if ($rir_status_before == RIRStatus::kDbOk) {
+			$this->rir_service_mapper->expects($this->never())->method(
+				'eraseAllDatabaseEntries');
+			$this->config->expects($this->exactly(4))->method(
+				'setServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo($rir_status_inter)],
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo(RIRStatus::kDbError)],
+				[$this->equalTo(RIRData::kErrorMessageName),
+					$this->equalTo('RIR seems to have changed the file format.')],
+				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+		} else {
+			$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
-		$this->config->expects($this->exactly(5))->method(
+			$this->config->expects($this->exactly(5))->method(
 				'setServiceSpecificConfigValue')->withConsecutive(
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo($rir_status_inter)],
@@ -443,6 +635,7 @@ class RIRDataTest extends TestCase {
 				[$this->equalTo(RIRData::kErrorMessageName),
 					$this->equalTo('RIR seems to have changed the file format.')],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+		}
 
 		$this->setupAndCheckDbEntriesNotCalled($file);
 
@@ -452,16 +645,33 @@ class RIRDataTest extends TestCase {
 	/**
 	 *
 	 * @dataProvider updateableRirStatusProvider
+	 * @dataProvider initializableRirStatusProvider
 	 */
-	public function testIsUpdateDatabaseFailure3Ok(int $rir_status_before,
+	public function testIsUpdateDatabaseExceptionDuringFillingOk(int $rir_status_before,
 			int $rir_status_inter) {
-		$this->config->expects($this->once())->method(
-				'getServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
-				strval($rir_status_before));
-		$this->rir_service_mapper->expects($this->once())->method(
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
+			[RIRData::kDbVersionName, '0', '1']
+		];
+		$this->config->expects($this->atLeast(1))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+		
+		if ($rir_status_before == RIRStatus::kDbOk) {
+			$this->rir_service_mapper->expects($this->never())->method(
+				'eraseAllDatabaseEntries');
+			$this->config->expects($this->exactly(4))->method(
+				'setServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo($rir_status_inter)],
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo(RIRStatus::kDbError)],
+				[$this->equalTo(RIRData::kErrorMessageName),
+					$this->equalTo('Exception caught during Update.')],
+				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+		} else {
+			$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
-		$this->config->expects($this->exactly(5))->method(
+			$this->config->expects($this->exactly(5))->method(
 				'setServiceSpecificConfigValue')->withConsecutive(
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo($rir_status_inter)],
@@ -471,6 +681,7 @@ class RIRDataTest extends TestCase {
 				[$this->equalTo(RIRData::kErrorMessageName),
 					$this->equalTo('Exception caught during Update.')],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+		}
 
 		$this->rir_data->setDataSource(
 				['afrinic' => $this->rir_data_test_file]);
@@ -493,16 +704,34 @@ class RIRDataTest extends TestCase {
 	/**
 	 *
 	 * @dataProvider updateableRirStatusProvider
+	 * @dataProvider initializableRirStatusProvider
 	 */
-	public function testIsUpdateDatabaseFailure4Ok(int $rir_status_before,
+	public function testIsUpdateDatabaseErrorInvalidFileHandleOk(int $rir_status_before,
 			int $rir_status_inter) {
-		$this->config->expects($this->once())->method(
-				'getServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
-				strval($rir_status_before));
-		$this->rir_service_mapper->expects($this->once())->method(
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
+			[RIRData::kDbVersionName, '0', '1']
+		];
+		$this->config->expects($this->atLeast(1))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+		
+		if ($rir_status_before == RIRStatus::kDbOk) {
+			$this->rir_service_mapper->expects($this->never())->method(
+				'eraseAllDatabaseEntries');
+			$this->config->expects($this->exactly(4))->method(
+				'setServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo($rir_status_inter)],
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo(RIRStatus::kDbError)],
+				[$this->equalTo(RIRData::kErrorMessageName),
+					$this->equalTo(
+							'Invalid file handle. Probably the internet connection got lost during the update.')],
+				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+		} else {
+			$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
-		$this->config->expects($this->exactly(5))->method(
+			$this->config->expects($this->exactly(5))->method(
 				'setServiceSpecificConfigValue')->withConsecutive(
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo($rir_status_inter)],
@@ -513,6 +742,7 @@ class RIRDataTest extends TestCase {
 					$this->equalTo(
 							'Invalid file handle. Probably the internet connection got lost during the update.')],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+		}
 
 		$this->setupAndCheckDbEntriesNotCalled(
 				__DIR__ . DIRECTORY_SEPARATOR . 'file-does-not-exist.txt');
@@ -555,7 +785,7 @@ class RIRDataTest extends TestCase {
 
 	/**
 	 *
-	 * @dataProvider databaseUpdatingStatus
+	 * @dataProvider databaseUpdatingStatusProvider
 	 */
 	public function testIsGetDatabaseUpdateStatusUpdatingOk(int $rir_status) {
 		$this->config->expects($this->once())->method(
@@ -569,7 +799,7 @@ class RIRDataTest extends TestCase {
 
 	/**
 	 *
-	 * @dataProvider databaseNotUpdatingStatus
+	 * @dataProvider databaseNotUpdatingStatusProvider
 	 */
 	public function testIsGetDatabaseUpdateStatusUpdateNotPossibleOk(
 			int $rir_status) {
@@ -587,7 +817,7 @@ class RIRDataTest extends TestCase {
 
 	/**
 	 *
-	 * @dataProvider databaseNotUpdatingStatus
+	 * @dataProvider databaseNotUpdatingStatusProvider
 	 */
 	public function testIsGetDatabaseUpdateStatusUpdatePossibleOk(
 			int $rir_status) {
@@ -605,14 +835,16 @@ class RIRDataTest extends TestCase {
 
 	/**
 	 *
-	 * @dataProvider databaseUpdatingStatus
+	 * @dataProvider databaseUpdatingStatusProvider
 	 */
 	public function testIsGetDatabaseUpdateStatusStringUpdatingOk(
 			int $rir_status) {
-		$this->config->expects($this->once())->method(
-				'getServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
-				strval($rir_status));
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '1']
+		];
+		$this->config->expects($this->atLeast(1))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
 
 		$number_of_entries = 55;
 		$this->rir_service_mapper->expects($this->once())->method(
@@ -625,7 +857,7 @@ class RIRDataTest extends TestCase {
 
 	/**
 	 *
-	 * @dataProvider databaseNotUpdatingStatusStings
+	 * @dataProvider databaseNotUpdatingStatusStingsProvider
 	 */
 	public function testIsGetDatabaseUpdateStatusStringUpdateNotPossibleOk(
 			int $rir_status, bool $ret1, bool $ret2, bool $ret3, string $msg) {
@@ -649,7 +881,7 @@ class RIRDataTest extends TestCase {
 
 	/**
 	 *
-	 * @dataProvider databaseNotUpdatingStatus
+	 * @dataProvider databaseNotUpdatingStatusProvider
 	 */
 	public function testIsGetDatabaseUpdateStatusStringUpdatePossibleOk(
 			int $rir_status) {
@@ -680,18 +912,26 @@ class RIRDataTest extends TestCase {
 		return ["invalid" => [- 1]];
 	}
 
-	public function nonOkRirStatusProvider(): array {
-		return ["kDbError" => [RIRStatus::kDbError],
-			"kDbInitilazing" => [RIRStatus::kDbInitilazing],
-			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized],
+	public function okRirStatusProvider(): array {
+		return ["kDbOk" => [RIRStatus::kDbOk],
 			"kDbUpdating" => [RIRStatus::kDbUpdating]];
 	}
 
-	public function updateableRirStatusProvider(): array {
-		return ["kDbOk" => [RIRStatus::kDbOk,RIRStatus::kDbUpdating],
+	public function nonOkRirStatusProvider(): array {
+		return ["kDbError" => [RIRStatus::kDbError],
+			"kDbInitilazing" => [RIRStatus::kDbInitilazing],
+			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized]];
+	}
+
+	public function initializableRirStatusProvider(): array {
+		return [
 			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized,
 				RIRStatus::kDbInitilazing],
 			"kDbError" => [RIRStatus::kDbError,RIRStatus::kDbInitilazing]];
+	}
+
+	public function updateableRirStatusProvider(): array {
+		return ["kDbOk" => [RIRStatus::kDbOk,RIRStatus::kDbUpdating]];
 	}
 
 	public function nonUpdateableRirStatusProvider(): array {
@@ -723,18 +963,18 @@ class RIRDataTest extends TestCase {
 		return $ret;
 	}
 
-	public function databaseUpdatingStatus(): array {
+	public function databaseUpdatingStatusProvider(): array {
 		return ["kDbInitilazing" => [RIRStatus::kDbInitilazing],
 			"kDbUpdating" => [RIRStatus::kDbUpdating]];
 	}
 
-	public function databaseNotUpdatingStatus(): array {
+	public function databaseNotUpdatingStatusProvider(): array {
 		return ["kDbError" => [RIRStatus::kDbError],
 			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized],
 			"kDbOk" => [RIRStatus::kDbOk]];
 	}
 
-	public function databaseNotUpdatingStatusStings(): array {
+	public function databaseNotUpdatingStatusStingsProvider(): array {
 		$ret = [];
 
 		$states = ["kDbError" => [RIRStatus::kDbError],
@@ -776,12 +1016,15 @@ class RIRDataTest extends TestCase {
 	private function makeServiceValid() {
 		$this->rir_data_checks->expects($this->atLeastOnce())->method(
 				'checkGMP')->willReturn(true);
-		$this->config->expects($this->atLeastOnce())->method(
-				'getServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
-				strval(RIRStatus::kDbOk));
 		$this->rir_service_mapper->expects($this->atLeastOnce())->method(
 				'getNumberOfEntries')->willReturn(100);
+
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval(RIRStatus::kDbOk)],
+			[RIRData::kDbVersionName, '0', '0']
+		];
+		$this->config->expects($this->atLeast(2))->method(
+					'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
 	}
 
 	private function setupAndCheckDbEntriesCalled(): void {

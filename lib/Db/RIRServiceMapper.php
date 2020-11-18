@@ -22,10 +22,13 @@ class RIRServiceMapper extends QBMapper {
 		return gmp_intval($gmp_ip + PHP_INT_MIN);
 	}
 
-	public function eraseAllDatabaseEntries() {
+	public function eraseAllDatabaseEntries(int $version = -1) {
 		$qb = $this->db->getQueryBuilder();
 		try {
 			$qb->delete($this->getTableName());
+			if ($version >= 0) {
+				$qb->where($qb->expr()->eq('version', $qb->createNamedParameter(strval($version))));
+			}
 			$qb->execute();
 			return true;
 		} catch (Exception $e) {
@@ -33,24 +36,27 @@ class RIRServiceMapper extends QBMapper {
 		}
 	}
 
-	public function getCountryCodeFromIpv4(int $ip): string {
-		return $this->getCountryCodeIpImpl($ip, '0');
+	public function getCountryCodeFromIpv4(int $ip, int $version): string {
+		return $this->getCountryCodeIpImpl($ip, '0', $version);
 	}
 
-	public function getCountryCodeFromIpv6(int $ip): string {
-		return $this->getCountryCodeIpImpl($ip, '1');
+	public function getCountryCodeFromIpv6(int $ip, int $version): string {
+		return $this->getCountryCodeIpImpl($ip, '1', $version);
 	}
 
-	public function getCountryCodeIpImpl(int $ip, string $is_ip_v6): string {
+	public function getCountryCodeIpImpl(int $ip, string $is_ip_v6, int $version): string {
 		$qb = $this->db->getQueryBuilder();
 
 		$expr1 = $qb->expr()->lte('begin_ip_range',
 				$qb->createNamedParameter($ip));
 		$expr2 = $qb->expr()->eq('is_ip_v6',
 				$qb->createNamedParameter($is_ip_v6));
+		$expr3 = $qb->expr()->eq('version',
+				$qb->createNamedParameter($version));
 
 		$qb->select('*')->from($this->getTableName())->where(
-				$qb->expr()->andX($expr1, $expr2));
+			$qb->expr()->andX($expr1, $expr2, $expr3));
+		
 
 		$qb->setMaxResults(1);
 		$qb->orderBy('begin_ip_range', 'DESC');
@@ -67,9 +73,12 @@ class RIRServiceMapper extends QBMapper {
 		}
 	}
 
-	public function getNumberOfEntries(): int {
+	public function getNumberOfEntries(int $version = -1): int {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select($qb->func()->count('*'))->from($this->getTableName());
+		if ($version >= 0) {
+			$qb->where($qb->expr()->eq('version', $qb->createNamedParameter(strval($version))));
+		}
 		$res = $this->findOneQuery($qb);
 		return intval($res['COUNT(*)']);
 	}
