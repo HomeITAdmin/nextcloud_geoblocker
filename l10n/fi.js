@@ -14,7 +14,6 @@ OC.L10N.register(
     "ERROR:" : "VIRHE:",
     "The database is corrupted. Please run update again." : "Tietokanta on korruptoitunut. Suorita päivitys uudelleen.",
     "Last error message:" : "Viimeisin virheviesti:",
-    "The database is currently updating. Please wait until update is finished. This may take several minutes." : "Tietokannan päivitys on meneillään. Odota kunnes päivitys valmistuu. Siinä saattaa kestää useita minuutteja.",
     "Something is missing." : "Jotain puuttuu.",
     "No database available!" : "Tietokantaa ei ole käytettävissä!",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "\"allow_url_fopen\" tulee olla sallittu php.ini:ssä.",

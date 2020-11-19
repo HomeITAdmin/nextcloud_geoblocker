@@ -20,7 +20,6 @@
     "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "Il database è in fase di inizializzazione. Attendi fino al termine dell'aggiornamento. Questo potrebbe richiedere diversi minuti.",
     "The database is corrupted. Please run update again." : "Il database è danneggiato. Esegui nuovamente l'aggiornamento.",
     "Last error message:" : "Ultimo messaggio di errore:",
-    "The database is currently updating. Please wait until update is finished. This may take several minutes." : "Il database è in fase di aggiornamento. Attendi fino al termine dell'aggiornamento. Questo potrebbe richiedere diversi minuti.",
     "Something is missing." : "Manca qualcosa.",
     "No database available!" : "Nessun database disponibile!",
     "RIR seems to have changed the file format." : "RIR sembra aver cambiato il formato del file.",

@@ -22,7 +22,6 @@ OC.L10N.register(
     "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "De database wordt momenteel geïnitialiseerd. Wacht tot de update is voltooid. Dit kan enkele minuten duren.",
     "The database is corrupted. Please run update again." : "De database is corrupt. Start de update opnieuw.",
     "Last error message:" : "Laatste foutmelding:",
-    "The database is currently updating. Please wait until update is finished. This may take several minutes." : "De database wordt momenteel bijgewerkt. Wacht tot de update is voltooid. Dit kan enkele minuten duren.",
     "Something is missing." : "Er mist iets.",
     "No database available!" : "Geen database beschikbaar",
     "RIR seems to have changed the file format." : "RIR lijkt het bestandsformaat te hebben gewijzigd.",

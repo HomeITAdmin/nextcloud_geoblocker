@@ -22,7 +22,6 @@ OC.L10N.register(
     "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "La base de datos se está inicializando. Por favor, espere hasta que la actualización termine. Esto podría tomar varios minutos.",
     "The database is corrupted. Please run update again." : "La base de datos está corrupta. Por favor, ejecute  de nuevo la actualización.",
     "Last error message:" : "Último mensaje de error:",
-    "The database is currently updating. Please wait until update is finished. This may take several minutes." : "La base de datos se está actualizando. Por favor, espere hasta que la actualización termine. Esto podría tomar varios minutos.",
     "Something is missing." : "Falta algo.",
     "No database available!" : "¡Base de datos no disponible!",
     "RIR seems to have changed the file format." : "Parece que RIR ha cambiado el formato del archivo.",

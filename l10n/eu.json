@@ -20,7 +20,6 @@
     "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "Datu-basea abiarazten ari da orain. Itxaron eguneratzea amaitzen den arte. Baliteke minutu batzuk behar izatea.",
     "The database is corrupted. Please run update again." : "Datu-basea hondatuta dago. Exekutatu eguneratzea berriro.",
     "Last error message:" : "Azken errore mezua:",
-    "The database is currently updating. Please wait until update is finished. This may take several minutes." : "Datu-basea abiarazten ari da orain. Itxaron eguneratzea amaitzen den arte. Baliteke minutu batzuk behar izatea.",
     "Something is missing." : "Zerbait falta da.",
     "No database available!" : "Ez dago datu-baserik eskuragarri!",
     "RIR seems to have changed the file format." : "Badirudi RIR-k fitxategiaren formatua aldatu duela.",

@@ -20,7 +20,6 @@
     "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "A base de datos está iniciándose. Agarde ata que remate a actualización. Pode levar varios minutos.",
     "The database is corrupted. Please run update again." : "Abase de datos está estragada. Volva executar a actualización.",
     "Last error message:" : "Última mensaxe de erro:",
-    "The database is currently updating. Please wait until update is finished. This may take several minutes." : "A base de datos está actualizandose. Agarde ata que remate a actualización. Pode levar varios minutos.",
     "Something is missing." : "Falta algo.",
     "No database available!" : "Non hai base de datos dispoñíbel!",
     "RIR seems to have changed the file format." : "Parece que RIR cambiou o formato do ficheiro.",

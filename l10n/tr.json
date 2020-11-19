@@ -20,7 +20,6 @@
     "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "Veritabanı hazırlanıyor. Lütfen güncelleme tamamlanana kadar bekleyin. Bu işlem birkaç dakika sürebilir.",
     "The database is corrupted. Please run update again." : "Veritabanı bozulmuş. Lütfen yeniden güncelleyin.",
     "Last error message:" : "Son hata iletisi:",
-    "The database is currently updating. Please wait until update is finished. This may take several minutes." : "Veritabanı güncelleniyor. Lütfen güncelleme tamamlanana kadar bekleyin. Bu işlem birkaç dakika sürebilir.",
     "Something is missing." : "Bir şey eksik.",
     "No database available!" : "Kullanılabilecek bir veritabanı bulunamadı!",
     "RIR seems to have changed the file format." : "RIR dosya biçimini değiştirmiş gibi görünüyor.",

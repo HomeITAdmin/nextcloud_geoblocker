@@ -22,7 +22,6 @@ OC.L10N.register(
     "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "数据库正在初始化。请等待更新完成，这可能需要几分钟的时间。",
     "The database is corrupted. Please run update again." : "数据库已损坏，请重新运行更新。",
     "Last error message:" : "最近的错误消息：",
-    "The database is currently updating. Please wait until update is finished. This may take several minutes." : "数据库正在更新中。请等待更新完成，这可能需要几分钟的时间。",
     "Something is missing." : "缺少了一些东西。",
     "No database available!" : "无可用数据库！",
     "RIR seems to have changed the file format." : "RIR 似乎已经改变了文件格式。",

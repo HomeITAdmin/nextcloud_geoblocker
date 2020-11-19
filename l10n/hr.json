@@ -20,7 +20,6 @@
     "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "Baza podataka se inicijalizira. Pričekajte završetak ažuriranja. To može potrajati nekoliko minuta.",
     "The database is corrupted. Please run update again." : "Baza podataka je oštećena. Ponovno pokrenite ažuriranje.",
     "Last error message:" : "Zadnja poruka o pogrešci:",
-    "The database is currently updating. Please wait until update is finished. This may take several minutes." : "Baza podataka se ažurira. Pričekajte završetak ažuriranja. To može potrajati nekoliko minuta.",
     "Something is missing." : "Nešto nedostaje.",
     "No database available!" : "Baza podataka nije dostupna!",
     "RIR seems to have changed the file format." : "Čini se da je RIP promijenio format datoteke.",

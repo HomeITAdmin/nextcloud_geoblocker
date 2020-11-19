@@ -22,7 +22,6 @@ OC.L10N.register(
     "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "Databáza sa práve inicializuje. Počkajte, kým sa aktualizácia neskončí. Môže to trvať niekoľko minúť.",
     "The database is corrupted. Please run update again." : "Databáza je poškodená. Znova spustite aktualizáciu.",
     "Last error message:" : "Posledná chybová správa:",
-    "The database is currently updating. Please wait until update is finished. This may take several minutes." : "Databáza sa práve aktualizuje. Počkajte, kým sa aktualizácia neskončí. Môže to trvať niekoľko minúť.",
     "Something is missing." : "Niečo chýba.",
     "No database available!" : "Databáza nie je k dispozícii!",
     "RIR seems to have changed the file format." : "Zdá sa, že RIR zmenil formát súboru.",

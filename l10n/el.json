@@ -20,7 +20,6 @@
     "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "Η βάση δεδομένων αρχικοποιείται. Παρακαλούμε περιμένετε μέχρι να ολοκληρωθεί η ενημέρωση. Αυτό μπορεί να διαρκέσει μερικά λεπτά.",
     "The database is corrupted. Please run update again." : "Η βάση δεδομένων είναι κατεστραμμένη. Παρακαλούμε εκτελέστε ξανά την ενημέρωση.",
     "Last error message:" : "Μήνυμα τελευταίου σφάλματος:",
-    "The database is currently updating. Please wait until update is finished. This may take several minutes." : "Η βάση δεδομένων ενημερώνεται. Παρακαλούμε περιμένετε μέχρι να ολοκληρωθεί. Αυτό μπορεί να διαρκέσει μερικά λεπτά.",
     "Something is missing." : "Κάτι λείπει.",
     "No database available!" : "Δεν υπάρχει διαθέσιμη βάση δεδομένων!",
     "RIR seems to have changed the file format." : "Το RIR φαίνεται να έχει αλλάξει τη μορφή του αρχείου.",

@@ -20,7 +20,6 @@
     "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "Databáze se v tuto chvíli inicializuje. Prosím vyčkejte, až bude aktualizace dokončena. To může trvat několik minut.",
     "The database is corrupted. Please run update again." : "Databáze je poškozená. Prosím spusťte aktualizaci znovu.",
     "Last error message:" : "Poslední chybová zpráva:",
-    "The database is currently updating. Please wait until update is finished. This may take several minutes." : "Databáze se nyní aktualizuje. Prosím vyčkejte, až bude aktualizace dokončena. To může trvat několik minut.",
     "Something is missing." : "Něco chybí.",
     "No database available!" : "Není k dispozici žádná databáze!",
     "RIR seems to have changed the file format." : "Zdá se, že RIR změnilo formát souboru.",

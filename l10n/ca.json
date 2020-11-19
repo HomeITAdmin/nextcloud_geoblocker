@@ -20,7 +20,6 @@
     "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "La base de dades està inicialitzant actualment. Espereu fins que finalitzi l'actualització. Això pot trigar uns minuts.",
     "The database is corrupted. Please run update again." : "La base de dades està malmesa. Torneu a executar l'actualització.",
     "Last error message:" : "Últim missatge d'error:",
-    "The database is currently updating. Please wait until update is finished. This may take several minutes." : "La base de dades s'està actualitzant actualment. Espereu fins que finalitzi l'actualització. Això pot trigar uns minuts.",
     "Something is missing." : "Falta alguna cosa.",
     "No database available!" : "No hi ha base de dades disponible!",
     "RIR seems to have changed the file format." : "RIR sembla haver canviat el format de fitxer.",
