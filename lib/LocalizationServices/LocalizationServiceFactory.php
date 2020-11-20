@@ -13,7 +13,7 @@ use OCA\GeoBlocker\Db\RIRServiceMapper;
 class LocalizationServiceFactory {
 	private $l;
 	private $config;
-	private $count_ids = 3;
+	private $count_ids = 4;
 	private $db;
 
 	public function __construct(GeoBlockerConfig $config, IL10N $l,
@@ -44,6 +44,9 @@ class LocalizationServiceFactory {
 			case '2':
 				$location_service = new RIRData(new RIRDataChecks(),  new RIRServiceMapper($this->db), $this->config,
 						$this->l);
+				break;
+			case '3':
+				$location_service = new Dummy($this->l);
 				break;
 			// Add new location Service here and increase $count_ids
 			default:
