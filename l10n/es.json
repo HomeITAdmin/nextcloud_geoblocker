@@ -7,6 +7,7 @@
     "No database date available." : "No hay base de datos disponible.",
     "Database file location not available!" : "¡La localización del archivo de base de datos no está disponible!",
     "Update Status not available!" : "¡Estado de Actualización no disponible!",
+    "OK. This service always returns \"%s\" for \"Country not found\"." : "OK. Este servicio siempre devuelve \"%s\" para \"País no encontrado\"",
     "OK." : "Aceptar.",
     "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "ERROR: el servicio parece no estar instalado en el host del servidor Nextcloud, o no es accesible por el servidor web o está mal configurado (¿Está disponible la base de datos para IPv4 e IPv6?). Es posible que la función exec() de php esté deshabilitada en el php.ini.",
     "Date of the database cannot be determined!" : "¡La fecha de la base de datos no se puede determinar!",

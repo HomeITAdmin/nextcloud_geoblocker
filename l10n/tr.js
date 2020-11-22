@@ -9,6 +9,7 @@ OC.L10N.register(
     "No database date available." : "Herhangi bir veritabanı tarihi yok.",
     "Database file location not available!" : "Veritabanı dosyasının konumu bulunamadı!",
     "Update Status not available!" : "Güncelleme durumu bilinmiyor!",
+    "OK. This service always returns \"%s\" for \"Country not found\"." : "Tamam. Bu hizmet \"Ülke bulunamadı\" için her zaman \"%s\" yanıtını verir.",
     "OK." : "Tamam.",
     "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "HATA: Hizmet Nextcloud kurulumununun bulunduğu sunucu üzerine kurulmamış gibi görünüyor ya da hatalı olarak yapılandırılmış (IPv4 ve IPv6 için veritabanı var mı?). PHP exec() işlevinin yürütülmesi php.ini içinde devre dışı bırakılmış olabilir.",
     "Date of the database cannot be determined!" : "Veritabanının tarihi belirlenemedi!",

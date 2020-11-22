@@ -9,6 +9,7 @@ OC.L10N.register(
     "No database date available." : "Kein Datenbank-Datum vorhanden.",
     "Database file location not available!" : "Speicherort der Datenbank ist nicht verfügbar!",
     "Update Status not available!" : "Status der Aktualisierung nicht verfügbar!",
+    "OK. This service always returns \"%s\" for \"Country not found\"." : "OK. Dieser Dienst gibt immer \"%s\" für \"Land nicht gefunden\" zurück.",
     "OK." : "OK",
     "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "FEHLER: Der Dienst scheint auf dem Host des Nextcloud-Servers nicht installiert, für den Webserver nicht erreichbar zu sein oder ist falsch konfiguriert (ist die Datenbank für IPv4 und IPv6 verfügbar ?). Möglicherweise ist die Verwendung der PHP-Funktion exec () in der php.ini deaktiviert. ",
     "Date of the database cannot be determined!" : "Das Datenbank-Datum konnte nicht ermittelt werden.",
