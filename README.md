@@ -5,10 +5,9 @@
 [![GitHub All Releases](https://img.shields.io/github/downloads/homeitadmin/nextcloud_geoblocker/total)](https://github.com/HomeITAdmin/nextcloud_geoblocker/releases)
 [![GitHub](https://img.shields.io/github/license/homeitadmin/nextcloud_geoblocker)](https://github.com/HomeITAdmin/nextcloud_geoblocker/blob/master/COPYING)
 
-This is a server side app for a [nextcloud](https://nextcloud.com/) instance.
-This is a front end to geo localization services, that allows blocking (beta in
-0.4.0), delaying (beta in 0.4.0) and logging of login attempts from specified
-countries.
+This is a server side app for a [Nextcloud](https://nextcloud.com/) instance.
+This is a front end to geo localization services, that allows blocking (beta),
+delaying (beta) and logging of login attempts from specified countries.
 Login attempts from local network IP addresses are not blocked (or logged).
 Wrong Nextcloud configuration (especially in container) can lead to all access
 seems to come from local network IP address.
@@ -32,11 +31,34 @@ right configuration for these config variables should help. It can make the
 configuration easier, if you make sure that the containers always have the same
 internal IP addresses.
 
+### I cannot login anymore
+
+If you cannot login anymore because Geoblocker App here are some hints what to do:
+
+- Geoblocker is causing an exception during the login:
+  - Option 1: Deactivate the Geoblocker App over the command line
+    - `sudo -u %NEXTCLOUD_INSTANCE_USER% php occ app:disable geoblocker`
+  - Option 2: From version 0.4.5 on you can switch to the dummy service and reset
+    the country list on the command line:
+    - `sudo -u %NEXTCLOUD_INSTANCE_USER% php occ
+      geoblocker:localization-service:select-service 3`
+    - `sudo -u %NEXTCLOUD_INSTANCE_USER% php occ geoblocker:country-selection:reset`
+- You accidently blocked the country you are in:
+  - Option 1: Login from an internal network.
+  - Option 2: Form version 0.4.5 on you can reset the country list on the command
+    line:
+    - `sudo -u %NEXTCLOUD_INSTANCE_USER% php occ geoblocker:country-selection:reset`
+
 ## How to activate the location services
 
 There are serveral location services available. The app is only the frontend for
 the location service, so the services need to be installed by the administrator
 correctly, that the app can work correctly.
+
+### Dummy
+
+This is just a dummy location service always returning "Country not found"
+for debug purposes.
 
 ### Geoiplookup
 
@@ -72,10 +94,10 @@ Using the MaxMind GeoLite2 PHP API:
   - Download the latest country database E.g.:
     - On Debian based systems the database gets downloaded to
     "/var/lib/GeoIP/GeoLite2-Country.mmdb" by:
-      - sudo apt-get install geoipupdate
+      - `sudo apt-get install geoipupdate`
       - For this the "contrib" archiv must be activ.
     - Add the API key information to "/etc/GeoIP.conf"
-    - run "sudo geoipupdate"
+    - run `sudo geoipupdate`
   - For Docker user: See
   [#20](https://github.com/HomeITAdmin/nextcloud_geoblocker/issues/20)
   how to use a seperate container to do the update of the database.
@@ -86,7 +108,22 @@ Using the MaxMind GeoLite2 PHP API:
   - API key needed.
   - Installation efforts needed from the administrator.
 
-### Data from Regional Internet Registries (RIRs) (Beta)
+If Geoblocker is insisting on that there is an error in the installation the following
+my help:
+
+- Open a shell and go to the folder of the geoip2.phar.
+- Start an interactive php shell:
+  - `sudo -u www-data php -a`
+- Run this line of code (replacing the db path for your system, and run it as one
+  line in the shell):
+
+```php
+include 'geoip2.phar'; use GeoIp2\Database\Reader; $reader = new Reader('%ABSOLUT_PATH_TO_DB%'); print($reader->country('24.165.23.67')->country->isoCode);
+```
+
+- This should either give you "US" as output or an hopefully helpful error message.
+
+### Data from Regional Internet Registries (RIRs)
 
 Using the information from the Regional Internet Registries (RIRs):
 
@@ -109,7 +146,7 @@ Using the information from the Regional Internet Registries (RIRs):
   - No installation needed.
 - Disadvantages
   - Preconditions need to be fulfilled.
-  - Currently not functional during update.
+  - Currently not functional during update. (Will be solved in 0.4.5)
 
 ## Fail2ban
 

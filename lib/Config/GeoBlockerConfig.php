@@ -100,6 +100,11 @@ class GeoBlockerConfig {
 		return $countries;
 	}
 
+	public function setChoosenCountriesByString(string $countries) {
+		$this->config->setAppValue('geoblocker', 'choosenCountries',
+			$countries);
+	}
+
 	public function isCountryCodeInListOfChoosenCountries(string $cc): bool {
 		$countries = $this->config->getAppValue('geoblocker', 'choosenCountries',
 				'');

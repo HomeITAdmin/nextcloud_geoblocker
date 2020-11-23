@@ -9,11 +9,16 @@ use OCP\IL10N;
 use OCP\IDbConnection;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
 use OCA\GeoBlocker\Db\RIRServiceMapper;
+use OutOfRangeException;
 
 class LocalizationServiceFactory {
+	/** @var IL10N */
 	private $l;
+	/** @var GeoBlockerConfig */
 	private $config;
+	/** @var int */
 	private $count_ids = 4;
+	/** @var IDbConnection */
 	private $db;
 
 	public function __construct(GeoBlockerConfig $config, IL10N $l,
@@ -23,8 +28,16 @@ class LocalizationServiceFactory {
 		$this->db = $db;
 	}
 
-	public function getCurrentLocationServiceID() {
+	public function getCurrentLocationServiceID(): int {
 		return intval($this->config->getChosenService());
+	}
+
+	public function setCurrentLocationServiceID(int $id) {
+		if ($id >= 0 and $id < $this->count_ids) {
+			return $this->config->setChosenService(strval($id));
+		} else {
+			throw new OutOfRangeException('Invalid location service ID.');
+		}
 	}
 
 	public function getLocationService() {
