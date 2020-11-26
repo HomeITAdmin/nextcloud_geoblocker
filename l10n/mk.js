@@ -1,6 +1,7 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "OK" : "Добро",
     "Loading" : "Се вчитува",
     "(beta version)" : "(бета верзија)",
     "Andorra" : "Андора",
