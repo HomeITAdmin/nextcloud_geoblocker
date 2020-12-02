@@ -15,6 +15,7 @@
     "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "CHYBA: zdá se, že služba není nainstalována správně nebo není k dispozici databáze v %s.",
     "No entries in the database. Please run update." : "Žádné položky v databázi. Prosím spusťte aktualizaci.",
     "ERROR:" : "CHYBA:",
+    "OK" : "OK",
     "PHP GMP Extension needs to be installed." : "Je třeba, aby bylo nainstalované rozšíření PHP GMP.",
     "The database is not initialized. Please run update." : "Databáze není inicializována. Prosím spusťte aktualizaci.",
     "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "Databáze se v tuto chvíli inicializuje. Prosím vyčkejte, až bude aktualizace dokončena. To může trvat několik minut.",
