@@ -35,7 +35,6 @@
     "Update in undefined state. Please complain to the developer." : "更新处于未定义状态。请向开发者告知。",
     "GeoBlocker" : "地理屏蔽器",
     "Blocks user depending on the estimated country of thier IP address." : "根据其 IP 地址对应的国家来屏蔽用户。",
-    "This is a front end to geo localization services, that allows blocking (beta), delaying (beta) and logging of login attempts from specified countries.\n\nCountries can be specified using allowlisting or blocklisting.\n\nCurrently available localization services are:\n- Geoiplookup (local programm on the host)\n- MaxMind GeoLite2 (local database accessed via PHP API)\n- Data from Reginal Internet Registries (Nextcloud SQL database build up with data downloaded from the RIRs FTP servers)\n\nFor help how to set up the localization services please have a look at the GitHub repository (homepage on the right side)." : "这是一个地理屏蔽服务的前端，允许屏蔽 (beta), 延迟 (beta) 和记录来自指定国家的登录尝试。\n\n可以使用白名单或黑名单来指定国家。\n\n目前可用的服务有：\n- Geoiplookup （主机上的本地程序）\n- MaxMind GeoLite2（通过 PHP API 访问的本地数据库）。\n- 来自地区性互联网注册机构的数据（Nextcloud SQL 数据库建立，数据从 RIRs FTP 服务器下载）\n\n有关如何设置该服务的帮助，请查看 GitHub 仓库（主页在右侧）。",
     "Loading" : "正在加载",
     "This is a front end to geo localization services, that allows blocking (beta), delaying (beta) and logging of login attempts from specified countries. " : "这是一个地理屏蔽服务的前端，允许屏蔽 (beta), 延迟 (beta) 和记录来自指定国家的登录尝试。",
     "Login attempts from local network IP addresses are not reacted on at all." : "对来自本地网络 IP 地址的登录尝试不会有反应。",
