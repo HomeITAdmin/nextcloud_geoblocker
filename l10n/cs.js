@@ -20,7 +20,7 @@ OC.L10N.register(
     "OK" : "OK",
     "PHP GMP Extension needs to be installed." : "Je třeba, aby bylo nainstalované rozšíření PHP GMP.",
     "The database is not initialized. Please run update." : "Databáze není inicializována. Prosím spusťte aktualizaci.",
-    "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "Databáze se v tuto chvíli inicializuje. Prosím vyčkejte, až bude aktualizace dokončena. To může trvat několik minut.",
+    "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "Databáze se v tuto chvíli inicializuje. Prosím vyčkejte do dokončení aktualizace. To může trvat několik minut.",
     "The database is corrupted. Please run update again." : "Databáze je poškozená. Prosím spusťte aktualizaci znovu.",
     "Last error message:" : "Poslední chybová zpráva:",
     "Something is missing." : "Něco chybí.",
