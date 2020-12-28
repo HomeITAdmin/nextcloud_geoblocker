@@ -72,6 +72,17 @@ class GeoBlockerConfig {
 		$this->config->setAppValue('geoblocker', 'blockIpAddress', $value);
 	}
 
+	public function getBlockIpAddressBefore(): bool {
+		$block_ip_address = $this->config->getAppValue('geoblocker',
+				'blockIpAddressBefore', '0');
+		return $block_ip_address === '1';
+	}
+
+	public function setBlockIpAddressBefore(bool $block_ip_address) {
+		$value = $block_ip_address === true ? '1' : '0';
+		$this->config->setAppValue('geoblocker', 'blockIpAddressBefore', $value);
+	}
+
 	public function getUseWhiteListing(): bool {
 		$log_with_user_name = $this->config->getAppValue('geoblocker',
 				'choosenWhiteBlackList', '0');

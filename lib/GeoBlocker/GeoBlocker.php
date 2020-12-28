@@ -9,6 +9,7 @@ use OCA\GeoBlocker\Config\GeoBlockerConfig;
 use OCP\ILogger;
 use OCP\IL10N;
 use OCA\GeoBlocker\LocalizationServices\ILocalizationService;
+use Exception;
 
 class GeoBlocker {
 	/** @var String */
@@ -51,6 +52,7 @@ class GeoBlocker {
 
 	public function isIpAddressBlocked(String $ip_address): bool {
 		$block_ip_address = false;
+		$block_ip_address_by_exception = false;
 		if ($this->isIPAddressValid($ip_address)) {
 			if (! $this->isIPAddressLocal($ip_address)) {
 				$location = $this->location_service->getCountryCodeFromIP(
@@ -77,10 +79,18 @@ class GeoBlocker {
 							$log_string .= ' Login is blocked.';
 							$any_reaction = true;
 						}
+						if ($this->config->getBlockIpAddressBefore()) {
+							$block_ip_address_by_exception = true;
+							$log_string .= ' Login is blocked by exception.';
+							$any_reaction = true;
+						}
 						if (! $any_reaction) {
 							$log_string .= ' No reaction is activated.';
 						}
 						$this->logEvent($log_string);
+						if ($block_ip_address_by_exception) {
+							throw new Exception("Login denied!", 1);
+						}
 					}
 				} elseif ($location === 'UNAVAILABLE') {
 					$log_string = sprintf(

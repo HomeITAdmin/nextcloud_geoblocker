@@ -51,6 +51,7 @@ class Admin implements ISettings {
 					'chosenService' => $this->config->getChosenService(),
 					'delayIpAddress' => $this->config->getDelayIpAddress(),
 					'blockIpAddress' => $this->config->getBlockIpAddress(),
+					'blockIpAddressBefore' => $this->config->getBlockIpAddressBefore(),
 					'localizationServiceFactory' => $localizationServiceFactory
 				]);
 		return $response;
