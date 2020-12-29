@@ -91,13 +91,17 @@ Using the MaxMind GeoLite2 PHP API:
   "$NEXTCLOUD_ROOT$/$CUSTOM_APP_FOLDER$/geoblocker/3rdparty/maxmind_geolite2/")
   from the MaxMind GeoIP2
   [release page](https://github.com/maxmind/GeoIP2-php/releases).
+  Alternatively you can put the file in the same folder as the database mentioned
+  below (from version 0.4.5 on).
   - Download the latest country database E.g.:
     - On Debian based systems the database gets downloaded to
     "/var/lib/GeoIP/GeoLite2-Country.mmdb" by:
       - `sudo apt-get install geoipupdate`
       - For this the "contrib" archiv must be activ.
-    - Add the API key information to "/etc/GeoIP.conf"
-    - run `sudo geoipupdate`
+      - Add the API key information to "/etc/GeoIP.conf"
+      - run `sudo geoipupdate`
+  - Make sure you have the right database path configured in the Geoblocker Settings
+  page.
   - For Docker user: See
   [#20](https://github.com/HomeITAdmin/nextcloud_geoblocker/issues/20)
   how to use a seperate container to do the update of the database.

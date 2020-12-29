@@ -9,7 +9,11 @@ echo ""
 echo ""
 echo "<<<<<<<<<<<<<<< Special Unit Tests  >>>>>>>>>>>>>>>"
 echo ""
-vendor/phpunit/phpunit/phpunit -c phpunit.special.xml --testdox
+vendor/phpunit/phpunit/phpunit -c phpunit.special1.xml --testdox
+echo ""
+vendor/phpunit/phpunit/phpunit -c phpunit.special2.xml --testdox
+echo ""
+vendor/phpunit/phpunit/phpunit -c phpunit.special3.xml --testdox
 
 echo ""
 echo ""

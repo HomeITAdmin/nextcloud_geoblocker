@@ -5,10 +5,6 @@ declare(strict_types = 1)
 
 namespace OCA\GeoBlocker\LocalizationServices;
 
-@include __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' .
-		DIRECTORY_SEPARATOR . '3rdparty' . DIRECTORY_SEPARATOR .
-		'maxmind_geolite2' . DIRECTORY_SEPARATOR . '' . 'geoip2.phar';
-
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
 use OCP\IL10N;
 use GeoIp2\Database\Reader;
@@ -20,9 +16,13 @@ class MaxMindGeoLite2 implements
 	ILocalizationService,
 	IDatabaseDate,
 		IDatabaseFileLocation {
+	/** @var IL10N */
 	private $l;
+	/** @var GeoBlockerConfig */
 	private $config;
+	/** @var String */
 	private $database_file_location;
+	/** @var String */
 	private $unique_service_string;
 
 	public function __construct(GeoBlockerConfig $config, IL10N $l) {
@@ -37,6 +37,10 @@ class MaxMindGeoLite2 implements
 	}
 
 	public function getStatus(): bool {
+		if (!@include_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '3rdparty'
+				. DIRECTORY_SEPARATOR . 'maxmind_geolite2' . DIRECTORY_SEPARATOR . 'geoip2.phar') {
+			@include_once \pathinfo($this->database_file_location)['dirname'] . DIRECTORY_SEPARATOR . 'geoip2.phar';
+		}
 		if (class_exists('GeoIp2\Database\Reader')) {
 			try {
 				$reader = new Reader($this->database_file_location);

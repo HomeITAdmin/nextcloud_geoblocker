@@ -1,0 +1,7 @@
+<phpunit bootstrap="tests/bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="special2">
+            <file>./tests/UnitMissingServiceTests/MaxMindGeoLite2MissingTest.php</file>
+        </testsuite>
+    </testsuites>
+</phpunit>
