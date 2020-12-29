@@ -189,7 +189,7 @@ $loading = $l->t('Loading').'...';
 			<label for="blocking-before-active">
 				<?php p($l->t('Activate blocking of login attempts from IP addresses of the specified countries.'));
 							p(' ');
-							p($l->t('(Blocking is enforced before password check by thowing an "login denied" exception!)'))?>
+							p($l->t('(Blocking is enforced before password check by throwing an "login denied" exception!)'))?>
 			</label>
 		</p>
 
