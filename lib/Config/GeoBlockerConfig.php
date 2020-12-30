@@ -96,7 +96,7 @@ class GeoBlockerConfig {
 
 	public function getChosenService(): string {
 		$chosen_service = $this->config->getAppValue('geoblocker',
-				'chosenService', '0');
+				'chosenService', '3');
 		return $chosen_service;
 	}
 

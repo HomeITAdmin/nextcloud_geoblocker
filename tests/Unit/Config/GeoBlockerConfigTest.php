@@ -224,7 +224,7 @@ class GeoBlockerConfigTest extends TestCase {
 	public function testIsGetChosenServiceValid() {
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'), $this->equalTo('chosenService'),
-				$this->equalTo('0'))->will($this->returnValue('1'));
+				$this->equalTo('3'))->will($this->returnValue('1'));
 		$this->assertEquals('1', $this->geo_config->getChosenService());
 	}
 

@@ -63,8 +63,7 @@ class LocalizationServiceFactory {
 				break;
 			// Add new location Service here and increase $count_ids
 			default:
-				$location_service = new GeoIPLookup(new GeoIPLookupCmdWrapper(),
-						$this->l);
+				$location_service = new Dummy($this->l);
 		}
 		return $location_service;
 	}
@@ -79,7 +78,7 @@ class LocalizationServiceFactory {
 					$location_service instanceof IDatabaseFileLocation) {
 				$service_string .= ' (' . $this->l->t('local') . ')';
 			}
-			if ($i == 0) {
+			if ($i == 3) {
 				$service_string .= '  (' . $this->l->t('default') . ')';
 			}
 			$overview[$service_string] = ($current_service == $i);

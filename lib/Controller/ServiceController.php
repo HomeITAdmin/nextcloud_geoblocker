@@ -8,13 +8,18 @@ use OCP\IL10N;
 use OCP\IDbConnection;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\JSONResponse;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
 use OCA\GeoBlocker\LocalizationServices\LocalizationServiceFactory;
 
 class ServiceController extends Controller {
+	/** @var GeoBlockerConfig */
 	private $config;
+	/** @var IL10N */
 	private $l;
+	/** @var IDbConnection */
 	private $db;
+	/** @var LocalizationServiceFactory */
 	private $location_service_factory;
 
 	public function __construct(string $AppName, IRequest $request,
@@ -41,30 +46,31 @@ class ServiceController extends Controller {
 	public function getDatabaseDate(int $id) {
 		$location_service = $this->location_service_factory->getLocationServiceByID(
 				$id);
-		if ($this->hasDatabaseDate($id)) {
+		if ($this->location_service_factory->hasDatabaseDateByID($id)) {
 			return new DataResponse($location_service->getDatabaseDate());
 		} else {
 			return new DataResponse($this->l->t("No database date available."));
 		}
 	}
 
+	public function hasConfigurationOptionImpl(int $id) {
+		return $this->location_service_factory->hasDatabaseFileLocationByID($id) ||
+				$this->location_service_factory->hasDatabaseUpdateByID($id);
+	}
+
 	public function hasConfigurationOption(int $id) {
-		return new DataResponse(
-				$this->location_service_factory->hasDatabaseFileLocationByID(
-						$id) ||
-				$this->location_service_factory->hasDatabaseUpdateByID($id));
+		return new DataResponse($this->hasConfigurationOptionImpl($id));
 	}
 
 	public function hasDatabaseFileLocation(int $id) {
 		return new DataResponse(
-				$this->location_service_factory->hasDatabaseFileLocationByID(
-						$id));
+				$this->location_service_factory->hasDatabaseFileLocationByID($id));
 	}
 
 	public function getDatabaseFileLocation(int $id) {
 		$location_service = $this->location_service_factory->getLocationServiceByID(
 				$id);
-		if ($this->hasDatabaseFileLocation($id)) {
+		if ($this->location_service_factory->hasDatabaseFileLocationByID($id)) {
 			return new DataResponse(
 					$location_service->getDatabaseFileLocation());
 		} else {
@@ -95,7 +101,7 @@ class ServiceController extends Controller {
 	public function getDatabaseUpdateStatus(int $id) {
 		$location_service = $this->location_service_factory->getLocationServiceByID(
 				$id);
-		if ($this->hasDatabaseUpdate($id)) {
+		if ($this->location_service_factory->hasDatabaseUpdateByID($id)) {
 			return new DataResponse(
 					$location_service->getDatabaseUpdateStatus());
 		} else {
@@ -106,11 +112,34 @@ class ServiceController extends Controller {
 	public function getDatabaseUpdateStatusString(int $id) {
 		$location_service = $this->location_service_factory->getLocationServiceByID(
 				$id);
-		if ($this->hasDatabaseUpdate($id)) {
+		if ($this->location_service_factory->hasDatabaseUpdateByID($id)) {
 			return new DataResponse(
 					$location_service->getDatabaseUpdateStatusString());
 		} else {
 			return new DataResponse($this->l->t("Update Status not available!"));
 		}
+	}
+
+	public function getAllServiceData(int $id) {
+		$location_service = $this->location_service_factory->getLocationServiceByID($id);
+		$ret = [];
+		$ret['status'] = $location_service->getStatusString();
+		$ret['hasDatabaseDate'] = $this->location_service_factory->hasDatabaseDateByID($id);
+		if ($ret['hasDatabaseDate']) {
+			$ret['getDatabaseDate'] = $location_service->getDatabaseDate();
+		}
+		$ret['hasConfigurationOption'] = $this->hasConfigurationOptionImpl($id);
+		if ($ret['hasConfigurationOption']) {
+			$ret['hasDatabaseFileLocation'] = $this->location_service_factory->hasDatabaseFileLocationByID($id);
+			if ($ret['hasDatabaseFileLocation']) {
+				$ret['getDatabaseFileLocation'] = $location_service->getDatabaseFileLocation();
+			}
+			$ret['hasDatabaseUpdate'] = $this->location_service_factory->hasDatabaseUpdateByID($id);
+			if ($ret['hasDatabaseUpdate']) {
+				$ret['getDatabaseUpdateStatus'] = $location_service->getDatabaseUpdateStatus();
+				$ret['getDatabaseUpdateStatusString'] = $location_service->getDatabaseUpdateStatusString();
+			}
+		}
+		return new JSONResponse($ret);
 	}
 }

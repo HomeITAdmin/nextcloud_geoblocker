@@ -24,4 +24,7 @@ return [
 			'url' => '/service/getDatabaseUpdateStatus/{id}','verb' => 'GET'],
 		['name' => 'service#getDatabaseUpdateStatusString',
 			'url' => '/service/getDatabaseUpdateStatusString/{id}',
+			'verb' => 'GET'],
+		['name' => 'service#getAllServiceData',
+			'url' => '/service/getAllServiceData/{id}',
 			'verb' => 'GET']]];

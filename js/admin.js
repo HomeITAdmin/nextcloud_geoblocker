@@ -1,82 +1,82 @@
 var last_used_service_id = 0;
 var baseUrl = OC.generateUrl('/apps/geoblocker');
 
-function updateServiceStatus(service_id) {
-	$.ajax({
-		url: baseUrl + '/service/status/' + service_id,
-		type: 'GET'
-	}).done(function (response) {
-		document.getElementById('status-chosen-service').innerHTML = response;
-	}).fail(function (response, code) {
-		document.getElementById('status-chosen-service').innerHTML = t('geoblocker', 'Status of the service cannot be determined.');
-	});
-}
+// function updateServiceStatus(service_id) {
+// 	$.ajax({
+// 		url: baseUrl + '/service/status/' + service_id,
+// 		type: 'GET'
+// 	}).done(function (response) {
+// 		document.getElementById('status-chosen-service').innerHTML = response;
+// 	}).fail(function (response, code) {
+// 		document.getElementById('status-chosen-service').innerHTML = t('geoblocker', 'Status of the service cannot be determined.');
+// 	});
+// }
 
-function updateDatabaseDate(service_id) {
-	$.ajax({
-		url: baseUrl + '/service/hasDatabaseDate/' + service_id,
-		type: 'GET'
-	}).done(function (response) {
-		if (response) {
-			$.ajax({
-				url: baseUrl + '/service/getDatabaseDate/' + service_id,
-				type: 'GET'
-			}).done(function (response) {
-				document.getElementById('database-date').style.display = 'block';
-				document.getElementById('database-date-string').innerHTML = response;
-			}).fail(function (response, code) {
-				document.getElementById('database-date').style.display = 'none';
-			});
-		} else {
-			document.getElementById('database-date').style.display = 'none';
-		}
-	}).fail(function (response, code) {
-		document.getElementById('database-date').style.display = 'none';
-	});
-}
+// function updateDatabaseDate(service_id) {
+// 	$.ajax({
+// 		url: baseUrl + '/service/hasDatabaseDate/' + service_id,
+// 		type: 'GET'
+// 	}).done(function (response) {
+// 		if (response) {
+// 			$.ajax({
+// 				url: baseUrl + '/service/getDatabaseDate/' + service_id,
+// 				type: 'GET'
+// 			}).done(function (response) {
+// 				document.getElementById('database-date').style.display = 'block';
+// 				document.getElementById('database-date-string').innerHTML = response;
+// 			}).fail(function (response, code) {
+// 				document.getElementById('database-date').style.display = 'none';
+// 			});
+// 		} else {
+// 			document.getElementById('database-date').style.display = 'none';
+// 		}
+// 	}).fail(function (response, code) {
+// 		document.getElementById('database-date').style.display = 'none';
+// 	});
+// }
 
-function updateDatabaseFileLocationExists(service_id) {
-	$.ajax({
-		url: baseUrl + '/service/getDatabaseFileLocation/' + service_id,
-		type: 'GET'
-	}).done(function (response) {
-		document.getElementById('database-path').style.display = 'block';
-		document.getElementById('database-path-string').value = response;
-	}).fail(function (response, code) {
-		document.getElementById('database-path').style.display = 'none';
-	});
-}
+// function updateDatabaseFileLocationExists(service_id) {
+// 	$.ajax({
+// 		url: baseUrl + '/service/getDatabaseFileLocation/' + service_id,
+// 		type: 'GET'
+// 	}).done(function (response) {
+// 		document.getElementById('database-path').style.display = 'block';
+// 		document.getElementById('database-path-string').value = response;
+// 	}).fail(function (response, code) {
+// 		document.getElementById('database-path').style.display = 'none';
+// 	});
+// }
 
-function updateDatabaseFileLocation(service_id) {
-	$.ajax({
-		url: baseUrl + '/service/hasDatabaseFileLocation/' + service_id,
-		type: 'GET'
-	}).done(function (response) {
-		if (response) {
-			updateDatabaseFileLocationExists(service_id);
-		} else {
-			document.getElementById('database-path').style.display = 'none';
-		}
-	}).fail(function (response, code) {
-		document.getElementById('database-path').style.display = 'none';
-	});
-}
+// function updateDatabaseFileLocation(service_id) {
+// 	$.ajax({
+// 		url: baseUrl + '/service/hasDatabaseFileLocation/' + service_id,
+// 		type: 'GET'
+// 	}).done(function (response) {
+// 		if (response) {
+// 			updateDatabaseFileLocationExists(service_id);
+// 		} else {
+// 			document.getElementById('database-path').style.display = 'none';
+// 		}
+// 	}).fail(function (response, code) {
+// 		document.getElementById('database-path').style.display = 'none';
+// 	});
+// }
 
-function updateDatabaseUpdate(service_id) {
-	$.ajax({
-		url: baseUrl + '/service/hasDatabaseUpdate/' + service_id,
-		type: 'GET'
-	}).done(function (response) {
-		if (response) {
-			document.getElementById('database-update').style.display = 'block';
-			updateDatabaseUpdateStatus(service_id);
-		} else {
-			document.getElementById('database-update').style.display = 'none';
-		}
-	}).fail(function (response, code) {
-		document.getElementById('database-update').style.display = 'none';
-	});
-}
+// function updateDatabaseUpdate(service_id) {
+// 	$.ajax({
+// 		url: baseUrl + '/service/hasDatabaseUpdate/' + service_id,
+// 		type: 'GET'
+// 	}).done(function (response) {
+// 		if (response) {
+// 			document.getElementById('database-update').style.display = 'block';
+// 			updateDatabaseUpdateStatus(service_id);
+// 		} else {
+// 			document.getElementById('database-update').style.display = 'none';
+// 		}
+// 	}).fail(function (response, code) {
+// 		document.getElementById('database-update').style.display = 'none';
+// 	});
+// }
 
 function updateStatusToStringPrefix(status) {
 	var string_begin = '';
@@ -97,81 +97,121 @@ function updateStatusToStringPrefix(status) {
 }
 
 function delayedUpdateDatabaseStatus(service_id) {
-	console.log("Test");
 	setTimeout(function () {
 		if (last_used_service_id == service_id) {
-			updateDatabaseUpdateStatus(service_id);
-			updateServiceStatus(service_id);
-			updateDatabaseDate(service_id);
+			updateAllServiceInformation(service_id)
 		}
 	}, 10000);
 
 }
 
-function updateDatabaseUpdateStatus(service_id) {
+// function updateDatabaseUpdateStatus(service_id) {
+// 	$.ajax({
+// 		url: baseUrl + '/service/getDatabaseUpdateStatus/' + service_id,
+// 		type: 'GET'
+// 	}).done(function (response) {
+// 		if (response == 1) {
+// 			document.getElementById('database-update-button').disabled = false;
+// 		} else {
+// 			document.getElementById('database-update-button').disabled = true;
+// 			if (response == 2) {
+// 				delayedUpdateDatabaseStatus(service_id);
+// 			}
+// 		}
+// 		updateDatabaseUpdateStatusString(service_id, response);
+// 	}).fail(function (response, code) {
+// 		document.getElementById('database-update-button').disabled = true;
+// 	});
+// }
+
+// function updateDatabaseUpdateStatusString(service_id, status) {
+// 	var prefix = updateStatusToStringPrefix(status);
+// 	document.getElementById('database-update-string-prefix').innerHTML = prefix;
+// 	if (status != 1) {
+// 		$.ajax({
+// 			url: baseUrl + '/service/getDatabaseUpdateStatusString/' + service_id,
+// 			type: 'GET'
+// 		}).done(function (response) {
+// 			if (response) {
+// 				document.getElementById('database-update-string').innerHTML = response;
+// 			} else {
+// 				document.getElementById('database-update-string').innerHTML = '';
+// 			}
+// 		}).fail(function (response, code) {
+// 			document.getElementById('database-update-string').innerHTML = '';
+// 		});
+// 	} else {
+// 		document.getElementById('database-update-string').innerHTML = '';
+// 	}
+// }
+
+// function updateConfigurationOptions(service_id) {
+// 	$.ajax({
+// 		url: baseUrl + '/service/hasConfigurationOption/' + service_id,
+// 		type: 'GET'
+// 	}).done(function (response) {
+// 		if (response) {
+// 			document.getElementById('service-config').style.display = 'block';
+// 			updateDatabaseFileLocation(service_id);
+// 			updateDatabaseUpdate(service_id);
+// 		} else {
+// 			document.getElementById('service-config').style.display = 'none';
+// 		}
+// 	}).fail(function (response, code) {
+// 		document.getElementById('service-config').style.display = 'none';
+// 	});
+// }
+
+function updateAllServiceInformation(service_id) {
 	$.ajax({
-		url: baseUrl + '/service/getDatabaseUpdateStatus/' + service_id,
+		url: baseUrl + '/service/getAllServiceData/' + service_id,
 		type: 'GET'
 	}).done(function (response) {
-		if (response == 1) {
-			document.getElementById('database-update-button').disabled = false;
+		document.getElementById('status-chosen-service').innerHTML = response['status'];
+		if (response['hasDatabaseDate']) {
+			document.getElementById('database-date').style.display = 'block';
+			document.getElementById('database-date-string').innerHTML = response['getDatabaseDate'];
 		} else {
-			document.getElementById('database-update-button').disabled = true;
-			if (response == 2) {
-				delayedUpdateDatabaseStatus(service_id);
-			}
+			document.getElementById('database-date').style.display = 'none';
 		}
-		updateDatabaseUpdateStatusString(service_id, response);
-	}).fail(function (response, code) {
-		document.getElementById('database-update-button').disabled = true;
-	});
-}
-
-function updateDatabaseUpdateStatusString(service_id, status) {
-	var prefix = updateStatusToStringPrefix(status);
-	document.getElementById('database-update-string-prefix').innerHTML = prefix;
-	if (status != 1) {
-		$.ajax({
-			url: baseUrl + '/service/getDatabaseUpdateStatusString/' + service_id,
-			type: 'GET'
-		}).done(function (response) {
-			if (response) {
-				document.getElementById('database-update-string').innerHTML = response;
-			} else {
-				document.getElementById('database-update-string').innerHTML = '';
-			}
-		}).fail(function (response, code) {
-			document.getElementById('database-update-string').innerHTML = '';
-		});
-	} else {
-		document.getElementById('database-update-string').innerHTML = '';
-	}
-}
-
-function updateConfigurationOptions(service_id) {
-	$.ajax({
-		url: baseUrl + '/service/hasConfigurationOption/' + service_id,
-		type: 'GET'
-	}).done(function (response) {
-		if (response) {
+		if (response['hasConfigurationOption']) {
 			document.getElementById('service-config').style.display = 'block';
-			updateDatabaseFileLocation(service_id);
-			updateDatabaseUpdate(service_id);
+
+			if (response['hasDatabaseFileLocation']) {
+				document.getElementById('database-path').style.display = 'block';
+				document.getElementById('database-path-string').value = response['getDatabaseFileLocation'];
+			} else {
+				document.getElementById('database-path').style.display = 'none';
+			}
+
+			if (response['hasDatabaseUpdate']) {
+				document.getElementById('database-update').style.display = 'block';
+				if (response['getDatabaseUpdateStatus'] == 1) {
+					document.getElementById('database-update-button').disabled = false;
+				} else {
+					document.getElementById('database-update-button').disabled = true;
+					if (response['getDatabaseUpdateStatus'] == 2) {
+						delayedUpdateDatabaseStatus(service_id);
+					}
+				}
+				var prefix = updateStatusToStringPrefix(response['getDatabaseUpdateStatus']);
+				document.getElementById('database-update-string-prefix').innerHTML = prefix;
+				document.getElementById('database-update-string').innerHTML = response['getDatabaseUpdateStatusString'];
+			} else {
+				document.getElementById('database-update').style.display = 'none';
+			}
+
 		} else {
 			document.getElementById('service-config').style.display = 'none';
 		}
 	}).fail(function (response, code) {
+		document.getElementById('status-chosen-service').innerHTML = t('geoblocker', 'Status of the service cannot be determined.');
+		document.getElementById('database-date').style.display = 'none';
 		document.getElementById('service-config').style.display = 'none';
 	});
 }
 
-function updateAllServiceInformation(service_id) {
-	updateServiceStatus(service_id);
-	updateDatabaseDate(service_id);
-	updateConfigurationOptions(service_id);
-}
-
-function fakeAdressAction(checked) {
+function fakeAddressAction(checked) {
 	var value = '0';
 	if (checked) {
 		value = '1';
@@ -233,10 +273,10 @@ $(document).ready(function () {
 		OCP.AppConfig.setValue('geoblocker', 'blockIpAddressBefore', value);
 	});
 	$('#do-fake-address').click(function () {
-		fakeAdressAction(this.checked);
+		fakeAddressAction(this.checked);
 	});
 	$('#fake-address').change(function () {
-		fakeAdressAction(document.getElementById('do-fake-address').checked);
+		fakeAddressAction(document.getElementById('do-fake-address').checked);
 	});
 
 	$('#database-path-string').change(function () {
@@ -260,10 +300,7 @@ $(document).ready(function () {
 	$('#choose-service').change(function () {
 		var service_id = this.value;
 		last_used_service_id = service_id;
-		OCP.AppConfig.setValue('geoblocker',
-			'chosenService'
-			, service_id);
-
+		OCP.AppConfig.setValue('geoblocker', 'chosenService', service_id);
 		updateAllServiceInformation(service_id);
 	});
 	$('#choose-service').change();
