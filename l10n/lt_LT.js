@@ -1,11 +1,11 @@
 OC.L10N.register(
     "geoblocker",
     {
-    "Status of the service cannot be determined." : "Nepavyksta nustatyti tarnybos būsenos.",
     "Update not possible. " : "Atnaujinimas neįmanomas.",
     "Update possible. " : "Atnaujinimas įmanomas.",
     "Update running. " : "Vykdomas atnaujinimas.",
     "Update undefined. " : "Atnaujinimas neapibrėžtas.",
+    "Status of the service cannot be determined." : "Nepavyksta nustatyti tarnybos būsenos.",
     "No database date available." : "Neprieinama jokia duomenų bazės data.",
     "Database file location not available!" : "Neprieinama duomenų bazės failo vieta!",
     "Update Status not available!" : "Atnaujinimo būsena neprieinama!",

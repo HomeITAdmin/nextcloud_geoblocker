@@ -1,11 +1,11 @@
 OC.L10N.register(
     "geoblocker",
     {
-    "Status of the service cannot be determined." : "Hizmet durumu belirlenemedi.",
     "Update not possible. " : "Güncellenemez.",
     "Update possible. " : "Güncellenebilir.",
     "Update running. " : "Güncelleniyor.",
     "Update undefined. " : "Güncelleme belirtilmemiş.",
+    "Status of the service cannot be determined." : "Hizmet durumu belirlenemedi.",
     "No database date available." : "Herhangi bir veritabanı tarihi yok.",
     "Database file location not available!" : "Veritabanı dosyasının konumu bulunamadı!",
     "Update Status not available!" : "Güncelleme durumu bilinmiyor!",

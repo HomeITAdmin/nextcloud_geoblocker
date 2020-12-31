@@ -1,11 +1,11 @@
 OC.L10N.register(
     "geoblocker",
     {
-    "Status of the service cannot be determined." : "Ekki hægt að ákvarða stöðu á þjónustu.",
     "Update not possible. " : "Uppfærsla ekki möguleg. ",
     "Update possible. " : "Uppfærsla möguleg. ",
     "Update running. " : "Uppfærsla í gangi. ",
     "Update undefined. " : "Uppfærsla óskilgreind. ",
+    "Status of the service cannot be determined." : "Ekki hægt að ákvarða stöðu á þjónustu.",
     "No database date available." : "Engin dagsetning gagnagrunns tiltæk.",
     "Database file location not available!" : "Staðsetning gagnagrunns ekki tiltæk!",
     "Update Status not available!" : "Staða uppfærslu ekki tiltæk!",

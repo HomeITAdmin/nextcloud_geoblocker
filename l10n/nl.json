@@ -1,9 +1,9 @@
 { "translations": {
-    "Status of the service cannot be determined." : "Status van de dienst kan niet worden bepaald",
     "Update not possible. " : "Update niet mogelijk.",
     "Update possible. " : "Update mogelijk.",
     "Update running. " : "Update bezig.",
     "Update undefined. " : "Update niet gedefinieerd.. ",
+    "Status of the service cannot be determined." : "Status van de dienst kan niet worden bepaald",
     "No database date available." : "Geen database datum beschikbaar",
     "Database file location not available!" : "De bestandslocatie van de database is niet beschikbaar!",
     "Update Status not available!" : "Update Status niet beschikbaar!",
@@ -71,6 +71,7 @@
     "(Delaying is enforced for 30s before password check.)" : "(Vertraging van 30s vóór de wachtwoordcontrole.)",
     "Activate blocking of login attempts from IP addresses of the specified countries." : "Inschakelen inlogblokkering voor IP-adressen uit de opgegeven landen.",
     "(Blocking is enforced after password check!)" : "(Blokkade vindt plaats na de wachtwoordcontrole!)",
+    "(Blocking is enforced before password check by throwing an \"login denied\" exception!)" : "(Blokkering wordt afgedwongen vóór de wachtwoordcontrole door een uitzondering \"aanmelding geweigerd\" te geven!)",
     "Test" : "Test",
     "Possibilities to test if the Geoblocker is working as expected:" : "Mogelijkheden om te testen of de Geoblocker werkt zoals verwacht:",
     "Next login attempt of user \"%s\" will be simulated to come from the following IP address:" : "Bij de volgende inlogpoging van de gebruiker \"%s\" zal gesimuleerd worden dat deze van het volgende IP-adres komt:",

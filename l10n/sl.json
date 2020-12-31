@@ -1,9 +1,9 @@
 { "translations": {
-    "Status of the service cannot be determined." : "Stanja storitve ni mogoče določiti.",
     "Update not possible. " : "Posodobitev ni mogoča.",
     "Update possible. " : "Posodobitev je mogoča.",
     "Update running. " : "Poteka posodabljanje ...",
     "Update undefined. " : "Posodobitev ni določena.",
+    "Status of the service cannot be determined." : "Stanja storitve ni mogoče določiti.",
     "No database date available." : "Datum podatkovne zbirke ni na voljo.",
     "Database file location not available!" : "Mesto datoteke podatkovne zbirke ni na voljo!",
     "Update Status not available!" : "Stanje posodobitve ni na voljo!",

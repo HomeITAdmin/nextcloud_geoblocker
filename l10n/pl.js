@@ -1,11 +1,11 @@
 OC.L10N.register(
     "geoblocker",
     {
-    "Status of the service cannot be determined." : "Nie można ustalić statusu usługi.",
     "Update not possible. " : "Aktualizacja nie jest możliwa. ",
     "Update possible. " : "Aktualizacja możliwa. ",
     "Update running. " : "Aktualizacja uruchomiona. ",
     "Update undefined. " : "Status niezdefiniowany ",
+    "Status of the service cannot be determined." : "Nie można ustalić statusu usługi.",
     "No database date available." : "Brak dostępnej bazy danych.",
     "Database file location not available!" : "Lokalizacja pliku bazy danych jest niedostępna!",
     "Update Status not available!" : "Status aktualizacji niedostępny!",
@@ -73,6 +73,7 @@ OC.L10N.register(
     "(Delaying is enforced for 30s before password check.)" : "(Opóźnienie jest wymuszane przez 30 sekund przed sprawdzeniem hasła.)",
     "Activate blocking of login attempts from IP addresses of the specified countries." : "Aktywuj blokowanie prób logowania z adresów IP określonych krajów.",
     "(Blocking is enforced after password check!)" : "(Blokowanie jest wymuszane po sprawdzeniu hasła!)",
+    "(Blocking is enforced before password check by throwing an \"login denied\" exception!)" : "(Blokowanie jest wymuszane przed sprawdzeniem hasła przez zgłoszenie wyjątku \"odmowa logowania\"!)",
     "Test" : "Test",
     "Possibilities to test if the Geoblocker is working as expected:" : "Możliwość sprawdzenia, czy Geoblocker działa zgodnie z oczekiwaniami:",
     "Next login attempt of user \"%s\" will be simulated to come from the following IP address:" : "Następna próba logowania użytkownika \"%s\" zostanie zasymulowana, aby pochodziło z następującego adresu IP:",

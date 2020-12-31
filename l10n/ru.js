@@ -1,10 +1,10 @@
 OC.L10N.register(
     "geoblocker",
     {
-    "Status of the service cannot be determined." : "Не удаётся определить состояние службы.",
     "Update not possible. " : "Обновление невозможно.",
     "Update possible. " : "Обновление возможно.",
     "Update running. " : "Обновление запущено.",
+    "Status of the service cannot be determined." : "Не удаётся определить состояние службы.",
     "No database date available." : "Данные из баз данных недоступны.",
     "Database file location not available!" : "Расположение файла базы данных недоступно!",
     "Update Status not available!" : "Статус обновления неизвестен!",
