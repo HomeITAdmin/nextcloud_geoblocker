@@ -151,6 +151,12 @@ Using the information from the Regional Internet Registries (RIRs):
 - Disadvantages
   - Preconditions need to be fulfilled.
   - Currently not functional during update. (Will be solved in 0.4.5)
+- Known issues
+  - If the nextcloud instance is restarted during the update of the service, the
+  service stays in the update process forever. At the moment you have to use the
+  command line to reset the database of the service and get the service back into
+  a valid state:
+    - `sudo -u %NEXTCLOUD_INSTANCE_USER% php occ geoblocker:localization-service:reset-db 2`
 
 ## Fail2ban
 
