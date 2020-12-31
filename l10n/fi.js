@@ -1,10 +1,10 @@
 OC.L10N.register(
     "geoblocker",
     {
-    "Status of the service cannot be determined." : "Palvelun tilaa ei voitu määrittää.",
     "Update not possible. " : "Päivitys ei ole mahdollinen.",
     "Update possible. " : "Päivitys mahdollinen.",
     "Update running. " : "Päivitys meneillään.",
+    "Status of the service cannot be determined." : "Palvelun tilaa ei voitu määrittää.",
     "No database date available." : "Tietokannan päiväys ei ole saatavilla.",
     "OK." : "OK.",
     "Date of the database cannot be determined!" : "Tietokannan päiväystä ei voitu määrittää!",

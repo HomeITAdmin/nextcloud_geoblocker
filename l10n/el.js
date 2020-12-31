@@ -1,11 +1,11 @@
 OC.L10N.register(
     "geoblocker",
     {
-    "Status of the service cannot be determined." : "Η κατάσταση της υπηρεσίας δεν μπορεί να προσδιοριστεί.",
     "Update not possible. " : "Δεν είναι δυνατή η ενημέρωση. ",
     "Update possible. " : "Είναι δυνατή η ενημέρωση. ",
     "Update running. " : "Η ενημέρωση εκτελείται. ",
     "Update undefined. " : "Απροσδιόριστη ενημέρωση. ",
+    "Status of the service cannot be determined." : "Η κατάσταση της υπηρεσίας δεν μπορεί να προσδιοριστεί.",
     "No database date available." : "Δεν είναι διαθέσιμη η ημερομηνία βάσης δεδομένων.",
     "Database file location not available!" : "Η θέση του αρχείου βάσης δεδομένων δεν είναι διαθέσιμη!",
     "Update Status not available!" : "Η κατάσταση της ενημέρωσης δεν είναι διαθέσιμη!",
