@@ -156,7 +156,8 @@ Using the information from the Regional Internet Registries (RIRs):
   service stays in the update process forever. At the moment you have to use the
   command line to reset the database of the service and get the service back into
   a valid state:
-    - `sudo -u %NEXTCLOUD_INSTANCE_USER% php occ geoblocker:localization-service:reset-db 2`
+    - `sudo -u %NEXTCLOUD_INSTANCE_USER% php occ
+    geoblocker:localization-service:reset-db 2`
 
 ## Fail2ban
 
