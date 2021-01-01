@@ -251,7 +251,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 					}
 				} catch (Exception $e) {
 					$this->setDBToErrorStatus(
-							$this->l->t('Exception caught during Update.'));
+							$this->l->t('Exception caught during Update: '). $e->getMessage());
 					return false;
 				} finally {
 					fclose($rir_data_handle);
@@ -292,10 +292,10 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 				return false;
 			}
 			$use_version = 0;
+			$this->setCurrentDbVersion($use_version);
 			if (! $this->fillDatabase($use_version)) {
 				return false;
 			}
-			$this->setCurrentDbVersion($use_version);
 			$this->setStatusId(RIRStatus::kDbOk);
 			return true;
 		} elseif ($status_id == RIRStatus::kDbOk) {
@@ -321,10 +321,11 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		return false;
 	}
 
-	public function getDatabaseUpdateStatus(): int {
+	public function getDatabaseUpdateStatusImpl(): int {
 		$status_id = $this->getStatusId();
-		if ($status_id == RIRStatus::kDbInitilazing ||
-				$status_id == RIRStatus::kDbUpdating) {
+		if ($status_id == RIRStatus::kDbInitilazing) {
+			return LocationServiceUpdateStatus::kUpdating+10;
+		} elseif ($status_id == RIRStatus::kDbUpdating) {
 			return LocationServiceUpdateStatus::kUpdating;
 		} else {
 			if ($this->rir_data_checks->checkAll()) {
@@ -334,9 +335,17 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 			}
 		}
 	}
+	public function getDatabaseUpdateStatus(): int {
+		$ret = $this->getDatabaseUpdateStatusImpl();
+		if ($ret <= LocationServiceUpdateStatus::kUpdating) {
+			return $ret;
+		} else {
+			return LocationServiceUpdateStatus::kUpdating;
+		}
+	}
 
 	public function getDatabaseUpdateStatusString(): string {
-		switch ($this->getDatabaseUpdateStatus()) {
+		switch ($this->getDatabaseUpdateStatusImpl()) {
 			case LocationServiceUpdateStatus::kUpdateNotPossible:
 				if (! $this->rir_data_checks->checkAllowURLFOpen()) {
 					return $this->l->t(
@@ -357,6 +366,10 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 			case LocationServiceUpdateStatus::kUpdating:
 				return $this->l->t('Current number of entries:') . ' ' .
 						strval($this->rir_service_mapper->getNumberOfEntries($this->getOtherDbVersion()));
+				break;
+			case LocationServiceUpdateStatus::kUpdating+10:
+				return $this->l->t('Current number of entries:') . ' ' .
+						strval($this->rir_service_mapper->getNumberOfEntries($this->getCurrentDbVersion()));
 				break;
 			default:
 				// @codeCoverageIgnoreStart

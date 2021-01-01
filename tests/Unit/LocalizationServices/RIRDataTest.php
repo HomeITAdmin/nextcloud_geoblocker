@@ -469,9 +469,9 @@ class RIRDataTest extends TestCase {
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo($rir_status_inter)],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+				[$this->equalTo(RIRData::kDbVersionName),$this->equalTo('0')],
 				[$this->equalTo(RIRData::kDatabaseDateName),
 					$this->equalTo(date("Y-m-d"))],
-				[$this->equalTo(RIRData::kDbVersionName),$this->equalTo('0')],
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo(RIRStatus::kDbOk)]);
 
@@ -622,11 +622,12 @@ class RIRDataTest extends TestCase {
 		} else {
 			$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
-			$this->config->expects($this->exactly(5))->method(
+			$this->config->expects($this->exactly(6))->method(
 				'setServiceSpecificConfigValue')->withConsecutive(
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo($rir_status_inter)],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+				[$this->equalTo(RIRData::kDbVersionName),$this->equalTo('0')],
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo(RIRStatus::kDbError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
@@ -663,20 +664,21 @@ class RIRDataTest extends TestCase {
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo(RIRStatus::kDbError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
-					$this->equalTo('Exception caught during Update.')],
+					$this->stringStartsWith('Exception caught during Update:')],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
 		} else {
 			$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
-			$this->config->expects($this->exactly(5))->method(
+			$this->config->expects($this->exactly(6))->method(
 				'setServiceSpecificConfigValue')->withConsecutive(
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo($rir_status_inter)],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+				[$this->equalTo(RIRData::kDbVersionName),$this->equalTo('0')],
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo(RIRStatus::kDbError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
-					$this->equalTo('Exception caught during Update.')],
+					$this->stringStartsWith('Exception caught during Update:')],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
 		}
 
@@ -728,11 +730,12 @@ class RIRDataTest extends TestCase {
 		} else {
 			$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
-			$this->config->expects($this->exactly(5))->method(
+			$this->config->expects($this->exactly(6))->method(
 				'setServiceSpecificConfigValue')->withConsecutive(
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo($rir_status_inter)],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+				[$this->equalTo(RIRData::kDbVersionName),$this->equalTo('0')],
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo(RIRStatus::kDbError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
@@ -873,17 +876,17 @@ class RIRDataTest extends TestCase {
 	 * @dataProvider databaseUpdatingStatusProvider
 	 */
 	public function testIsGetDatabaseUpdateStatusStringUpdatingOk(
-			int $rir_status) {
+			int $rir_status, int $version) {
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status)],
-			[RIRData::kDbVersionName, '0', '1']
+			[RIRData::kDbVersionName, '0', '0']
 		];
 		$this->config->expects($this->atLeast(1))->method(
 			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
 
 		$number_of_entries = 55;
 		$this->rir_service_mapper->expects($this->once())->method(
-				'getNumberOfEntries')->willReturn($number_of_entries);
+				'getNumberOfEntries')->with($this->equalTo($version))->willReturn($number_of_entries);
 
 		$this->assertEquals(
 				'Current number of entries: ' . strval($number_of_entries),
@@ -1025,8 +1028,8 @@ class RIRDataTest extends TestCase {
 	}
 
 	public function databaseUpdatingStatusProvider(): array {
-		return ["kDbInitilazing" => [RIRStatus::kDbInitilazing],
-			"kDbUpdating" => [RIRStatus::kDbUpdating]];
+		return ["kDbInitilazing" => [RIRStatus::kDbInitilazing, 0],
+			"kDbUpdating" => [RIRStatus::kDbUpdating, 1]];
 	}
 
 	public function databaseNotUpdatingStatusProvider(): array {
