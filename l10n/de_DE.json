@@ -71,7 +71,7 @@
     "(Delaying is enforced for 30s before password check.)" : "(Die Verzögerung wird 30 Sekunden lang erzwungen, bevor das Passwort überprüft wird.)",
     "Activate blocking of login attempts from IP addresses of the specified countries." : "Sperrung der Anmeldung von IP-Adressen der angegebenen Länder aktivieren.",
     "(Blocking is enforced after password check!)" : "(Blockierung wird nach der Passwortprüfung erzwungen!)",
-    "(Blocking is enforced before password check by throwing an \"login denied\" exception!)" : "(Die Blockierung wird vor der Kennwortprüfung durch Auslösen einer Ausnahme \"Anmeldung verweigert\" erzwungen!)",
+    "(Blocking is enforced before password check by throwing an \"login denied\" exception!)" : "(Die Blockierung wird vor der Passwortprüfung durch Auslösen einer \"Anmeldung verweigert\"-Ausnahme erzwungen!)",
     "Test" : "Test",
     "Possibilities to test if the Geoblocker is working as expected:" : "Möglichkeiten um zu Überprüfen, ob der Geoblocker wie erwartet funktioniert:",
     "Next login attempt of user \"%s\" will be simulated to come from the following IP address:" : "Der nächste Login-Versuch des Benutzers \"%s\" wird so simuliert, dass er von der folgenden IP-Adresse kommt:",
