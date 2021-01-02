@@ -23,7 +23,6 @@
     "Something is missing." : "Niečo chýba.",
     "No database available!" : "Databáza nie je k dispozícii!",
     "RIR seems to have changed the file format." : "Zdá sa, že RIR zmenil formát súboru.",
-    "Exception caught during Update." : "Počas aktualizácie bola zachytená výnimka.",
     "Invalid file handle. Probably the internet connection got lost during the update." : "Neplatný popisovač súboru. Pravdepodobne došlo k strate internetového pripojenia počas aktualizácie.",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "V php.ini  musí byť povolený \"allow_url_fopen\".",
     "Internet connection needs to be available." : "Musí byť k dispozícii pripojenie na internet.",

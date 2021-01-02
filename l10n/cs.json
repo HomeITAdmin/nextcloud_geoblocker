@@ -24,7 +24,6 @@
     "Something is missing." : "Něco chybí.",
     "No database available!" : "Není k dispozici žádná databáze!",
     "RIR seems to have changed the file format." : "Zdá se, že RIR změnilo formát souboru.",
-    "Exception caught during Update." : "V průběhu aktualizace zachycena výjimka.",
     "Invalid file handle. Probably the internet connection got lost during the update." : "Neplatná obsluha souboru. Pravděpodobně při aktualizaci došlo k výpadku připojení k Internetu.",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "v php.ini je třeba povolit „allow_url_fopen“.",
     "Internet connection needs to be available." : "Je třeba, aby bylo k dispozici připojení k Internetu.",

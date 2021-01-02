@@ -25,7 +25,6 @@ OC.L10N.register(
     "Something is missing." : "Algo está faltando.",
     "No database available!" : "Nenhum banco de dados disponível!",
     "RIR seems to have changed the file format." : "RIR parece ter alterado o formato do arquivo.",
-    "Exception caught during Update." : "Exceção capturada durante a atualização.",
     "Invalid file handle. Probably the internet connection got lost during the update." : "Identificador de arquivo inválido. Provavelmente a conexão com a internet se perdeu durante a atualização.",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "\"allow_url_fopen\" precisa estar permitida em php.ini.",
     "Internet connection needs to be available." : "A conexão com a Internet precisa estar disponível.",

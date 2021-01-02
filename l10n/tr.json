@@ -26,7 +26,6 @@
     "Something is missing." : "Bir şey eksik.",
     "No database available!" : "Kullanılabilecek bir veritabanı bulunamadı!",
     "RIR seems to have changed the file format." : "RIR dosya biçimini değiştirmiş gibi görünüyor.",
-    "Exception caught during Update." : "Güncelleme sırasında bir sorun çıktı.",
     "Invalid file handle. Probably the internet connection got lost during the update." : "Dosya işleyici geçersiz. Büyük olasılıkla güncelleme sırasında İnternet bağlantısı kesildi.",
     "Database contains old version information. Reset the database using the command line tool." : "Veritabanında eski sürümden kalma bilgiler var. Komut satırı aracını kullanarak veritabanını sıfırlayın.",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "php.ini dosyasında \"allow_url_fopen\" izninin verilmesi gerekiyor.",

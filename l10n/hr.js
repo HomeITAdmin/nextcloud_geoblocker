@@ -25,7 +25,6 @@ OC.L10N.register(
     "Something is missing." : "Nešto nedostaje.",
     "No database available!" : "Baza podataka nije dostupna!",
     "RIR seems to have changed the file format." : "Čini se da je RIP promijenio format datoteke.",
-    "Exception caught during Update." : "Otkrivena iznimka tijekom ažuriranja.",
     "Invalid file handle. Probably the internet connection got lost during the update." : "Nevažeći naziv datoteke. Vjerojatno je došlo do prekida veze tijekom ažuriranja.",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "Omogućite „allow_url_fopen” u datoteci php.ini.",
     "Internet connection needs to be available." : "Internetska veza mora biti dostupna.",

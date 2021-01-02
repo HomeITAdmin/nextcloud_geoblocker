@@ -23,7 +23,6 @@
     "Something is missing." : "Κάτι λείπει.",
     "No database available!" : "Δεν υπάρχει διαθέσιμη βάση δεδομένων!",
     "RIR seems to have changed the file format." : "Το RIR φαίνεται να έχει αλλάξει τη μορφή του αρχείου.",
-    "Exception caught during Update." : "Εντοπίστηκε εξαίρεση κατά την ενημέρωση.",
     "Invalid file handle. Probably the internet connection got lost during the update." : "Μη έγκυρος χειρισμός αρχείου. Πιθανώς η σύνδεση στο Διαδίκτυο χάθηκε κατά τη διάρκεια της ενημέρωσης.",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "Επιτρέψτε το \"allow_url_fopen\" στο αρχείο php.ini.",
     "Internet connection needs to be available." : "Η σύνδεση στο Διαδίκτυο πρέπει να είναι διαθέσιμη.",

@@ -28,7 +28,6 @@ OC.L10N.register(
     "Something is missing." : "缺少了一些东西。",
     "No database available!" : "无可用数据库！",
     "RIR seems to have changed the file format." : "RIR 似乎已经改变了文件格式。",
-    "Exception caught during Update." : "更新中发现异常。",
     "Invalid file handle. Probably the internet connection got lost during the update." : "无效的文件句柄。可能是在更新中失去了网络连接。",
     "Database contains old version information. Reset the database using the command line tool." : "数据库包含旧版本信息。使用命令行工具重置数据库。",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "\"allow_url_fopen\" 需要在 php.ini 中被允许。",

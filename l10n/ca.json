@@ -23,7 +23,6 @@
     "Something is missing." : "Falta alguna cosa.",
     "No database available!" : "No hi ha base de dades disponible!",
     "RIR seems to have changed the file format." : "RIR sembla haver canviat el format de fitxer.",
-    "Exception caught during Update." : "Excepció capturada durant l'actualització.",
     "Invalid file handle. Probably the internet connection got lost during the update." : "L'identificador de fitxer no és vàlid. Probablement la connexió d'internet es va perdre durant l'actualització.",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "\"allow_url_fopen\" s'ha de permetre en php.ini.",
     "Internet connection needs to be available." : "La connexió a Internet ha d'estar disponible.",

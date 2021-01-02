@@ -28,7 +28,6 @@ OC.L10N.register(
     "Something is missing." : "Nekaj manjka ...",
     "No database available!" : "Na voljo ni nobena podatkovna zbirka!",
     "RIR seems to have changed the file format." : "Kaže, da je na vpisniku RIR spremenjen zapis datoteke.",
-    "Exception caught during Update." : "Zaznana je napaka med posodabljanjem.",
     "Invalid file handle. Probably the internet connection got lost during the update." : "Neveljaven ročnik datoteke. Najverjetneje je bila spletna povezava med posodabljanjem prekinjena.",
     "Database contains old version information. Reset the database using the command line tool." : "Podatkovna zbirka vsebuje stare podrobnosti različice. Ponastavite podatkovno zbirko z uporabo ukazne vrstice.",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "Ukaz »allow_url_fopen« mora biti v datoteke php.ini omogočen.",

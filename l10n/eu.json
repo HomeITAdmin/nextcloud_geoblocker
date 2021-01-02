@@ -23,7 +23,6 @@
     "Something is missing." : "Zerbait falta da.",
     "No database available!" : "Ez dago datu-baserik eskuragarri!",
     "RIR seems to have changed the file format." : "Badirudi RIR-k fitxategiaren formatua aldatu duela.",
-    "Exception caught during Update." : "Salbuespena topatu da eguneratzea egitean.",
     "Invalid file handle. Probably the internet connection got lost during the update." : "Fitxategi helduleku baliogabea. Seguru aski internet konexioa galdu egin da eguneratzean zehar.",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "\"allow_url_fopen\" onartu behar da php.ini -(a)n.",
     "Internet connection needs to be available." : "Internet konexioa erabilgarri egotea beharrezkoa da.",

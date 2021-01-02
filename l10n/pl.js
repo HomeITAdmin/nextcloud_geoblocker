@@ -28,7 +28,6 @@ OC.L10N.register(
     "Something is missing." : "Czegoś brakuje.",
     "No database available!" : "Brak dostępnej bazy danych!",
     "RIR seems to have changed the file format." : "Wygląda na to, że RIR zmienił format pliku.",
-    "Exception caught during Update." : "Wychwycono wyjątek podczas aktualizacji.",
     "Invalid file handle. Probably the internet connection got lost during the update." : "Niepoprawne uzyskanie pliku. Prawdopodobnie połączenie internetowe zostało utracone podczas aktualizacji.",
     "Database contains old version information. Reset the database using the command line tool." : "Baza danych zawiera informacje o starej wersji. Zresetuj bazę danych za pomocą narzędzia wiersza poleceń.",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "\"allow_url_fopen\" musi być dozwolone w php.ini.",
