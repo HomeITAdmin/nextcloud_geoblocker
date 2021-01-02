@@ -251,7 +251,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 					}
 				} catch (Exception $e) {
 					$this->setDBToErrorStatus(
-							$this->l->t('Exception caught during Update: '). $e->getMessage());
+							$this->l->t('Exception caught during Update:') . ' ' . $e->getMessage());
 					return false;
 				} finally {
 					fclose($rir_data_handle);
