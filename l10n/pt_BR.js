@@ -17,6 +17,7 @@ OC.L10N.register(
     "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "ERRO: O serviço parece estar instalado incorretamente ou o banco de dados não está disponível em%s.",
     "No entries in the database. Please run update." : "Sem entradas no banco de dados. Rode a atualização.",
     "ERROR:" : "ERRO:",
+    "OK" : "OK",
     "PHP GMP Extension needs to be installed." : "A extensão PHP GMP precisa estar instalada.",
     "The database is not initialized. Please run update." : "O banco de dados não está inicializado. Rode a atualização.",
     "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "O banco de dados está sendo inicializado. Aguarde a atualização terminar. Isso pode levar vários minutos.",

@@ -26,6 +26,7 @@
     "Something is missing." : "Etwas fehlt.",
     "No database available!" : "Keine Datenbank vorhanden!",
     "RIR seems to have changed the file format." : "RIR scheinen das Dateiformat geändert zu haben.",
+    "Exception caught during Update:" : "Ausnahme während der Aktualisierung abgefangen:",
     "Invalid file handle. Probably the internet connection got lost during the update." : "Ungültiges Dateihandle. Wahrscheinlich ist die Internetverbindung während der Aktualisierung verloren gegangen.",
     "Database contains old version information. Reset the database using the command line tool." : "Die Datenbank enthält alte Versionsinformationen. Setzen Sie die Datenbank über das Komandozeilenwerkzeug zurück.",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "\"allow_url_fopen\" muss in php.ini zugelassen werden.",
