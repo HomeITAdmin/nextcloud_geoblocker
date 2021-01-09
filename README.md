@@ -62,7 +62,7 @@ for debug purposes.
 
 ### Geoiplookup
 
-Using the geoiolookip programm available on some linux distributions:
+Using the geoiplookup programm available on some linux distributions:
 
 - Precondition
   - PHP must be allowed to use the exec() method. This is configured in the
