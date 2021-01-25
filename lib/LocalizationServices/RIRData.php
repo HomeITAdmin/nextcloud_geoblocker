@@ -20,11 +20,11 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	/** @var GeoBlockerConfig */
 	private $config;
 	private $rir_ftps = [
-		'ripencc' => 'ftp://ftp.ripe.net/pub/stats/ripencc/delegated-ripencc-latest',
-		'arin' => 'ftp://ftp.arin.net/pub/stats/arin/delegated-arin-extended-latest',
-		'afrinic' => 'ftp://ftp.afrinic.net/pub/stats/afrinic/delegated-afrinic-latest',
-		'apnic' => 'ftp://ftp.apnic.net/pub/stats/apnic/delegated-apnic-latest',
-		'lacnic' => 'ftp://ftp.lacnic.net/pub/stats/lacnic/delegated-lacnic-latest'];
+		'ripencc' => 'https://ftp.ripe.net/pub/stats/ripencc/delegated-ripencc-latest',
+		'arin' => 'https://ftp.arin.net/pub/stats/arin/delegated-arin-extended-latest',
+		'afrinic' => 'https://ftp.afrinic.net/pub/stats/afrinic/delegated-afrinic-latest',
+		'apnic' => 'https://ftp.apnic.net/stats/apnic/delegated-apnic-latest',
+		'lacnic' => 'https://ftp.lacnic.net/pub/stats/lacnic/delegated-lacnic-latest'];
 	public const kServiceStatusName = 'rir_data_service_status';
 	public const kDatabaseDateName = 'rir_data_db_date';
 	public const kErrorMessageName = 'rir_data_error_message';
