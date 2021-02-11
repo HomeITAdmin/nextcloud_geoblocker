@@ -6,7 +6,7 @@ declare(strict_types = 1)
 namespace OCA\GeoBlocker\LocalizationServices;
 
 use OCP\IL10N;
-use OCP\IDbConnection;
+use OCP\IDBConnection;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
 use OCA\GeoBlocker\Db\RIRServiceMapper;
 use OutOfRangeException;
@@ -18,11 +18,11 @@ class LocalizationServiceFactory {
 	private $config;
 	/** @var int */
 	private $count_ids = 4;
-	/** @var IDbConnection */
+	/** @var IDBConnection */
 	private $db;
 
 	public function __construct(GeoBlockerConfig $config, IL10N $l,
-			IDbConnection $db) {
+			IDBConnection $db) {
 		$this->l = $l;
 		$this->config = $config;
 		$this->db = $db;

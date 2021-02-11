@@ -9,7 +9,7 @@ use OCP\ILogger;
 use OCP\IRequest;
 use OCP\IUserSession;
 use OCP\IL10N;
-use OCP\IDbConnection;
+use OCP\IDBConnection;
 use OCA\GeoBlocker\LocalizationServices\LocalizationServiceFactory;
 
 class Admin implements ISettings {
@@ -26,7 +26,7 @@ class Admin implements ISettings {
 	/** @var IDBConnection */
 	private $db;
 	public function __construct(GeoBlockerConfig $config, ILogger $logger,
-			IRequest $request, IUserSession $user_session, IL10N $l, IDbConnection $db) {
+			IRequest $request, IUserSession $user_session, IL10N $l, IDBConnection $db) {
 		$this->config = $config;
 		$this->logger = $logger;
 		$this->request = $request;

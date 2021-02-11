@@ -31,7 +31,7 @@ class RIRDataTest extends TestCase {
 		$this->config = $this->getMockBuilder(
 				'OCA\GeoBlocker\Config\GeoBlockerConfig')->setConstructorArgs(
 				[$tmp_config])->getMock();
-		$tmp_db = $this->getMockBuilder('OCP\IDbConnection')->getMock();
+		$tmp_db = $this->getMockBuilder('OCP\IDBConnection')->getMock();
 		$this->rir_service_mapper = $this->getMockBuilder(
 				'OCA\GeoBlocker\Db\RIRServiceMapper')->setConstructorArgs(
 				[$tmp_db])->getMock();

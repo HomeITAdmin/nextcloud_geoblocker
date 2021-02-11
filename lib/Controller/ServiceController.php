@@ -5,7 +5,7 @@ namespace OCA\GeoBlocker\Controller;
 use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IL10N;
-use OCP\IDbConnection;
+use OCP\IDBConnection;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
@@ -17,13 +17,13 @@ class ServiceController extends Controller {
 	private $config;
 	/** @var IL10N */
 	private $l;
-	/** @var IDbConnection */
+	/** @var IDBConnection */
 	private $db;
 	/** @var LocalizationServiceFactory */
 	private $location_service_factory;
 
 	public function __construct(string $AppName, IRequest $request,
-			IConfig $config, IL10N $l, IDbConnection $db) {
+			IConfig $config, IL10N $l, IDBConnection $db) {
 		parent::__construct($AppName, $request);
 		$this->config = new GeoBlockerConfig($config);
 		$this->l = $l;

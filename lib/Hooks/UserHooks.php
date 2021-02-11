@@ -9,7 +9,7 @@ use OCP\ILogger;
 use OCP\IRequest;
 use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 use OCP\IL10N;
-use OCP\IDbConnection;
+use OCP\IDBConnection;
 use OCA\GeoBlocker\LocalizationServices\LocalizationServiceFactory;
 
 class UserHooks {
@@ -22,7 +22,7 @@ class UserHooks {
 	private $is_ip_address_blocked = false;
 
 	public function __construct(IUserSession $userSession, ILogger $logger,
-			IRequest $request, IConfig $config, IL10N $l, IDbConnection $db) {
+			IRequest $request, IConfig $config, IL10N $l, IDBConnection $db) {
 		$this->userSession = $userSession;
 		$this->logger = $logger;
 		$this->request = $request;

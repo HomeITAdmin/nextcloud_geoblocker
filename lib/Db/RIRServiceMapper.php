@@ -3,13 +3,13 @@
 namespace OCA\GeoBlocker\Db;
 
 use Exception;
-use OCP\IDbConnection;
+use OCP\IDBConnection;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\QBMapper;
 use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 
 class RIRServiceMapper extends QBMapper {
-	public function __construct(IDbConnection $db) {
+	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'geoblocker_ls_rir', RIRServiceDBEntity::class);
 	}
 
