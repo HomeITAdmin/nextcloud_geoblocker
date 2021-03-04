@@ -150,6 +150,22 @@ class GeoIPLookupTest extends TestCase {
 				$this->geo_ip_lookup->getCountryCodeFromIP($ip_address));
 	}
 
+	public function testIsDateFromValidConfigOk() {
+		$this->cmd_wrapper->expects($this->once())->method('getFullDateString')->will(
+				$this->returnCallback(
+						[$this,'callbackGeoIpLookupValidDate']));
+		$this->assertEquals('2018-11-08',
+				$this->geo_ip_lookup->getDatabaseDate());
+	}
+
+	public function testIsDateFromInvalidConfigOk() {
+		$this->cmd_wrapper->expects($this->once())->method('getFullDateString')->will(
+				$this->returnCallback(
+						[$this,'callbackGeoIpLookupInvalidDate']));
+		$this->assertEquals('Date of the database cannot be determined!',
+				$this->geo_ip_lookup->getDatabaseDate());
+	}
+
 	public function callbackGeoIpLookupInvalid(string $ip_address,
 			array &$output, int &$return_var): String {
 		$output = [];
@@ -199,9 +215,11 @@ class GeoIPLookupTest extends TestCase {
 			$return_var = 0;
 			return 'GeoIP Country Edition: IP Address not found';
 		} else {
-			$output = ['GeoIP Country Edition: US, United States'];
+			$output = ['GeoIP Country Edition: US, United States',
+				'GeoIP City Edition, Rev 1: US, 00, N/A, N/A, N/A, 37.750999, -97.821999, 0, 0',
+				'GeoIP ASNum Edition: AS15169 GOOGLE'];
 			$return_var = 0;
-			return 'GeoIP Country Edition: US, United States';
+			return 'GeoIP ASNum Edition: AS15169 GOOGLE';
 		}
 	}
 
@@ -216,6 +234,21 @@ class GeoIPLookupTest extends TestCase {
 			$return_var = 0;
 			return 'GeoIP Country V6 Edition: DE, Germany';
 		}
+	}
+
+	public function callbackGeoIpLookupValidDate(
+			array &$output, int &$return_var): String {
+		$output = ['GeoIP Country Edition: GEO-106FREE 20181108 Build',
+			'GeoIP Country V6 Edition: GEO-106FREE 20181108 Build'];
+		$return_var = 0;
+		return 'GeoIP Country V6 Edition: GEO-106FREE 20181108 Build';
+	}
+
+	public function callbackGeoIpLookupInvalidDate(
+		array &$output, int &$return_var): String {
+		$output = ['Nothing to show'];
+		$return_var = 0;
+		return 'Nothing to show';
 	}
 
 	public function callbackLTJustRouteThrough(string $in): string {

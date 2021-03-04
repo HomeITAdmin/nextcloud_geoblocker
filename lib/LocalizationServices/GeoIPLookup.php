@@ -72,12 +72,18 @@ class GeoIPLookup implements ILocalizationService, IDatabaseDate {
 			$location = 'AA'; // Country not found
 		} else {
 			$matches = [];
-			$count_matches = preg_match('/^GeoIP .*Edition: (..),.*/',
-					$location_raw, $matches);
-			if ($count_matches != 1) {
+			foreach ($output as $line) {
+				$match = [];
+				$count_matches = preg_match('/^GeoIP Country .*Edition: (..),.*/',
+					$line, $match);
+				if ($count_matches > 0) {
+					$matches[] = $match[1];
+				}
+			}
+			if (count($matches) != 1) {
 				$location = 'UNAVAILABLE';
 			} else {
-				$location = $matches[1];
+				$location = $matches[0];
 			}
 		}
 		return $location;
