@@ -101,7 +101,7 @@ class GeoIPLookup implements ILocalizationService, IDatabaseDate {
 			foreach ($output as $line) {
 				$match = [];
 				$count_matches = preg_match(
-						'/^GeoIP .*Edition: GEO-.*FREE (\d{8}) Build/', $line,
+						'/^GeoIP Country .*Edition.*(\d{8}).*/', $line,
 						$match);
 				if ($count_matches > 0) {
 					$matches[] = $match[1];

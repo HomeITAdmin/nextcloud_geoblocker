@@ -154,6 +154,14 @@ class GeoIPLookupTest extends TestCase {
 		$this->cmd_wrapper->expects($this->once())->method('getFullDateString')->will(
 				$this->returnCallback(
 						[$this,'callbackGeoIpLookupValidDate']));
+		$this->assertEquals('2021-02-22',
+				$this->geo_ip_lookup->getDatabaseDate());
+	}
+
+	public function testIsDateFromValidConfig2Ok() {
+		$this->cmd_wrapper->expects($this->once())->method('getFullDateString')->will(
+				$this->returnCallback(
+						[$this,'callbackGeoIpLookupValidDate2']));
 		$this->assertEquals('2018-11-08',
 				$this->geo_ip_lookup->getDatabaseDate());
 	}
@@ -238,6 +246,18 @@ class GeoIPLookupTest extends TestCase {
 
 	public function callbackGeoIpLookupValidDate(
 			array &$output, int &$return_var): String {
+		$output = ['GeoIP Country Edition: GeoLite2 Country 20210223',
+			'GeoIP City Edition, Rev 1: GeoLite2 City 20210223',
+			'GeoIP ASNum Edition:',
+			'GeoIP Country V6 Edition: GeoLite2 Country 20210222',
+			'GeoIP City Edition V6, Rev 1: GeoLite2 City 20210223',
+			'GeoIP ASNum V6 Edition:'];
+		$return_var = 0;
+		return 'GeoIP ASNum V6 Edition:';
+	}
+
+	public function callbackGeoIpLookupValidDate2(
+		array &$output, int &$return_var): String {
 		$output = ['GeoIP Country Edition: GEO-106FREE 20181108 Build',
 			'GeoIP Country V6 Edition: GEO-106FREE 20181108 Build'];
 		$return_var = 0;
