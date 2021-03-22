@@ -10,21 +10,25 @@ use OCP\IDBConnection;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
 use OCA\GeoBlocker\Db\RIRServiceMapper;
 use OutOfRangeException;
+use OCP\ILogger;
 
 class LocalizationServiceFactory {
 	/** @var IL10N */
 	private $l;
 	/** @var GeoBlockerConfig */
 	private $config;
+	/** @var ILogger */
+	private $logger;
 	/** @var int */
 	private $count_ids = 4;
 	/** @var IDBConnection */
 	private $db;
 
 	public function __construct(GeoBlockerConfig $config, IL10N $l,
-			IDBConnection $db) {
+			IDBConnection $db, ILogger $logger) {
 		$this->l = $l;
 		$this->config = $config;
+		$this->logger = $logger;
 		$this->db = $db;
 	}
 
@@ -52,7 +56,7 @@ class LocalizationServiceFactory {
 						$this->l);
 				break;
 			case '1':
-				$location_service = new MaxMindGeoLite2($this->config, $this->l);
+				$location_service = new MaxMindGeoLite2($this->config, $this->l, $this->logger);
 				break;
 			case '2':
 				$location_service = new RIRData(new RIRDataChecks(),  new RIRServiceMapper($this->db), $this->config,

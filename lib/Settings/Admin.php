@@ -37,7 +37,7 @@ class Admin implements ISettings {
 	public function getForm() {
 		$response = new TemplateResponse('geoblocker', 'admin');
 		$localizationServiceFactory = new LocalizationServiceFactory(
-				$this->config, $this->l, $this->db);
+				$this->config, $this->l, $this->db, $this->logger);
 		$response->setParams(
 				['logWithIpAddress' => $this->config->getLogWithIpAddress(),
 					'logWithCountryCode' => $this->config->getLogWithCountryCode(),

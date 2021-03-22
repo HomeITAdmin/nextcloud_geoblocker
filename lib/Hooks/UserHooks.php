@@ -54,7 +54,7 @@ class UserHooks {
 		}
 
 		$location_service_factory = new LocalizationServiceFactory(
-				$this->config, $this->l, $this->db);
+				$this->config, $this->l, $this->db, $this->logger);
 		$location_service = $location_service_factory->getLocationService();
 		$geoblocker = new GeoBlocker($user, $this->logger, $this->config,
 				$this->l, $location_service);

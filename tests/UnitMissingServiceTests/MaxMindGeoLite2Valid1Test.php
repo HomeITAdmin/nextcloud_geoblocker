@@ -18,7 +18,7 @@ class MaxMindGeoLite2Valid1Test extends MaxMindGeoLite2TestBase {
 		$this->assertFalse(file_exists($this->phar_file_1));
 		$this->assertTrue(file_exists($this->phar_file_2));
 		try {
-			$this->geo_ip_lookup = new MaxMindGeoLite2($this->config, $this->l);
+			$this->geo_ip_lookup = new MaxMindGeoLite2($this->config, $this->l, $this->logger);
 			$this->assertTrue($this->geo_ip_lookup->getStatus());
 		} catch (Exception $e) {
 			$this->assertFalse(true);

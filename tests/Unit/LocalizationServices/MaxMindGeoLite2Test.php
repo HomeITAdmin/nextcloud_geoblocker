@@ -10,6 +10,7 @@ use OCA\GeoBlocker\LocalizationServices\MaxMindGeoLite2;
 
 class MaxMindGeoLite2Test extends TestCase {
 	protected $l;
+	protected $logger;
 	protected $config;
 	private $geo_ip_lookup;
 
@@ -18,11 +19,12 @@ class MaxMindGeoLite2Test extends TestCase {
 		$this->l = $this->getMockBuilder('OCP\IL10N')->getMock();
 		$this->l->method('t')->will(
 				$this->returnCallback([$this,'callbackLTJustRouteThrough']));
+		$this->logger = $this->getMockBuilder('OCP\ILogger')->getMock();
 		$tmp_config = $this->getMockBuilder('OCP\IConfig')->getMock();
 		$this->config = $this->getMockBuilder(
 				'OCA\GeoBlocker\Config\GeoBlockerConfig')->setConstructorArgs(
 				[$tmp_config])->getMock();
-		$this->geo_ip_lookup = new MaxMindGeoLite2($this->config, $this->l);
+		$this->geo_ip_lookup = new MaxMindGeoLite2($this->config, $this->l, $this->logger);
 	}
 
 	public function testIsValidStatusOk() {

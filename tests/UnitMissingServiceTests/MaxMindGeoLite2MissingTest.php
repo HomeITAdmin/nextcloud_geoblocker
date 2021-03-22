@@ -19,7 +19,7 @@ class MaxMindGeoLite2MissingTest extends MaxMindGeoLite2TestBase {
 		$this->assertFalse(file_exists($this->phar_file_2));
 
 		try {
-			$this->geo_ip_lookup = new MaxMindGeoLite2($this->config, $this->l);
+			$this->geo_ip_lookup = new MaxMindGeoLite2($this->config, $this->l, $this->logger);
 			$this->assertFalse($this->geo_ip_lookup->getStatus());
 		} catch (Exception $e) {
 			$this->assertFalse(true);
