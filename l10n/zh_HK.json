@@ -13,7 +13,6 @@
     "Date of the database cannot be determined!" : "無法偵測數據庫的更新日期！",
     "local" : "本地",
     "default" : "默認",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "錯誤：服務似乎未安裝妥當或於 %s 上的數據庫尚未就緒。",
     "No entries in the database. Please run update." : "數據庫不存在任何實體。請執行更新程序。",
     "ERROR:" : "錯誤：",
     "OK" : "OK",

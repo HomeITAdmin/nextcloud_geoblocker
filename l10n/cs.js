@@ -15,7 +15,6 @@ OC.L10N.register(
     "Date of the database cannot be determined!" : "Datum databáze se nedaří zjistit!",
     "local" : "místní",
     "default" : "výchozí",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "CHYBA: zdá se, že služba není nainstalována správně nebo není k dispozici databáze v %s.",
     "No entries in the database. Please run update." : "Žádné položky v databázi. Prosím spusťte aktualizaci.",
     "ERROR:" : "CHYBA:",
     "OK" : "OK",

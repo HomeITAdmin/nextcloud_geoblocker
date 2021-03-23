@@ -13,7 +13,6 @@
     "Date of the database cannot be determined!" : "Veritabanının tarihi belirlenemedi!",
     "local" : "yerel",
     "default" : "varsayılan",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "HATA: Hizmet doğru kurulmamış ya da %s üzerindeki veritabanına erişilemiyor  gibi görünüyor.",
     "No entries in the database. Please run update." : "Veritabanında herhangi bir kayıt bulunamadı. Lütfen güncelleyin.",
     "ERROR:" : "HATA:",
     "OK" : "Tamam",

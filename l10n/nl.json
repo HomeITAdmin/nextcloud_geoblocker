@@ -13,7 +13,6 @@
     "Date of the database cannot be determined!" : "Datum van de database kan niet worden bepaald!",
     "local" : "lokaal",
     "default" : "standaard",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "FOUT: Service lijkt niet goed te zijn geïnstalleerd of de database is niet beschikbaar op %s.",
     "No entries in the database. Please run update." : "Geen gegevens in de database. Voer alstublieft een update uit.",
     "ERROR:" : "FOUT:",
     "OK" : "OK",

@@ -15,7 +15,6 @@ OC.L10N.register(
     "Date of the database cannot be determined!" : "Az adatbázis dátuma nem határozható meg!",
     "local" : "helyi",
     "default" : "alapértelmezett",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "HIBA: Úgy tűnik, hogy a szolgáltatás nincs megfelelően telepítve, vagy az adatbázis nem érhető el a(z) % s helyen. ",
     "No entries in the database. Please run update." : "Nincs bejegyzés az adatbázisban. Kérjük, futtassa a frissítést. ",
     "ERROR:" : "Hiba:",
     "OK" : "Ok",

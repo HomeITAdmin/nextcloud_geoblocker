@@ -14,7 +14,6 @@ OC.L10N.register(
     "Date of the database cannot be determined!" : "無法偵測資料庫的更新日期！",
     "local" : "本地",
     "default" : "預設",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "錯誤：服務看起來並未正確安裝或資料庫尚未就緒於%s",
     "No entries in the database. Please run update." : "資料庫不存在任何實體。請執行更新程序。",
     "ERROR:" : "錯誤：",
     "OK" : "OK",

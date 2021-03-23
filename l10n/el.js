@@ -15,7 +15,6 @@ OC.L10N.register(
     "Date of the database cannot be determined!" : "Η Ημερομηνία βάσης δεδομένων δεν μπορεί να καθοριστεί!",
     "local" : "τοπικά",
     "default" : "προεπιλογή",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "ΣΦΑΛΜΑ: Η υπηρεσία φαίνεται να μην είναι σωστά εγκατεστημένη ή η βάση δεδομενων δεν είναι διαθέσιμη στα %s.",
     "No entries in the database. Please run update." : "Δεν υπάρχουν καταχωρήσεις στην βάση δεδομένων. Παρακαλούμε ελέγξτε για ενημερώσεις.",
     "ERROR:" : "ΣΦΑΛΜΑ:",
     "OK" : "Εντάξει.",

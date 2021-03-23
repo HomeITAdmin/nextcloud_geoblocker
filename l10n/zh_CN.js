@@ -15,7 +15,6 @@ OC.L10N.register(
     "Date of the database cannot be determined!" : "数据库的日期无法确定！",
     "local" : "本地",
     "default" : "默认",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "错误：服务未正确安装或在%s的数据库不可用。",
     "No entries in the database. Please run update." : "数据库中没有条目，请运行更新。",
     "ERROR:" : "错误：",
     "OK" : "好的",
