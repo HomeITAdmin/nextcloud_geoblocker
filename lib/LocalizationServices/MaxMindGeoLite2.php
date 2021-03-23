@@ -54,7 +54,7 @@ class MaxMindGeoLite2 implements
 				return $service_string . $this->l->t('OK.');
 			} else {
 				return $service_string .
-					$this->l->t('ERROR: There is an unkown problem with the service.');
+					$this->l->t('ERROR: There is an unknown problem with the service.');
 			}
 		} catch (AddressNotFoundException $e) {
 			return $service_string .
