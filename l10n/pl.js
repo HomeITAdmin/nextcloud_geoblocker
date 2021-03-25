@@ -15,6 +15,7 @@ OC.L10N.register(
     "Date of the database cannot be determined!" : "Nie można ustalić bazy danych!",
     "local" : "lokalny",
     "default" : "domyślny",
+    "ERROR: There is an unknown problem with the service." : "BŁĄD: Wystąpił nieznany problem z usługą.",
     "ERROR: Country cannot be found." : "BŁĄD: Nie można znaleźć kraju.",
     "ERROR: Database is not valid, does not have the correct access rights or is not placed at %s." : "BŁĄD: Baza danych jest nieprawidłowa, nie ma odpowiednich praw dostępu lub nie znajduje się w %s.",
     "ERROR: Invalid Argument." : "BŁĄD: Nieprawidłowy argument.",
