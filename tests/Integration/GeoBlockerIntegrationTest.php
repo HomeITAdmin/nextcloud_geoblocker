@@ -11,6 +11,7 @@ use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper;
 use OCA\GeoBlocker\LocalizationServices\MaxMindGeoLite2;
 use PHPUnit\Framework\MockObject\Rule\InvokedCount as InvokedCountMatcher;
+use OC\User\LoginException;
 
 class GeoBlockerIntegrationTest extends TestCase {
 	protected $user;
@@ -66,8 +67,12 @@ class GeoBlockerIntegrationTest extends TestCase {
 		$this->logger->expects($invokerLogging)->method($log_method)->with(
 				$this->equalTo($log_string),
 				$this->equalTo(['app' => 'geoblocker']));
-		$this->assertEquals($expect_blocking,
-				$this->geoblocker->isIpAddressBlocked($ip_address));
+		if ($expect_blocking) {
+			$this->expectException(LoginException::class);
+			$this->expectExceptionMessageMatches('/^Your attempt to login from country ".." is blocked by the Nextcloud GeoBlocker App. '
+			. 'If this is a problem for you, please contact your administrator.$/');
+		}
+		$this->geoblocker->blockIpAddress($ip_address);
 	}
 
 	public function defaultTranslate() {

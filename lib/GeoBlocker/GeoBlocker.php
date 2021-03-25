@@ -9,7 +9,7 @@ use OCA\GeoBlocker\Config\GeoBlockerConfig;
 use OCP\ILogger;
 use OCP\IL10N;
 use OCA\GeoBlocker\LocalizationServices\ILocalizationService;
-use Exception;
+use OC\User\LoginException;
 
 class GeoBlocker {
 	/** @var String */
@@ -50,9 +50,8 @@ class GeoBlocker {
 		$this->logger->error($log_string, ['app' => 'geoblocker']);
 	}
 
-	public function isIpAddressBlocked(String $ip_address): bool {
+	public function blockIpAddress(String $ip_address): void {
 		$block_ip_address = false;
-		$block_ip_address_by_exception = false;
 		if ($this->isIPAddressValid($ip_address)) {
 			if (! $this->isIPAddressLocal($ip_address)) {
 				$location = $this->location_service->getCountryCodeFromIP(
@@ -74,23 +73,21 @@ class GeoBlocker {
 							$log_string .= ' Login is delayed.';
 							$any_reaction = true;
 						}
-						if ($this->config->getBlockIpAddress()) {
+						$should_be_blocked = $this->config->getBlockIpAddress();
+						if ($should_be_blocked|| $this->config->getBlockIpAddressBefore()) {
+							//Make sure this one is also set, too. Want to get rid of "getBlockIpAddressBefore" soon.
+							if (!$should_be_blocked) {
+								$this->config->setBlockIpAddress(true);
+							}
+
 							$block_ip_address = true;
 							$log_string .= ' Login is blocked.';
-							$any_reaction = true;
-						}
-						if ($this->config->getBlockIpAddressBefore()) {
-							$block_ip_address_by_exception = true;
-							$log_string .= ' Login is blocked by exception.';
 							$any_reaction = true;
 						}
 						if (! $any_reaction) {
 							$log_string .= ' No reaction is activated.';
 						}
 						$this->logEvent($log_string);
-						if ($block_ip_address_by_exception) {
-							throw new Exception("Login denied!", 1);
-						}
 					}
 				} elseif ($location === 'UNAVAILABLE') {
 					$log_string = sprintf(
@@ -115,7 +112,10 @@ class GeoBlocker {
 					$log_address);
 			$this->logEvent($log_string);
 		}
-		return $block_ip_address;
+		if ($block_ip_address) {
+			throw new LoginException($this->l->t('Your attempt to login from country "%s" is blocked by the Nextcloud GeoBlocker App. '
+			. 'If this is a problem for you, please contact your administrator.', [$location]));
+		}
 	}
 
 	public static function isIPAddressValid(String $ip_address): bool {

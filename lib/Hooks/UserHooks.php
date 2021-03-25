@@ -19,7 +19,6 @@ class UserHooks {
 	private $config;
 	private $l;
 	private $db;
-	private $is_ip_address_blocked = false;
 
 	public function __construct(IUserSession $userSession, ILogger $logger,
 			IRequest $request, IConfig $config, IL10N $l, IDBConnection $db) {
@@ -36,13 +35,6 @@ class UserHooks {
 			$this->checkGeoIpBlocking($user);
 		};
 		$this->userSession->listen('\OC\User', 'preLogin', $callback_pre_login);
-		
-		$callback_post_login = function (\OC\User\User $user, string $password) {
-			if ($this->is_ip_address_blocked) {
-				$this->userSession->logout();
-			}
-		};
-		$this->userSession->listen('\OC\User', 'postLogin', $callback_post_login);
 	}
 
 	private function checkGeoIpBlocking($user) {
@@ -58,6 +50,6 @@ class UserHooks {
 		$location_service = $location_service_factory->getLocationService();
 		$geoblocker = new GeoBlocker($user, $this->logger, $this->config,
 				$this->l, $location_service);
-		$this->is_ip_address_blocked = $geoblocker->isIpAddressBlocked($ip_address);
+		$geoblocker->blockIpAddress($ip_address);
 	}
 }

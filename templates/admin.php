@@ -169,7 +169,7 @@ $loading = $l->t('Loading').'...';
 			<label for="delaying-active">
 				<?php p($l->t('Activate delaying of login attempts from IP addresses of the specified countries.'));
 							p(' ');
-							p($l->t('(Delaying is enforced for 30s before password check.)'))?>
+							p($l->t('(30 seconds)'))?>
 			</label>
 		</p>
 		<p class="subsection">
@@ -177,22 +177,9 @@ $loading = $l->t('Loading').'...';
 								print_unescaped('checked="checked"');
 							} ?>>
 			<label for="blocking-active">
-				<?php p($l->t('Activate blocking of login attempts from IP addresses of the specified countries.'));
-							p(' ');
-							p($l->t('(Blocking is enforced after password check!)'))?>
+				<?php p($l->t('Activate blocking of login attempts from IP addresses of the specified countries.'));?>
 			</label>
 		</p>
-		<p class="subsection">
-			<input type="checkbox" name="blocking-before-active" id="blocking-before-active" class="checkbox" <?php if ($_['blockIpAddressBefore']) {
-								print_unescaped('checked="checked"');
-							} ?>>
-			<label for="blocking-before-active">
-				<?php p($l->t('Activate blocking of login attempts from IP addresses of the specified countries.'));
-							p(' ');
-							p($l->t('(Blocking is enforced before password check by throwing an "login denied" exception!)'))?>
-			</label>
-		</p>
-
 	</div>
 
 	<h3><?php p($l->t('Test')); ?>

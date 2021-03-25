@@ -264,12 +264,6 @@ $(document).ready(function () {
 			value = '1';
 		}
 		OCP.AppConfig.setValue('geoblocker', 'blockIpAddress', value);
-	});
-	$('#blocking-before-active').click(function () {
-		var value = '0';
-		if (this.checked) {
-			value = '1';
-		}
 		OCP.AppConfig.setValue('geoblocker', 'blockIpAddressBefore', value);
 	});
 	$('#do-fake-address').click(function () {
