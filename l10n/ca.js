@@ -14,7 +14,6 @@ OC.L10N.register(
     "Date of the database cannot be determined!" : "La data de la base de dades no es pot determinar!",
     "local" : "local",
     "default" : "predeterminat",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "ERROR: El servei no sembla estar instal·lat correctament o la base de dades no està disponible a %s.",
     "No entries in the database. Please run update." : "No hi ha entrades a la base de dades. Executeu l'actualització.",
     "ERROR:" : "ERROR:",
     "PHP GMP Extension needs to be installed." : "S'ha d'instal·lar l'extensió PHP GMP.",

@@ -13,7 +13,6 @@
     "Date of the database cannot be determined!" : "Дата базы данных не может быть определена!",
     "local" : "локальная",
     "default" : "по умолчанию",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "Ошибка: на %s не установлена служба или недоступна база данных.",
     "No entries in the database. Please run update." : "Отсутствуют записи в базе данных, запустите обновление.",
     "ERROR:" : "ОШИБКА:",
     "OK" : "ОК",

@@ -13,7 +13,6 @@
     "Date of the database cannot be determined!" : "Das Datenbank-Datum konnte nicht ermittelt werden.",
     "local" : "Lokal",
     "default" : "Standard",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "FEHLER: Der Dienst scheint nicht installiert zu sein oder die Datenbank ist nicht unter %s erreichbar. ",
     "No entries in the database. Please run update." : "Keine Einträge in der Datenbank. Bitte Aktualisierung starten.",
     "ERROR:" : "Fehler:",
     "OK" : "OK",

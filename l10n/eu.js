@@ -14,7 +14,6 @@ OC.L10N.register(
     "Date of the database cannot be determined!" : "Ezin da zehaztu datu-basearen data!",
     "local" : "lokala",
     "default" : "lehenetsia",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "ERROREA: badirudi zerbitzua ez dagoela ondo instalatuta edo datu-basea ez dagoela eskuragarri %s(e)n.",
     "No entries in the database. Please run update." : "Ez dago sarrerarik datu-basean. Exekutatu eguneratzea. ",
     "ERROR:" : "ERROREA:",
     "OK" : "OK",

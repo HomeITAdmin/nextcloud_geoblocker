@@ -15,7 +15,6 @@ OC.L10N.register(
     "Date of the database cannot be determined!" : "Impossible de déterminer la date de la base de données.",
     "local" : "local",
     "default" : "défaut",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "ERREUR : Le service ne semble pas être installé correctement ou la base de données n’est pas disponible à %s.",
     "No entries in the database. Please run update." : "Pas de données dans la base de donnée. Veuillez réaliser la mise à jour.",
     "ERROR:" : "ERREUR :",
     "OK" : "OK",

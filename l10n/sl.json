@@ -13,7 +13,6 @@
     "Date of the database cannot be determined!" : "Datuma podatkovne zbirke ni mogoče določiti!",
     "local" : "krajevno",
     "default" : "privzeto",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "NAPAKA: Kaže, da storitev ni pravilno nameščena, ali pa ni dosegljiva podatkovna zbirka na %s.",
     "No entries in the database. Please run update." : "V podatkovni zbirki ni vpisov. Zaženite posodobitev.",
     "ERROR:" : "NAPAKA:",
     "OK" : "V redu",

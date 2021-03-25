@@ -8,7 +8,6 @@ OC.L10N.register(
     "Date of the database cannot be determined!" : "לא ניתן לאתר את תאריך מסד הנתונים!",
     "local" : "מקומי",
     "default" : "בררת מחדל",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "שגיאה: כנראה שהשירות לא מותקן או שמסד הנתונים אינו זמין תחת %s.",
     "GeoBlocker" : "GeoBlocker",
     "Blocks user depending on the estimated country of thier IP address." : "חוסם משתמש בהתאם למדינה שהוסקה לפי כתובת ה־IP.",
     "Loading" : "בטעינה",

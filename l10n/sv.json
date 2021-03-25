@@ -13,7 +13,6 @@
     "Date of the database cannot be determined!" : "Databasens datum kan inte fastställas",
     "local" : "lokal",
     "default" : "standard",
-    "ERROR: Service does not seem to be installed correctly or database is not available at %s." : "FEL: Tjänsten verkar inte vara korrekt installerad, eller är inte tillgänglig på %s.",
     "No entries in the database. Please run update." : "Inga objekt i databasen. Kör en uppdatering.",
     "ERROR:" : "FEL:",
     "OK" : "OK",
