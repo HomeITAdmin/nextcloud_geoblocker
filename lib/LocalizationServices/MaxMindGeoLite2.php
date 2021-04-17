@@ -15,6 +15,8 @@ use OCP\ILogger;
 
 class DatabaseReaderNotFoundException extends \Exception {
 }
+class DatabaseFileNotFoundException extends \Exception {
+}
 
 class MaxMindGeoLite2 implements
 	ILocalizationService,
@@ -59,11 +61,11 @@ class MaxMindGeoLite2 implements
 		} catch (AddressNotFoundException $e) {
 			return $service_string .
 				$this->l->t('ERROR: Country cannot be found.');
-		} catch (InvalidDatabaseException $e) {
+		} catch (DatabaseFileNotFoundException | InvalidDatabaseException $e) {
 			return $service_string .
 				$this->l->t(
-						'ERROR: Database is not valid, does not have the correct access rights or is not placed at %s.',
-						$this->database_file_location);
+					'ERROR: Database is not valid, does not have the correct access rights or is not placed at %s.',
+					$this->database_file_location);
 		} catch (InvalidArgumentException $e) {
 			return $service_string .
 				$this->l->t('ERROR: Invalid Argument.');
@@ -83,7 +85,10 @@ class MaxMindGeoLite2 implements
 			@include_once \pathinfo($this->database_file_location)['dirname'] . DIRECTORY_SEPARATOR . 'geoip2.phar';
 		}
 		if (!class_exists('GeoIp2\Database\Reader')) {
-			throw new DatabaseReaderNotFoundException('Test');
+			throw new DatabaseReaderNotFoundException('"GeoIp2\Database\Reader" does not exists.');
+		}
+		if (!\file_exists($this->database_file_location)) {
+			throw new DatabaseFileNotFoundException('No file at ' . $this->database_file_location . '.');
 		}
 		$reader = new Reader($this->database_file_location);
 		$record = $reader->country($ip_address);
@@ -95,15 +100,18 @@ class MaxMindGeoLite2 implements
 			return $this->getCountryCodeFromIPImpl($ip_address);
 		} catch (AddressNotFoundException $e) {
 			$this->logError('Address No Found: ' . $e->getMessage());
-			return 'AA';
+			return GeoBlocker::kCountryNotFoundCode;
 		} catch (InvalidDatabaseException $e) {
 			$this->logError('Invalid Database Exception: ' . $e->getMessage());
+			return 'UNAVAILABLE';
+		} catch (DatabaseFileNotFoundException $e) {
+			$this->logError('Database File Not Found Exception: ' . $e->getMessage());
 			return 'UNAVAILABLE';
 		} catch (InvalidArgumentException $e) {
 			$this->logError('Invalid Argument Exception: ' . $e->getMessage());
 			return 'UNAVAILABLE';
 		} catch (DatabaseReaderNotFoundException $e) {
-			$this->logError('Database Reader is not available.');
+			$this->logError('Database Reader is not available: '. $e->getMessage());
 			return 'UNAVAILABLE';
 		}
 	}

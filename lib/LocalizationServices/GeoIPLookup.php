@@ -69,7 +69,7 @@ class GeoIPLookup implements ILocalizationService, IDatabaseDate {
 		if ($return_val != 0) {
 			$location = 'UNAVAILABLE';
 		} elseif (strpos($location_raw, 'IP Address not found') !== false) {
-			$location = 'AA'; // Country not found
+			$location = GeoBlocker::kCountryNotFoundCode;
 		} else {
 			$matches = [];
 			foreach ($output as $line) {
