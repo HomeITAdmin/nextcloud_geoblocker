@@ -57,7 +57,6 @@
     "with username" : "имя пользователя",
     "In addition, the login attempt can also be delayed and blocked." : "Дополнительно увеличивать интервал между попытками и блокировать неудавшиеся попытки входа.",
     "(beta version)" : "(бета-версия)",
-    "(Delaying is enforced for 30s before password check.)" : "(Установлена задежка в 30 с до проверки пароля).",
     "Test" : "Проверить",
     "Possibilities to test if the Geoblocker is working as expected:" : "Способы проверить работоспособность приложения:",
     "Next login attempt of user \"%s\" will be simulated to come from the following IP address:" : "Для следующей попытки входа пользователя %s IP-адрес будет определён как:",
