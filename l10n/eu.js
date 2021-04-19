@@ -58,6 +58,7 @@ OC.L10N.register(
     "with IP Address" : "IP helbidearekin",
     "with Country Code" : "Herrialde-kodearekin",
     "with username" : "erabiltzaile-izenarekin",
+    "(beta version)" : "(beta bertsioa)",
     "Test" : "Proba",
     "Possibilities to test if the Geoblocker is working as expected:" : "Geoblocker espero bezala dabilen aztertzeko aukerak:",
     "Next login attempt of user \"%s\" will be simulated to come from the following IP address:" : "\"%s\" erabiltzailearen saioa hasteko hurrengo saiakera IP helbide honetatik datorrela simulatuko da:",
