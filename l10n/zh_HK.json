@@ -64,7 +64,7 @@
     "All countries are blocked but the selected ones (allowlist)" : "僅允許清單內的國家（白名單）。",
     "Select countries from list" : "從清單中選擇國家。",
     "The following countries were selected in the list above: " : "以下是被選中的國家：",
-    "Reaction" : "動作",
+    "Reaction" : "應對",
     "If a login attempt is detected from the chosen countries, the attempt is logged with the following information" : "若登入請求被認為來自選中的國家，將會記錄以下的資訊。",
     "( be aware of data protection issues depending on your logging strategy)" : "（請注意這些資訊可能含有需被保護的個人資料）",
     "with IP Address" : "記錄IP位置",
