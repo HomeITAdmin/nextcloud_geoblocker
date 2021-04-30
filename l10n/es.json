@@ -17,7 +17,7 @@
     "ERROR: There is an unknown problem with the service." : "ERROR: Hay un problema desconocido con el servicio.",
     "ERROR: Country cannot be found." : "ERROR: No se puede encontrar el país.",
     "ERROR: Database is not valid, does not have the correct access rights or is not placed at %s." : "ERROR: La base de datos no es válida, no tienes los derechos de acceso correctos o no está colocada en %s.",
-    "ERROR: Invalid Argument." : "ERROR: Argumento Invalido",
+    "ERROR: Invalid Argument." : "ERROR: Argumento no válido",
     "ERROR: \"geoip2.phar\" does not seem to be place correctly or do not have the correct access rights." : "ERROR: \"geoip2.phar\" no parece estar colocado correctamente o no tiene los derechos de acceso correctos.",
     "No entries in the database. Please run update." : "No hay entradas en la base de datos. Por favor, ejecute una actualización.",
     "ERROR:" : "ERROR:",
