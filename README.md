@@ -158,6 +158,7 @@ Using the information from the Regional Internet Registries (RIRs):
   a valid state:
     - `sudo -u %NEXTCLOUD_INSTANCE_USER% php occ
     geoblocker:localization-service:reset-db 2`
+  - IPv6 needs at least a 64 bit system to work correctly.
 
 ## Fail2ban
 
