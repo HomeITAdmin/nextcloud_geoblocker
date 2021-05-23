@@ -1,8 +1,13 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "OK." : "OK.",
+    "default" : "既定値",
+    "ERROR:" : "エラー:",
+    "OK" : "OK",
     "Blocks user depending on the estimated country of thier IP address." : "IPアドレスによって推定された国に応じてユーザーをブロックします．",
     "Loading" : "読み込み中",
+    "Service" : "サービス",
     "Andorra" : "アンドラ",
     "United Arab Emirates" : "アラブ首長国連邦",
     "Afghanistan" : "アフガニスタン",
