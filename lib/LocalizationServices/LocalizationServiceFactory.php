@@ -60,7 +60,7 @@ class LocalizationServiceFactory {
 				break;
 			case '2':
 				$location_service = new RIRData(new RIRDataChecks(),  new RIRServiceMapper($this->db), $this->config,
-						$this->l);
+						$this->l, $this->logger);
 				break;
 			case '3':
 				$location_service = new Dummy($this->l);

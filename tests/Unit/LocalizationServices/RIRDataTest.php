@@ -18,6 +18,7 @@ class RIRDataTest extends TestCase {
 	protected $config;
 	protected $rir_service_mapper;
 	protected $l;
+	protected $logger;
 	private $rir_data;
 	private $error_message_not_enough_entries = 'No entries in the database. Please run update.';
 	private $rir_data_test_file = __DIR__ . DIRECTORY_SEPARATOR .
@@ -38,8 +39,9 @@ class RIRDataTest extends TestCase {
 		$this->l = $this->getMockBuilder('OCP\IL10N')->getMock();
 		$this->l->method('t')->will(
 				$this->returnCallback([$this,'callbackLTJustRouteThrough']));
+		$this->logger = $this->getMockBuilder('OCP\ILogger')->getMock();
 		$this->rir_data = new RIRData($this->rir_data_checks,
-				$this->rir_service_mapper, $this->config, $this->l);
+				$this->rir_service_mapper, $this->config, $this->l, $this->logger);
 	}
 
 	/**
@@ -128,11 +130,17 @@ class RIRDataTest extends TestCase {
 	public function testIsValidStatusStringOk(int $rir_status) {
 		$this->rir_data_checks->expects($this->once())->method('checkGMP')->willReturn(
 				true);
-		$this->config->expects($this->exactly(2))->method(
-			'getServiceSpecificConfigValue')->withConsecutive([
-				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0')]
-			,[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')])->willReturnOnConsecutiveCalls(
-			strval($rir_status), '0');
+		
+		$error_message = 'My last error message!';
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '0'],
+			[RIRData::kErrorMessageName, '', $error_message]
+		];
+
+		$this->config->expects($this->exactly($rir_status == RIRStatus::kDbOkButError ? 3 : 2))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+		
 		$this->rir_service_mapper->expects($this->once())->method(
 				'getNumberOfEntries')->willReturn(1000);
 
@@ -372,7 +380,7 @@ class RIRDataTest extends TestCase {
 	 *
 	 * @dataProvider okRirStatusProvider
 	 */
-	public function testIsGetDatabaseDateInvalidForNoSavedDateAndOKStatusOk(int $rir_status) {
+	public function testIsGetDatabaseDateInvalidForNoSavedDateAndOkStatusOk(int $rir_status) {
 		$this->rir_service_mapper->expects($this->never())->method(
 				'getNumberOfEntries');
 		$ret_map = [
@@ -551,7 +559,7 @@ class RIRDataTest extends TestCase {
 					$this->equalTo(RIRStatus::kDbError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
 					$this->equalTo(
-							'Problem during erasing the whole database occured.')],
+							'Problem during erasing the whole or part of the database occured. Reset the database using the command line tool.')],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
 
 		$this->setupAndCheckDbEntriesNotCalled($this->rir_data_test_file);
@@ -585,7 +593,7 @@ class RIRDataTest extends TestCase {
 					$this->equalTo(RIRStatus::kDbError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
 					$this->equalTo(
-							'Problem during erasing the whole database occured.')],
+							'Problem during erasing the whole or part of the database occured. Reset the database using the command line tool.')],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]
 				);
 
@@ -599,7 +607,7 @@ class RIRDataTest extends TestCase {
 	 * @dataProvider updateableRirStatusAndInvalidFilesProvider
 	 */
 	public function testIsUpdateDatabaseErrorRirFormatOk(int $rir_status_before,
-			int $rir_status_inter, string $file) {
+			int $rir_status_inter, int $fileNumber) {
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
 			[RIRData::kDbVersionName, '0', '0']
@@ -607,18 +615,23 @@ class RIRDataTest extends TestCase {
 		$this->config->expects($this->atLeast(1))->method(
 			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
 		
-		if ($rir_status_before == RIRStatus::kDbOk) {
-			$this->rir_service_mapper->expects($this->never())->method(
-				'eraseAllDatabaseEntries');
-			$this->config->expects($this->exactly(4))->method(
+		if ($rir_status_before == RIRStatus::kDbOk
+			|| $rir_status_before == RIRStatus::kDbOkButError) {
+			$this->rir_service_mapper->expects($this->once())->method('getNumberOfEntries')
+				->with($this->equalTo('1'))
+				->willReturn(0);
+			$this->rir_service_mapper
+				->expects($this->once())
+				->method('eraseAllDatabaseEntries')
+				->willReturn(true);
+			$this->config->expects($this->exactly(3))->method(
 				'setServiceSpecificConfigValue')->withConsecutive(
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo($rir_status_inter)],
 				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo(RIRStatus::kDbError)],
+					$this->equalTo(RIRStatus::kDbOkButError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
-					$this->equalTo('RIR seems to have changed the file format.')],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+					$this->isType('string')]);
 		} else {
 			$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
@@ -631,11 +644,20 @@ class RIRDataTest extends TestCase {
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo(RIRStatus::kDbError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
-					$this->equalTo('RIR seems to have changed the file format.')],
+					$this->isType('string')],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
 		}
 
-		$this->setupAndCheckDbEntriesNotCalled($file);
+		$this->logger->expects($this->once())
+			->method('error');
+		
+		$file = __DIR__ . DIRECTORY_SEPARATOR . 'test-rir-data-invalid' . strval($fileNumber) . '.txt';
+
+		if ($fileNumber <= 3) {
+			$this->setupAndCheckDbEntriesNotCalled($file);
+		} else {
+			$this->rir_data->setDataSource(['afrinic' => $file]);
+		}
 
 		$this->assertFalse($this->rir_data->updateDatabase());
 	}
@@ -654,18 +676,23 @@ class RIRDataTest extends TestCase {
 		$this->config->expects($this->atLeast(1))->method(
 			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
 		
-		if ($rir_status_before == RIRStatus::kDbOk) {
-			$this->rir_service_mapper->expects($this->never())->method(
-				'eraseAllDatabaseEntries');
-			$this->config->expects($this->exactly(4))->method(
+		if ($rir_status_before == RIRStatus::kDbOk
+			|| $rir_status_before == RIRStatus::kDbOkButError) {
+			$this->rir_service_mapper->expects($this->once())->method('getNumberOfEntries')
+				->with($this->equalTo('0'))
+				->willReturn(0);
+			$this->rir_service_mapper
+				->expects($this->once())
+				->method('eraseAllDatabaseEntries')
+				->willReturn(true);
+			$this->config->expects($this->exactly(3))->method(
 				'setServiceSpecificConfigValue')->withConsecutive(
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo($rir_status_inter)],
 				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo(RIRStatus::kDbError)],
+					$this->equalTo(RIRStatus::kDbOkButError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
-					$this->stringStartsWith('Exception caught during Update:')],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+					$this->stringStartsWith('Exception caught during Update for region')]);
 		} else {
 			$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
@@ -678,7 +705,7 @@ class RIRDataTest extends TestCase {
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo(RIRStatus::kDbError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
-					$this->stringStartsWith('Exception caught during Update:')],
+					$this->stringStartsWith('Exception caught during Update for region')],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
 		}
 
@@ -713,20 +740,25 @@ class RIRDataTest extends TestCase {
 		];
 		$this->config->expects($this->atLeast(1))->method(
 			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
-		
-		if ($rir_status_before == RIRStatus::kDbOk) {
-			$this->rir_service_mapper->expects($this->never())->method(
-				'eraseAllDatabaseEntries');
-			$this->config->expects($this->exactly(4))->method(
+
+		if ($rir_status_before == RIRStatus::kDbOk
+			|| $rir_status_before == RIRStatus::kDbOkButError) {
+			$this->rir_service_mapper->expects($this->once())->method('getNumberOfEntries')
+				->with($this->equalTo('0'))
+				->willReturn(0);
+			$this->rir_service_mapper
+				->expects($this->once())
+				->method('eraseAllDatabaseEntries')
+				->willReturn(true);
+			$this->config->expects($this->exactly(3))->method(
 				'setServiceSpecificConfigValue')->withConsecutive(
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo($rir_status_inter)],
 				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo(RIRStatus::kDbError)],
+					$this->equalTo(RIRStatus::kDbOkButError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
 					$this->equalTo(
-							'Invalid file handle. Probably the internet connection got lost during the update.')],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+							'Invalid file handle for region "%s". Probably the internet connection got lost during the update.')]);
 		} else {
 			$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
@@ -740,7 +772,7 @@ class RIRDataTest extends TestCase {
 					$this->equalTo(RIRStatus::kDbError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
 					$this->equalTo(
-							'Invalid file handle. Probably the internet connection got lost during the update.')],
+							'Invalid file handle for region "%s". Probably the internet connection got lost during the update.')],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
 		}
 
@@ -754,7 +786,48 @@ class RIRDataTest extends TestCase {
 	 *
 	 * @dataProvider updateableRirStatusProvider
 	 */
-	public function testIsUpdateDatabaseErrorEntriesAlreadyExistOk(int $rir_status_before,
+	public function testIsUpdateDatabaseSuccessEntriesAlreadyExistOk(int $rir_status_before,
+			int $rir_status_inter) {
+		$this->config->expects($this->exactly(5))->method(
+				'getServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0')],
+				[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')],
+				[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')],
+				[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')],
+				[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')])
+				->willReturnOnConsecutiveCalls(strval($rir_status_before), '1', '1', '1', '0');
+
+		$this->rir_service_mapper->expects($this->once())->method('getNumberOfEntries')
+			->with($this->equalTo('0'))
+			->willReturn(55);
+		
+		
+		$this->rir_service_mapper->expects($this->exactly(2))->method(
+			'eraseAllDatabaseEntries')->willReturn(true);
+
+		$this->config->expects($this->exactly(4))->method(
+			'setServiceSpecificConfigValue')->withConsecutive(
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo($rir_status_inter)],
+				[$this->equalTo(RIRData::kDatabaseDateName),
+					$this->equalTo(date("Y-m-d"))],
+				[$this->equalTo(RIRData::kDbVersionName),
+					$this->equalTo('0')],
+				[$this->equalTo(RIRData::kServiceStatusName),
+					$this->equalTo(RIRStatus::kDbOk)]
+			);
+	
+
+		$this->setupAndCheckDbEntriesCalled();
+
+		$this->assertTrue($this->rir_data->updateDatabase());
+	}
+
+	/**
+	 *
+	 * @dataProvider updateableRirStatusProvider
+	 */
+	public function testIsUpdateDatabaseEntriesAlreadyExistEraseFailureOk(int $rir_status_before,
 			int $rir_status_inter) {
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
@@ -767,9 +840,12 @@ class RIRDataTest extends TestCase {
 			->with($this->equalTo('0'))
 			->willReturn(55);
 		
-		
-		$this->rir_service_mapper->expects($this->never())->method(
-			'eraseAllDatabaseEntries');
+		$this->rir_service_mapper
+			->expects($this->exactly(1))
+			->method('eraseAllDatabaseEntries')
+			->with($this->equalTo('0'))
+			->willReturn(false);
+
 		$this->config->expects($this->exactly(4))->method(
 			'setServiceSpecificConfigValue')->withConsecutive(
 			[$this->equalTo(RIRData::kServiceStatusName),
@@ -778,12 +854,8 @@ class RIRDataTest extends TestCase {
 				$this->equalTo(RIRStatus::kDbError)],
 			[$this->equalTo(RIRData::kErrorMessageName),
 				$this->equalTo(
-						'Database contains old version information. Reset the database using the command line tool.')],
+						'Problem during erasing the whole or part of the database occured. Reset the database using the command line tool.')],
 			[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
-	
-
-		$this->setupAndCheckDbEntriesNotCalled(
-				__DIR__ . DIRECTORY_SEPARATOR . 'file-does-not-exist.txt');
 
 		$this->assertFalse($this->rir_data->updateDatabase());
 	}
@@ -815,7 +887,7 @@ class RIRDataTest extends TestCase {
 					$this->equalTo(RIRStatus::kDbError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
 					$this->equalTo(
-							'Problem during erasing the whole database occured.')],
+							'Problem during erasing the whole or part of the database occured. Reset the database using the command line tool.')],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
 
 		$this->assertFalse($this->rir_data->resetDatabase());
@@ -943,7 +1015,8 @@ class RIRDataTest extends TestCase {
 			"kDbInitilazing" => [RIRStatus::kDbInitilazing],
 			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized],
 			"kDbUpdating" => [RIRStatus::kDbUpdating],
-			"kDbOk" => [RIRStatus::kDbOk]];
+			"kDbOk" => [RIRStatus::kDbOk],
+			"kDbOkButError" => [RIRStatus::kDbOkButError]];
 	}
 
 	public function invalidRirStatusProvider(): array {
@@ -952,7 +1025,8 @@ class RIRDataTest extends TestCase {
 
 	public function okRirStatusProvider(): array {
 		return ["kDbOk" => [RIRStatus::kDbOk],
-			"kDbUpdating" => [RIRStatus::kDbUpdating]];
+			"kDbUpdating" => [RIRStatus::kDbUpdating],
+			"kDbOkButError" => [RIRStatus::kDbOkButError]];
 	}
 
 	public function nonOkRirStatusProvider(): array {
@@ -969,7 +1043,8 @@ class RIRDataTest extends TestCase {
 	}
 
 	public function updateableRirStatusProvider(): array {
-		return ["kDbOk" => [RIRStatus::kDbOk,RIRStatus::kDbUpdating]];
+		return ["kDbOk" => [RIRStatus::kDbOk,RIRStatus::kDbUpdating],
+			"kDbOkButError" => [RIRStatus::kDbOkButError,RIRStatus::kDbUpdating]];
 	}
 
 	public function nonUpdateableRirStatusProvider(): array {
@@ -1007,14 +1082,17 @@ class RIRDataTest extends TestCase {
 		$ret = [];
 
 		$states = ["kDbOk" => [RIRStatus::kDbOk,RIRStatus::kDbUpdating],
+			"kDbOkButError" => [RIRStatus::kDbOkButError,RIRStatus::kDbUpdating],
 			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized,
 				RIRStatus::kDbInitilazing],
 			"kDbError" => [RIRStatus::kDbError,RIRStatus::kDbInitilazing]];
 		$files = [
-			"tooShort" => [
-				__DIR__ . DIRECTORY_SEPARATOR . 'test-rir-data-invalid1.txt'],
-			"invalidRIRName" => [
-				__DIR__ . DIRECTORY_SEPARATOR . 'test-rir-data-invalid2.txt']];
+			"tooShort" => [1],
+			"invalidRIRName" => [2],
+			"nonsenseFile" => [3],
+			"tooLessIPv4" => [4],
+			"tooLessIPv6" => [5],
+			"bothTargets0" => [6]];
 
 		foreach ($states as $state_key => $state_value) {
 			foreach ($files as $file_key => $file_value) {
@@ -1035,7 +1113,8 @@ class RIRDataTest extends TestCase {
 	public function databaseNotUpdatingStatusProvider(): array {
 		return ["kDbError" => [RIRStatus::kDbError],
 			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized],
-			"kDbOk" => [RIRStatus::kDbOk]];
+			"kDbOk" => [RIRStatus::kDbOk],
+			"kDbOkButError" => [RIRStatus::kDbOkButError]];
 	}
 
 	public function databaseNotUpdatingStatusStingsProvider(): array {
@@ -1043,7 +1122,8 @@ class RIRDataTest extends TestCase {
 
 		$states = ["kDbError" => [RIRStatus::kDbError],
 			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized],
-			"kDbOk" => [RIRStatus::kDbOk]];
+			"kDbOk" => [RIRStatus::kDbOk],
+			"kDbOkButError" => [RIRStatus::kDbOkButError]];
 
 		$other = [
 			"checkAllowURLFOpen" => [false,true,true,

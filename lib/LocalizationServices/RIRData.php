@@ -7,6 +7,7 @@ namespace OCA\GeoBlocker\LocalizationServices;
 
 use Exception;
 use OCP\IL10N;
+use OCP\ILogger;
 use OCA\GeoBlocker\Db\RIRServiceMapper;
 use OCA\GeoBlocker\Db\RIRServiceDBEntity;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
@@ -19,6 +20,9 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	private $service_name = 'rir_data';
 	/** @var GeoBlockerConfig */
 	private $config;
+	/** @var ILogger */
+	private $logger;
+
 	private $rir_ftps = [
 		'ripencc' => 'https://ftp.ripe.net/pub/stats/ripencc/delegated-ripencc-latest',
 		'arin' => 'https://ftp.arin.net/pub/stats/arin/delegated-arin-extended-latest',
@@ -32,11 +36,12 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 
 	public function __construct(RIRDataChecks $rir_data_checks,
 			RIRServiceMapper $rir_service_mapper, GeoBlockerConfig $config,
-			IL10N $l) {
+			IL10N $l, ILogger $logger) {
 		$this->rir_data_checks = $rir_data_checks;
 		$this->l = $l;
 		$this->rir_service_mapper = $rir_service_mapper;
 		$this->config = $config;
+		$this->logger = $logger;
 	}
 
 	private function getStatusId(): int {
@@ -102,9 +107,13 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		$this->rir_ftps = $rir_ftps;
 	}
 
+	private function isOKStatus(int $status_id):bool {
+		return $status_id == RIRStatus::kDbOk || $status_id == RIRStatus::kDbUpdating || $status_id == RIRStatus::kDbOkButError;
+	}
+
 	public function getStatus(): bool {
 		$status_id = $this->getStatusId();
-		if (($status_id == RIRStatus::kDbOk || $status_id == RIRStatus::kDbUpdating) &&
+		if ($this->isOKStatus($status_id) &&
 				$this->rir_data_checks->checkGMP() &&
 				$this->checkDBPlausibleAndSetToError()) {
 			return true;
@@ -118,14 +127,26 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		$service_string_ok = $service_string . ' ' . $this->l->t('OK');
 		$status_id = $this->getStatusId();
 
-		if (($status_id == RIRStatus::kDbOk || $status_id == RIRStatus::kDbUpdating) &&
+		if ($this->isOKStatus($status_id) &&
 				! $this->checkDBPlausibleAndSetToError()) {
 			$status_id = RIRStatus::kDbError;
 		}
 
-		if ($status_id == RIRStatus::kDbOk) {
+		if ($this->isOKStatus($status_id)) {
 			if ($this->rir_data_checks->checkGMP()) {
-				return $service_string_ok . '.';
+				if ($status_id == RIRStatus::kDbOk) {
+					return $service_string_ok . '.';
+				} elseif ($status_id == RIRStatus::kDbUpdating) {
+					return $service_string_ok . ': ' .
+					$this->l->t(
+							'The database is currently updating, but the service can be used during the update with the last valid data.');
+				} elseif ($status_id == RIRStatus::kDbOkButError) {
+					return $service_string_ok . ': ' .
+					$this->l->t(
+							'The last update try ended in an error but the service can be used with the last valid data. ').
+							' ' . $this->l->t('Last error message:') . ' ' .
+							$this->getErrorMessage();
+				}
 			} else {
 				return $service_string_error . ' ' .
 						$this->l->t('PHP GMP Extension needs to be installed.');
@@ -144,15 +165,6 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 							'The database is corrupted. Please run update again.') .
 					' ' . $this->l->t('Last error message:') . ' ' .
 					$this->getErrorMessage();
-		} elseif ($status_id == RIRStatus::kDbUpdating) {
-			if ($this->rir_data_checks->checkGMP()) {
-				return $service_string_ok . ': ' .
-					$this->l->t(
-							'The database is currently updating, but the service can be used during the update.');
-			} else {
-				return $service_string_error . ' ' .
-						$this->l->t('PHP GMP Extension needs to be installed.');
-			}
 		}
 		return $service_string_error . ' ' .
 				$this->l->t('Something is missing.');
@@ -182,13 +194,13 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		$status_id = $this->getStatusId();
 		$db_date = $this->getDatabaseDateImpl();
 		if ($db_date == '') {
-			if (($status_id == RIRStatus::kDbOk) || ($status_id == RIRStatus::kDbUpdating)) {
+			if ($this->isOKStatus($status_id)) {
 				return $this->l->t('Date of the database cannot be determined!');
 			} else {
 				return $this->l->t('No database available!');
 			}
 		} else {
-			if ((($status_id == RIRStatus::kDbOk) || ($status_id == RIRStatus::kDbUpdating)) &&
+			if ($this->isOKStatus($status_id) &&
 					$this->checkIfEntriesForVersionExists($this->getCurrentDbVersion())) {
 				return $db_date;
 			} else {
@@ -198,13 +210,20 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		return $this->l->t('No database available!');
 	}
 
-	private function setDBToErrorStatus(string $error_message) {
-		$this->setStatusId(RIRStatus::kDbError);
+	private function setDBToErrorStatus(string $error_message, bool $dbOKOnError = false) {
+		if ($dbOKOnError) {
+			$this->setStatusId(RIRStatus::kDbOkButError);
+		} else {
+			$this->setStatusId(RIRStatus::kDbError);
+		}
 		$this->setErrorMessage($error_message);
-		$this->resetDatabaseDateImpl();
+		$this->logger->error('There was a problem to add data to the DB: ' . $error_message, ['app' => 'geoblocker']);
+		if (!$dbOKOnError) {
+			$this->resetDatabaseDateImpl();
+		}
 	}
 
-	private function fillDatabase(int $version): bool {
+	private function fillDatabase(int $version, bool $dbOKOnError = false): bool {
 		foreach ($this->rir_ftps as $rir_name => $rir_url) {
 			try {
 				$rir_data_handle = fopen($rir_url, 'r');
@@ -213,8 +232,11 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 			}
 			if ($rir_data_handle != false) {
 				try {
-					$at_least_one_entry = false;
-					while (($line = fgets($rir_data_handle))) {
+					$number_of_ipv4_entries_target = 0;
+					$number_of_ipv4_entries_actual = 0;
+					$number_of_ipv6_entries_target = 0;
+					$number_of_ipv6_entries_actual = 0;
+					while (($line = fgets($rir_data_handle)) !== false) {
 						$parts = explode('|', $line);
 						if ($parts[0] == $rir_name && count($parts) >= 7) {
 							if ($parts[2] == 'ipv4' && $parts[1] != '') {
@@ -227,7 +249,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 								$db_entry->setIsIpV6(false);
 								$db_entry->setVersion($version);
 								$this->rir_service_mapper->insert($db_entry);
-								$at_least_one_entry = true;
+								++$number_of_ipv4_entries_actual;
 							} elseif ($parts[2] == 'ipv6' && $parts[1] != '') {
 								$db_entry = new RIRServiceDBEntity();
 								$db_entry->setBeginIpRange(
@@ -239,19 +261,38 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 								$db_entry->setIsIpV6(true);
 								$db_entry->setVersion($version);
 								$this->rir_service_mapper->insert($db_entry);
-								$at_least_one_entry = true;
+								++$number_of_ipv6_entries_actual;
+							}
+						} elseif ($parts[0] == $rir_name && count($parts) == 6 && str_starts_with($parts[5],'summary')) {
+							if ($parts[2] == 'ipv4') {
+								$number_of_ipv4_entries_target = intval($parts[4]);
+							} elseif ($parts[2] == 'ipv6') {
+								$number_of_ipv6_entries_target = intval($parts[4]);
 							}
 						}
 					}
-					if (! $at_least_one_entry) {
+					if (($number_of_ipv4_entries_actual + $number_of_ipv6_entries_actual) == 0
+							|| ($number_of_ipv4_entries_target + $number_of_ipv6_entries_target) == 0) {
 						$this->setDBToErrorStatus(
 								$this->l->t(
-										'RIR seems to have changed the file format.'));
+										'No valid entries could be read for region "%s". Maybe the RIR has changed the file format.', [$rir_name]), $dbOKOnError);
+						return false;
+					} elseif ($number_of_ipv4_entries_actual != $number_of_ipv4_entries_target) {
+						$this->setDBToErrorStatus(
+							$this->l->t(
+									'Not the right number of entries read for ipv4 in region "%s". Should have been %d but was %d.',
+									 [$rir_name,  $number_of_ipv4_entries_target, $number_of_ipv4_entries_actual]), $dbOKOnError);
+						return false;
+					} elseif ($number_of_ipv6_entries_actual != $number_of_ipv6_entries_target) {
+						$this->setDBToErrorStatus(
+							$this->l->t(
+									'Not the right number of entries read for ipv6 in region "%s". Should have been %d but was %d.',
+									 [$rir_name,  $number_of_ipv6_entries_target, $number_of_ipv6_entries_actual]), $dbOKOnError);
 						return false;
 					}
 				} catch (Exception $e) {
 					$this->setDBToErrorStatus(
-							$this->l->t('Exception caught during Update:') . ' ' . $e->getMessage());
+							$this->l->t('Exception caught during Update for region "%s": %s', [$rir_name, $e->getMessage()]), $dbOKOnError);
 					return false;
 				} finally {
 					fclose($rir_data_handle);
@@ -259,7 +300,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 			} else {
 				$this->setDBToErrorStatus(
 						$this->l->t(
-								'Invalid file handle. Probably the internet connection got lost during the update.'));
+								'Invalid file handle for region "%s". Probably the internet connection got lost during the update.', [$rir_name]), $dbOKOnError);
 				return false;
 			}
 		}
@@ -269,7 +310,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 
 	private function eraseDatabase(int $version) {
 		if (! $this->rir_service_mapper->eraseAllDatabaseEntries($version)) {
-			$this->setDBToErrorStatus('Problem during erasing the whole database occured.');
+			$this->setDBToErrorStatus('Problem during erasing the whole or part of the database occured. Reset the database using the command line tool.');
 			return false;
 		} else {
 			if (($version == -1) || ($version == $this->getCurrentDbVersion())) {
@@ -298,17 +339,18 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 			}
 			$this->setStatusId(RIRStatus::kDbOk);
 			return true;
-		} elseif ($status_id == RIRStatus::kDbOk) {
+		} elseif ($status_id == RIRStatus::kDbOk ||
+				$status_id == RIRStatus::kDbOkButError) {
 			$this->setStatusId(RIRStatus::kDbUpdating);
 			$before_version = $this->getCurrentDbVersion();
 			$after_version = $this->getOtherDbVersion();
 			if ($this->checkIfEntriesForVersionExists($after_version)) {
-				$this->setDBToErrorStatus(
-					$this->l->t(
-							'Database contains old version information. Reset the database using the command line tool.'));
-				return false;
+				if (! $this->eraseDatabase($after_version)) {
+					return false;
+				}
 			}
-			if (! $this->fillDatabase($after_version)) {
+			if (! $this->fillDatabase($after_version, true)) {
+				$this->eraseDatabase($after_version);
 				return false;
 			}
 			$this->setCurrentDbVersion($after_version);

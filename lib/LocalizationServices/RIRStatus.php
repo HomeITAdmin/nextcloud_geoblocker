@@ -8,4 +8,5 @@ abstract class RIRStatus {
 	public const kDbError = 2;
 	public const kDbOk = 3;
 	public const kDbUpdating = 4;
+	public const kDbOkButError = 5;
 }
