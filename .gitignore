@@ -5,6 +5,7 @@ vendor/
 composer.lock
 .phpunit.result.cache
 3rdparty/maxmind_geolite2/geoip2.phar
+3rdparty/rir_data/*.txt
 node_modules
 package-lock.json
 build/

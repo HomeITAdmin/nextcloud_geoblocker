@@ -13,11 +13,12 @@ use OCA\GeoBlocker\Db\RIRServiceDBEntity;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
 
 class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
+	/** @var IL10N */
 	private $l;
 	/** @var RIRServiceMapper */
 	private $rir_service_mapper;
+	/** @var RIRDataChecks */
 	private $rir_data_checks;
-	private $service_name = 'rir_data';
 	/** @var GeoBlockerConfig */
 	private $config;
 	/** @var ILogger */
@@ -29,6 +30,9 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		'afrinic' => 'https://ftp.afrinic.net/pub/stats/afrinic/delegated-afrinic-latest',
 		'apnic' => 'https://ftp.apnic.net/stats/apnic/delegated-apnic-latest',
 		'lacnic' => 'https://ftp.lacnic.net/pub/stats/lacnic/delegated-lacnic-latest'];
+
+	private const local_file_path = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '3rdparty' . DIRECTORY_SEPARATOR . 'rir_data' . DIRECTORY_SEPARATOR ;
+
 	public const kServiceStatusName = 'rir_data_service_status';
 	public const kDatabaseDateName = 'rir_data_db_date';
 	public const kErrorMessageName = 'rir_data_error_message';
@@ -225,12 +229,26 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 
 	private function fillDatabase(int $version, bool $dbOKOnError = false): bool {
 		foreach ($this->rir_ftps as $rir_name => $rir_url) {
+			$rir_url_handle = false;
+			$rir_data_handle = false;
 			try {
-				$rir_data_handle = fopen($rir_url, 'r');
+				$rir_url_handle = fopen($rir_url, 'r');
+				$file_name = RIRData::local_file_path . $rir_name . ".txt";
+				$ret_put = file_put_contents($file_name, $rir_url_handle);
+				if ($ret_put !== false && $ret_put > 0) {
+					$rir_data_handle = fopen($file_name, 'r');
+				} else {
+					throw new Exception('No data put into target file.');
+				}
 			} catch (Exception $e) {
-				$rir_data_handle = false;
+				$this->logger->warning('Problem downloading the information for region "' . $rir_name . '". Error message: ' . $e, ['app' => 'geoblocker']);
+			} finally {
+				if ($rir_url_handle !== false) {
+					fclose($rir_url_handle);
+				}
 			}
-			if ($rir_data_handle != false) {
+
+			if ($rir_data_handle !== false) {
 				try {
 					$number_of_ipv4_entries_target = 0;
 					$number_of_ipv4_entries_actual = 0;
@@ -239,29 +257,37 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 					while (($line = fgets($rir_data_handle)) !== false) {
 						$parts = explode('|', $line);
 						if ($parts[0] == $rir_name && count($parts) >= 7) {
-							if ($parts[2] == 'ipv4' && $parts[1] != '') {
-								$db_entry = new RIRServiceDBEntity();
-								$db_entry->setBeginIpRange(
+							if ($parts[1] != '') {
+								if ($parts[2] == 'ipv4') {
+									$db_entry = new RIRServiceDBEntity();
+									$db_entry->setBeginIpRange(
 										RIRServiceMapper::ipv4String2Int64(
 												$parts[3]));
-								$db_entry->setCountryCode($parts[1]);
-								$db_entry->setLengthIpRange($parts[4]);
-								$db_entry->setIsIpV6(false);
-								$db_entry->setVersion($version);
-								$this->rir_service_mapper->insert($db_entry);
-								++$number_of_ipv4_entries_actual;
-							} elseif ($parts[2] == 'ipv6' && $parts[1] != '') {
-								$db_entry = new RIRServiceDBEntity();
-								$db_entry->setBeginIpRange(
+									$db_entry->setCountryCode($parts[1]);
+									$db_entry->setLengthIpRange($parts[4]);
+									$db_entry->setIsIpV6(false);
+									$db_entry->setVersion($version);
+									$this->rir_service_mapper->insert($db_entry);
+									++$number_of_ipv4_entries_actual;
+								} elseif ($parts[2] == 'ipv6') {
+									$db_entry = new RIRServiceDBEntity();
+									$db_entry->setBeginIpRange(
 										RIRServiceMapper::ipv6String2Int64(
 												$parts[3]));
-								$db_entry->setCountryCode($parts[1]);
-								$db_entry->setLengthIpRange(
+									$db_entry->setCountryCode($parts[1]);
+									$db_entry->setLengthIpRange(
 										pow(2, 64 - intval($parts[4])));
-								$db_entry->setIsIpV6(true);
-								$db_entry->setVersion($version);
-								$this->rir_service_mapper->insert($db_entry);
-								++$number_of_ipv6_entries_actual;
+									$db_entry->setIsIpV6(true);
+									$db_entry->setVersion($version);
+									$this->rir_service_mapper->insert($db_entry);
+									++$number_of_ipv6_entries_actual;
+								}
+							} elseif ($parts[6] == 'reserved' || $parts[6] == 'available') {
+								if ($parts[2] == 'ipv4') {
+									++$number_of_ipv4_entries_actual;
+								} elseif ($parts[2] == 'ipv6') {
+									++$number_of_ipv6_entries_actual;
+								}
 							}
 						} elseif ($parts[0] == $rir_name && count($parts) == 6 && str_starts_with($parts[5],'summary')) {
 							if ($parts[2] == 'ipv4') {
