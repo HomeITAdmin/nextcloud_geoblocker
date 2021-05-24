@@ -143,11 +143,11 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 				} elseif ($status_id == RIRStatus::kDbUpdating) {
 					return $service_string_ok . ': ' .
 					$this->l->t(
-							'The database is currently updating, but the service can be used during the update with the last valid data.');
+							'The database is currently updating. During the update can be used the service with the last valid data.');
 				} elseif ($status_id == RIRStatus::kDbOkButError) {
 					return $service_string_ok . ': ' .
 					$this->l->t(
-							'The last update try ended in an error but the service can be used with the last valid data. ').
+							'The last update try ended in an error but the service can be used with the last valid data.').
 							' ' . $this->l->t('Last error message:') . ' ' .
 							$this->getErrorMessage();
 				}
@@ -306,13 +306,13 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 					} elseif ($number_of_ipv4_entries_actual != $number_of_ipv4_entries_target) {
 						$this->setDBToErrorStatus(
 							$this->l->t(
-									'Not the right number of entries read for ipv4 in region "%s". Should have been %d but was %d.',
+									'Not the right number of entries read for IPv4 in region "%s". Should have been %d but was %d.',
 									 [$rir_name,  $number_of_ipv4_entries_target, $number_of_ipv4_entries_actual]), $dbOKOnError);
 						return false;
 					} elseif ($number_of_ipv6_entries_actual != $number_of_ipv6_entries_target) {
 						$this->setDBToErrorStatus(
 							$this->l->t(
-									'Not the right number of entries read for ipv6 in region "%s". Should have been %d but was %d.',
+									'Not the right number of entries read for IPv6 in region "%s". Should have been %d but was %d.',
 									 [$rir_name,  $number_of_ipv6_entries_target, $number_of_ipv6_entries_actual]), $dbOKOnError);
 						return false;
 					}
