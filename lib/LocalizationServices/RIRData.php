@@ -143,7 +143,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 				} elseif ($status_id == RIRStatus::kDbUpdating) {
 					return $service_string_ok . ': ' .
 					$this->l->t(
-							'The database is currently updating. During the update can be used the service with the last valid data.');
+							'The database is currently updating. During the update the service can be used with the last valid data.');
 				} elseif ($status_id == RIRStatus::kDbOkButError) {
 					return $service_string_ok . ': ' .
 					$this->l->t(

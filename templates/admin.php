@@ -13,7 +13,7 @@ $loading = $l->t('Loading').'...';
 	<div class="subsection">
 		<p><?php p($l->t('This is a front end to geo localization services, that allows blocking (beta), delaying (beta) and logging of login attempts from specified countries. ')); ?>
 		</p>
-		<p><?php p($l->t('Login attempts from local network IP addresses are not reacted on at all.')); ?>
+		<p><?php p($l->t('Login attempts from local network IP addresses are never blocked, delayed or logged.')); ?>
 		</p>
 		<p><?php p($l->t('Wrong Nextcloud configuration (especially in container) can lead to all accesses seem to come from a local network IP address.')); ?>
 		</p>
