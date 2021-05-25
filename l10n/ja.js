@@ -2,7 +2,7 @@ OC.L10N.register(
     "geoblocker",
     {
     "OK." : "OK.",
-    "default" : "既定値",
+    "default" : "デフォルト",
     "ERROR:" : "エラー:",
     "OK" : "OK",
     "Blocks user depending on the estimated country of thier IP address." : "IPアドレスによって推定された国に応じてユーザーをブロックします．",
