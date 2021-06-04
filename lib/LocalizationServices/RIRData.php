@@ -143,7 +143,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 					if ($this->rir_data_checks->check64Bit()) {
 						return $service_string_ok . '.';
 					} else {
-						return $service_string_ok . ': ' . $this->l->t('But IPv6 is only working on at least 64 bit systems. When upgrading the system from below 64bit remember to update the DB again.');
+						return $service_string_ok . ': ' . $this->l->t('But IPv6 is only working on at least 64 bit systems. When upgrading the system to 64bit or higher remember to update the DB again.');
 					}
 				} elseif ($status_id == RIRStatus::kDbUpdating) {
 					return $service_string_ok . ': ' .
@@ -439,7 +439,11 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 				}
 				return '';
 			case LocationServiceUpdateStatus::kUpdatePossible:
-				return '';
+				if (!$this->rir_data_checks->check64Bit()) {
+					return $this->l->t('But IPv6 is not included on systems with less then 64 bit.');
+				} else {
+					return '';
+				}
 				break;
 			case LocationServiceUpdateStatus::kUpdating:
 				return $this->l->t('Current number of entries:') . ' ' .

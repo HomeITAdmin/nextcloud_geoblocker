@@ -1042,7 +1042,8 @@ class RIRDataTest extends TestCase {
 	 * @dataProvider databaseNotUpdatingStatusProvider
 	 */
 	public function testIsGetDatabaseUpdateStatusStringUpdatePossibleOk(
-			int $rir_status) {
+			int $rir_status, bool $bit_64_ok) {
+		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
 		$this->config->expects($this->once())->method(
 				'getServiceSpecificConfigValue')->with(
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
@@ -1050,8 +1051,11 @@ class RIRDataTest extends TestCase {
 
 		$this->rir_data_checks->expects($this->once())->method('checkAll')->willReturn(
 				true);
-
-		$this->assertEquals('', $this->rir_data->getDatabaseUpdateStatusString());
+		if ($bit_64_ok) {
+			$this->assertEquals('', $this->rir_data->getDatabaseUpdateStatusString());
+		} else {
+			$this->assertEquals('But IPv6 is not included on systems with less then 64 bit.', $this->rir_data->getDatabaseUpdateStatusString());
+		}
 	}
 
 	public function callbackLTJustRouteThrough(string $in): string {
@@ -1200,10 +1204,23 @@ class RIRDataTest extends TestCase {
 	}
 
 	public function databaseNotUpdatingStatusProvider(): array {
-		return ["kDbError" => [RIRStatus::kDbError],
-			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized],
-			"kDbOk" => [RIRStatus::kDbOk],
-			"kDbOkButError" => [RIRStatus::kDbOkButError]];
+		$ret = [];
+		$states = [[RIRStatus::kDbError],
+			[RIRStatus::kDbNotInitialized],
+			[RIRStatus::kDbOk],
+			[RIRStatus::kDbOkButError]];
+		$bit_64_oks = [true, false];
+
+		foreach ($states as $state) {
+			$line1 = $state;
+			foreach ($bit_64_oks as $bit_64_ok) {
+				$line2 = $line1;
+				array_push($line2,$bit_64_ok);
+				array_push($ret,$line2);
+			}
+		}
+
+		return $ret;
 	}
 
 	public function databaseNotUpdatingStatusStingsProvider(): array {

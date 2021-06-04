@@ -24,7 +24,7 @@ interface IDatabaseUpdate {
 	 * Returns a status string describing the current status of the update.
 	 * If:
 	 * - Status == kUpdateNotPossible: Why is the update not possible and what needs to be done to change this.
-	 * - Status == kUpdatePossible: Not relevant, string will we ignored.
+	 * - Status == kUpdatePossible: Additional information and limitations for the update.
 	 * - Status == kUpdating: If wanted additional information about what is currently happening can be provided otherwise return "".
 	 *
 	 * @return string
