@@ -25,6 +25,10 @@ class RIRDataChecks {
 		return $is_conn;
 	}
 
+	public function check64Bit(): bool {
+		return PHP_INT_SIZE >= 8;
+	}
+
 	public function checkAll(): bool {
 		return $this->checkAllowURLFOpen() && $this->checkGMP() &&
 				$this->checkInternetConnection();

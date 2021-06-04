@@ -23,6 +23,8 @@ class GeoBlocker {
 	/** @var ILocalizationService */
 	private $location_service;
 	public const kCountryNotFoundCode = 'AA';
+	public const kUnavailableCode = 'UNAVAILABLE';
+	public const kInvalidIPCode = 'INVALID_IP';
 	private const kNotShownString = 'NOT_SHOWN_IN_LOG';
 
 	public function __construct(String $user, ILogger $logger,

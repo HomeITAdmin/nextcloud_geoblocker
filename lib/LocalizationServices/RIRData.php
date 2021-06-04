@@ -11,6 +11,7 @@ use OCP\ILogger;
 use OCA\GeoBlocker\Db\RIRServiceMapper;
 use OCA\GeoBlocker\Db\RIRServiceDBEntity;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
+use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 
 class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	/** @var IL10N */
@@ -139,7 +140,11 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 		if ($this->isOKStatus($status_id)) {
 			if ($this->rir_data_checks->checkGMP()) {
 				if ($status_id == RIRStatus::kDbOk) {
-					return $service_string_ok . '.';
+					if ($this->rir_data_checks->check64Bit()) {
+						return $service_string_ok . '.';
+					} else {
+						return $service_string_ok . ': ' . $this->l->t('But IPv6 is only working on at least 64 bit systems. When upgrading the system from below 64bit remember to update the DB again.');
+					}
 				} elseif ($status_id == RIRStatus::kDbUpdating) {
 					return $service_string_ok . ': ' .
 					$this->l->t(
@@ -152,8 +157,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 							$this->getErrorMessage();
 				}
 			} else {
-				return $service_string_error . ' ' .
-						$this->l->t('PHP GMP Extension needs to be installed.');
+				return $service_string_error . ' ' . $this->l->t('PHP GMP Extension needs to be installed.');
 			}
 		} elseif ($status_id == RIRStatus::kDbNotInitialized) {
 			return $service_string_error . ' ' .
@@ -167,8 +171,8 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 			return $service_string_error . ' ' .
 					$this->l->t(
 							'The database is corrupted. Please run update again.') .
-					' ' . $this->l->t('Last error message:') . ' ' .
-					$this->getErrorMessage();
+							' ' . $this->l->t('Last error message:') . ' ' .
+							$this->getErrorMessage();
 		}
 		return $service_string_error . ' ' .
 				$this->l->t('Something is missing.');
@@ -176,7 +180,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 
 	public function getCountryCodeFromIP(string $ip_address): string {
 		if (! $this->getStatus()) {
-			return 'UNAVAILABLE';
+			return GeoBlocker::kUnavailableCode;
 		}
 
 		$version = $this->getCurrentDbVersion();
@@ -186,11 +190,15 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 					RIRServiceMapper::ipv4String2Int64($ip_address), $version);
 			return $cc;
 		} elseif (filter_var($ip_address, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-			$cc = $this->rir_service_mapper->getCountryCodeFromIpv6(
+			if ($this->rir_data_checks->check64Bit()) {
+				$cc = $this->rir_service_mapper->getCountryCodeFromIpv6(
 					RIRServiceMapper::ipv6String2Int64($ip_address), $version);
-			return $cc;
+				return $cc;
+			} else {
+				return GeoBlocker::kCountryNotFoundCode;
+			}
 		} else {
-			return 'INVALID_IP';
+			return GeoBlocker::kInvalidIPCode;
 		}
 	}
 
@@ -228,6 +236,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	}
 
 	private function fillDatabase(int $version, bool $dbOKOnError = false): bool {
+		$is64bit = $this->rir_data_checks->check64Bit();
 		foreach ($this->rir_ftps as $rir_name => $rir_url) {
 			$rir_url_handle = false;
 			$rir_data_handle = false;
@@ -269,7 +278,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 									$db_entry->setVersion($version);
 									$this->rir_service_mapper->insert($db_entry);
 									++$number_of_ipv4_entries_actual;
-								} elseif ($parts[2] == 'ipv6') {
+								} elseif ($parts[2] == 'ipv6' && $is64bit) {
 									$db_entry = new RIRServiceDBEntity();
 									$db_entry->setBeginIpRange(
 										RIRServiceMapper::ipv6String2Int64(
@@ -285,14 +294,14 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 							} elseif ($parts[6] == 'reserved' || $parts[6] == 'available') {
 								if ($parts[2] == 'ipv4') {
 									++$number_of_ipv4_entries_actual;
-								} elseif ($parts[2] == 'ipv6') {
+								} elseif ($parts[2] == 'ipv6' && $is64bit) {
 									++$number_of_ipv6_entries_actual;
 								}
 							}
 						} elseif ($parts[0] == $rir_name && count($parts) == 6 && str_starts_with($parts[5],'summary')) {
 							if ($parts[2] == 'ipv4') {
 								$number_of_ipv4_entries_target = intval($parts[4]);
-							} elseif ($parts[2] == 'ipv6') {
+							} elseif ($parts[2] == 'ipv6' && $is64bit) {
 								$number_of_ipv6_entries_target = intval($parts[4]);
 							}
 						}
@@ -403,6 +412,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 			}
 		}
 	}
+
 	public function getDatabaseUpdateStatus(): int {
 		$ret = $this->getDatabaseUpdateStatusImpl();
 		if ($ret <= LocationServiceUpdateStatus::kUpdating) {

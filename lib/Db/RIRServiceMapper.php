@@ -9,6 +9,8 @@ use OCP\AppFramework\Db\QBMapper;
 use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 
 class RIRServiceMapper extends QBMapper {
+	public const kIPv6OffsetForSQL = '-9223372036854775808';
+
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'geoblocker_ls_rir', RIRServiceDBEntity::class);
 	}
@@ -19,7 +21,7 @@ class RIRServiceMapper extends QBMapper {
 
 	public static function ipv6String2Int64(string $ip): int {
 		$gmp_ip = gmp_import(substr(inet_pton($ip), 0, 8));
-		return gmp_intval($gmp_ip + PHP_INT_MIN);
+		return gmp_intval(gmp_add($gmp_ip, RIRServiceMapper::kIPv6OffsetForSQL));
 	}
 
 	public function eraseAllDatabaseEntries(int $version = -1) {

@@ -143,6 +143,10 @@ Using the information from the Regional Internet Registries (RIRs):
   the time. It is needed for the update process and to assign IPs to countries
   during login. Have a look in the
   [PHP manual](https://www.php.net/manual/en/book.gmp.php).
+  - For this service to work with IPv6 you need at least a 64 bit system. If this
+  is not fulfilled IPv6 addresses will be always returned as 'AA: Country Not Found'
+  and the database will not be filled with IPv6 data (starting with version 0.5.0).
+  If you change your system make sure to update the DB again.
 - Installation
   - No installastion outside from Nextcloud is needed on the host.
   - When the update is started in the settings section, the data which country got
@@ -153,7 +157,6 @@ Using the information from the Regional Internet Registries (RIRs):
   - No installation needed.
 - Disadvantages
   - Preconditions need to be fulfilled.
-  - Currently not functional during update. (Will be solved in 0.4.5)
 - Known issues
   - If the nextcloud instance is restarted during the update of the service, the
   service stays in the update process forever. At the moment you have to use the
@@ -161,7 +164,6 @@ Using the information from the Regional Internet Registries (RIRs):
   a valid state:
     - `sudo -u %NEXTCLOUD_INSTANCE_USER% php occ
     geoblocker:localization-service:reset-db 2`
-  - IPv6 needs at least a 64 bit system to work correctly.
 
 ## Fail2ban
 

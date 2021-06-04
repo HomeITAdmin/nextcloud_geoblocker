@@ -130,7 +130,8 @@ class RIRDataTest extends TestCase {
 	public function testIsValidStatusStringOk(int $rir_status) {
 		$this->rir_data_checks->expects($this->once())->method('checkGMP')->willReturn(
 				true);
-		
+		$this->rir_data_checks->expects($this->atMost(1))->method('check64Bit')->willReturn(true);
+
 		$error_message = 'My last error message!';
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status)],
@@ -145,6 +146,36 @@ class RIRDataTest extends TestCase {
 				'getNumberOfEntries')->willReturn(1000);
 
 		$result = '"RIR Data": OK';
+		$this->assertStringStartsWith($result, $this->rir_data->getStatusString());
+	}
+
+	/**
+	 *
+	 * @dataProvider okRirStatusProvider
+	 */
+	public function testIsValidStatusStringWith64BitHintOk(int $rir_status) {
+		$this->rir_data_checks->expects($this->once())->method('checkGMP')->willReturn(
+				true);
+		$this->rir_data_checks->expects($this->atMost(1))->method('check64Bit')->willReturn(false);
+		
+		$error_message = 'My last error message!';
+		$ret_map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '0'],
+			[RIRData::kErrorMessageName, '', $error_message]
+		];
+
+		$this->config->expects($this->exactly($rir_status == RIRStatus::kDbOkButError ? 3 : 2))->method(
+			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+		
+		$this->rir_service_mapper->expects($this->once())->method(
+				'getNumberOfEntries')->willReturn(1000);
+
+		if ($rir_status == RIRStatus::kDbOk) {
+			$result = '"RIR Data": OK: But IPv6 is only working on at least 64 bit systems.';
+		} else {
+			$result = '"RIR Data": OK';
+		}
 		$this->assertStringStartsWith($result, $this->rir_data->getStatusString());
 	}
 
@@ -178,7 +209,7 @@ class RIRDataTest extends TestCase {
 	 * @dataProvider allRirStatusProvider
 	 * @dataProvider invalidRirStatusProvider
 	 */
-	public function testIsErrorStatusStringOkforCheckGmpNotOk(int $rir_status) {
+	public function testIsErrorStatusStringOkForCheckGmpNotOk(int $rir_status) {
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				false);
 		$this->rir_service_mapper->expects($this->atMost(1))->method(
@@ -230,22 +261,33 @@ class RIRDataTest extends TestCase {
 	 * @dataProvider validIpProvider
 	 */
 	public function testIsCountryCodeFromValidIpOk(string $ip_address, bool $ip_v6,
-			string $country_code, string $version, string $rir_status) {
+			string $country_code, string $version, string $rir_status, bool $bit_64_ok) {
 		$this->makeServiceValid($version, $rir_status);
+		$this->rir_data_checks->expects($this->atMost(1))->method('check64Bit')->willReturn($bit_64_ok);
 
 		if ($ip_v6) {
-			$this->rir_service_mapper->expects($this->once())->method(
+			if ($bit_64_ok) {
+				$this->rir_service_mapper->expects($this->once())->method(
 				'getCountryCodeFromIpv6')->with(
 					$this->equalTo(RIRServiceMapper::ipv6String2Int64($ip_address)), $this->equalTo($version))
 				->willReturn($country_code);
+			} else {
+				$this->rir_service_mapper->expects($this->never())->method(
+					'getCountryCodeFromIpv6');
+			}
 		} else {
 			$this->rir_service_mapper->expects($this->once())->method(
 				'getCountryCodeFromIpv4')->with(
 					$this->equalTo(RIRServiceMapper::ipv4String2Int64($ip_address)), $this->equalTo($version))
 				->willReturn($country_code);
 		}
-		$this->assertEquals($country_code,
+		if ($ip_v6 && !$bit_64_ok) {
+			$this->assertEquals('AA',
 				$this->rir_data->getCountryCodeFromIP($ip_address));
+		} else {
+			$this->assertEquals($country_code,
+				$this->rir_data->getCountryCodeFromIP($ip_address));
+		}
 	}
 
 	/**
@@ -463,7 +505,9 @@ class RIRDataTest extends TestCase {
 	 * @dataProvider initializableRirStatusProvider
 	 */
 	public function testIsUpdateDatabaseSuccessForInitializableOk(int $rir_status_before,
-			int $rir_status_inter) {
+			int $rir_status_inter, bool $bit_64_ok) {
+		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
+
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
 			[RIRData::kDbVersionName, '0', '0']
@@ -483,7 +527,7 @@ class RIRDataTest extends TestCase {
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo(RIRStatus::kDbOk)]);
 
-		$this->setupAndCheckDbEntriesCalled();
+		$this->setupAndCheckDbEntriesCalled($bit_64_ok);
 
 		$this->assertTrue($this->rir_data->updateDatabase());
 	}
@@ -493,7 +537,8 @@ class RIRDataTest extends TestCase {
 	 * @dataProvider updateableRirStatusProvider
 	 */
 	public function testIsUpdateDatabaseSuccessForUpdateableOk(int $rir_status_before,
-			int $rir_status_inter) {
+			int $rir_status_inter, bool $bit_64_ok) {
+		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
 		$this->config->expects($this->exactly(4))->method(
 				'getServiceSpecificConfigValue')->withConsecutive(
 				[$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0')],
@@ -514,7 +559,7 @@ class RIRDataTest extends TestCase {
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo(RIRStatus::kDbOk)]);
 
-		$this->setupAndCheckDbEntriesCalled();
+		$this->setupAndCheckDbEntriesCalled($bit_64_ok);
 
 		$this->assertTrue($this->rir_data->updateDatabase());
 	}
@@ -572,7 +617,8 @@ class RIRDataTest extends TestCase {
 	 * @dataProvider updateableRirStatusProvider
 	 */
 	public function testIsUpdateDatabaseErrorDuringErasingForUpdateableOk(int $rir_status_before,
-			int $rir_status_inter) {
+			int $rir_status_inter, bool $bit_64_ok) {
+		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
 		$this->config->expects($this->exactly(3))->method(
 			'getServiceSpecificConfigValue')->withConsecutive(
 			[$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0')],
@@ -597,7 +643,7 @@ class RIRDataTest extends TestCase {
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]
 				);
 
-		$this->setupAndCheckDbEntriesCalled();
+		$this->setupAndCheckDbEntriesCalled($bit_64_ok);
 
 		$this->assertFalse($this->rir_data->updateDatabase());
 	}
@@ -608,6 +654,7 @@ class RIRDataTest extends TestCase {
 	 */
 	public function testIsUpdateDatabaseErrorRirFormatOk(int $rir_status_before,
 			int $rir_status_inter, int $fileNumber) {
+		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn(true);
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
 			[RIRData::kDbVersionName, '0', '0']
@@ -787,7 +834,8 @@ class RIRDataTest extends TestCase {
 	 * @dataProvider updateableRirStatusProvider
 	 */
 	public function testIsUpdateDatabaseSuccessEntriesAlreadyExistOk(int $rir_status_before,
-			int $rir_status_inter) {
+			int $rir_status_inter, bool $bit_64_ok) {
+		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
 		$this->config->expects($this->exactly(5))->method(
 				'getServiceSpecificConfigValue')->withConsecutive(
 				[$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0')],
@@ -818,7 +866,7 @@ class RIRDataTest extends TestCase {
 			);
 	
 
-		$this->setupAndCheckDbEntriesCalled();
+		$this->setupAndCheckDbEntriesCalled($bit_64_ok);
 
 		$this->assertTrue($this->rir_data->updateDatabase());
 	}
@@ -1036,15 +1084,39 @@ class RIRDataTest extends TestCase {
 	}
 
 	public function initializableRirStatusProvider(): array {
-		return [
-			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized,
-				RIRStatus::kDbInitilazing],
-			"kDbError" => [RIRStatus::kDbError,RIRStatus::kDbInitilazing]];
+		$ret = [];
+		$states = [[RIRStatus::kDbNotInitialized, RIRStatus::kDbInitilazing],
+			[RIRStatus::kDbError,RIRStatus::kDbInitilazing]];
+		$bit_64_oks = [true, false];
+
+		foreach ($states as $state) {
+			$line1 = $state;
+			foreach ($bit_64_oks as $bit_64_ok) {
+				$line2 = $line1;
+				array_push($line2,$bit_64_ok);
+				array_push($ret,$line2);
+			}
+		}
+
+		return $ret;
 	}
 
 	public function updateableRirStatusProvider(): array {
-		return ["kDbOk" => [RIRStatus::kDbOk,RIRStatus::kDbUpdating],
-			"kDbOkButError" => [RIRStatus::kDbOkButError,RIRStatus::kDbUpdating]];
+		$ret = [];
+		$states = [ [RIRStatus::kDbOk,RIRStatus::kDbUpdating],
+			[RIRStatus::kDbOkButError,RIRStatus::kDbUpdating]];
+		$bit_64_oks = [true, false];
+
+		foreach ($states as $state) {
+			$line1 = $state;
+			foreach ($bit_64_oks as $bit_64_ok) {
+				$line2 = $line1;
+				array_push($line2,$bit_64_ok);
+				array_push($ret,$line2);
+			}
+		}
+
+		return $ret;
 	}
 
 	public function nonUpdateableRirStatusProvider(): array {
@@ -1053,14 +1125,31 @@ class RIRDataTest extends TestCase {
 	}
 
 	public function validIpProvider(): array {
-		return [ ['2a02:2e0:3fe:1001:302::', true, 'DE', '0', strval(RIRStatus::kDbOk)],
-			['24.165.23.67', false, 'US', '0', strval(RIRStatus::kDbOk)],
-			['2a02:2e0:3fe:1001:302::', true, 'DE', '1', strval(RIRStatus::kDbOk)],
-			['24.165.23.67', false, 'US', '1', strval(RIRStatus::kDbOk)],
-			['2a02:2e0:3fe:1001:302::', true, 'DE', '0', strval(RIRStatus::kDbUpdating)],
-			['24.165.23.67', false, 'US', '0', strval(RIRStatus::kDbUpdating)],
-			['2a02:2e0:3fe:1001:302::', true, 'DE', '1', strval(RIRStatus::kDbUpdating)],
-			['24.165.23.67', false, 'US', '1', strval(RIRStatus::kDbUpdating)]];
+		$ret = [];
+		$ips = [['2a02:2e0:3fe:1001:302::', true, 'DE'],
+			['24.165.23.67', false, 'US']];
+		$versions = ['0','1'];
+		$states = [strval(RIRStatus::kDbOk), strval(RIRStatus::kDbUpdating)];
+		$bit_64_oks = [true, false];
+
+		foreach ($ips as $ip_array) {
+			$line1 = $ip_array;
+			foreach ($versions as $version) {
+				$line2 = $line1;
+				array_push($line2,$version);
+				foreach ($states as $state) {
+					$line3 = $line2;
+					array_push($line3,$state);
+					foreach ($bit_64_oks as $bit_64_ok) {
+						$line4 = $line3;
+						array_push($line4,$bit_64_ok);
+						array_push($ret,$line4);
+					}
+				}
+			}
+		}
+
+		return $ret;
 	}
 
 	public function invalidIpProvider(): array {
@@ -1171,7 +1260,7 @@ class RIRDataTest extends TestCase {
 					'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
 	}
 
-	private function setupAndCheckDbEntriesCalled(): void {
+	private function setupAndCheckDbEntriesCalled(bool $ip_v6_ok = true): void {
 		$this->rir_data->setDataSource(
 				['afrinic' => $this->rir_data_test_file]);
 
@@ -1195,23 +1284,29 @@ class RIRDataTest extends TestCase {
 			array_push($db_entries, $db_entry);
 		}
 
-		foreach ($inputsV6 as $input) {
-			$parts = explode('|', $input);
-			$db_entry = new RIRServiceDBEntity();
-			$db_entry->setBeginIpRange(
+		if ($ip_v6_ok) {
+			foreach ($inputsV6 as $input) {
+				$parts = explode('|', $input);
+				$db_entry = new RIRServiceDBEntity();
+				$db_entry->setBeginIpRange(
 					RIRServiceMapper::ipv6String2Int64($parts[3]));
-			$db_entry->setCountryCode($parts[1]);
-			$db_entry->setLengthIpRange(pow(2, 64 - intval($parts[4])));
-			$db_entry->setIsIpV6(true);
-			$db_entry->setVersion(0);
-			array_push($db_entries, $db_entry);
-		}
+				$db_entry->setCountryCode($parts[1]);
+				$db_entry->setLengthIpRange(pow(2, 64 - intval($parts[4])));
+				$db_entry->setIsIpV6(true);
+				$db_entry->setVersion(0);
+				array_push($db_entries, $db_entry);
+			}
 
-		$this->rir_service_mapper->expects($this->exactly(4))->method('insert')->withConsecutive(
+			$this->rir_service_mapper->expects($this->exactly(4))->method('insert')->withConsecutive(
 				[$this->equalTo($db_entries[0])],
 				[$this->equalTo($db_entries[1])],
 				[$this->equalTo($db_entries[2])],
 				[$this->equalTo($db_entries[3])]);
+		} else {
+			$this->rir_service_mapper->expects($this->exactly(2))->method('insert')->withConsecutive(
+				[$this->equalTo($db_entries[0])],
+				[$this->equalTo($db_entries[1])]);
+		}
 	}
 
 	private function setupAndCheckDbEntriesNotCalled(string $file): void {
