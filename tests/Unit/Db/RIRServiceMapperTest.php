@@ -45,6 +45,11 @@ class RIRServiceMapperTest extends TestCase {
 		$ip2 = "ABCD:1234:4312:DBCA:FFFF:EEEE:1111:5555";
 		
 		$this->assertEquals(RIRServiceMapper::ipv6String2Int64($ip2), RIRServiceMapper::ipv6String2Int64($ip));
+
+		$ip = "0:0:0:1::";
+		$ip2 = "0:0:0:0001::";
+		
+		$this->assertEquals(RIRServiceMapper::ipv6String2Int64($ip2), RIRServiceMapper::ipv6String2Int64($ip));
 	}
 
 	public function callbackLTJustRouteThrough(string $in): string {
