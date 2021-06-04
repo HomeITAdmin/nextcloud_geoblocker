@@ -15,6 +15,8 @@ $loading = $l->t('Loading').'...';
 		</p>
 		<p><?php p($l->t('Login attempts from local network IP addresses are never blocked, delayed or logged.')); ?>
 		</p>
+		<p><?php p($l->t('In the current implementation the login page is normally shown to everybody independend of the country. Also login attempts with a non existing user are failing as usual independend of the country.')); ?>
+		</p>
 		<p><?php p($l->t('Wrong Nextcloud configuration (especially in container) can lead to all accesses seem to come from a local network IP address.')); ?>
 		</p>
 		<p><?php p($l->t('If you are accessing from external network, this should be an external IP address: ')); p($_['ipAddress']); p(' ');
