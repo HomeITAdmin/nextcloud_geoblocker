@@ -9,9 +9,9 @@ This is a server side app for a [Nextcloud](https://nextcloud.com/) instance.
 This is a front end to geo localization services, that allows blocking (beta),
 delaying (beta) and logging of login attempts from specified countries.
 Login attempts from local network IP addresses are never blocked, delayed or logged.
-In the current implementation the login page is normally shown to everybody independend
+In the current implementation the login page is normally shown to everybody independent
 of the country. Also login attempts with a non existing user are failing as usual
-independend of the country.
+independent of the country.
 Wrong Nextcloud configuration (especially in container) can lead to all access
 seems to come from local network IP address.
 Determination of the country from IP address is only as good as the chosen service.
