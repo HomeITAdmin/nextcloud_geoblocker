@@ -143,7 +143,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 					if ($this->rir_data_checks->check64Bit()) {
 						return $service_string_ok . '.';
 					} else {
-						return $service_string_ok . ': ' . $this->l->t('But IPv6 is only working on at least 64 bit systems. When upgrading the system from below 64bit remember to update the DB again.');
+						return $service_string_ok . ': ' . $this->l->t('IPv6 works only on 64-bit (or higher) systems. When upgrading the system to 64-bit remember to update the DB again.');
 					}
 				} elseif ($status_id == RIRStatus::kDbUpdating) {
 					return $service_string_ok . ': ' .
