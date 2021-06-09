@@ -172,7 +172,7 @@ class RIRDataTest extends TestCase {
 				'getNumberOfEntries')->willReturn(1000);
 
 		if ($rir_status == RIRStatus::kDbOk) {
-			$result = '"RIR Data": OK: But IPv6 is only working on at least 64 bit systems.';
+			$result = '"RIR Data": OK: IPv6 works only on 64-bit (or higher) systems.';
 		} else {
 			$result = '"RIR Data": OK';
 		}
@@ -1054,7 +1054,7 @@ class RIRDataTest extends TestCase {
 		if ($bit_64_ok) {
 			$this->assertEquals('', $this->rir_data->getDatabaseUpdateStatusString());
 		} else {
-			$this->assertEquals('But IPv6 is not included on systems with less then 64 bit.', $this->rir_data->getDatabaseUpdateStatusString());
+			$this->assertEquals('IPv6 is not included on systems with less then 64-bit.', $this->rir_data->getDatabaseUpdateStatusString());
 		}
 	}
 
