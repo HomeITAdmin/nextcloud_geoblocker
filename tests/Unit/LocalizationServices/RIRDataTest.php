@@ -1054,7 +1054,7 @@ class RIRDataTest extends TestCase {
 		if ($bit_64_ok) {
 			$this->assertEquals('', $this->rir_data->getDatabaseUpdateStatusString());
 		} else {
-			$this->assertEquals('IPv6 is not included on systems with less then 64-bit.', $this->rir_data->getDatabaseUpdateStatusString());
+			$this->assertEquals('IPv6 is not included on systems with less than 64-bit.', $this->rir_data->getDatabaseUpdateStatusString());
 		}
 	}
 
