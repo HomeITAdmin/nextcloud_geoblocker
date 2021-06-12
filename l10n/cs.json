@@ -39,6 +39,7 @@
     "Invalid file handle for region \"%s\". Probably the internet connection got lost during the update." : "Neplatná obsluha souboru pro oblast „%s“. Pravděpodobně při aktualizaci došlo k výpadku připojení k Internetu.",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "v php.ini je třeba povolit „allow_url_fopen“.",
     "Internet connection needs to be available." : "Je třeba, aby bylo k dispozici připojení k Internetu.",
+    "IPv6 is not included on systems with less than 64-bit." : "IPv6 není obsaženo na systémech, které jsou méně než 64-bit.",
     "Current number of entries:" : "Stávající počet položek:",
     "Update in undefined state. Please complain to the developer." : "Aktualizace v nedefinovaném stavu. Prosím obraťte se na vývojáře.",
     "GeoBlocker" : "Geoblokace",

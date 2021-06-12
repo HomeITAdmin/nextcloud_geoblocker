@@ -41,6 +41,7 @@ OC.L10N.register(
     "Invalid file handle for region \"%s\". Probably the internet connection got lost during the update." : "Ungültiges Dateihandle für die Region \"%s\". Wahrscheinlich ist die Internetverbindung während der Aktualisierung verloren gegangen.",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "\"allow_url_fopen\" muss in php.ini zugelassen werden.",
     "Internet connection needs to be available." : "Internetverbindung muss verfügbar sein.",
+    "IPv6 is not included on systems with less than 64-bit." : "IPv6 ist auf Systemen mit niedriger als 64 Bit nicht enthalten.",
     "Current number of entries:" : "Aktuelle Anzahl von Einträgen:",
     "Update in undefined state. Please complain to the developer." : "Aktualisierung hat einen unbekannten Zustand. Bitte kontaktieren Sie den Entwickler.",
     "GeoBlocker" : "GeoBlocker",
