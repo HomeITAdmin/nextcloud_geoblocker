@@ -39,6 +39,7 @@
     "Invalid file handle for region \"%s\". Probably the internet connection got lost during the update." : "區域「%s」的檔案錯誤。這可能是因為在更新時的網路連線中斷造成。",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "在\"php.ini\"內需要允許\"allow_url_fopen\"。",
     "Internet connection needs to be available." : "需要可用的網路連線。",
+    "IPv6 is not included on systems with less than 64-bit." : "低於 64 位元的系統不包含 IPv6。",
     "Current number of entries:" : "當前實體數量：",
     "Update in undefined state. Please complain to the developer." : "更新處於一個未定義的狀態，請向開發人員抱怨。",
     "GeoBlocker" : "GeoBlocker",
