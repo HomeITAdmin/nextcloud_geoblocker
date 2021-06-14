@@ -38,12 +38,12 @@ jobs:
       - name: Configure server with app
         uses: SMillerDev/nextcloud-actions/setup-nextcloud-app@main
         with:
-          app: 'news'
+          app: 'geoblocker'
           check-code: true
 
-      - name: Setup problem matchers for PHPUnit
-        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
-
+#      - name: Setup problem matchers for PHPUnit
+#        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+#
 #      - name: Prep PHP tests
 #        working-directory: ../server/apps/news
 #        run: make php-test-dependencies
