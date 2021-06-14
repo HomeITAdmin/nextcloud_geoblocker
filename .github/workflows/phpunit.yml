@@ -50,7 +50,7 @@ jobs:
 #        run: make php-test-dependencies
 #        
       - name: Unittests
-        working-directory: ../server/apps/news
+        working-directory: ../server/apps/geoblocker
         run: ./runtest.sh
 #        run: make unit-test
 #        
