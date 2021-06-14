@@ -39,7 +39,7 @@ jobs:
         uses: SMillerDev/nextcloud-actions/setup-nextcloud-app@main
         with:
           app: 'geoblocker'
-          check-code: true
+          check-code: false
 
 #      - name: Setup problem matchers for PHPUnit
 #        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
