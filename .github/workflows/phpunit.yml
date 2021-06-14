@@ -2,10 +2,6 @@ name: PHPUnit Tests
 
 on:
   workflow_dispatch:
-  
-name: PHP Tests
-on:
-  pull_request
 
 jobs:
   php:
