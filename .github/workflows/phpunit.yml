@@ -49,8 +49,9 @@ jobs:
 #        working-directory: ../server/apps/news
 #        run: make php-test-dependencies
 #        
-#      - name: Unittests
-#        working-directory: ../server/apps/news
+      - name: Unittests
+        working-directory: ../server/apps/news
+        run: ./runtest.sh
 #        run: make unit-test
 #        
 #      - name: Upload codecoverage
