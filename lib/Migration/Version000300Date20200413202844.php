@@ -45,7 +45,7 @@ class Version000300Date20200413202844 extends SimpleMigrationStep {
 					['autoincrement' => true,'notnull' => true]);
 			$table->addColumn('begin_ip_range', 'bigint', ['notnull' => true]);
 			$table->addColumn('length_ip_range', 'bigint', ['notnull' => true]);
-			$table->addColumn('is_ip_v6', 'boolean', ['notnull' => true]);
+			$table->addColumn('is_ip_v6', 'boolean', ['notnull' => false]);
 			$table->addColumn('country_code', 'string',
 					['notnull' => true,'length' => 2]);
 			$table->addColumn('version', 'integer', ['notnull' => true]);
