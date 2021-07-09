@@ -14,6 +14,7 @@ OC.L10N.register(
     "Date of the database cannot be determined!" : "Dátum databázy nie je možné určiť!",
     "local" : "miestna",
     "default" : "predvolené",
+    "ERROR: Country cannot be found." : "CHYBA: Krajina nebola nájdená.",
     "No entries in the database. Please run update." : "V databáze nie sú žiadne záznamy. Spustite aktualizáciu.",
     "ERROR:" : "CHYBA:",
     "Last error message:" : "Posledná chybová správa:",
