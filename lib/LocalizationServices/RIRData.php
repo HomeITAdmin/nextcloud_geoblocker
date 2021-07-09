@@ -440,7 +440,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 				return '';
 			case LocationServiceUpdateStatus::kUpdatePossible:
 				if (!$this->rir_data_checks->check64Bit()) {
-					return $this->l->t('IPv6 is not included on systems with less then 64-bit.');
+					return $this->l->t('IPv6 is not included on systems with less than 64-bit.');
 				} else {
 					return '';
 				}
