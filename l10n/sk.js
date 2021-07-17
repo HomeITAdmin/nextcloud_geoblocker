@@ -9,6 +9,7 @@ OC.L10N.register(
     "No database date available." : "Dátum databázy nie je dostupný.",
     "Database file location not available!" : "Umiestnenie súboru s databázou nie je dostupné!",
     "Update Status not available!" : "Stav aktualizácie nie je k dispozícii!",
+    "OK. This service always returns \"%s\" for \"Country not found\"." : "Ok. Táto služba vždy vráti \"%s\" pre „Krajina sa nenašla“.",
     "OK." : "OK.",
     "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "CHYBA: Zdá sa, že služba nie je nainštalovaná na hostiteľovi servera Nextcloud alebo nie je dostupná pre webový server, alebo je nesprávne nastavená (je k dispozícii databáza pre IPv4 a IPv6 ?!). Možno je použitie php funkcie exec () v php.ini zakázané.",
     "Date of the database cannot be determined!" : "Dátum databázy nie je možné určiť!",
