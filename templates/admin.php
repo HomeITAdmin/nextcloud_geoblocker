@@ -19,7 +19,7 @@ $loading = $l->t('Loading').'...';
 		</p>
 		<p><?php p($l->t('Wrong Nextcloud configuration (especially in container) can lead to all accesses seem to come from a local network IP address.')); ?>
 		</p>
-		<p><?php p($l->t('If you are accessing from external network, this should be an external IP address: ')); p($_['ipAddress']); p(' ');
+		<p><?php p($l->t('If you are accessing from external network, this should be an external IP address:')); p(' '); p($_['ipAddress']); p(' ');
 		if (GeoBlocker::isIPAddressLocal($_['ipAddress'])) {
 			p($l->t('is local.'));
 		} else {
@@ -76,7 +76,7 @@ $loading = $l->t('Loading').'...';
 				<?php p($l->t('Configuration of the chosen service: ')); ?>
 			</p>
 			<div class="subsection" id="database-path" style="display:none">
-				<?php p($l->t('Location of the database: '));?>
+				<?php p($l->t('Location of the database (full path including the file name):')); p(' ');?>
 				<input class="path-input" type="text" size="50" id="database-path-string"
 					value="<?php p($loading); ?>">
 			</div>

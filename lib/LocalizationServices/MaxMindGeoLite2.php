@@ -71,7 +71,7 @@ class MaxMindGeoLite2 implements
 				$this->l->t('ERROR: Invalid Argument.');
 		} catch (DatabaseReaderNotFoundException $e) {
 			return $service_string .
-				$this->l->t('ERROR: "geoip2.phar" does not seem to be place correctly or do not have the correct access rights.');
+				$this->l->t('ERROR: "geoip2.phar" does not seem to be placed correctly or does not have the correct access rights.');
 		}
 	}
 

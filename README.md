@@ -104,7 +104,7 @@ Using the MaxMind GeoLite2 PHP API:
       - Add the API key information to "/etc/GeoIP.conf"
       - run `sudo geoipupdate`
   - Make sure you have the right database path configured in the Geoblocker Settings
-  page.
+  page (it must be the full path including the filename e.g. "/var/lib/GeoIP/GeoLite2-Country.mmdb").
   - For Docker user: See
   [#20](https://github.com/HomeITAdmin/nextcloud_geoblocker/issues/20)
   how to use a seperate container to do the update of the database.
@@ -116,7 +116,7 @@ Using the MaxMind GeoLite2 PHP API:
   - Installation efforts needed from the administrator.
 
 If Geoblocker is insisting on that there is an error in the installation the following
-my help:
+may help:
 
 - Open a shell and go to the folder of the geoip2.phar.
 - Start an interactive php shell:
@@ -129,6 +129,10 @@ include 'geoip2.phar'; use GeoIp2\Database\Reader; $reader = new Reader('%ABSOLU
 ```
 
 - This should either give you "US" as output or an hopefully helpful error message.
+- There are still cases where the database cannot be accessed. This is maybe caused
+  by additional security features like SELinux or AppArmor. Try putting the database
+  file into the same directory as the "geoip2.phar" file in "3rdparty/maxmind_geolite2/"
+  and configure the full path on the settings page accordingly.
 
 ### Data from Regional Internet Registries (RIRs)
 
