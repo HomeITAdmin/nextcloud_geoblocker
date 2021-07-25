@@ -23,7 +23,6 @@ OC.L10N.register(
     "Status of the chosen service: " : "מצב השירות הנבחר:",
     "Date of the database: " : "תאריך מסד הנתונים:",
     "Configuration of the chosen service: " : "הגדרת השירות הנבחר:",
-    "Location of the database: " : "מיקום מסד הנתונים:",
     "Country Selection" : "בחירת מדינות",
     "Choose the selection mode" : "אופן בחירה מועדף",
     "Select countries from list" : "נא לבחור ארצות מהרשימה",

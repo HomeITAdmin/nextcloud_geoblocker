@@ -19,7 +19,6 @@ OC.L10N.register(
     "Loading" : "Įkeliama",
     "Status of the chosen service: " : "Pasirinktos tarnybos būsena: ",
     "Date of the database: " : "Duomenų bazės data: ",
-    "Location of the database: " : "Duomenų bazės vieta: ",
     "Country Selection" : "Šalių pasirinkimas",
     "Choose the selection mode" : "Pasirinkite pasirinkimo veikseną",
     "Reaction" : "Reakcija",

@@ -29,7 +29,6 @@ OC.L10N.register(
     "Status of the chosen service: " : "Valitun palvelun tila:",
     "Date of the database: " : "Tietokannan päiväys:",
     "Configuration of the chosen service: " : "Valitun palvelun määritys:",
-    "Location of the database: " : "Tietokannan sijainti:",
     "Update Database" : "Päivitä tietokanta",
     "Country Selection" : "Maavalinta",
     "Select countries from list" : "Valitse maat luettelosta",

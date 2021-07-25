@@ -21,7 +21,6 @@ OC.L10N.register(
     "Status of the chosen service: " : "Staða valinnar þjónustu: ",
     "Date of the database: " : "Dagsetning gagnagrunns",
     "Configuration of the chosen service: " : "Uppsetning valinnar þjónustu: ",
-    "Location of the database: " : "Staðsetning gagnagrunns: ",
     "Update Database" : "Uppfæra gagnagrunn",
     "Country Selection" : "Val á landi",
     "Choose the selection mode" : "Veldu valham",

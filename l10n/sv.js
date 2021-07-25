@@ -40,7 +40,6 @@ OC.L10N.register(
     "Status of the chosen service: " : "Status för den valda tjänsten:",
     "Date of the database: " : "Databasens datum:",
     "Configuration of the chosen service: " : "Konfigurera den valda tjänsten:",
-    "Location of the database: " : "Databasens plats:",
     "Update Database" : "Uppdatera databas",
     "Country Selection" : "Välj land",
     "Choose the selection mode" : "Välj urvalsmetod",
