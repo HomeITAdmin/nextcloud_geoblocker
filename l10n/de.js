@@ -51,6 +51,7 @@ OC.L10N.register(
     "Login attempts from local network IP addresses are never blocked, delayed or logged." : "Anmeldeversuche von IP-Adressen im lokalen Netzwerk werden nicht blockiert, verzögert oder protokolliert.",
     "In the current implementation the login page is normally shown to everybody independent of the country. Also login attempts with a non existing user are failing as usual independent of the country." : "In der aktuellen Implementierung wird die Anmeldeseite normalerweise länderunabhängig jedem angezeigt. Auch Anmeldeversuche mit einem nicht existierenden Benutzer scheitern wie üblich länderunabhängig.",
     "Wrong Nextcloud configuration (especially in container) can lead to all accesses seem to come from a local network IP address." : "Falsche Konfiguration der Nextcloud (insbesondere in Containern) kann dazu führen, dass alle Zugriffe scheinbar von der IP-Adresse des lokalen Netzwerks kommen.",
+    "If you are accessing from external network, this should be an external IP address:" : "Wenn Du von einem externen Netzwerk aus zugreifst, sollte  dies eine externe Adresse sein:",
     "is local." : "ist lokal.",
     "is external." : "ist extern.",
     "Determination of the country from IP address is only as good as the chosen service." : "Die Bestimmung des Landes aus der IP-Adresse ist nur so gut wie der gewählte Dienst.",
