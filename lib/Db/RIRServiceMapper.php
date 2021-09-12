@@ -77,11 +77,11 @@ class RIRServiceMapper extends QBMapper {
 
 	public function getNumberOfEntries(int $version = -1): int {
 		$qb = $this->db->getQueryBuilder();
-		$qb->select($qb->func()->count('*'))->from($this->getTableName());
+		$qb->selectAlias($qb->func()->count('*'),'count')->from($this->getTableName());
 		if ($version >= 0) {
 			$qb->where($qb->expr()->eq('version', $qb->createNamedParameter(strval($version))));
 		}
 		$res = $this->findOneQuery($qb);
-		return intval($res['COUNT(*)']);
+		return intval($res['count']);
 	}
 }
