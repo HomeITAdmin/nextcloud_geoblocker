@@ -23,6 +23,8 @@ OC.L10N.register(
     "No entries in the database. Please run update." : "V podatkovni zbirki ni vpisov. Zaženite posodobitev.",
     "ERROR:" : "NAPAKA:",
     "OK" : "V redu",
+    "The database is currently updating. During the update the service can be used with the last valid data." : "Trenutno poteka posodabljanje podatkovne zbirke, a je storitve kljub temu mogoče uporabljati z nazadnje veljavnimi podatki.",
+    "The last update try ended in an error but the service can be used with the last valid data." : "Zadnja posodobitev se je sicer končala z napako, a je storitve kljub temu mogoče uporabljati z nazadnje veljavnimi podatki.",
     "Last error message:" : "Zadnje sporočilo o napaki:",
     "PHP GMP Extension needs to be installed." : "Nameščena mora biti razširitev PHP GMP.",
     "The database is not initialized. Please run update." : "Podatkovna zbirka še ni pripravljena. Zaženite posodobitev.",
