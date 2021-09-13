@@ -50,6 +50,7 @@ class RIRServiceMapperDBTest extends TestCase {
 		$db_entry->setVersion(RIRServiceMapperDBTest::kUsedTestVersion);
 		$this->rir_mapper->insert($db_entry);
 
+		$this->assertEquals($this->rir_mapper->getNumberOfEntries(RIRServiceMapperDBTest::kUsedTestVersion), 2);
 		$this->assertEquals($this->rir_mapper->getCountryCodeFromIpv4(RIRServiceMapper::ipv4String2Int64('24.165.23.67'), RIRServiceMapperDBTest::kUsedTestVersion), 'US');
 		$this->assertEquals($this->rir_mapper->getCountryCodeFromIpv6(RIRServiceMapper::ipv6String2Int64('2a02:2e0:3fe:1001:302::'), RIRServiceMapperDBTest::kUsedTestVersion), 'DE');
 
