@@ -21,6 +21,7 @@ OC.L10N.register(
     "No database available!" : "Tietokantaa ei ole käytettävissä!",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "\"allow_url_fopen\" tulee olla sallittu php.ini:ssä.",
     "Internet connection needs to be available." : "Internetyhteys tulee olla käytettävissä.",
+    "Current number of entries:" : "Nykyisten tietuiden määrä:",
     "Loading" : "Ladataan",
     "is local." : "on paikallinen.",
     "is external." : "on ulkoinen.",
