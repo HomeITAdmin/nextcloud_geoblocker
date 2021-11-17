@@ -159,7 +159,8 @@ appstore:
 	fi
 
 .PHONY: unit-test
-unit-test:	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.xml
+unit-test:	
+	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c $(CURDIR)/phpunit.xml
 	
 .PHONY: test
 test: 	make unit-test
@@ -170,3 +171,4 @@ prepare-test:
 	make composer
 	rm -R $(CURDIR)/../../3rdparty/nikic/php-parser/
 	cp -R $(CURDIR)/vendor/nikic/php-parser/ $(CURDIR)/../../3rdparty/nikic/
+	wget https://github.com/maxmind/GeoIP2-php/releases/latest/download/geoip2.phar -O 3rdparty/maxmind_geolite2/geoip2.phar
