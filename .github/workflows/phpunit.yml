@@ -49,10 +49,9 @@ jobs:
         working-directory: ../server/apps/geoblocker
         run: make prepare-test
         
-      - name: Unittests
+      - name: Unit-Tests
         working-directory: ../server/apps/geoblocker
-        run: ./runtest.sh
-#        run: make unit-test
+        run: make unit-test
 #        
 #      - name: Upload codecoverage
 #        working-directory: ../server/apps/news
