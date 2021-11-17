@@ -161,6 +161,11 @@ appstore:
 	fi
 
 .PHONY: test
-test: composer
-	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.xml
+test:	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.xml
 	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.integration.xml
+
+.PHONY: prepare-test
+prepare-test: 
+	composer
+	rm ../../3rdparty/nikic/php-parser/
+	cp -R vendor/nikic/php-parser/ ../../3rdparty/nikic/
