@@ -1,7 +1,5 @@
 # This file is licensed under the Affero General Public License version 3 or
 # later. See the COPYING file.
-# @author Bernhard Posselt <dev@bernhard-posselt.com>
-# @copyright Bernhard Posselt 2016
 
 # Generic Makefile for building and packaging a Nextcloud app which uses npm and
 # Composer.
@@ -160,9 +158,12 @@ appstore:
 		openssl dgst -sha512 -sign $(cert_dir)/$(app_name).key $(build_dir)/$(app_name)-$(version).tar.gz | openssl base64; \
 	fi
 
+.PHONY: unit-test
+unit-test:	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.xml
+	
 .PHONY: test
-test:	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.xml
-	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.integration.xml
+test: 	make unit-test
+	
 
 .PHONY: prepare-test
 prepare-test: 
