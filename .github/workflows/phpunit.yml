@@ -45,10 +45,10 @@ jobs:
 #      - name: Setup problem matchers for PHPUnit
 #        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 #
-#      - name: Prep PHP tests
-#        working-directory: ../server/apps/news
-#        run: make php-test-dependencies
-#        
+      - name: Prep PHP tests
+        working-directory: ../server/apps/geoblocker
+        run: make prepare-test
+        
       - name: Unittests
         working-directory: ../server/apps/geoblocker
         run: ./runtest.sh
