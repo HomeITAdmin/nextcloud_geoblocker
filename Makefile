@@ -166,6 +166,6 @@ test:	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.xml
 
 .PHONY: prepare-test
 prepare-test: 
-	composer
-	rm ../../3rdparty/nikic/php-parser/
-	cp -R vendor/nikic/php-parser/ ../../3rdparty/nikic/
+	make composer
+	rm -R $(CURDIR)/../../3rdparty/nikic/php-parser/
+	cp -R $(CURDIR)/vendor/nikic/php-parser/ $(CURDIR)/../../3rdparty/nikic/
