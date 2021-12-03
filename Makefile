@@ -45,7 +45,7 @@ source_package_name=$(source_build_directory)/$(app_name)
 cert_dir=$(build_dir)/cert
 npm=$(shell which npm 2> /dev/null)
 composer=$(shell which composer 2> /dev/null)
-version=0.5.1
+version=0.5.2
 
 all: build
 
