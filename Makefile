@@ -83,10 +83,11 @@ endif
 # Installs npm dependencies
 .PHONY: npm
 npm:
-ifeq (,$(wildcard $(CURDIR)/package.json))
-	cd js && $(npm) build
+ifneq (, $(npm))
+	cd js && $(npm) run build
 else
-	npm build
+	@echo "npm command not available, please install nodejs first"
+	@exit 1
 endif
 
 # Removes the appstore build
