@@ -114,9 +114,10 @@ Using the MaxMind GeoLite2 PHP API:
 - Disadvantages
   - API key needed.
   - Installation efforts needed from the administrator.
+- Known issues
   - There are reports, that the "geoip2.phar" file gets deleted in the "3rdparty/maxmind_geolite2/"
-    folder during update of the Nextcloud instance or the Geoblocker App. Use the option to put the
-    file in the database folder then.
+    folder during update of the Nextcloud instance or the Geoblocker App. Try using the option to put the
+    file in the database folder in that case.
 
 If Geoblocker is insisting on that there is an error in the installation the following
 may help:
