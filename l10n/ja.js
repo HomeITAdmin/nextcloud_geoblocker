@@ -3,11 +3,13 @@ OC.L10N.register(
     {
     "OK." : "OK.",
     "default" : "デフォルト",
+    "ERROR: Country cannot be found." : "エラー：国が見つかりません。",
     "ERROR:" : "エラー:",
     "OK" : "OK",
     "Blocks user depending on the estimated country of thier IP address." : "IPアドレスによって推定された国に応じてユーザーをブロックします．",
     "Loading" : "読み込み中",
     "Service" : "サービス",
+    "COUNTRY NOT FOUND" : "国が見つかりません",
     "Andorra" : "アンドラ",
     "United Arab Emirates" : "アラブ首長国連邦",
     "Afghanistan" : "アフガニスタン",
