@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use OCA\GeoBlocker\LocalizationServices\LocalizationServiceFactory;
 use OCA\GeoBlocker\LocalizationServices\LocationServiceUpdateStatus;
 
-class ResetDB extends Command {
+class UpdateDB extends Command {
 
 	/** @var LocalizationServiceFactory */
 	private $ls_factory;
@@ -29,12 +29,12 @@ class ResetDB extends Command {
 	}
 
 	protected function configure(): void {
-		$this->setName('geoblocker:localization-service:reset-db')->setDescription(
-				'Reset the database for the given localization service.')->addArgument(
+		$this->setName('geoblocker:localization-service:update-db')->setDescription(
+				'Update the database for the given localization service.')->addArgument(
 				'service_id', InputArgument::OPTIONAL,
-				'The ID of the localization service, whose database will be reset. If not given the current service will be used.');
+				'The ID of the localization service, whose database will be updated. If not given the current service will be used.');
 	}
-
+	
 	protected function execute(InputInterface $input, OutputInterface $output): void {
 		$this->output = $output;
 		if ($input->getArgument('service_id') == null) {
@@ -44,20 +44,20 @@ class ResetDB extends Command {
 		}
 
 		if (! $this->ls_factory->hasDatabaseUpdateByID($service_id)) {
-			$this->logError('The database of this service cannot be reset.');
+			$this->logError('The database of this service cannot be updated.');
 		} else {
-			$this->logInfo('Starting reset of the database.');			
+			$this->logInfo('Starting update of the database. This may take very long.');
 			$loc_service = $this->ls_factory->getLocationServiceByID($service_id);
-			if ($loc_service->resetDatabase()) {
+			if ($loc_service->updateDatabase()) {
 				if ($loc_service->getDatabaseUpdateStatus() ==
 						LocationServiceUpdateStatus::kUpdatePossible &&
-						! $loc_service->getStatus()) {
-					$this->logInfo('Reset was successful.');
+						$loc_service->getStatus()) {
+					$this->logInfo('Update was successful.');
 				} else {
-					$this->logError('There was a problem when reseting the database. Service is not in correct status.');
+					$this->logError('There was a problem when updating the database. Service is not in the correct status afterwards.');
 				}
 			} else {
-				$this->logError('There was a problem when reseting the database. Reset function returned false.');
+				$this->logError('There was a problem when updating the database. Update function returned false. Update Status: ' . $loc_service->getDatabaseUpdateStatusString());
 			}
 		}
 
