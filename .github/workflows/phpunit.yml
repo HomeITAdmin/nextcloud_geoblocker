@@ -46,7 +46,7 @@ jobs:
 #        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 #
       - name: Prep Maxmind
-        run: sudo apt-get update && sudo apt-get install geoipupdate && echo ${{ secrets.GEOIP_CONF }} > /etc/GeoIP.conf && geoipupdate
+        run: sudo apt-get update && sudo apt-get install geoipupdate && echo "${{ secrets.GEOIP_CONF }}" > /etc/GeoIP.conf && geoipupdate
 
       - name: Prep PHP tests
         working-directory: ../server/apps/geoblocker
@@ -59,3 +59,6 @@ jobs:
 #      - name: Upload codecoverage
 #        working-directory: ../server/apps/news
 #        run: bash <(curl -s https://codecov.io/bash) -f build/php-unit.clover -N ${{ github.sha }}
+
+      - name: Clean up
+        run: rm /etc/GeoIP.conf
