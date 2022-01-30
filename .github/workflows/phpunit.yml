@@ -48,7 +48,7 @@ jobs:
       - name: Prep Maxmind
         run: sudo apt-get update && sudo apt-get install geoipupdate && sudo cat >/etc/GeoIP.conf << EOL
           "${{ secrets.GEOIP_CONF }}"
-          EOL && sudo geoipupdate
+          EOL
 
       - name: Prep PHP tests
         working-directory: ../server/apps/geoblocker
