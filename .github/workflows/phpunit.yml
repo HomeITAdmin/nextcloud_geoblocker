@@ -46,8 +46,7 @@ jobs:
 #        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 #
       - name: Prep Maxmind
-        run: sudo apt-get update && \
-              sudo apt-get install geoipupdate
+        run: sudo apt-get update && sudo apt-get install geoipupdate && geeoipupdate
 
       - name: Prep PHP tests
         working-directory: ../server/apps/geoblocker
