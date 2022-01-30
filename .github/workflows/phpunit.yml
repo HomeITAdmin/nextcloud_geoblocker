@@ -12,7 +12,8 @@ jobs:
       matrix:
         php-versions: ['7.4', '8.0']
         nextcloud: ['stable20', 'stable21', 'stable22', 'stable23']
-        database: ['sqlite', 'pgsql', 'mysql']
+        #database: ['sqlite', 'pgsql', 'mysql']
+        database: ['sqlite']
         experimental: [false]
     steps:
       - name: Checkout
