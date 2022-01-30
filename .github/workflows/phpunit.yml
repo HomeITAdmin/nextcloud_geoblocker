@@ -10,9 +10,9 @@ jobs:
     name: "PHP: Nextcloud ${{ matrix.nextcloud }} - PHP ${{ matrix.php-versions }} - DB ${{ matrix.database }}"
     strategy:
       matrix:
-        php-versions: ['7.4']
-        nextcloud: ['stable20']
-        database: ['sqlite']
+        php-versions: ['7.4', '8.0']
+        nextcloud: ['stable20', 'stable21', 'stable22', 'stable23']
+        database: ['sqlite', 'pgsql', 'mysql']
         experimental: [false]
     steps:
       - name: Checkout
