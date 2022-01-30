@@ -45,6 +45,9 @@ jobs:
 #      - name: Setup problem matchers for PHPUnit
 #        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 #
+      - name: Secret Test
+        run: echo ${{ secrets.TEST_SECRET }}
+
       - name: Prep PHP tests
         working-directory: ../server/apps/geoblocker
         run: make prepare-test
