@@ -2,6 +2,13 @@ name: PHPUnit Tests
 
 on:
   workflow_dispatch:
+  
+env:
+  POSTGRES_PASSWORD: nc_test_db
+  MYSQL_USER: nc_test
+  MYSQL_PASSWORD: nc_test_db
+  MYSQL_DATABASE: nc_test
+  MYSQL_PORT: 3800
 
 jobs:
   php:
@@ -26,12 +33,51 @@ jobs:
           extensions: pdo_sqlite,pdo_mysql,pdo_pgsql,gd,zip
           coverage: pcov
           
-      - name: Set up server non MySQL
+      #- name: Set up server non MySQL
+      #  uses: SMillerDev/nextcloud-actions/setup-nextcloud@main
+      #  with:
+      #    cron: true
+      #    version: ${{ matrix.nextcloud }}
+      #    database-type: ${{ matrix.database }}
+          
+      ### MySQL specific setup
+      - name: Setup mysql
+        if: matrix.database == 'mysql'
+        uses: getong/mariadb-action@v1.1
+        with:
+          mariadb version: '10.5'
+          host port: ${{ env.MYSQL_PORT }}
+          mysql database: ${{ env.MYSQL_DATABASE }}
+          mysql root password: ${{ env.MYSQL_PASSWORD }}
+          mysql user: ${{ env.MYSQL_USER }}
+          mysql password: ${{ env.MYSQL_PASSWORD }}
+
+      - name: Set up server MySQL
+        if: matrix.database == 'mysql'
         uses: SMillerDev/nextcloud-actions/setup-nextcloud@main
         with:
-          cron: true
           version: ${{ matrix.nextcloud }}
+          cron: true
           database-type: ${{ matrix.database }}
+          database-host: 127.0.0.1
+          database-port: ${{ env.MYSQL_PORT }}
+          database-name: ${{ env.MYSQL_DATABASE }}
+          database-user: root
+          database-password: ${{ env.MYSQL_PASSWORD }}
+
+      ### Back to normal setup
+      - name: Set up server non MySQL
+        if: matrix.database != 'mysql'
+        uses: SMillerDev/nextcloud-actions/setup-nextcloud@main
+        with:
+          version: ${{ matrix.nextcloud }}
+          cron: true
+          database-type: ${{ matrix.database }}
+          database-host: localhost
+          database-port: 5432
+          database-name: postgres
+          database-user: postgres
+          database-password: ${{ env.POSTGRES_PASSWORD }}
 
       - name: Prime app build
         run: make
