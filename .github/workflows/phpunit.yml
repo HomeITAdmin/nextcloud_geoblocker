@@ -15,11 +15,23 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental }}
     name: "PHP: Nextcloud ${{ matrix.nextcloud }} - PHP ${{ matrix.php-versions }} - DB ${{ matrix.database }}"
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432 # Maps tcp port 5432 on service container to the host
     strategy:
       matrix:
         php-versions: ['7.4', '8.0']
         nextcloud: ['stable21', 'stable22', 'stable23']
-        database: ['sqlite', 'pgsql', 'mysql
+        database: ['sqlite', 'pgsql', 'mysql']
         experimental: [false]
     steps:
       - name: Checkout
