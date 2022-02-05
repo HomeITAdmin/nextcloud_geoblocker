@@ -117,7 +117,7 @@ jobs:
         
       - name: Unit and Integration Tests
         working-directory: ../server/apps/geoblocker
-        run: make test
+        run: sudo make test
 #        
 #      - name: Upload codecoverage
 #        working-directory: ../server/apps/news
