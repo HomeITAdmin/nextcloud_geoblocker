@@ -110,6 +110,10 @@ jobs:
           && sudo sed -i "s/<<ID>>/${{ secrets.MM_ID }}/g" /etc/GeoIP.conf
           && sudo sed -i "s/<<KEY>>/${{ secrets.MM_KEY }}/g" /etc/GeoIP.conf
           && sudo geoipupdate
+      
+      - name: Prep GeoIPLookup
+        run: sudo apt-get update 
+          && sudo apt-get install geoip-bin geoip-database
 
       - name: Prep PHPUnit tests
         working-directory: ../server/apps/geoblocker
