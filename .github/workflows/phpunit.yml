@@ -111,13 +111,13 @@ jobs:
           && sudo sed -i "s/<<KEY>>/${{ secrets.MM_KEY }}/g" /etc/GeoIP.conf
           && sudo geoipupdate
 
-      - name: Prep PHP tests
+      - name: Prep PHPUnit tests
         working-directory: ../server/apps/geoblocker
         run: make prepare-test
         
-      - name: Unit-Tests
+      - name: Unit and Integration Tests
         working-directory: ../server/apps/geoblocker
-        run: make unit-test
+        run: make test
 #        
 #      - name: Upload codecoverage
 #        working-directory: ../server/apps/news

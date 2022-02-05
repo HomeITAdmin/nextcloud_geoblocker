@@ -1,41 +1,14 @@
 # This file is licensed under the Affero General Public License version 3 or
 # later. See the COPYING file.
 
-# Generic Makefile for building and packaging a Nextcloud app which uses npm and
-# Composer.
-#
 # Dependencies:
 # * make
 # * which
 # * curl: used if phpunit and composer are not installed to fetch them from the web
 # * tar: for building the archive
 # * npm: for building and testing everything JS
-#
-# If no composer.json is in the app root directory, the Composer step
-# will be skipped. The same goes for the package.json which can be located in
-# the app root or the js/ directory.
-#
-# The npm command by launches the npm build script:
-#
-#    npm run build
-#
-# The npm test command launches the npm test script:
-#
-#    npm run test
-#
-# The idea behind this is to be completely testing and build tool agnostic. All
-# build tools and additional package managers should be installed locally in
-# your project, since this won't pollute people's global namespace.
-#
-# The following npm scripts in your package.json install and update the bower
-# and npm dependencies and use gulp as build system (notice how everything is
-# run from the node_modules folder):
-#
-#    "scripts": {
-#        "test": "node node_modules/gulp-cli/bin/gulp.js karma",
-#        "prebuild": "npm install && node_modules/bower/bin/bower install && node_modules/bower/bin/bower update",
-#        "build": "node node_modules/gulp-cli/bin/gulp.js"
-#    },
+# * ...
+# ...
 
 app_name=$(notdir $(CURDIR))
 build_dir=$(CURDIR)/build
@@ -162,9 +135,16 @@ appstore:
 .PHONY: unit-test
 unit-test:	
 	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c $(CURDIR)/phpunit.xml
+	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c $(CURDIR)/phpunit.special1.xml
+	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c $(CURDIR)/phpunit.special2.xml 
+	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c $(CURDIR)/phpunit.special3.xml 
+
+.PHONY: integration-test
+integration-test:
+	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c $(CURDIR)/phpunit.integration.xml
 	
 .PHONY: test
-test: 	make unit-test
+test: unit-test integration-test
 	
 
 .PHONY: prepare-test
