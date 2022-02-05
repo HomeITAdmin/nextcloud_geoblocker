@@ -2,6 +2,10 @@ name: PHPUnit Tests
 
 on:
   workflow_dispatch:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
   
 env:
   POSTGRES_PASSWORD: nc_test_db
