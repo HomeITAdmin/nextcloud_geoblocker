@@ -34,6 +34,7 @@ For help how to set up the localization services please have a look at the GitHu
 	
 	<commands>
 		<command>OCA\GeoBlocker\Command\LocalizationService\ResetDB</command>
+		<command>OCA\GeoBlocker\Command\LocalizationService\UpdateDB</command>
 		<command>OCA\GeoBlocker\Command\LocalizationService\ListServices</command>
 		<command>OCA\GeoBlocker\Command\LocalizationService\SelectService</command>
 		<command>OCA\GeoBlocker\Command\LocalizationService\ResetCountries</command>
