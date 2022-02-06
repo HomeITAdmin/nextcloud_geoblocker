@@ -48,14 +48,6 @@ jobs:
           extensions: pdo_sqlite,pdo_mysql,pdo_pgsql,gd,zip
           coverage: pcov
           
-      #- name: Set up server non MySQL
-      #  uses: SMillerDev/nextcloud-actions/setup-nextcloud@main
-      #  with:
-      #    cron: true
-      #    version: ${{ matrix.nextcloud }}
-      #    database-type: ${{ matrix.database }}
-          
-      ### MySQL specific setup
       - name: Setup mysql
         if: matrix.database == 'mysql'
         uses: getong/mariadb-action@v1.1
@@ -80,7 +72,6 @@ jobs:
           database-user: root
           database-password: ${{ env.MYSQL_PASSWORD }}
 
-      ### Back to normal setup
       - name: Set up server non MySQL
         if: matrix.database != 'mysql'
         uses: SMillerDev/nextcloud-actions/setup-nextcloud@main
@@ -101,12 +92,8 @@ jobs:
         uses: SMillerDev/nextcloud-actions/setup-nextcloud-app@main
         with:
           app: 'geoblocker'
-          #check-code: true
-          check-code: false
+          check-code: true
 
-#      - name: Setup problem matchers for PHPUnit
-#        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
-#
       - name: Prep Maxmind
         run: sudo apt-get update 
           && sudo apt-get install geoipupdate 
@@ -128,7 +115,7 @@ jobs:
         run: sudo make test
 #        
 #      - name: Upload codecoverage
-#        working-directory: ../server/apps/news
+#        working-directory: ../server/apps/geoblocker
 #        run: bash <(curl -s https://codecov.io/bash) -f build/php-unit.clover -N ${{ github.sha }}
 
       - name: Clean up
