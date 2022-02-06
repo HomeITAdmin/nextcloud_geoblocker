@@ -145,7 +145,17 @@ integration-test:
 	
 .PHONY: test
 test: unit-test integration-test
-	
+
+.PHONY: unit-test-cov
+unit-test-cov:	
+	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c $(CURDIR)/phpunit.xml --coverage-html $(CURDIR)/build/coverage_report_unit --coverage-filter $(CURDIR)/lib/
+
+.PHONY: integration-test-cov
+integration-test-cov:
+	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c $(CURDIR)/phpunit.integration.xml --coverage-html build/coverage_report_integration --coverage-filter lib/
+
+.PHONY: test-cov
+test-cov: unit-test-cov integration-test-cov
 
 .PHONY: prepare-test
 prepare-test: 
