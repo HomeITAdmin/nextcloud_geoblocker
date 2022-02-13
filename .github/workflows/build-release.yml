@@ -2,7 +2,7 @@ name: Build and publish app release
 
 on:
   release:
-      types: [published]
+      types: [released]
 
 env:
   APP_NAME: geoblocker
