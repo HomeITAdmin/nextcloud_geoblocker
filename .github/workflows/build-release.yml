@@ -1,9 +1,8 @@
 name: Build and publish app release
 
 on:
-  # workflow_dispatch:
   release:
-       types: [published]
+      types: [published]
 
 env:
   APP_NAME: geoblocker
