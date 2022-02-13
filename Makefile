@@ -15,7 +15,12 @@ build_dir=$(CURDIR)/build
 build_tools_directory=$(build_dir)/tools
 source_build_directory=$(build_dir)/artifacts/source
 source_package_name=$(source_build_directory)/$(app_name)
-cert_dir=$(build_dir)/cert
+appstore_build_directory:=$(CURDIR)/build/appstore/$(app_name)
+appstore_sign_dir=$(appstore_build_directory)/sign
+appstore_artifact_directory:=$(CURDIR)/build/artifacts/appstore
+appstore_package_name:=$(appstore_artifact_directory)/$(app_name)
+# cert_dir=$(build_dir)/cert
+cert_dir=$(HOME)/.nextcloud/certificates
 npm=$(shell which npm 2> /dev/null)
 composer=$(shell which composer 2> /dev/null)
 version=0.5.2
@@ -131,6 +136,45 @@ appstore:
 		echo "Signing package…"; \
 		openssl dgst -sha512 -sign $(cert_dir)/$(app_name).key $(build_dir)/$(app_name)-$(version).tar.gz | openssl base64; \
 	fi
+
+# Builds the source package for the app store for the github action
+.PHONY: appstore2
+appstore2:
+	rm -rf $(appstore_build_directory) $(appstore_sign_dir) $(appstore_artifact_directory) 
+	mkdir -p $(appstore_sign_dir)/$(app_name)
+	cp -r \
+	"3rdparty" \
+	"appinfo" \
+	"css" \
+	"img" \
+	"js" \
+	"l10n" \
+	"lib" \
+	"templates" \
+	"COPYING" \
+	$(appstore_sign_dir)/$(app_name)
+
+	rm -f $(appstore_sign_dir)/$(app_name)/3rdparty/maxmind_geolite2/*
+	rm -f $(appstore_sign_dir)/$(app_name)/3rdparty/rir_data/*
+	rm -f $(appstore_sign_dir)/$(app_name)/3rdparty/maxmind_geolite2/.gitkeep
+	rm -f $(appstore_sign_dir)/$(app_name)/3rdparty/rir_data/.gitkeep
+	rm -f $(appstore_sign_dir)/$(app_name)/3rdparty/.gitkeep
+
+	mkdir -p $(cert_dir)
+	php ./bin/tools/file_from_env.php "app_private_key" "$(cert_dir)/$(app_name).key"
+	php ./bin/tools/file_from_env.php "app_public_crt" "$(cert_dir)/$(app_name).crt"
+
+	@if [ -f $(cert_dir)/$(app_name).key ]; then \
+		echo "Signing app files…"; \
+		php ../../occ integrity:sign-app \
+			--privateKey=$(cert_dir)/$(app_name).key\
+			--certificate=$(cert_dir)/$(app_name).crt\
+			--path=$(appstore_sign_dir)/$(app_name); \
+		echo "Signing app files ... done"; \
+	fi
+
+	mkdir -p $(appstore_artifact_directory)
+	tar -czf $(appstore_package_name).tar.gz -C $(appstore_sign_dir) $(app_name)
 
 .PHONY: unit-test
 unit-test:	
