@@ -2,7 +2,7 @@ name: Build and publish app release
 
 on:
   release:
-      types: [released]
+      types: [published]
 
 env:
   APP_NAME: geoblocker
@@ -59,17 +59,16 @@ jobs:
           file: ../server/apps/${{ env.APP_NAME }}/build/artifacts/appstore/${{ env.APP_NAME }}.tar.gz
           asset_name: ${{ env.APP_NAME }}.tar.gz
           tag: ${{ github.ref }}
-          overwrite: false
-        ## TODO: true
+          overwrite: true
 
-      # - name: Upload app to Nextcloud appstore
-      #   uses: R0Wi/nextcloud-appstore-push-action@a011fe619bcf6e77ddebc96f9908e1af4071b9c1
-      #   with:
-      #     app_name: ${{ env.APP_NAME }}
-      #     appstore_token: ${{ secrets.APPSTORE_TOKEN }}
-      #     download_url: ${{ steps.attach_to_release.outputs.browser_download_url }}
-      #     app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
-      #     nightly: ${{ github.event.release.prerelease }}
+      - name: Upload app to Nextcloud appstore
+        uses: R0Wi/nextcloud-appstore-push-action@a011fe619bcf6e77ddebc96f9908e1af4071b9c1
+        with:
+          app_name: ${{ env.APP_NAME }}
+          appstore_token: ${{ secrets.APPSTORE_TOKEN }}
+          download_url: ${{ steps.attach_to_release.outputs.browser_download_url }}
+          app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          nightly: ${{ github.event.release.prerelease }}
 
       - name: Delete crt and key from local storage
         run: rm -f ~/.nextcloud/certificates/*
