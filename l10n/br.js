@@ -1,6 +1,7 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "OK" : "OK",
     "Loading" : "Kargañ",
     "Andorra" : "Andorra",
     "United Arab Emirates" : "Emirelezhioù Arab Unanet",

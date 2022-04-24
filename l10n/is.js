@@ -13,6 +13,7 @@ OC.L10N.register(
     "Date of the database cannot be determined!" : "Ekki hægt að ákvarða dagsetningu gagnagrunns!",
     "local" : "staðvært",
     "default" : "sjálfgefið",
+    "OK" : "Í lagi",
     "No database available!" : "Enginn gagnagrunnur tiltækur!",
     "Loading" : "Hleð inn",
     "is local." : "er staðvært.",

@@ -10,6 +10,7 @@ OC.L10N.register(
     "default" : "בררת מחדל",
     "No entries in the database. Please run update." : "אין רשומות במסד הנתונים. נא להריץ עדכון.",
     "ERROR:" : "שגיאה:",
+    "OK" : "אישור",
     "Last error message:" : "הודעת שגיאה אחרונה:",
     "Something is missing." : "משהו חסר.",
     "Internet connection needs to be available." : "החיבור לאינטרנט צריך להיות זמין.",

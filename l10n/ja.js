@@ -2,6 +2,7 @@ OC.L10N.register(
     "geoblocker",
     {
     "OK." : "OK.",
+    "local" : "ローカル",
     "default" : "デフォルト",
     "ERROR: Country cannot be found." : "エラー：国が見つかりません。",
     "ERROR:" : "エラー:",

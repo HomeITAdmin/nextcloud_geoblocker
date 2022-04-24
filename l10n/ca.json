@@ -14,6 +14,7 @@
     "default" : "predeterminat",
     "No entries in the database. Please run update." : "No hi ha entrades a la base de dades. Executeu l'actualització.",
     "ERROR:" : "ERROR:",
+    "OK" : "D'acord",
     "Last error message:" : "Últim missatge d'error:",
     "PHP GMP Extension needs to be installed." : "S'ha d'instal·lar l'extensió PHP GMP.",
     "The database is not initialized. Please run update." : "La base de dades no està inicialitzada. Executeu l'actualització.",
