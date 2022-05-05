@@ -22,7 +22,7 @@
     "No entries in the database. Please run update." : "Veritabanında herhangi bir kayıt bulunamadı. Lütfen güncelleyin.",
     "ERROR:" : "HATA:",
     "OK" : "Tamam",
-    "IPv6 works only on 64-bit (or higher) systems. When upgrading the system to 64-bit remember to update the DB again." : "IPv6 yalnız 64 bit (veya üstü) sistemlerde çalışır. Sistemi 64 bit olarak yükseltirken veritabanını yeniden güncellemeyi unutmayın.",
+    "IPv6 works only on 64-bit (or higher) systems. When upgrading the system to 64-bit remember to update the DB again." : "IPv6 yalnızca 64 bit (veya üstü) sistemlerde çalışır. Sistemi 64 bit olarak yükseltirken veritabanını yeniden güncellemeyi unutmayın.",
     "The database is currently updating. During the update the service can be used with the last valid data." : "Veritabanı güncelleniyor. Güncelleme sırasında hizmet, geçerli son veritabanı ile kullanılabilir.",
     "The last update try ended in an error but the service can be used with the last valid data." : "Veritabanı güncelleniyor. Güncelleme sırasında hizmet, geçerli veritabanı ile kullanılabilir.",
     "Last error message:" : "Son hata iletisi:",
