@@ -91,7 +91,7 @@ Using the MaxMind GeoLite2 PHP API:
 - Installation
   - Download the file "geoip2.phar" to the folder "3rdparty/maxmind_geolite2/"
   inside the GeoBlocker app folder (the folder already exists under
-  "$NEXTCLOUD_ROOT$/$CUSTOM_APP_FOLDER$/geoblocker/3rdparty/maxmind_geolite2/")
+  "%NEXTCLOUD_ROOT%/%CUSTOM_APP_FOLDER%/geoblocker/3rdparty/maxmind_geolite2/")
   from the MaxMind GeoIP2
   [release page](https://github.com/maxmind/GeoIP2-php/releases).
   Alternatively you can put the file in the same folder as the database mentioned
