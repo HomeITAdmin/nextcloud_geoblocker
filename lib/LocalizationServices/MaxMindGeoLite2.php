@@ -32,6 +32,8 @@ class MaxMindGeoLite2 implements
 	private $database_file_location;
 	/** @var String */
 	private $unique_service_string;
+	private const kStatusTestIP = '9.9.9.9';
+	private const kStatusTestResult = 'US';
 
 	public function __construct(GeoBlockerConfig $config, IL10N $l, ILogger $logger) {
 		$this->l = $l;
@@ -46,13 +48,13 @@ class MaxMindGeoLite2 implements
 	}
 
 	public function getStatus(): bool {
-		return $this->getCountryCodeFromIP('1.1.1.1') == 'AU';
+		return $this->getCountryCodeFromIP($this::kStatusTestIP) ==  $this::kStatusTestResult;
 	}
 
 	public function getStatusString(): string {
 		$service_string = '"MaxMind GeoLite2": ';
 		try {
-			if ($this->getCountryCodeFromIPImpl('1.1.1.1') == 'AU') {
+			if ($this->getCountryCodeFromIPImpl($this::kStatusTestIP) == $this::kStatusTestResult) {
 				return $service_string . $this->l->t('OK.');
 			} else {
 				return $service_string .
