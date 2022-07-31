@@ -166,6 +166,7 @@ Using the information from the Regional Internet Registries (RIRs):
   - No installation needed.
 - Disadvantages
   - Preconditions need to be fulfilled.
+  - At least one case is known, where the data isn't correct: [#102](https://github.com/HomeITAdmin/nextcloud_geoblocker/issues/102)
 - Known issues
   - If the nextcloud instance is restarted during the update of the service, the
   service stays in the update process forever. At the moment you have to use the
