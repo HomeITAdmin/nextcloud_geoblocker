@@ -8,7 +8,7 @@
     "Database file location not available!" : "Lokalizacja pliku bazy danych jest niedostępna!",
     "Update Status not available!" : "Status aktualizacji niedostępny!",
     "Your attempt to login from country \"%s\" is blocked by the Nextcloud GeoBlocker App. If this is a problem for you, please contact your administrator." : "Twoja próba zalogowania się z kraju \"%s\" jest blokowana przez aplikację Nextcloud GeoBlocker. Jeśli jest to dla Ciebie problem, skontaktuj się z administratorem.",
-    "OK. This service always returns \"%s\" for \"Country not found\"." : "OK. Ta usługa zawsze zwraca \"%s\" dla „Nie znaleziono kraju”.",
+    "OK. This service always returns \"%s\" for \"Country not found\"." : "OK. Ta usługa zawsze zwraca \"%s\" dla \"Nie znaleziono kraju\".",
     "OK." : "OK.",
     "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "BŁĄD: Wygląda na to, że usługa nie została zainstalowana na hoście serwera Nextcloud, albo jest nieosiągalna dla serwera WWW lub jest źle skonfigurowana (czy baza danych dla IPv4 i IPv6 jest dostępna?!). Może też być, że użycie exec() w funkcji php jest wyłączone w php.ini.",
     "Date of the database cannot be determined!" : "Nie można ustalić bazy danych!",
