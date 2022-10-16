@@ -41,6 +41,7 @@ OC.L10N.register(
     "Blocks user depending on the estimated country of thier IP address." : "Bloque un utilisateur en fonction du pays estimé par leur adresse IP.",
     "Loading" : "Chargement",
     "This is a front end to geo localization services, that allows blocking (beta), delaying (beta) and logging of login attempts from specified countries. " : "Il s'agit d'une interface pour les services de géolocalisation, qui permet de bloquer (bêta), de retarder (bêta) et de consigner les tentatives de connexion à partir de pays spécifiés.",
+    "Login attempts from local network IP addresses are never blocked, delayed or logged." : "Les tentatives de connexions depuis les adresses IP locales ne sont jamais bloquées, retardées ou enregistrées.",
     "Wrong Nextcloud configuration (especially in container) can lead to all accesses seem to come from a local network IP address." : "Une mauvaise configuration de Nextcloud (spécifiquement dans un conteneur) peut faire croire que tous les accès viennent d'adresses IP locales.",
     "If you are accessing from external network, this should be an external IP address:" : "Si vous accédez depuis un réseau externe, cela doit être une adresse IP externe.",
     "is local." : "est local.",
