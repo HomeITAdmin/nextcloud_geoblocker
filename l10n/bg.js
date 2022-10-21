@@ -66,7 +66,7 @@ OC.L10N.register(
     "Location of the database (full path including the file name):" : "Местоположение на базата данни (пълният път, включително името на файла):",
     "Update Database" : "Актуализиране на базата данни",
     "Country Selection" : "Избор на държава",
-    "Choose the selection mode" : "Изберане на режим на избора",
+    "Choose the selection mode" : "Избиране на режим за селекция/подбор/",
     "No country is blocked but the selected ones (blocklist)" : "Никоя държава не се блокира, освен избраните (списък с блокирани)",
     "All countries are blocked but the selected ones (allowlist)" : "Всички държави се блокират, освен избраните (списък с разрешени)",
     "Select countries from list" : "Избор на държави от списъка",
