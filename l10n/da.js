@@ -1,9 +1,14 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "OK." : "OK.",
     "local" : "lokal",
+    "default" : "standard",
     "OK" : "OK",
     "Loading" : "Indlæser",
+    "Service" : "Tjeneste",
+    "Select countries from list" : "Vælg lande fra liste",
+    "with IP Address" : "med IP adresse",
     "Andorra" : "Andorra",
     "Afghanistan" : "Afghanistan",
     "Albania" : "Albanien",
