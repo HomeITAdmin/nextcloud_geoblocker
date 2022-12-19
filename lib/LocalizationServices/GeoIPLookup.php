@@ -6,6 +6,7 @@ declare(strict_types = 1)
 namespace OCA\GeoBlocker\LocalizationServices;
 
 use OCP\IL10N;
+use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 
 class GeoIPLookup implements ILocalizationService, IDatabaseDate {
 	private $cmd_wrapper;

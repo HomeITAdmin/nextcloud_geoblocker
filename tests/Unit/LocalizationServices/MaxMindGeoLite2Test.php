@@ -7,6 +7,7 @@ namespace OCA\GeoBlocker\Tests\Unit\LocalizationService;
 
 use PHPUnit\Framework\TestCase;
 use OCA\GeoBlocker\LocalizationServices\MaxMindGeoLite2;
+use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 
 class MaxMindGeoLite2Test extends TestCase {
 	protected $l;
@@ -78,6 +79,18 @@ class MaxMindGeoLite2Test extends TestCase {
 
 		$country_code = 'US';
 		$ip_address = '24.165.23.67';
+		$this->assertEquals($country_code,
+				$this->geo_ip_lookup->getCountryCodeFromIP($ip_address));
+	}
+
+	public function testIsCountryCodeFromNotFoundIpOk() {
+		$ip_address = 'fe80::';
+		$country_code = GeoBlocker::kCountryNotFoundCode;
+		$this->assertEquals($country_code,
+				$this->geo_ip_lookup->getCountryCodeFromIP($ip_address));
+
+		$ip_address = '127.0.0.1';
+		$country_code = GeoBlocker::kCountryNotFoundCode;
 		$this->assertEquals($country_code,
 				$this->geo_ip_lookup->getCountryCodeFromIP($ip_address));
 	}

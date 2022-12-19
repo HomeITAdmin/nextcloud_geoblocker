@@ -7,6 +7,7 @@ namespace OCA\GeoBlocker\Tests\Unit\LocalizationService;
 
 use PHPUnit\Framework\TestCase;
 use OCA\GeoBlocker\LocalizationServices\GeoIPLookup;
+use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 
 class GeoIPLookupTest extends TestCase {
 	protected $cmd_wrapper;
@@ -79,6 +80,24 @@ class GeoIPLookupTest extends TestCase {
 
 		$country_code = 'US';
 		$ip_address = '24.165.23.67';
+		$this->assertEquals($country_code,
+				$this->geo_ip_lookup->getCountryCodeFromIP($ip_address));
+	}
+
+	public function testIsCountryCodeFromNotFoundIpOk() {
+		$this->cmd_wrapper->method('geoiplookup')->will(
+				$this->returnCallback(
+						[$this,'callbackGeoIpLookupValid']));
+		$this->cmd_wrapper->method('geoiplookup6')->will(
+				$this->returnCallback(
+						[$this,'callbackGeoIpLookup6Valid']));
+		$ip_address = '2a02:2e0:3fe:1001:302::';
+		$country_code = GeoBlocker::kCountryNotFoundCode;
+		$this->assertEquals($country_code,
+				$this->geo_ip_lookup->getCountryCodeFromIP($ip_address));
+
+		$ip_address = '24.165.23.67';
+		$country_code = GeoBlocker::kCountryNotFoundCode;
 		$this->assertEquals($country_code,
 				$this->geo_ip_lookup->getCountryCodeFromIP($ip_address));
 	}

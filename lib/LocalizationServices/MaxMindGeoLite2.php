@@ -6,6 +6,7 @@ declare(strict_types = 1)
 namespace OCA\GeoBlocker\LocalizationServices;
 
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
+use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 use OCP\IL10N;
 use GeoIp2\Database\Reader;
 use MaxMind\Db\Reader\InvalidDatabaseException;
