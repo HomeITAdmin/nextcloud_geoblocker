@@ -81,7 +81,7 @@ OC.L10N.register(
     "Brazil" : "Бразилія ",
     "Bahamas" : "Багамські острови",
     "Bhutan" : "Бутан ",
-    "Bouvet Island" : "Буве",
+    "Bouvet Island" : "Острів Буве",
     "Botswana" : "Ботсвана ",
     "Belarus" : "Білорусь",
     "Belize" : "Беліз ",
