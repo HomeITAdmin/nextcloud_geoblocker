@@ -87,7 +87,7 @@ OC.L10N.register(
     "Belize" : "Беліз ",
     "Canada" : "Канада",
     "Cocos (Keeling) Islands" : "Кокосові (Кілінгові) острови ",
-    "Congo, Democratic Republic of the" : "Конго, Демократична Республіка ",
+    "Congo, Democratic Republic of the" : "Демократична Республіка Конго",
     "Central African Republic" : "Центральноафриканська Республіка ",
     "Congo" : "Конго ",
     "Switzerland" : "Швейцарія ",
