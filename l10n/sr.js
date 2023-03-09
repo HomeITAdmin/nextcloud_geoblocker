@@ -1,6 +1,7 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "local" : "локална",
     "OK" : "У реду",
     "Loading" : "Учитавам",
     "Andorra" : "Андора",
