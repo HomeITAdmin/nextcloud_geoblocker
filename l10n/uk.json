@@ -29,7 +29,7 @@
     "Status of the chosen service: " : "Статус обраного сервісу:",
     "Date of the database: " : "Дата створення бази даних: ",
     "Configuration of the chosen service: " : "Налаштування обраного сервісу:",
-    "Location of the database (full path including the file name):" : "Місце знаходження бази даних (повний шлях, включаючи ім'я файлу):",
+    "Location of the database (full path including the file name):" : "Розташування бази даних (повний шлях, включаючи ім'я файлу):",
     "Update Database" : "Оновити базу даних",
     "Country Selection" : "Вибір країни",
     "No country is blocked but the selected ones (blocklist)" : "Не блокується жодна країна, окрім обраних (blocklist) ",
