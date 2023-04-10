@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Markdown Linting Action
-      uses: avto-dev/markdown-lint@v1.3.1
+      uses: avto-dev/markdown-lint@latest
       #uses: docker://avtodev/markdown-lint:v1.3.1
       with:
         config: .github/lint/markdown-lint.yml
@@ -27,7 +27,7 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: ['7.4', '8.0']
+        php-versions: ['8.0', '8.1', '8.2']
 
     name: php${{ matrix.php-versions }} lint
     steps:
