@@ -38,6 +38,8 @@ jobs:
         database: ['sqlite', 'pgsql', 'mysql']
         experimental: [true]
         exclude: 
+          - database: 'pgsql'
+            nextcloud: 'stable24'
           - php-versions: '8.2'
             nextcloud: 'stable24'
           - php-versions: '8.2'
