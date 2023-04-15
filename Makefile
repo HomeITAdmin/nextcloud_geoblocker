@@ -204,7 +204,7 @@ test-cov: unit-test-cov integration-test-cov
 .PHONY: prepare-test
 prepare-test: 
 	make composer
-	rm -R $(CURDIR)/../../3rdparty/nikic/php-parser/
+	rm -Rf $(CURDIR)/../../3rdparty/nikic/php-parser/
 	cp -R $(CURDIR)/vendor/nikic/php-parser/ $(CURDIR)/../../3rdparty/nikic/
 	wget https://github.com/maxmind/GeoIP2-php/releases/latest/download/geoip2.phar -O $(CURDIR)/3rdparty/maxmind_geolite2/geoip2.phar
         chown www-data:1000 $(CURDIR)/3rdparty/maxmind_geolite2/geoip2.phar
