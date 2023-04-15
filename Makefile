@@ -23,7 +23,7 @@ appstore_package_name:=$(appstore_artifact_directory)/$(app_name)
 cert_dir=$(HOME)/.nextcloud/certificates
 npm=$(shell which npm 2> /dev/null)
 composer=$(shell which composer 2> /dev/null)
-version=0.5.7
+version=0.5.8
 
 all: build
 
