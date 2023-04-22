@@ -69,7 +69,7 @@ OC.L10N.register(
     "Choose the selection mode" : "Режим работы:",
     "No country is blocked but the selected ones (blocklist)" : "Блокировать только выбранные страны (чёрный список)",
     "All countries are blocked but the selected ones (allowlist)" : "Не блокировать только выбранные страны (белый список)",
-    "Select countries from list" : "Выберите стран из стписка",
+    "Select countries from list" : "Выберите страны из списка",
     "The following countries were selected in the list above: " : "Выбраны следующие страны:",
     "Reaction" : "Действия",
     "If a login attempt is detected from the chosen countries, the attempt is logged with the following information" : "При определении попытки входа из стран, выбранных выше, в журнал будут дополнительно записаны следующие данные",

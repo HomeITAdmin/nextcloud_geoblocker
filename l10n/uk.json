@@ -34,7 +34,7 @@
     "Country Selection" : "Вибір країни",
     "No country is blocked but the selected ones (blocklist)" : "Не блокується жодна країна, окрім обраних (blocklist) ",
     "All countries are blocked but the selected ones (allowlist)" : "Заблоковані всі країни, крім обраних (allowlist) ",
-    "Select countries from list" : "Виберіть країну зі списку",
+    "Select countries from list" : "Виберіть країни зі списку",
     "The following countries were selected in the list above: " : "До переліку, наведеного вище, були відібрані наступні країни:",
     "with IP Address" : "з IP-адресою ",
     "with Country Code" : "з кодом країни",
