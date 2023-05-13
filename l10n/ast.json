@@ -1,5 +1,8 @@
 { "translations": {
     "ERROR: There is an unknown problem with the service." : "ERROR: Hai un problema desconocíu col serviciu.",
+    "ERROR:" : "ERROR:",
+    "Something is missing." : "Falta daqué.",
+    "repository" : "depósitu",
     "Andorra" : "Andorra",
     "United Arab Emirates" : "Emiratos Árabes Xuníos",
     "Afghanistan" : "Afganistán",
@@ -37,9 +40,12 @@
     "Costa Rica" : "Costa Rica",
     "Cuba" : "Cuba",
     "Cyprus" : "Xipre",
+    "Germany" : "Alemaña",
+    "Denmark" : "Dinamarca",
     "Algeria" : "Arxelia",
     "Estonia" : "Estonia",
     "Eritrea" : "Eritrea",
+    "France" : "Francia",
     "Gambia" : "Gambia",
     "Guyana" : "Guyana",
     "Ireland" : "Irlanda",
@@ -51,6 +57,7 @@
     "Mongolia" : "Mongolia",
     "Mauritania" : "Mauritania",
     "Malta" : "Malta",
+    "Mexico" : "Méxicu",
     "Mozambique" : "Mozambique",
     "Namibia" : "Namibia",
     "Nicaragua" : "Nicaragua",
@@ -67,7 +74,9 @@
     "Somalia" : "Somalia",
     "El Salvador" : "El Salvador",
     "Turks and Caicos Islands" : "Islles Turques y Caicos",
+    "Thailand" : "Tailandia",
     "Tuvalu" : "Tuvalu",
+    "Ukraine" : "Ucraína",
     "Uganda" : "Uganda"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
