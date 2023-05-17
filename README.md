@@ -174,6 +174,11 @@ Using the information from the Regional Internet Registries (RIRs):
   a valid state:
     - `sudo -u %NEXTCLOUD_INSTANCE_USER% php occ
     geoblocker:localization-service:reset-db 2`
+  - Especially the region "apnic" seems to have a problem some times leading to
+  error message when you try to update: "RIR Data": ERROR: The database is corrupted.
+  Please run update again. Last error message: Not the right number of entries read
+  for IPv4 in region "apnic". Should have been %n% but was %n-1%."
+  Try again in the next days in this case.
 
 ## Fail2ban
 
