@@ -1,0 +1,19 @@
+tasks:
+  - name: Dependencies
+    init: make build
+    command: exit
+
+  - name: Nextcloud Server
+    init: |
+      cd gitpod
+      docker-compose up --no-start
+    command: |
+      git config core.filemode false
+      chmod -R 777 .
+      cd gitpod
+      docker-compose up
+
+ports:
+  - port: 8080
+    visibility: private
+    onOpen: open-browser
