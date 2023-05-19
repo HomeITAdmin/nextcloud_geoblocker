@@ -1,9 +1,5 @@
 version: '2'
 
-volumes: 
-   nextcloud: 
-   config: 
-
 services:
   app:
     image: nextcloud
@@ -11,8 +7,6 @@ services:
       - 8080:80
     restart: no
     volumes:
-      - nextcloud:/var/www/html 
-      - config:/var/www/html/config
       - ${GITPOD_REPO_ROOT}:/var/www/html/custom_apps/geoblocker
     environment:
       - NEXTCLOUD_ADMIN_USER=admin
