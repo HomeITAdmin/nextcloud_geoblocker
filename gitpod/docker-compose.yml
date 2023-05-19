@@ -7,8 +7,6 @@ volumes:
 services:
   app:
     image: nextcloud
-    build:
-      context: .
     ports: 
       - 8080:80
     restart: no
