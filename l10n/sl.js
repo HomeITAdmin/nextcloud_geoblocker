@@ -41,6 +41,7 @@ OC.L10N.register(
     "Blocks user depending on the estimated country of thier IP address." : "Prepreči prijavo glede na ocenjeno državo oziroma zaznan IP naslov.",
     "Loading" : "Poteka nalaganje ...",
     "This is a front end to geo localization services, that allows blocking (beta), delaying (beta) and logging of login attempts from specified countries. " : "To je vmesnik za prikazovanje geolokacijskih storitev, ki mogoča zavračanje (preizkusno), odlašanje (preizkusno) in beleženje poskusov prijav iz določenih držav.",
+    "In the current implementation the login page is normally shown to everybody independent of the country. Also login attempts with a non existing user are failing as usual independent of the country." : "V trenutni izvedbi je prijavna stran prikazana vsem, neodvisno od države. Podobno so poskusi prijave neobstoječega uporabnika obravnavani na enak neodvisen način.",
     "Wrong Nextcloud configuration (especially in container) can lead to all accesses seem to come from a local network IP address." : "Napačne nastavitve Nextcloud (zlasti v vsebniku) lahko povzročijo, da so dostopi zaznani, ko da izvirajo vsi z naslova IP krajevnega omrežja.",
     "is local." : "je krajeven naslov.",
     "is external." : "je zunanji naslov.",
