@@ -1,8 +1,4 @@
 tasks:
-  - name: Dependencies
-    init: make build
-    command: exit
-
   - name: Nextcloud Server
     before: |
       sudo chown -R gitpod:www-data .
