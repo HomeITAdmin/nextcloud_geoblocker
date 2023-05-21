@@ -4,10 +4,10 @@ tasks:
       sudo chown -R gitpod:www-data .
       sudo chmod -R g+w .
     init: |
-      cd gitpod
+      cd .gitpod
       docker-compose up --no-start
     command: |
-      cd gitpod
+      cd .gitpod
       docker-compose up
 
 ports:
