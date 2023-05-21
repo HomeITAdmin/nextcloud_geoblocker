@@ -1,0 +1,16 @@
+tasks:
+  - name: Nextcloud Server
+    before: |
+      sudo chown -R gitpod:www-data .
+      sudo chmod -R g+w .
+    init: |
+      cd gitpod
+      docker-compose up --no-start
+    command: |
+      cd gitpod
+      docker-compose up
+
+ports:
+  - port: 8080
+    visibility: private
+    onOpen: open-browser
