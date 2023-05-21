@@ -1,4 +1,7 @@
 FROM nextcloud 
+
+ RUN apt-get update && \
+     apt-get install -y sudo geoip-bin wget
   
  COPY custom-entrypoint.sh /custom-entrypoint.sh 
  RUN chmod +x /custom-entrypoint.sh 
