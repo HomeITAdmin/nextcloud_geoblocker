@@ -36,7 +36,7 @@ jobs:
         php-versions: ['7.4', '8.0', '8.1', '8.2']
         nextcloud: ['stable24', 'stable25', 'stable26', 'stable27']
         database: ['sqlite', 'pgsql', 'mysql']
-        experimental: [true]
+        experimental: [false]
         exclude: 
           - database: 'pgsql'
             nextcloud: 'stable24'
@@ -46,9 +46,11 @@ jobs:
             nextcloud: 'stable25'
           - php-versions: '7.4'
             nextcloud: 'stable26'
+          - php-versions: '7.4'
+            nextcloud: 'stable27'
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
