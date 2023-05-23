@@ -18,7 +18,7 @@ Currently available localization services are:
 - Data from Regional Internet Registries (Nextcloud SQL database build up with data downloaded from the RIRs FTP servers)
 
 For help how to set up the localization services please have a look at the GitHub repository (homepage on the right side).]]></description>
-	<version>0.5.8</version>
+	<version>0.5.9</version>
 	<licence>agpl</licence>
 	<author mail="homeitadmin@seypro.de">HomeITAdmin</author>
 	<namespace>GeoBlocker</namespace>
@@ -29,7 +29,7 @@ For help how to set up the localization services please have a look at the GitHu
 	<screenshot>https://raw.githubusercontent.com/HomeITAdmin/nextcloud_geoblocker/master/img/1.PNG</screenshot>
 
 	<dependencies>
-		<nextcloud min-version="24" max-version="26" />
+		<nextcloud min-version="25" max-version="27" />
 	</dependencies>
 	
 	<commands>
