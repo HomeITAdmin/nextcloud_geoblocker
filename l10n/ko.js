@@ -30,7 +30,7 @@ OC.L10N.register(
     "Last error message:" : "최근 오류 메시지:",
     "PHP GMP Extension needs to be installed." : "PHP GMP 확장이 설치되어야 합니다.",
     "The database is not initialized. Please run update." : "데이터베이스가 초기화되지 않았습니다. 업데이트를 실행하십시오.",
-    "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "데이터베이스가 초기화 중입니다. 업데이트를 마칠 때 까지 기다리십시오. 몇 분이 걸릴 수 있습니다.",
+    "The database is currently initializing. Please wait until update is finished. This may take several minutes." : "데이터베이스가 초기화 중입니다. 업데이트를 마칠 때까지 기다리십시오. 몇 분이 걸릴 수 있습니다.",
     "The database is corrupted. Please run update again." : "데이터베이스가 잘못되었습니다. 업데이트를 다시 실행하십시오.",
     "Something is missing." : "무엇인가 유실된 것 같습니다.",
     "No database available!" : "데이터베이스를 사용할 수 없음!",
