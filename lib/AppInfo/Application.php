@@ -3,25 +3,20 @@
 namespace OCA\GeoBlocker\AppInfo;
 
 use OCP\AppFramework\App;
+use OCP\AppFramework\Bootstrap\IBootContext;
+use OCP\AppFramework\Bootstrap\IBootstrap;
+use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCA\GeoBlocker\Hooks\UserHooks;
 
-class Application extends App {
+class Application extends App implements IBootstrap {
 	public function __construct(array $urlParams = []) {
 		parent::__construct('geoblocker', $urlParams);
-
-		$this->getContainer()->registerService('UserHooks',
-				function ($c) {
-					return new UserHooks(
-							$c->query('ServerContainer')->getUserSession(),
-							$c->query('ServerContainer')->getLogger(),
-							$c->query('ServerContainer')->getRequest(),
-							$c->query('ServerContainer')->getConfig(),
-							$c->query('ServerContainer')->getL10N('geoblocker'),
-							$c->query('ServerContainer')->getDatabaseConnection());
-				});
 	}
 	
-	public function register(): void {
-		$this->getContainer()->query('UserHooks')->register();
+	public function register(IRegistrationContext $context): void {
+	}
+
+	public function boot(IBootContext $context): void {
+		$context->getAppContainer()->get(UserHooks::class)->register();
 	}
 }
