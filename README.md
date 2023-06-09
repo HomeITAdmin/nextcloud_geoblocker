@@ -80,6 +80,7 @@ Using the geoiplookup programm available on some linux distributions:
 - Disadvantages
   - Precondition must be fullfilled.
   - Installation efforts needed from the administrator.
+  - Seems to have pretty old database
 
 ### MaxMind GeoLite2
 
