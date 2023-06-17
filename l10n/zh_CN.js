@@ -79,7 +79,7 @@ OC.L10N.register(
     "In addition, the login attempt can also be delayed and blocked." : "此外，登录尝试也可以被延迟和屏蔽。",
     "(beta version)" : "（公开测试版本）",
     "Activate delaying of login attempts from IP addresses of the specified countries." : "激活延迟来自指定国家的 IP 地址的登录尝试。",
-    "(30 seconds)" : "(30 秒)",
+    "(30 seconds)" : "（30 秒）",
     "Activate blocking of login attempts from IP addresses of the specified countries." : "激活屏蔽来自指定国家的 IP 地址的登录尝试。",
     "Test" : "测试",
     "Possibilities to test if the Geoblocker is working as expected:" : "测试地理屏蔽器是否按预期工作的可能性：",
