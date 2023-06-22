@@ -31,7 +31,7 @@
     "Blocks user depending on the estimated country of thier IP address." : "Bloquea o usuario segundo o país estimado do seu enderezo IP.",
     "Loading" : "Cargando",
     "This is a front end to geo localization services, that allows blocking (beta), delaying (beta) and logging of login attempts from specified countries. " : "Esta é unha interface para os servizos de localización xeográfica, que permite o bloqueo (beta), o atraso (beta) e o rexistro dos intentos de inicio de sesión de países especificados.",
-    "Wrong Nextcloud configuration (especially in container) can lead to all accesses seem to come from a local network IP address." : "A configuración incorrecta  de Nextcloud (especialmente nun contedor) pode levar a que todo o acceso poida proceder do enderezo IP da rede local.",
+    "Wrong Nextcloud configuration (especially in container) can lead to all accesses seem to come from a local network IP address." : "A configuración errónea  de Nextcloud (especialmente nun contedor) pode levar a que todo o acceso poida proceder do enderezo IP da rede local.",
     "is local." : "é local.",
     "is external." : "é externo.",
     "Determination of the country from IP address is only as good as the chosen service." : "A determinación do país a partir do enderezo IP é tan bo como o servizo escollido.",
