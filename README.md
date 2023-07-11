@@ -99,7 +99,7 @@ Using the MaxMind GeoLite2 PHP API:
   below (from version 0.4.5 on).
   - Download the latest country database E.g.:
     - On Debian based systems the database gets downloaded to
-    "/var/lib/GeoIP/GeoLite2-Country.mmdb" by:
+    "/usr/share/GeoIP/GeoLite2-Country.mmdb" by:
       - `sudo apt-get install geoipupdate`
       - For this the "contrib" archiv must be activ.
       - Add the API key information to "/etc/GeoIP.conf"
