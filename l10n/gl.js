@@ -9,7 +9,7 @@ OC.L10N.register(
     "No database date available." : "Non está dispoñíbel a data da base de datos.",
     "Database file location not available!" : "Non está dispoñíbel a localización do ficheiro da base de datos.",
     "Update Status not available!" : "Non está dispoñíbel o estado da actualización!",
-    "Your attempt to login from country \"%s\" is blocked by the Nextcloud GeoBlocker App. If this is a problem for you, please contact your administrator." : "O seu intento de iniciar sesión dende «%s»  está bloqueado pola aplicación Nextcloud GeoBlocker. Se isto é un problema para vostede, póñase en contacto coa administración desta instancia..",
+    "Your attempt to login from country \"%s\" is blocked by the Nextcloud GeoBlocker App. If this is a problem for you, please contact your administrator." : "O seu intento de iniciar sesión dende «%s»  está bloqueado pola aplicación Nextcloud GeoBlocker. Se isto é un problema para Vde. póñase en contacto coa administración desta instancia..",
     "OK. This service always returns \"%s\" for \"Country not found\"." : "De acordo. Este servizo sempre devolve «%s» para «País non atopado».",
     "OK." : "Aceptar",
     "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "ERRO: Semella que o servizo non está instalado no servidor de Nextcloud ou non é accesíbel para o servidor web ou está mal configurado (está dispoñíbel a base de datos para IPv4 e IPv6 ?!). Quizais estea desactivado o uso da función de PHP exec() en php.ini.",
