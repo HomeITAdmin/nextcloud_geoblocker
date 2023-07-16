@@ -105,7 +105,7 @@ Using the MaxMind GeoLite2 PHP API:
       - Add the API key information to "/etc/GeoIP.conf"
       - run `sudo geoipupdate`
   - Make sure you have the right database path configured in the Geoblocker Settings
-  page (it must be the full path including the filename e.g. "/var/lib/GeoIP/GeoLite2-Country.mmdb").
+  page (it must be the full path including the filename e.g. "/usr/share/GeoIP/GeoLite2-Country.mmdb").
   - For Docker user: See
   [#20](https://github.com/HomeITAdmin/nextcloud_geoblocker/issues/20)
   how to use a seperate container to do the update of the database.
