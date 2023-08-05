@@ -83,7 +83,7 @@ OC.L10N.register(
     "(30 seconds)" : "(30 segundos)",
     "Activate blocking of login attempts from IP addresses of the specified countries." : "Activar o bloqueo dos intentos de acceso dende os enderezos IP dos países especificados.",
     "Test" : "Proba",
-    "Possibilities to test if the Geoblocker is working as expected:" : "Posibilidades de probar se o Geoblocker funciona como se espera:",
+    "Possibilities to test if the Geoblocker is working as expected:" : "Posibilidades de probar se GeoBlocker funciona tal e como se agarda:",
     "Next login attempt of user \"%s\" will be simulated to come from the following IP address:" : "O seguinte intento de acceso de «%s» vai ser simulado como procedente do seguinte enderezo IP:",
     "COUNTRY NOT FOUND" : "PAÍS NON ATOPADO",
     "Andorra" : "Andorra",
