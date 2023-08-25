@@ -70,7 +70,7 @@ OC.L10N.register(
     "No country is blocked but the selected ones (blocklist)" : "Блокувати тільки обрані країни (чорний список)",
     "All countries are blocked but the selected ones (allowlist)" : "Не блокувати тільки обрані країни (білий список)",
     "Select countries from list" : "Виберіть країни зі списку",
-    "The following countries were selected in the list above: " : "До переліку, наведеного вище, були відібрані наступні країни:",
+    "The following countries were selected in the list above: " : "До переліку, наведеного вище, було відібрано такі країни:",
     "Reaction" : "Реакція",
     "If a login attempt is detected from the chosen countries, the attempt is logged with the following information" : "Якщо виявлено спробу входу з обраних країн, ця спроба реєструється з наступною інформацією",
     "( be aware of data protection issues depending on your logging strategy)" : "(пам'ятайте про проблеми захисту даних залежно від вашої стратегії ведення журналу)",
