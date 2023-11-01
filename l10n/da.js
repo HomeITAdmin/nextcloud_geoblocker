@@ -89,6 +89,7 @@ OC.L10N.register(
     "Thailand" : "Thailand",
     "Tunisia" : "Tunesien",
     "Turkey" : "Tyrkiet",
+    "Trinidad and Tobago" : "Trinidad og Tobago",
     "Ukraine" : "Ukraine",
     "Uganda" : "Uganda",
     "Samoa" : "Samoa",
