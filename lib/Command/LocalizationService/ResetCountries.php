@@ -25,9 +25,9 @@ class ResetCountries extends Command {
 			'Resets the country selection, so that no country is blocked.');
 	}
 
-	protected function execute(InputInterface $input, OutputInterface $output): void {
+	protected function execute(InputInterface $input, OutputInterface $output): int {
 		$this->config->setUseWhiteListing(false);
 		$this->config->setChoosenCountriesByString('');
-		return;
+		return 0;
 	}
 }

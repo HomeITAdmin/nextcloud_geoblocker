@@ -28,11 +28,11 @@ class SelectService extends Command {
 				'The ID of the localization service to be used.');
 	}
 
-	protected function execute(InputInterface $input, OutputInterface $output): void {
+	protected function execute(InputInterface $input, OutputInterface $output): int {
 		$service_id = intval($input->getArgument('service_id'));
 
 		$this->ls_factory->setCurrentLocationServiceID($service_id);
 
-		return;
+		return 0;
 	}
 }

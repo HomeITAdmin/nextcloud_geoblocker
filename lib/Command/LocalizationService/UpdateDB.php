@@ -35,7 +35,7 @@ class UpdateDB extends Command {
 				'The ID of the localization service, whose database will be updated. If not given the current service will be used.');
 	}
 	
-	protected function execute(InputInterface $input, OutputInterface $output): void {
+	protected function execute(InputInterface $input, OutputInterface $output): int {
 		$this->output = $output;
 		if ($input->getArgument('service_id') == null) {
 			$service_id = $this->ls_factory->getCurrentLocationServiceID();
@@ -61,7 +61,7 @@ class UpdateDB extends Command {
 			}
 		}
 
-		return;
+		return 0;
 	}
 
 	private function logInfo(string $info) {

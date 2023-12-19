@@ -25,7 +25,7 @@ class ListServices extends Command {
 				'List the IDs of the localization services.');
 	}
 
-	protected function execute(InputInterface $input, OutputInterface $output): void {
+	protected function execute(InputInterface $input, OutputInterface $output): int {
 		$info_string = "<info>\n";
 		$i = 0;
 		foreach ($this->ls_factory->getLocationServiceOverview() as $key => $value) {
@@ -39,6 +39,6 @@ class ListServices extends Command {
 		}
 		$info_string .= "</info>";
 		$output->writeln($info_string);
-		return;
+		return 0;
 	}
 }
