@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "ERROR: There is an unknown problem with the service." : "ERROR: Hai un problema desconocíu col serviciu.",
     "ERROR:" : "ERROR:",
+    "OK" : "Normal",
     "Something is missing." : "Falta daqué.",
     "repository" : "depósitu",
     "Andorra" : "Andorra",
