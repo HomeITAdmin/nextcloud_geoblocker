@@ -226,7 +226,7 @@ OC.L10N.register(
     "Monaco" : "Monaco",
     "Moldova, Republic of" : "Moldavie, République de",
     "Montenegro" : "Monténégro",
-    "Saint Martin (French part)" : "Saint Martin (Partie française)",
+    "Saint Martin (French part)" : "Saint-Martin (Antilles françaises)",
     "Madagascar" : "Madagascar",
     "Marshall Islands" : "Îles Marshall",
     "North Macedonia" : "Macédoine du Nord",
