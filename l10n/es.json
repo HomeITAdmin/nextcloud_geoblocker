@@ -36,7 +36,7 @@
     "Not the right number of entries read for IPv4 in region \"%s\". Should have been %d but was %d." : "El número de entradas para IPv4 leídas de la región \"%s\" no es correcta. Deberían haber sido %d pero fue %d.",
     "Not the right number of entries read for IPv6 in region \"%s\". Should have been %d but was %d." : "El número de entradas para IPv6 leídas de la región \"%s\" no es correcta. Deberían haber sido %d pero fue %d.",
     "Exception caught during Update for region \"%s\": %s" : "Detectada una excepción durante la actualización de la región \"%s\": %s: ",
-    "Invalid file handle for region \"%s\". Probably the internet connection got lost during the update." : "Identificador del archivo no válido para la región \"%s\". Probablemente se perdió la conexión a Internet durante la actualización.",
+    "Invalid file handle for region \"%s\". Probably the internet connection got lost during the update." : "Identificador de archivo no válido para la región \"%s\". Probablemente se perdió la conexión a internet durante la actualización.",
     "\"allow_url_fopen\" needs to be allowed in php.ini." : "\"allow_url_fopen\" debe estar permitido en php.ini.",
     "Internet connection needs to be available." : "Se necesita tener disponible una conexión a Internet.",
     "IPv6 is not included on systems with less than 64-bit." : "IPv6 no está incluido en sistemas con menos de 64-bits.",
