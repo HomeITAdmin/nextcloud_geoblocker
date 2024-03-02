@@ -63,7 +63,7 @@ OC.L10N.register(
     "Status of the chosen service: " : "Статус обраного сервісу:",
     "Date of the database: " : "Дата створення бази даних: ",
     "Configuration of the chosen service: " : "Налаштування обраного сервісу:",
-    "Location of the database (full path including the file name):" : "Розташування бази даних (повний шлях, включаючи ім'я файлу):",
+    "Location of the database (full path including the file name):" : "Розташування бази даних (повний шлях, включно з ім'ям файлу):",
     "Update Database" : "Оновити базу даних",
     "Country Selection" : "Вибір країни",
     "Choose the selection mode" : "Виберіть режим вибору",
