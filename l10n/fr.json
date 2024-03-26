@@ -82,7 +82,7 @@
     "Activate blocking of login attempts from IP addresses of the specified countries." : "Activez le blocage des tentatives de connexion à partir des adresses IP des pays spécifiés.",
     "Test" : "Test",
     "Possibilities to test if the Geoblocker is working as expected:" : "Possibilités de tester si Geoblocker fonctionne correctement :",
-    "Next login attempt of user \"%s\" will be simulated to come from the following IP address:" : "La prochaine tentative de connexion pour l'utilisateur « %s » simulera  l’utilisation de l’adresse IP suivante :",
+    "Next login attempt of user \"%s\" will be simulated to come from the following IP address:" : "La prochaine tentative de connexion pour l’utilisateur « %s » simulera  l’utilisation de l’adresse IP suivante :",
     "COUNTRY NOT FOUND" : "PAYS NON TROUVÉ",
     "Andorra" : "Andorre",
     "United Arab Emirates" : "Émirats Arabes Unis",
