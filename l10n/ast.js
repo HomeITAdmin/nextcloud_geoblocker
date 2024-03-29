@@ -5,6 +5,7 @@ OC.L10N.register(
     "ERROR:" : "ERROR:",
     "OK" : "Normal",
     "Something is missing." : "Falta daqué.",
+    "Loading" : "Cargando",
     "repository" : "depósitu",
     "Andorra" : "Andorra",
     "United Arab Emirates" : "Emiratos Árabes Xuníos",
