@@ -125,6 +125,7 @@ OC.L10N.register(
     "Israel" : "Israel",
     "Isle of Man" : "Islla de Man",
     "India" : "India",
+    "British Indian Ocean Territory" : "Territoriu Británicu del Océanu de Índicu",
     "Iraq" : "Iraq",
     "Iran (Islamic Republic of)" : "Irán",
     "Iceland" : "Islandia",
