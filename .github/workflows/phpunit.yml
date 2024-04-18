@@ -100,7 +100,15 @@ jobs:
           check-code: false
           force: ${{ matrix.experimental }}
 
+      - name: Cache Maxmind DB
+        id: cache-maxmind
+        uses: actions/cache@v4
+        with:
+          path: /var/lib/GeoIP/GeoLite2-Country.mmdb
+          key: ${{ runner.os }}-maxmind-db
+
       - name: Prep Maxmind
+        if: steps.cache-maxmind.outputs.cache-hit != 'true'
         run: sudo apt-get update 
           && sudo apt-get install geoipupdate 
           && sudo mv GeoIP.template.conf /etc/GeoIP.conf 
