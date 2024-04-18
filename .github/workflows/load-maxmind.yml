@@ -1,0 +1,27 @@
+name: PHPUnit Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  load:
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
+    name: "Load Maxmind Database into cache"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache db
+        uses: actions/cache@v4
+        with:
+          path: /var/lib/GeoIP/GeoLite2-Country.mmdb
+          key: ${{ runner.os }}-maxmind-db
+
+      - name: Prep Maxmind
+        run: sudo apt-get update 
+          && sudo apt-get install geoipupdate 
+          && sudo mv GeoIP.template.conf /etc/GeoIP.conf 
+          && sudo sed -i "s/<<ID>>/${{ secrets.MM_ID }}/g" /etc/GeoIP.conf
+          && sudo sed -i "s/<<KEY>>/${{ secrets.MM_KEY }}/g" /etc/GeoIP.conf
+          && sudo geoipupdate
