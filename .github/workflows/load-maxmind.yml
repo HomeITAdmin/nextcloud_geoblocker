@@ -1,4 +1,4 @@
-name: PHPUnit Tests
+name: Load Maxmind DB to Cache
 
 on:
   workflow_dispatch:
