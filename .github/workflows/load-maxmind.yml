@@ -12,10 +12,10 @@ jobs:
     name: "Load Maxmind Database into cache"
     steps:
       - name: Checkout
-        uses: actions/checkout@latest
+        uses: actions/checkout@v4
 
       - name: Cache db
-        uses: actions/cache@lastest
+        uses: actions/cache@v4
         with:
           path: /var/lib/GeoIP/GeoLite2-Country.mmdb
           key: ${{ runner.os }}-maxmind-db
