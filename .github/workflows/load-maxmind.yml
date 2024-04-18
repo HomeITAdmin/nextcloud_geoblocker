@@ -6,7 +6,7 @@ on:
 jobs:
   load:
     runs-on: ubuntu-latest
-    continue-on-error: ${{ matrix.experimental }}
+    continue-on-error: false
     name: "Load Maxmind Database into cache"
     steps:
       - name: Checkout
