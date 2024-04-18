@@ -2,6 +2,8 @@ name: Load Maxmind DB to Cache
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron:  '1 5 1 * *'
 
 jobs:
   load:
@@ -10,10 +12,10 @@ jobs:
     name: "Load Maxmind Database into cache"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@latest
 
       - name: Cache db
-        uses: actions/cache@v4
+        uses: actions/cache@lastest
         with:
           path: /var/lib/GeoIP/GeoLite2-Country.mmdb
           key: ${{ runner.os }}-maxmind-db
