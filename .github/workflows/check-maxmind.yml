@@ -1,0 +1,27 @@
+name: Check Maxmind DB to Cache
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  load:
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    name: "Load Maxmind Database into cache"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache db
+        uses: actions/cache@v4
+        with:
+          path: /var/lib/GeoIP/GeoLite2-Country.mmdb
+          key: ${{ runner.os }}-maxmind-db
+
+      - name: Test Maxmind No Cache Hit
+        if: steps.cache-maxmind.outputs.cache-hit != 'true'
+        run: echo 'No Cache Hit'
+
+      - name: Test Maxmind Cache Hit
+        if: steps.cache-maxmind.outputs.cache-hit == 'true'
+        run: echo 'Cache Hit'
