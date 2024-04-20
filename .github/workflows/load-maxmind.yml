@@ -17,7 +17,8 @@ jobs:
       - name: Cache db
         uses: actions/cache@v4
         with:
-          path: /var/lib/GeoIP/GeoLite2-Country.mmdb
+          #path: /var/lib/GeoIP/GeoLite2-Country.mmdb
+          path: /home/runner/work/_temp/GeoIP/GeoLite2-Country.mmdb
           key: ${{ runner.os }}-maxmind-db
 
       - name: Prep Maxmind
@@ -27,3 +28,4 @@ jobs:
           && sudo sed -i "s/<<ID>>/${{ secrets.MM_ID }}/g" /etc/GeoIP.conf
           && sudo sed -i "s/<<KEY>>/${{ secrets.MM_KEY }}/g" /etc/GeoIP.conf
           && sudo geoipupdate
+          && cp /var/lib/GeoIP/GeoLite2-Country.mmdb /home/runner/work/_temp/GeoIP/GeoLite2-Country.mmdb
