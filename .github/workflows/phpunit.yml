@@ -121,7 +121,8 @@ jobs:
 
       - name: Prep Maxmind Cache Hit
         if: steps.cache-maxmind.outputs.cache-hit == 'true'
-        run: sudo cp /home/runner/work/_temp/GeoIP/GeoLite2-Country.mmdb /var/lib/GeoIP/GeoLite2-Country.mmdb 
+        run: sudo mkdir -p /var/lib/GeoIP/
+          && sudo cp /home/runner/work/_temp/GeoIP/GeoLite2-Country.mmdb /var/lib/GeoIP/GeoLite2-Country.mmdb 
       
       - name: Prep GeoIPLookup
         run: sudo apt-get update 
