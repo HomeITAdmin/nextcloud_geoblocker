@@ -28,4 +28,5 @@ jobs:
           && sudo sed -i "s/<<ID>>/${{ secrets.MM_ID }}/g" /etc/GeoIP.conf
           && sudo sed -i "s/<<KEY>>/${{ secrets.MM_KEY }}/g" /etc/GeoIP.conf
           && sudo geoipupdate
+          && mkdir -p /home/runner/work/_temp/GeoIP/
           && cp /var/lib/GeoIP/GeoLite2-Country.mmdb /home/runner/work/_temp/GeoIP/GeoLite2-Country.mmdb
