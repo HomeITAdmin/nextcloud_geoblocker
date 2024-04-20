@@ -17,7 +17,6 @@ jobs:
       - name: Cache db
         uses: actions/cache@v4
         with:
-          #path: /var/lib/GeoIP/GeoLite2-Country.mmdb
           path: /home/runner/work/_temp/GeoIP/GeoLite2-Country.mmdb
           key: ${{ runner.os }}-maxmind-db
 
