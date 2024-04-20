@@ -106,7 +106,6 @@ jobs:
         with:
           path: /home/runner/work/_temp/GeoIP/GeoLite2-Country.mmdb
           key: ${{ runner.os }}-maxmind-db
-          fail-on-cache-miss: true
 
       - name: Prep Maxmind No Cache Hit
         if: steps.cache-maxmind.outputs.cache-hit != 'true'
