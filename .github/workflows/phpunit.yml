@@ -141,4 +141,4 @@ jobs:
 #        run: bash <(curl -s https://codecov.io/bash) -f build/php-unit.clover -N ${{ github.sha }}
 
       - name: Clean up
-        run: sudo rm /etc/GeoIP.conf
+        run: sudo rm -f /etc/GeoIP.conf
