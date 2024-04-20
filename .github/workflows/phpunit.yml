@@ -104,11 +104,11 @@ jobs:
         id: cache-maxmind
         uses: actions/cache@v4
         with:
-          path: /var/lib/GeoIP/GeoLite2-Country.mmdb
+          path: /home/runner/work/_temp/GeoIP/GeoLite2-Country.mmdb
           key: ${{ runner.os }}-maxmind-db
           fail-on-cache-miss: true
 
-      - name: Prep Maxmind
+      - name: Prep Maxmind No Cache Hit
         if: steps.cache-maxmind.outputs.cache-hit != 'true'
         run: sudo apt-get update 
           && sudo apt-get install geoipupdate 
@@ -116,6 +116,12 @@ jobs:
           && sudo sed -i "s/<<ID>>/${{ secrets.MM_ID }}/g" /etc/GeoIP.conf
           && sudo sed -i "s/<<KEY>>/${{ secrets.MM_KEY }}/g" /etc/GeoIP.conf
           && sudo geoipupdate
+          && mkdir -p /home/runner/work/_temp/GeoIP/
+          && cp /var/lib/GeoIP/GeoLite2-Country.mmdb /home/runner/work/_temp/GeoIP/GeoLite2-Country.mmdb
+
+      - name: Prep Maxmind Cache Hit
+        if: steps.cache-maxmind.outputs.cache-hit == 'true'
+        run: sudo cp /home/runner/work/_temp/GeoIP/GeoLite2-Country.mmdb /var/lib/GeoIP/GeoLite2-Country.mmdb 
       
       - name: Prep GeoIPLookup
         run: sudo apt-get update 
