@@ -72,7 +72,7 @@ OC.L10N.register(
     "Select countries from list" : "إختر بلداناً من القائمة",
     "The following countries were selected in the list above: " : "البلدان التالية تمّ اختيارها من القائمة أعلاه:",
     "Reaction" : "ردة الفعل",
-    "If a login attempt is detected from the chosen countries, the attempt is logged with the following information" : "إذا ما تمّ اكتشاف محاولة للدخول من إحدى الدول المختارة، فسيتم تسجيل المحاولة مع المعلومات التالية",
+    "If a login attempt is detected from the chosen countries, the attempt is logged with the following information" : "إذا تم اكتشاف محاولة تسجيل دخول من البلدان المختارة، فسيتم تسجيل المحاولة بالمعلومات التالية.",
     "( be aware of data protection issues depending on your logging strategy)" : "(إنتبه لمسائل حماية البيانات إعتماداً على استراتيجيتك في الدخول)",
     "with IP Address" : "باستخدام العنوان الشبكي",
     "with Country Code" : "باستخدام رمز الدولة",
