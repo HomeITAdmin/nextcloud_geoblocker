@@ -34,12 +34,9 @@ jobs:
     strategy:
       matrix:
         php-versions: ['8.1', '8.2', '8.3']
-        nextcloud: ['stable27', 'stable28', 'stable29']
+        nextcloud: ['stable28', 'stable29', 'stable30']
         database: ['sqlite', 'pgsql', 'mysql']
         experimental: [false]
-        exclude: 
-          - php-versions: '8.3'
-            nextcloud: 'stable27'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -55,7 +52,7 @@ jobs:
         if: matrix.database == 'mysql'
         uses: getong/mariadb-action@v1.1
         with:
-          mariadb version: '10.5'
+          mariadb version: '10.11'
           host port: ${{ env.MYSQL_PORT }}
           mysql database: ${{ env.MYSQL_DATABASE }}
           mysql root password: ${{ env.MYSQL_PASSWORD }}
