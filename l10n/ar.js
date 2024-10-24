@@ -9,7 +9,7 @@ OC.L10N.register(
     "No database date available." : "لا توجد قاعدة بيانات متاحة حاليّاً.",
     "Database file location not available!" : "موضع ملف قاعدة البيانات غير متاح.",
     "Update Status not available!" : "حالة التحديث غير متاحة.",
-    "Your attempt to login from country \"%s\" is blocked by the Nextcloud GeoBlocker App. If this is a problem for you, please contact your administrator." : "محاولتك الدخول من الدولة \"%s\" تمّ حظرها من قِبَل تطبيق \"الحظر الجغرافي\" GeoBlocker app لنكست كلاود . إذا كانت هذه مشكلتك، إتصل رجاءً بمشرف النظام.",
+    "Your attempt to login from country \"%s\" is blocked by the Nextcloud GeoBlocker App. If this is a problem for you, please contact your administrator." : "محاولتك الدخول من الدولة \"%s\" تمّ حظرها من قِبَل تطبيق \"الحظر الجغرافي\" GeoBlocker app لنكست كلاود . إذا كانت هذه مشكلتك، إتصل رجاءً بمسؤول النظام.",
     "OK. This service always returns \"%s\" for \"Country not found\"." : "حسناً. هذه الخدمة تقوم دائماً بإرجاع \"%s\" لـ\"الدولة غير موجودة\".",
     "OK." : "حسناً.",
     "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "خطأ: يبدو أن الخدمة غير مثبتة على مضيف خادوم نكست كلاود، أو أنه لا يمكن الوصول إليها من خادوم الويب، أو تم تكوينها بشكل خاطئ (هل قاعدة بيانات IPv4 و IPv6 متاحة؟!). ربما تمّ تعطيل استخدام دالة php exec () في ملف php.ini.",
