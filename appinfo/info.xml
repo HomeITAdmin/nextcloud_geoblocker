@@ -29,7 +29,7 @@ For help how to set up the localization services please have a look at the GitHu
 	<screenshot>https://raw.githubusercontent.com/HomeITAdmin/nextcloud_geoblocker/master/img/1.PNG</screenshot>
 
 	<dependencies>
-		<nextcloud min-version="28" max-version="30" />
+		<nextcloud min-version="29" max-version="31" />
 	</dependencies>
 	
 	<commands>
