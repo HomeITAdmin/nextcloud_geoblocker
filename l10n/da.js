@@ -80,6 +80,7 @@ OC.L10N.register(
     "Myanmar" : "Myanmar",
     "Malaysia" : "Malaysia",
     "Namibia" : "Namibia",
+    "New Caledonia" : "Ny kaledonien",
     "Norway" : "Norge",
     "Nepal" : "Nepal",
     "New Zealand" : "New Zealand",
