@@ -6,7 +6,7 @@ declare(strict_types = 1)
 namespace OCA\GeoBlocker\GeoBlocker;
 
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCP\IL10N;
 use OCA\GeoBlocker\LocalizationServices\ILocalizationService;
 use OC\User\LoginException;
@@ -14,7 +14,7 @@ use OC\User\LoginException;
 class GeoBlocker {
 	/** @var String */
 	private $user;
-	/** @var ILogger */
+	/** @var LoggerInterface */
 	private $logger;
 	/** @var GeoBlockerConfig */
 	private $config;
@@ -27,7 +27,7 @@ class GeoBlocker {
 	public const kInvalidIPCode = 'INVALID_IP';
 	private const kNotShownString = 'NOT_SHOWN_IN_LOG';
 
-	public function __construct(String $user, ILogger $logger,
+	public function __construct(String $user, LoggerInterface $logger,
 			GeoBlockerConfig $config, IL10N $l,
 			ILocalizationService $location_service) {
 		$this->user = $user;

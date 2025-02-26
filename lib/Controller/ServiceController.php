@@ -6,7 +6,7 @@ use OCP\IRequest;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IDBConnection;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
@@ -20,13 +20,13 @@ class ServiceController extends Controller {
 	private $l;
 	/** @var IDBConnection */
 	private $db;
-	/** @var ILogger */
+	/** @var LoggerInterface */
 	private $logger;
 	/** @var LocalizationServiceFactory */
 	private $location_service_factory;
 
 	public function __construct(string $AppName, IRequest $request,
-			IConfig $config, IL10N $l, IDBConnection $db, ILogger $logger) {
+			IConfig $config, IL10N $l, IDBConnection $db, LoggerInterface $logger) {
 		parent::__construct($AppName, $request);
 		$this->config = new GeoBlockerConfig($config);
 		$this->l = $l;

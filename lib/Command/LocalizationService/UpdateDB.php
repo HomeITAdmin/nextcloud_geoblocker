@@ -5,7 +5,7 @@ declare(strict_types = 1)
 
 namespace OCA\GeoBlocker\Command\LocalizationService;
 
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,10 +19,10 @@ class UpdateDB extends Command {
 	private $ls_factory;
 	/** @var OutputInterface */
 	private $output;
-	/** @var ILogger */
+	/** @var LoggerInterface */
 	private $logger;
 
-	public function __construct(LocalizationServiceFactory $ls_factory, ILogger $logger) {
+	public function __construct(LocalizationServiceFactory $ls_factory, LoggerInterface $logger) {
 		parent::__construct();
 		$this->ls_factory = $ls_factory;
 		$this->logger = $logger;

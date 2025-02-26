@@ -5,7 +5,7 @@ namespace OCA\GeoBlocker\Settings;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\Settings\ISettings;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCP\IRequest;
 use OCP\IUserSession;
 use OCP\IL10N;
@@ -15,7 +15,7 @@ use OCA\GeoBlocker\LocalizationServices\LocalizationServiceFactory;
 class Admin implements ISettings {
 	/** @var GeoBlockerConfig */
 	private $config;
-	/** @var ILogger */
+	/** @var LoggerInterface */
 	private $logger;
 	/** @var IRequest */
 	private $request;
@@ -25,7 +25,7 @@ class Admin implements ISettings {
 	private $l;
 	/** @var IDBConnection */
 	private $db;
-	public function __construct(GeoBlockerConfig $config, ILogger $logger,
+	public function __construct(GeoBlockerConfig $config, LoggerInterface $logger,
 			IRequest $request, IUserSession $user_session, IL10N $l, IDBConnection $db) {
 		$this->config = $config;
 		$this->logger = $logger;

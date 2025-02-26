@@ -12,7 +12,7 @@ use GeoIp2\Database\Reader;
 use MaxMind\Db\Reader\InvalidDatabaseException;
 use InvalidArgumentException;
 use GeoIp2\Exception\AddressNotFoundException;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 
 class DatabaseReaderNotFoundException extends \Exception {
 }
@@ -27,7 +27,7 @@ class MaxMindGeoLite2 implements
 	private $l;
 	/** @var GeoBlockerConfig */
 	private $config;
-	/** @var ILogger */
+	/** @var LoggerInterface */
 	private $logger;
 	/** @var String */
 	private $database_file_location;
@@ -36,7 +36,7 @@ class MaxMindGeoLite2 implements
 	private const kStatusTestIP = '9.9.9.9';
 	private const kStatusTestResult = 'US';
 
-	public function __construct(GeoBlockerConfig $config, IL10N $l, ILogger $logger) {
+	public function __construct(GeoBlockerConfig $config, IL10N $l, LoggerInterface $logger) {
 		$this->l = $l;
 		$this->config = $config;
 		$this->logger = $logger;

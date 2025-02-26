@@ -7,7 +7,7 @@ namespace OCA\GeoBlocker\LocalizationServices;
 
 use Exception;
 use OCP\IL10N;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCA\GeoBlocker\Db\RIRServiceMapper;
 use OCA\GeoBlocker\Db\RIRServiceDBEntity;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
@@ -22,7 +22,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 	private $rir_data_checks;
 	/** @var GeoBlockerConfig */
 	private $config;
-	/** @var ILogger */
+	/** @var LoggerInterface */
 	private $logger;
 
 	private $rir_ftps = [
@@ -41,7 +41,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 
 	public function __construct(RIRDataChecks $rir_data_checks,
 			RIRServiceMapper $rir_service_mapper, GeoBlockerConfig $config,
-			IL10N $l, ILogger $logger) {
+			IL10N $l, LoggerInterface $logger) {
 		$this->rir_data_checks = $rir_data_checks;
 		$this->l = $l;
 		$this->rir_service_mapper = $rir_service_mapper;
