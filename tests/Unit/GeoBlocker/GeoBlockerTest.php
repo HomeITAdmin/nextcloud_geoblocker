@@ -20,7 +20,7 @@ class GeoBlockerTest extends TestCase {
 
 	private function mySetUp(): void {
 		$this->user = 'admin';
-		$this->logger = $this->getMockBuilder('OCP\ILogger')->getMock();
+		$this->logger = $this->getMockBuilder('Psr\Log\LoggerInterface')->getMock();
 		$tmp_config = $this->getMockBuilder('OCP\IConfig')->getMock();
 		$this->config = $this->getMockBuilder(
 				'OCA\GeoBlocker\Config\GeoBlockerConfig')->setConstructorArgs(
