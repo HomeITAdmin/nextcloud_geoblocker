@@ -18,7 +18,7 @@ jobs:
   php:
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental }}
-    name: "PHP: Nextcloud ${{ matrix.nextcloud }} - PHP ${{ matrix.php-versions }} - DB ${{ matrix.database }}"
+    name: "PHP: Nextcloud ${{ matrix.nextcloud }} - PHP ${{ matrix.php-version }} - DB ${{ matrix.database }}"
     services:
       postgres:
         image: postgres
@@ -33,10 +33,15 @@ jobs:
           - 5432:5432 # Maps tcp port 5432 on service container to the host
     strategy:
       matrix:
-        php-versions: ['8.2', '8.3', '8.4']
+        php-version: ['8.2', '8.3', '8.4']
         nextcloud: ['stable29', 'stable30', 'stable31']
         database: ['sqlite', 'pgsql', 'mysql']
         experimental: [false]
+        exclude:
+          - php-version: '8.4'
+            nexcloud: 'stable29'
+          - php-version: '8.4'
+            nexcloud: 'stable30'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,7 +49,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php-version }}
           extensions: pdo_sqlite,pdo_mysql,pdo_pgsql,gd,zip
           coverage: pcov
           
