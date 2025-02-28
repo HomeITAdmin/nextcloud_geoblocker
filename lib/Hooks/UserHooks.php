@@ -5,7 +5,7 @@ namespace OCA\GeoBlocker\Hooks;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
 use OCP\IConfig;
 use OCP\IUserSession;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCP\IRequest;
 use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 use OCP\IL10N;
@@ -20,7 +20,7 @@ class UserHooks {
 	private $l;
 	private $db;
 
-	public function __construct(IUserSession $userSession, ILogger $logger,
+	public function __construct(IUserSession $userSession, LoggerInterface $logger,
 			IRequest $request, IConfig $config, IL10N $l, IDBConnection $db) {
 		$this->userSession = $userSession;
 		$this->logger = $logger;

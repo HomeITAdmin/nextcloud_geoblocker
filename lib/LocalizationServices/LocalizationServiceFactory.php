@@ -10,14 +10,14 @@ use OCP\IDBConnection;
 use OCA\GeoBlocker\Config\GeoBlockerConfig;
 use OCA\GeoBlocker\Db\RIRServiceMapper;
 use OutOfRangeException;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 
 class LocalizationServiceFactory {
 	/** @var IL10N */
 	private $l;
 	/** @var GeoBlockerConfig */
 	private $config;
-	/** @var ILogger */
+	/** @var LoggerInterface */
 	private $logger;
 	/** @var int */
 	private $count_ids = 4;
@@ -25,7 +25,7 @@ class LocalizationServiceFactory {
 	private $db;
 
 	public function __construct(GeoBlockerConfig $config, IL10N $l,
-			IDBConnection $db, ILogger $logger) {
+			IDBConnection $db, LoggerInterface $logger) {
 		$this->l = $l;
 		$this->config = $config;
 		$this->logger = $logger;

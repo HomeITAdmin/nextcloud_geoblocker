@@ -20,7 +20,7 @@ abstract class MaxMindGeoLite2TestBase extends TestCase {
 	public function setUp(): void {
 		parent::setUp();
 		$this->l = $this->getMockBuilder('OCP\IL10N')->getMock();
-		$this->logger = $this->getMockBuilder('OCP\ILogger')->getMock();
+		$this->logger = $this->getMockBuilder('Psr\Log\LoggerInterface')->getMock();
 		$this->l->method('t')->will(
 				$this->returnCallback([$this,'callbackLTJustRouteThrough']));
 		$tmp_config = $this->getMockBuilder('OCP\IConfig')->getMock();
