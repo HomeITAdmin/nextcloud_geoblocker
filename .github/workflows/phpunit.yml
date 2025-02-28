@@ -39,9 +39,9 @@ jobs:
         experimental: [false]
         exclude:
           - php-version: '8.4'
-            nexcloud: 'stable29'
+            nextcloud: 'stable29'
           - php-version: '8.4'
-            nexcloud: 'stable30'
+            nextcloud: 'stable30'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
