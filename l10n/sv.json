@@ -28,7 +28,6 @@
     "Current number of entries:" : "Antal objekt:",
     "Update in undefined state. Please complain to the developer." : "Uppdateringen blev odefinierad. Kontakta utvecklarna.",
     "GeoBlocker" : "GeoBlocker",
-    "Blocks user depending on the estimated country of thier IP address." : "Blockerar användare beroende på uppskattat land för deras IP-adresser.",
     "Loading" : "Läser in",
     "is local." : "Är lokal",
     "is external." : "Är extern",

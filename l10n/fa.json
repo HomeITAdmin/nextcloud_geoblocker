@@ -43,7 +43,6 @@
     "Current number of entries:" : "Current number of entries:",
     "Update in undefined state. Please complain to the developer." : "Update in undefined state. Please complain to the developer.",
     "GeoBlocker" : "GeoBlocker",
-    "Blocks user depending on the estimated country of thier IP address." : "Blocks user depending on the estimated country of thier IP address.",
     "Loading" : "در حال بار گزاری",
     "This is a front end to geo localization services, that allows blocking (beta), delaying (beta) and logging of login attempts from specified countries. " : "This is a front end to geo localization services, that allows blocking (beta), delaying (beta) and logging of login attempts from specified countries. ",
     "Login attempts from local network IP addresses are never blocked, delayed or logged." : "Login attempts from local network IP addresses are never blocked, delayed or logged.",

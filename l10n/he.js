@@ -32,7 +32,6 @@ OC.L10N.register(
     "IPv6 is not included on systems with less than 64-bit." : "IPv6 אינו כלול במערכות הפעלה עם פחות מ64-ביט",
     "Current number of entries:" : "מספר הרשומות הנוכחי:",
     "GeoBlocker" : "GeoBlocker",
-    "Blocks user depending on the estimated country of thier IP address." : "חוסם משתמש בהתאם למדינה שהוסקה לפי כתובת ה־IP.",
     "Loading" : "בטעינה",
     "Login attempts from local network IP addresses are never blocked, delayed or logged." : "ניסינות לחיבור מרשת האינטרנט הביתית אף פעם לא נחסמים, מעוקבים או רשומים.",
     "is local." : "מקומי.",

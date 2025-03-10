@@ -45,7 +45,6 @@ OC.L10N.register(
     "Current number of entries:" : "目前的条目数量：",
     "Update in undefined state. Please complain to the developer." : "更新处于未定义状态。请向开发者告知。",
     "GeoBlocker" : "地理屏蔽器",
-    "Blocks user depending on the estimated country of thier IP address." : "根据其 IP 地址对应的国家来屏蔽用户。",
     "Loading" : "正在加载",
     "This is a front end to geo localization services, that allows blocking (beta), delaying (beta) and logging of login attempts from specified countries. " : "这是一个地理屏蔽服务的前端，允许屏蔽 (beta), 延迟 (beta) 和记录来自指定国家的登录尝试。",
     "Login attempts from local network IP addresses are never blocked, delayed or logged." : "本地网络IP地址的登录尝试永远不会被阻止、延迟或记录。",

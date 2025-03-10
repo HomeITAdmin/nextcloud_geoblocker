@@ -5,7 +5,6 @@
     "ERROR: Country cannot be found." : "エラー：国が見つかりません。",
     "ERROR:" : "エラー:",
     "OK" : "OK",
-    "Blocks user depending on the estimated country of thier IP address." : "IPアドレスによって推定された国に応じてユーザーをブロックします．",
     "Loading" : "読み込み中",
     "This is a front end to geo localization services, that allows blocking (beta), delaying (beta) and logging of login attempts from specified countries. " : "これは地理位置特定サービスのフロントエンドであり、指定した国/地域からのログイン試行を拒否(ベータ版)・遅延(ベータ版)・記録することができます。",
     "Login attempts from local network IP addresses are never blocked, delayed or logged." : "ローカルネットワーク上のIPアドレスからのログイン試行については、拒否・遅延・記録されることはありません。",
