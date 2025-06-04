@@ -67,7 +67,7 @@ OC.L10N.register(
     "Update Database" : "Veri tabanını güncelle",
     "Country Selection" : "Ülke seçimi",
     "Choose the selection mode" : "Seçim kipini seçin",
-    "No country is blocked but the selected ones (blocklist)" : "Seçilmişler dışındaki hiç bir ülke engellenmez (engelleme listesi)",
+    "No country is blocked but the selected ones (blocklist)" : "Seçilmişler dışındaki hiçbir ülke engellenmez (engelleme listesi)",
     "All countries are blocked but the selected ones (allowlist)" : "Seçilmişler dışındaki tüm ülkeler engellenir (izin verilenler listesi)",
     "Select countries from list" : "Listeden ülkeleri seçin",
     "The following countries were selected in the list above: " : "Aşağıdaki ülkeler yukarıdaki listeden seçilmiş:",
