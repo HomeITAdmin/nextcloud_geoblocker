@@ -10,7 +10,7 @@
     "Your attempt to login from country \"%s\" is blocked by the Nextcloud GeoBlocker App. If this is a problem for you, please contact your administrator." : "\"%s\" ülkesinden oturum açma girişiminiz Nextcloud GeoBlocker uygulaması tarafından engellendi. Bir hata olduğunu düşünüyorsanız BT yöneticiniz ile görüşün.",
     "OK. This service always returns \"%s\" for \"Country not found\"." : "Tamam. Bu hizmet \"Ülke bulunamadı\" için her zaman \"%s\" yanıtını verir.",
     "OK." : "Tamam.",
-    "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "HATA: Hizmet Nextcloud kurulumununun bulunduğu sunucu üzerine kurulmamış gibi görünüyor ya da hatalı olarak yapılandırılmış (IPv4 ve IPv6 için veri tabanı var mı?). PHP exec() işlevinin yürütülmesi php.ini içinde devre dışı bırakılmış olabilir.",
+    "ERROR: Service seem to be not installed on the host of the Nextcloud server or not reachable for the web server or is wrongly configured (is the database for IPv4 and IPv6 available?!). Maybe the use of the php function exec() is disabled in the php.ini." : "HATA: Hizmet Nextcloud kurulumununun bulunduğu sunucu üzerine kurulmamış gibi görünüyor ya da hatalı olarak yapılandırılmış (IPv4 ve IPv6 için veri tabanı var mı?). PHP exec() işlevinin yürütülmesi php.ini içinden kapatılmış olabilir.",
     "Date of the database cannot be determined!" : "Veri tabanının tarihi belirlenemedi!",
     "local" : "yerel",
     "default" : "varsayılan",
