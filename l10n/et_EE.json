@@ -32,6 +32,7 @@
     "with IP Address" : "IP aadress",
     "with Country Code" : "riigikood",
     "(30 seconds)" : "(30 sekundit)",
+    "Test" : "Katseta",
     "Next login attempt of user \"%s\" will be simulated to come from the following IP address:" : "Järgmist „%s“ kasutaja sisselogimiskatset simuleerime toimima järgmiselt ip-aadressilt:",
     "COUNTRY NOT FOUND" : "MAAD EI LEIDU",
     "Andorra" : "Andorra",
