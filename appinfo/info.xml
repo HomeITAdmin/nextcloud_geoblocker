@@ -18,7 +18,7 @@ Currently available localization services are:
 - Data from Regional Internet Registries (Nextcloud SQL database build up with data downloaded from the RIRs FTP servers)
 
 For help how to set up the localization services please have a look at the GitHub repository (homepage on the right side).]]></description>
-	<version>0.5.16</version>
+	<version>0.5.17</version>
 	<licence>agpl</licence>
 	<author mail="homeitadmin@seypro.de">HomeITAdmin</author>
 	<namespace>GeoBlocker</namespace>
