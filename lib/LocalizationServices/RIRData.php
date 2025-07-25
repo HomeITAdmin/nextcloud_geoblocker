@@ -291,7 +291,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 									$this->rir_service_mapper->insert($db_entry);
 									++$number_of_ipv6_entries_actual;
 								}
-							} elseif ($parts[6] == 'reserved' || $parts[6] == 'available') {
+							} elseif ($parts[6] == 'reserved' || $parts[6] == 'available' || $parts[6] == 'assigned' || $parts[6] == 'allocated') {
 								if ($parts[2] == 'ipv4') {
 									++$number_of_ipv4_entries_actual;
 								} elseif ($parts[2] == 'ipv6' && $is64bit) {
