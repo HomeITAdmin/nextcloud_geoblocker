@@ -2,6 +2,7 @@ OC.L10N.register(
     "geoblocker",
     {
     "OK" : "OK",
+    "Loading" : "Loading",
     "Andorra" : "Andorra",
     "United Arab Emirates" : "Muungano wa Falme za Kiarabu (UAE)",
     "Afghanistan" : "Afghanistan",
