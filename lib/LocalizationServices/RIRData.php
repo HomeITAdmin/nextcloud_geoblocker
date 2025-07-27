@@ -266,6 +266,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 					while (($line = fgets($rir_data_handle)) !== false) {
 						$parts = explode('|', $line);
 						if ($parts[0] == $rir_name && count($parts) >= 7) {
+							$part6 = trim($parts[6]);
 							if ($parts[1] != '') {
 								if ($parts[2] == 'ipv4') {
 									$db_entry = new RIRServiceDBEntity();
@@ -291,7 +292,7 @@ class RIRData implements ILocalizationService, IDatabaseDate, IDatabaseUpdate {
 									$this->rir_service_mapper->insert($db_entry);
 									++$number_of_ipv6_entries_actual;
 								}
-							} elseif ($parts[6] == 'reserved' || $parts[6] == 'available' || $parts[6] == 'assigned' || $parts[6] == 'allocated') {
+							} elseif ($part6 == 'reserved' || $part6 == 'available' || $part6 == 'assigned' || $part6 == 'allocated') {
 								if ($parts[2] == 'ipv4') {
 									++$number_of_ipv4_entries_actual;
 								} elseif ($parts[2] == 'ipv6' && $is64bit) {
