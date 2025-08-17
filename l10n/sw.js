@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "OK" : "OK",
     "Loading" : "Loading",
+    "Test" : "Test",
     "Andorra" : "Andorra",
     "United Arab Emirates" : "Muungano wa Falme za Kiarabu (UAE)",
     "Afghanistan" : "Afghanistan",
