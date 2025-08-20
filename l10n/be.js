@@ -31,6 +31,7 @@ OC.L10N.register(
     "Benin" : "Бенін",
     "Saint Barthélemy" : "Сен-Бартэльмі",
     "Bermuda" : "Бермудскія астравы",
+    "Brunei Darussalam" : "Бруней-Дарусалам",
     "Bonaire, Sint Eustatius and Saba" : "Банайрэ, Сінт-Эстаціус і Саба",
     "Brazil" : "Бразілія",
     "Bahamas" : "Багамскія астравы",
