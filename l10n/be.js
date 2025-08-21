@@ -57,6 +57,7 @@ OC.L10N.register(
     "Curaçao" : "Кюрасаа",
     "Christmas Island" : "Востраў Каляд",
     "Cyprus" : "Кіпр",
+    "Czechia" : "Чэхія",
     "Germany" : "Германія",
     "Djibouti" : "Джыбуці",
     "Denmark" : "Данія",
