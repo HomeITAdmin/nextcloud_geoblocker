@@ -34,12 +34,10 @@ jobs:
     strategy:
       matrix:
         php-version: ['8.2', '8.3', '8.4']
-        nextcloud: ['stable29', 'stable30', 'stable31']
+        nextcloud: [ 'stable30', 'stable31', 'stable32']
         database: ['sqlite', 'pgsql', 'mysql']
         experimental: [false]
         exclude:
-          - php-version: '8.4'
-            nextcloud: 'stable29'
           - php-version: '8.4'
             nextcloud: 'stable30'
     steps:
