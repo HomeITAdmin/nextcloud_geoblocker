@@ -7,6 +7,7 @@ OC.L10N.register(
     "Last error message:" : "Апошняе паведамленне пра памылку:",
     "GeoBlocker" : "GeoBlocker",
     "Loading" : "Загрузка",
+    "Update Database" : "Абнавіць базу даных",
     "Reaction" : "Рэакцыя",
     "Test" : "Тэст",
     "COUNTRY NOT FOUND" : "КРАІНА НЕ ЗНОЙДЗЕНА",
