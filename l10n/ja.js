@@ -19,6 +19,7 @@ OC.L10N.register(
     "For help how to setup the localization services, have a look into the Readme in the" : "位置特定サービスのセットアップ方法については、Readmeを次のリンクから参照してください。",
     "repository" : "リポジトリ",
     "Service" : "サービス",
+    "Status of the chosen service: " : "選択したサービスのステータス:",
     "Country Selection" : "国の選択",
     "with IP Address" : "IPアドレスで",
     "with username" : "ユーザー名で",
