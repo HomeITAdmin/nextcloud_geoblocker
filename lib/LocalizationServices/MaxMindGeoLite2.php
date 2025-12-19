@@ -33,7 +33,7 @@ class MaxMindGeoLite2 implements
 	private $database_file_location;
 	/** @var String */
 	private $unique_service_string;
-	private const kStatusTestIP = '9.9.9.9';
+	private const kStatusTestIP = '8.8.8.8'; # Changed to 8.8.8.8, since 9.9.9.9 isn't inside the MaxMind mmdb files anymore
 	private const kStatusTestResult = 'US';
 
 	public function __construct(GeoBlockerConfig $config, IL10N $l, LoggerInterface $logger) {
