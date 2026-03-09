@@ -43,6 +43,7 @@ OC.L10N.register(
     "with username" : "käyttäjätunnuksella",
     "(beta version)" : "(beetaversio)",
     "(30 seconds)" : "(30 sekuntia)",
+    "Test" : "Kokeile",
     "COUNTRY NOT FOUND" : "MAATA EI LÖYTYNYT",
     "Andorra" : "Andorra",
     "United Arab Emirates" : "Yhdistyneet arabiemiirikunnat",
