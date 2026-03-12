@@ -40,6 +40,8 @@ jobs:
         exclude:
           - php-version: '8.5'
             nextcloud: 'stable31'
+          - php-version: '8.5'
+            nextcloud: 'stable32'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
