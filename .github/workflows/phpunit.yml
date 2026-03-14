@@ -36,7 +36,7 @@ jobs:
         php-version: ['8.3', '8.4', '8.5']
         nextcloud: [ 'stable31', 'stable32', 'stable33']
         database: ['sqlite', 'pgsql', 'mysql']
-        experimental: [true]
+        experimental: [false]
         exclude:
           - php-version: '8.5'
             nextcloud: 'stable31'
