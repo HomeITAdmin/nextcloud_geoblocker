@@ -31,7 +31,7 @@ class RIRServiceMapper extends QBMapper {
 			if ($version >= 0) {
 				$qb->where($qb->expr()->eq('version', $qb->createNamedParameter(strval($version))));
 			}
-			$qb->execute();
+			$qb->executeStatement();
 			return true;
 		} catch (Exception $e) {
 			return false;
