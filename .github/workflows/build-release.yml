@@ -14,12 +14,12 @@ jobs:
     name: "Release: build, sign and upload the app"
     strategy:
       matrix:
-        php-versions: ['8.3']
-        nextcloud: ['stable30']
+        php-versions: ['8.4']
+        nextcloud: ['stable33']
         database: ['sqlite']
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
