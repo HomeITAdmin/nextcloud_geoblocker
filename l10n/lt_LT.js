@@ -24,6 +24,7 @@ OC.L10N.register(
     "Choose the selection mode" : "Pasirinkite pasirinkimo veikseną",
     "Reaction" : "Reakcija",
     "(beta version)" : "(beta versija)",
+    "Test" : "Testuoti",
     "COUNTRY NOT FOUND" : "ŠALIS NERASTA",
     "Andorra" : "Andora",
     "United Arab Emirates" : "Jungtiniai Arabų Emyratai",
