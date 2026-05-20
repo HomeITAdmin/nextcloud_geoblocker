@@ -4,6 +4,7 @@ OC.L10N.register(
     "OK" : "Добро",
     "Loading" : "Се вчитува",
     "(beta version)" : "(бета верзија)",
+    "Test" : "Тест",
     "Andorra" : "Андора",
     "United Arab Emirates" : "Обединети Арапски Емирати",
     "Afghanistan" : "Афганистан",
