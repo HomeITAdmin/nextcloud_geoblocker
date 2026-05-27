@@ -51,11 +51,12 @@ class RIRDataTest extends TestCase {
 	public function testIsStatusTrueOk(int $rir_status) {
 		$this->rir_data_checks->expects($this->Once())->method(
 			'checkGMP')->willReturn(true);
+		$map = [
+			[RIRData::kServiceStatusName, '0', strval($rir_status)],
+			[RIRData::kDbVersionName, '0', '0']
+		];
 		$this->config->expects($this->exactly(2))->method(
-			'getServiceSpecificConfigValue')->withConsecutive([
-				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0')]
-			,[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')])->willReturnOnConsecutiveCalls(
-			strval($rir_status), '0');
+			'getServiceSpecificConfigValue')->willReturnMap($map);
 		$this->rir_service_mapper->expects($this->Once())->method(
 			'getNumberOfEntries')->willReturn(100);
 		$this->assertTrue($this->rir_data->getStatus());
@@ -140,7 +141,7 @@ class RIRDataTest extends TestCase {
 		];
 
 		$this->config->expects($this->exactly($rir_status == RIRStatus::kDbOkButError ? 3 : 2))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 		
 		$this->rir_service_mapper->expects($this->once())->method(
 				'getNumberOfEntries')->willReturn(1000);
@@ -166,7 +167,7 @@ class RIRDataTest extends TestCase {
 		];
 
 		$this->config->expects($this->exactly($rir_status == RIRStatus::kDbOkButError ? 3 : 2))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 		
 		$this->rir_service_mapper->expects($this->once())->method(
 				'getNumberOfEntries')->willReturn(1000);
@@ -198,7 +199,7 @@ class RIRDataTest extends TestCase {
 		];
 
 		$this->config->expects($this->atLeast(1))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 
 		$result = '"RIR Data": ERROR';
 		$this->assertStringStartsWith($result, $this->rir_data->getStatusString());
@@ -223,7 +224,7 @@ class RIRDataTest extends TestCase {
 		];
 
 		$this->config->expects($this->atLeast(1))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 
 		$result = '"RIR Data": ERROR';
 		$this->assertStringStartsWith($result, $this->rir_data->getStatusString());
@@ -246,7 +247,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kErrorMessageName, '', $this->error_message_not_enough_entries]
 		];
 		$this->config->expects($this->atLeast(1))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 
 		if ($rir_status == RIRStatus::kDbOk || $rir_status == RIRStatus::kDbUpdating) {
 			$this->checkSetDBToErrorState($this->error_message_not_enough_entries);
@@ -322,7 +323,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDbVersionName, '0', '1']
 		];
 		$this->config->expects($this->atLeast(1))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 
 		$this->rir_service_mapper->expects($this->never())->method(
 				'getCountryCodeFromIpv6');
@@ -351,7 +352,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDbVersionName, '0', '1']
 		];
 		$this->config->expects($this->atLeast(1))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 		
 		
 		if ($rir_status == RIRStatus::kDbOk || $rir_status == RIRStatus::kDbUpdating) {
@@ -385,7 +386,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDbVersionName, '0', '1']
 		];
 		$this->config->expects($this->atLeast(1))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 		
 		
 		$this->rir_service_mapper->expects($this->never())->method(
@@ -413,7 +414,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDatabaseDateName, '', $db_date]
 		];
 		$this->config->expects($this->atLeast(2))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 
 		$this->assertEquals($db_date, $this->rir_data->getDatabaseDate());
 	}
@@ -431,7 +432,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDatabaseDateName, '', '']
 		];
 		$this->config->expects($this->atLeast(2))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 		
 		$this->assertEquals('Date of the database cannot be determined!',
 				$this->rir_data->getDatabaseDate());
@@ -451,7 +452,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDatabaseDateName, '', '']
 		];
 		$this->config->expects($this->atLeast(2))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 
 		$this->assertEquals('No database available!',
 				$this->rir_data->getDatabaseDate());
@@ -472,7 +473,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDatabaseDateName, '', $db_date]
 		];
 		$this->config->expects($this->atLeast(2))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 
 		$this->assertEquals('No database available!',
 				$this->rir_data->getDatabaseDate());
@@ -494,7 +495,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDatabaseDateName, '', $db_date]
 		];
 		$this->config->expects($this->atLeast(2))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 
 		$this->assertEquals('No database available!',
 				$this->rir_data->getDatabaseDate());
@@ -513,7 +514,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDbVersionName, '0', '0']
 		];
 		$this->config->expects($this->atLeast(1))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 		$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
 		$this->config->expects($this->exactly(5))->method(
@@ -593,7 +594,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDbVersionName, '0', '1']
 		];
 		$this->config->expects($this->atLeast(1))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 		$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(false);
 		$this->config->expects($this->exactly(4))->method(
@@ -660,7 +661,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDbVersionName, '0', '0']
 		];
 		$this->config->expects($this->atLeast(1))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 		
 		if ($rir_status_before == RIRStatus::kDbOk
 			|| $rir_status_before == RIRStatus::kDbOkButError) {
@@ -721,7 +722,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDbVersionName, '0', '1']
 		];
 		$this->config->expects($this->atLeast(1))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 		
 		if ($rir_status_before == RIRStatus::kDbOk
 			|| $rir_status_before == RIRStatus::kDbOkButError) {
@@ -786,7 +787,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDbVersionName, '0', '1']
 		];
 		$this->config->expects($this->atLeast(1))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 
 		if ($rir_status_before == RIRStatus::kDbOk
 			|| $rir_status_before == RIRStatus::kDbOkButError) {
@@ -882,7 +883,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDbVersionName, '0', '1']
 		];
 		$this->config->expects($this->atLeast(1))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 
 		$this->rir_service_mapper->expects($this->once())->method('getNumberOfEntries')
 			->with($this->equalTo('0'))
@@ -914,11 +915,13 @@ class RIRDataTest extends TestCase {
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'));
 		$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
-		$this->config->expects($this->exactly(2))->method(
-				'setServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo(RIRStatus::kDbNotInitialized)]);
+		$this->config->expects($this->at(0))->method(
+				'setServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo(''));
+		$this->config->expects($this->at(1))->method(
+				'setServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo(RIRStatus::kDbNotInitialized));
 
 		$this->assertTrue($this->rir_data->resetDatabase());
 	}
@@ -929,14 +932,18 @@ class RIRDataTest extends TestCase {
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'));
 		$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(false);
-		$this->config->expects($this->exactly(3))->method(
-				'setServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo(RIRStatus::kDbError)],
-				[$this->equalTo(RIRData::kErrorMessageName),
-					$this->equalTo(
-							'Problem during erasing the whole or part of the database occured. Reset the database using the command line tool.')],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+		$this->config->expects($this->at(0))->method(
+				'setServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo(RIRStatus::kDbError));
+		$this->config->expects($this->at(1))->method(
+				'setServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kErrorMessageName),
+				$this->equalTo(
+						'Problem during erasing the whole or part of the database occured. Reset the database using the command line tool.'));
+		$this->config->expects($this->at(2))->method(
+				'setServiceSpecificConfigValue')->with(
+				$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo(''));
 
 		$this->assertFalse($this->rir_data->resetDatabase());
 	}
@@ -1002,7 +1009,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDbVersionName, '0', '0']
 		];
 		$this->config->expects($this->atLeast(1))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 
 		$number_of_entries = 55;
 		$this->rir_service_mapper->expects($this->once())->method(
@@ -1274,7 +1281,7 @@ class RIRDataTest extends TestCase {
 			[RIRData::kDbVersionName, '0', $version]
 		];
 		$this->config->expects($this->atLeast(2))->method(
-					'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+					'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 	}
 
 	private function setupAndCheckDbEntriesCalled(bool $ip_v6_ok = true): void {
