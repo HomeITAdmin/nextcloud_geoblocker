@@ -45,23 +45,23 @@ class GeoBlockerTest extends TestCase {
 		$this->location_service->expects($invoker_location_service)->method(
 				'getCountryCodeFromIP')->with($this->equalTo($ip_address))->willReturn(
 				$country_code);
-		$this->config->method('getLogWithUserName')->will(
-				$this->returnValue($log_with_user_name));
-		$this->config->method('getLogWithCountryCode')->will(
-				$this->returnValue($log_with_country_code));
-		$this->config->method('getLogWithIpAddress')->will(
-				$this->returnValue($log_with_ip_address));
+		$this->config->method('getLogWithUserName')->willReturn(
+				$log_with_user_name);
+		$this->config->method('getLogWithCountryCode')->willReturn(
+				$log_with_country_code);
+		$this->config->method('getLogWithIpAddress')->willReturn(
+				$log_with_ip_address);
 		$this->config->method('isCountryCodeInListOfChoosenCountries')->with(
-				$this->equalTo($country_code))->will(
-				$this->returnValue($is_country_in_list));
-		$this->config->method('getUseWhiteListing')->with()->will(
-				$this->returnValue($use_white_listing));
-		$this->config->method('getDelayIpAddress')->with()->will(
-				$this->returnValue(false));
-		$this->config->method('getBlockIpAddress')->with()->will(
-				$this->returnValue($blocking_active));
-		$this->l->method('t')->will(
-				$this->returnCallback([$this,'defaultTranslate']));
+				$this->equalTo($country_code))->willReturn(
+				$is_country_in_list);
+		$this->config->method('getUseWhiteListing')->with()->willReturn(
+				$use_white_listing);
+		$this->config->method('getDelayIpAddress')->with()->willReturn(
+				false);
+		$this->config->method('getBlockIpAddress')->with()->willReturn(
+				$blocking_active);
+		$this->l->method('t')->willReturnCallback(
+				[$this,'defaultTranslate']);
 		$this->logger->expects($invoker_logging)->method($log_method)->with(
 				$this->equalTo($log_string),
 				$this->equalTo(['app' => 'geoblocker']));

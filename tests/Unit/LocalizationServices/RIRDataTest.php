@@ -37,8 +37,8 @@ class RIRDataTest extends TestCase {
 				'OCA\GeoBlocker\Db\RIRServiceMapper')->setConstructorArgs(
 				[$tmp_db])->getMock();
 		$this->l = $this->getMockBuilder('OCP\IL10N')->getMock();
-		$this->l->method('t')->will(
-				$this->returnCallback([$this,'callbackLTJustRouteThrough']));
+		$this->l->method('t')->willReturnCallback(
+				[$this,'callbackLTJustRouteThrough']);
 		$this->logger = $this->getMockBuilder('Psr\Log\LoggerInterface')->getMock();
 		$this->rir_data = new RIRData($this->rir_data_checks,
 				$this->rir_service_mapper, $this->config, $this->l, $this->logger);
@@ -114,7 +114,7 @@ class RIRDataTest extends TestCase {
 		];
 		
 		$this->config->expects($this->atLeast(1))->method(
-			'getServiceSpecificConfigValue')->will($this->returnValueMap($ret_map));
+			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 		
 		if ($rir_status == RIRStatus::kDbOk || $rir_status == RIRStatus::kDbUpdating) {
 			$this->checkSetDBToErrorState($this->error_message_not_enough_entries);

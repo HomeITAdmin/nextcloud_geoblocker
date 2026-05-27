@@ -15,9 +15,8 @@ class DummyTest extends TestCase {
 	public function setUp(): void {
 		parent::setUp();
 		$this->l = $this->getMockBuilder('OCP\IL10N')->getMock();
-		$this->l->method('t')->will(
-				$this->returnCallback(
-						[$this,'callbackLTJustRouteThrough']));
+		$this->l->method('t')->willReturnCallback(
+				[$this,'callbackLTJustRouteThrough']);
 		$this->dummy = new Dummy($this->l);
 	}
 

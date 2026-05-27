@@ -21,14 +21,14 @@ class GeoBlockerConfigTest extends TestCase {
 	public function testIsGetLogWithIpAddressFalseValid() {
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'), $this->equalTo('logWithIpAddress'),
-				$this->equalTo('0'))->will($this->returnValue('0'));
+				$this->equalTo('0'))->willReturn('0');
 		$this->assertFalse($this->geo_config->getLogWithIpAddress());
 	}
 
 	public function testIsGetLogWithIpAddressTrueValid() {
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'), $this->equalTo('logWithIpAddress'),
-				$this->equalTo('0'))->will($this->returnValue('1'));
+				$this->equalTo('0'))->willReturn('1');
 		$this->assertTrue($this->geo_config->getLogWithIpAddress());
 	}
 
@@ -49,16 +49,16 @@ class GeoBlockerConfigTest extends TestCase {
 	public function testIsGetLogWithCountryCodeFalseValid() {
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'),
-				$this->equalTo('logWithCountryCode'), $this->equalTo('0'))->will(
-				$this->returnValue('0'));
+				$this->equalTo('logWithCountryCode'), $this->equalTo('0'))->willReturn(
+				'0');
 		$this->assertFalse($this->geo_config->getLogWithCountryCode());
 	}
 
 	public function testIsGetLogWithCountryCodeTrueValid() {
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'),
-				$this->equalTo('logWithCountryCode'), $this->equalTo('0'))->will(
-				$this->returnValue('1'));
+				$this->equalTo('logWithCountryCode'), $this->equalTo('0'))->willReturn(
+				'1');
 		$this->assertTrue($this->geo_config->getLogWithCountryCode());
 	}
 
@@ -78,15 +78,15 @@ class GeoBlockerConfigTest extends TestCase {
 
 	public function testIsGetLogWithUserNameFalseValid() {
 		$this->config->expects($this->once())->method('getAppValue')->with(
-				$this->equalTo('geoblocker'), $this->equalTo('logWithUserName'))->will(
-				$this->returnValue('0'), $this->equalTo('0'));
+				$this->equalTo('geoblocker'), $this->equalTo('logWithUserName'), $this->equalTo('0'))->willReturn(
+				'0');
 		$this->assertFalse($this->geo_config->getLogWithUserName());
 	}
 
 	public function testIsGetLogWithUserNameTrueValid() {
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'), $this->equalTo('logWithUserName'),
-				$this->equalTo('0'))->will($this->returnValue('1'));
+				$this->equalTo('0'))->willReturn('1');
 		$this->assertTrue($this->geo_config->getLogWithUserName());
 	}
 
@@ -107,16 +107,16 @@ class GeoBlockerConfigTest extends TestCase {
 	public function testIsGetUseWhiteListingFalseValid() {
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'),
-				$this->equalTo('choosenWhiteBlackList'), $this->equalTo('0'))->will(
-				$this->returnValue('0'));
+				$this->equalTo('choosenWhiteBlackList'), $this->equalTo('0'))->willReturn(
+				'0');
 		$this->assertFalse($this->geo_config->getUseWhiteListing());
 	}
 
 	public function testIsGetUseWhiteListingTrueValid() {
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'),
-				$this->equalTo('choosenWhiteBlackList'), $this->equalTo('0'))->will(
-				$this->returnValue('1'));
+				$this->equalTo('choosenWhiteBlackList'), $this->equalTo('0'))->willReturn(
+				'1');
 		$this->assertTrue($this->geo_config->getUseWhiteListing());
 	}
 
@@ -138,7 +138,7 @@ class GeoBlockerConfigTest extends TestCase {
 		$return_string = 'AE, AF, AG, AI, AL,';
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'), $this->equalTo('choosenCountries'),
-				$this->equalTo(''))->will($this->returnValue($return_string));
+				$this->equalTo(''))->willReturn($return_string);
 		$this->assertEquals($return_string,
 				$this->geo_config->getChoosenCountriesByString());
 	}
@@ -147,7 +147,7 @@ class GeoBlockerConfigTest extends TestCase {
 		$return_string = 'AE, AF, AG, AI, AL,';
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'), $this->equalTo('choosenCountries'),
-				$this->equalTo(''))->will($this->returnValue($return_string));
+				$this->equalTo(''))->willReturn($return_string);
 		$this->assertFalse(
 				$this->geo_config->isCountryCodeInListOfChoosenCountries('AQ'));
 	}
@@ -156,7 +156,7 @@ class GeoBlockerConfigTest extends TestCase {
 		$return_string = '';
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'), $this->equalTo('choosenCountries'),
-				$this->equalTo(''))->will($this->returnValue($return_string));
+				$this->equalTo(''))->willReturn($return_string);
 		$this->assertFalse(
 				$this->geo_config->isCountryCodeInListOfChoosenCountries('AQ'));
 	}
@@ -165,7 +165,7 @@ class GeoBlockerConfigTest extends TestCase {
 		$return_string = 'AE, AF, AG, AI, AL,';
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'), $this->equalTo('choosenCountries'),
-				$this->equalTo(''))->will($this->returnValue($return_string));
+				$this->equalTo(''))->willReturn($return_string);
 		$this->assertTrue(
 				$this->geo_config->isCountryCodeInListOfChoosenCountries('AG'));
 	}
@@ -173,14 +173,14 @@ class GeoBlockerConfigTest extends TestCase {
 	public function testIsGetDoFakeAddressFalseValid() {
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'), $this->equalTo('doFakeAddress'),
-				$this->equalTo('0'))->will($this->returnValue('0'));
+				$this->equalTo('0'))->willReturn('0');
 		$this->assertFalse($this->geo_config->getDoFakeAddress());
 	}
 
 	public function testIsGetDoFakeAddressTrueValid() {
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'), $this->equalTo('doFakeAddress'),
-				$this->equalTo('0'))->will($this->returnValue('1'));
+				$this->equalTo('0'))->willReturn('1');
 		$this->assertTrue($this->geo_config->getDoFakeAddress());
 	}
 
@@ -201,30 +201,30 @@ class GeoBlockerConfigTest extends TestCase {
 	public function testIsGetFakeAddressValidAddressValid() {
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'), $this->equalTo('fakeAddress'),
-				$this->equalTo('127.0.0.1'))->will(
-				$this->returnValue('24.165.23.67'));
+				$this->equalTo('127.0.0.1'))->willReturn(
+				'24.165.23.67');
 		$this->assertEquals('24.165.23.67', $this->geo_config->getFakeAddress());
 	}
 
 	public function testIsGetFakeAddressInvalidAddressValid() {
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'), $this->equalTo('fakeAddress'),
-				$this->equalTo('127.0.0.1'))->will(
-				$this->returnValue('24.165.23.67.234'));
+				$this->equalTo('127.0.0.1'))->willReturn(
+				'24.165.23.67.234');
 		$this->assertEquals('127.0.0.1', $this->geo_config->getFakeAddress());
 	}
 
 	public function testIsGetFakeAddressEmptyAddressValid() {
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'), $this->equalTo('fakeAddress'),
-				$this->equalTo('127.0.0.1'))->will($this->returnValue(''));
+				$this->equalTo('127.0.0.1'))->willReturn('');
 		$this->assertEquals('127.0.0.1', $this->geo_config->getFakeAddress());
 	}
 
 	public function testIsGetChosenServiceValid() {
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'), $this->equalTo('chosenService'),
-				$this->equalTo('3'))->will($this->returnValue('1'));
+				$this->equalTo('3'))->willReturn('1');
 		$this->assertEquals('1', $this->geo_config->getChosenService());
 	}
 
@@ -241,8 +241,7 @@ class GeoBlockerConfigTest extends TestCase {
 		$test_return = '11';
 		$this->config->expects($this->once())->method('getAppValue')->with(
 				$this->equalTo('geoblocker'), $this->equalTo($test_name),
-				$this->equalTo($test_default))->will(
-				$this->returnValue($test_return));
+				$this->equalTo($test_default))->willReturn($test_return);
 		$this->assertEquals($test_return,
 				$this->geo_config->getServiceSpecificConfigValue($test_name,
 						$test_default));
