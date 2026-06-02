@@ -28,10 +28,7 @@ class DummyTest extends TestCase {
 		$this->assertStringStartsWith('"Dummy": OK. This service always returns', $this->dummy->getStatusString());
 	}
 
-	/**
-	 *
-	 * @dataProvider ipProvider
-	 */
+	#[DataProvider('ipProvider')]
 	public function testIsCountryCodeOk(string $ip_address) {
 		$this->assertEquals('AA', $this->dummy->getCountryCodeFromIP($ip_address));
 	}
@@ -40,7 +37,7 @@ class DummyTest extends TestCase {
 		return $in;
 	}
 
-	public function ipProvider(): array {
+	public static function ipProvider(): array {
 		return [ ['2a02:2e0:3fe:1001:302::'],
 			['24.165.23.67'],
 			['asdfes'],

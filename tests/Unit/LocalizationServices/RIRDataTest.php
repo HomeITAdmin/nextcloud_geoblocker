@@ -12,6 +12,7 @@ use OCA\GeoBlocker\LocalizationServices\RIRData;
 use OCA\GeoBlocker\LocalizationServices\RIRStatus;
 use OCA\GeoBlocker\Db\RIRServiceDBEntity;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class RIRDataTest extends TestCase {
 	protected $rir_data_checks;
@@ -44,10 +45,7 @@ class RIRDataTest extends TestCase {
 				$this->rir_service_mapper, $this->config, $this->l, $this->logger);
 	}
 
-	/**
-	 *
-	 * @dataProvider okRirStatusProvider
-	 */
+	#[DataProvider('okRirStatusProvider')]
 	public function testIsStatusTrueOk(int $rir_status) {
 		$this->rir_data_checks->expects($this->Once())->method(
 			'checkGMP')->willReturn(true);
@@ -62,11 +60,8 @@ class RIRDataTest extends TestCase {
 		$this->assertTrue($this->rir_data->getStatus());
 	}
 
-	/**
-	 *
-	 * @dataProvider nonOkRirStatusProvider
-	 * @dataProvider invalidRirStatusProvider
-	 */
+	#[DataProvider('nonOkRirStatusProvider')]
+	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsStatusFalseOkForNonOkRirStatus(int $rir_status) {
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				true);
@@ -80,11 +75,8 @@ class RIRDataTest extends TestCase {
 		$this->assertFalse($this->rir_data->getStatus());
 	}
 
-	/**
-	 *
-	 * @dataProvider allRirStatusProvider
-	 * @dataProvider invalidRirStatusProvider
-	 */
+	#[DataProvider('allRirStatusProvider')]
+	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsStatusFalseOkForCheckGmpNotOk(int $rir_status) {
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				false);
@@ -98,11 +90,8 @@ class RIRDataTest extends TestCase {
 		$this->assertFalse($this->rir_data->getStatus());
 	}
 
-	/**
-	 *
-	 * @dataProvider allRirStatusProvider
-	 * @dataProvider invalidRirStatusProvider
-	 */
+	#[DataProvider('allRirStatusProvider')]
+	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsStatusFalseOkForNoEntriesInDb(int $rir_status) {
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				true);
@@ -124,10 +113,7 @@ class RIRDataTest extends TestCase {
 		$this->assertFalse($this->rir_data->getStatus());
 	}
 
-	/**
-	 *
-	 * @dataProvider okRirStatusProvider
-	 */
+	#[DataProvider('okRirStatusProvider')]
 	public function testIsValidStatusStringOk(int $rir_status) {
 		$this->rir_data_checks->expects($this->once())->method('checkGMP')->willReturn(
 				true);
@@ -150,10 +136,7 @@ class RIRDataTest extends TestCase {
 		$this->assertStringStartsWith($result, $this->rir_data->getStatusString());
 	}
 
-	/**
-	 *
-	 * @dataProvider okRirStatusProvider
-	 */
+	#[DataProvider('okRirStatusProvider')]
 	public function testIsValidStatusStringWith64BitHintOk(int $rir_status) {
 		$this->rir_data_checks->expects($this->once())->method('checkGMP')->willReturn(
 				true);
@@ -180,11 +163,8 @@ class RIRDataTest extends TestCase {
 		$this->assertStringStartsWith($result, $this->rir_data->getStatusString());
 	}
 
-	/**
-	 *
-	 * @dataProvider nonOkRirStatusProvider
-	 * @dataProvider invalidRirStatusProvider
-	 */
+	#[DataProvider('nonOkRirStatusProvider')]
+	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsErrorStatusStringOkForNonOkRirStatus(int $rir_status) {
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				true);
@@ -205,11 +185,8 @@ class RIRDataTest extends TestCase {
 		$this->assertStringStartsWith($result, $this->rir_data->getStatusString());
 	}
 
-	/**
-	 *
-	 * @dataProvider allRirStatusProvider
-	 * @dataProvider invalidRirStatusProvider
-	 */
+	#[DataProvider('allRirStatusProvider')]
+	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsErrorStatusStringOkForCheckGmpNotOk(int $rir_status) {
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				false);
@@ -230,11 +207,8 @@ class RIRDataTest extends TestCase {
 		$this->assertStringStartsWith($result, $this->rir_data->getStatusString());
 	}
 
-	/**
-	 *
-	 * @dataProvider allRirStatusProvider
-	 * @dataProvider invalidRirStatusProvider
-	 */
+	#[DataProvider('allRirStatusProvider')]
+	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsInvalidStatusStringOkForNoEntriesInDb(int $rir_status) {
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				true);
@@ -257,10 +231,7 @@ class RIRDataTest extends TestCase {
 		$this->assertStringStartsWith($result, $this->rir_data->getStatusString());
 	}
 
-	/**
-	 *
-	 * @dataProvider validIpProvider
-	 */
+	#[DataProvider('validIpProvider')]
 	public function testIsCountryCodeFromValidIpOk(string $ip_address, bool $ip_v6,
 			string $country_code, string $version, string $rir_status, bool $bit_64_ok) {
 		$this->makeServiceValid($version, $rir_status);
@@ -291,10 +262,7 @@ class RIRDataTest extends TestCase {
 		}
 	}
 
-	/**
-	 *
-	 * @dataProvider invalidIpProvider
-	 */
+	#[DataProvider('invalidIpProvider')]
 	public function testIsCountryCodeFromInvalidIpOk(string $ip_address, string $version, string $rir_status) {
 		$this->makeServiceValid($version, $rir_status);
 
@@ -308,11 +276,8 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getCountryCodeFromIP($ip_address));
 	}
 
-	/**
-	 *
-	 * @dataProvider allRirStatusProvider
-	 * @dataProvider invalidRirStatusProvider
-	 */
+	#[DataProvider('allRirStatusProvider')]
+	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsCountryCodeFromValidIpWithCheckGmpNotOkServiceOk(int $rir_status) {
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				false);
@@ -336,11 +301,8 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getCountryCodeFromIP($ip_address));
 	}
 
-	/**
-	 *
-	 * @dataProvider allRirStatusProvider
-	 * @dataProvider invalidRirStatusProvider
-	 */
+	#[DataProvider('allRirStatusProvider')]
+	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsCountryCodeFromValidIpWithNoEntriesInDbServiceOk(int $rir_status) {
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				true);
@@ -370,11 +332,8 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getCountryCodeFromIP($ip_address));
 	}
 
-	/**
-	 *
-	 * @dataProvider nonOkRirStatusProvider
-	 * @dataProvider invalidRirStatusProvider
-	 */
+	#[DataProvider('nonOkRirStatusProvider')]
+	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsCountryCodeFromValidIpWithNonOkStatus(int $rir_status) {
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				true);
@@ -400,10 +359,7 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getCountryCodeFromIP($ip_address));
 	}
 
-	/**
-	 *
-	 * @dataProvider okRirStatusProvider
-	 */
+	#[DataProvider('okRirStatusProvider')]
 	public function testIsGetDatabaseDateValidOk(int $rir_status) {
 		$db_date = '2020-06-07';
 		$this->rir_service_mapper->expects($this->once())->method(
@@ -419,10 +375,7 @@ class RIRDataTest extends TestCase {
 		$this->assertEquals($db_date, $this->rir_data->getDatabaseDate());
 	}
 
-	/**
-	 *
-	 * @dataProvider okRirStatusProvider
-	 */
+	#[DataProvider('okRirStatusProvider')]
 	public function testIsGetDatabaseDateInvalidForNoSavedDateAndOkStatusOk(int $rir_status) {
 		$this->rir_service_mapper->expects($this->never())->method(
 				'getNumberOfEntries');
@@ -438,11 +391,8 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getDatabaseDate());
 	}
 
-	/**
-	 *
-	 * @dataProvider nonOkRirStatusProvider
-	 * @dataProvider invalidRirStatusProvider
-	 */
+	#[DataProvider('nonOkRirStatusProvider')]
+	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsGetDatabaseDateInvalidForNoSavedDateAndNonOkStatusOk(int $rir_status) {
 		$this->rir_service_mapper->expects($this->never())->method(
 				'getNumberOfEntries');
@@ -458,11 +408,8 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getDatabaseDate());
 	}
 
-	/**
-	 *
-	 * @dataProvider nonOkRirStatusProvider
-	 * @dataProvider invalidRirStatusProvider
-	 */
+	#[DataProvider('nonOkRirStatusProvider')]
+	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsGetDatabaseDateInvalidForNonOKStatusOk(int $rir_status) {
 		$db_date = '2020-06-07';
 		$this->rir_service_mapper->expects($this->never())->method(
@@ -479,11 +426,8 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getDatabaseDate());
 	}
 
-	/**
-	 *
-	 * @dataProvider allRirStatusProvider
-	 * @dataProvider invalidRirStatusProvider
-	 */
+	#[DataProvider('allRirStatusProvider')]
+	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsGetDatabaseDateInvalidForNoEntryInDbOk(int $rir_status) {
 		$db_date = '2020-06-07';
 		$this->rir_service_mapper->expects($this->atMost(1))->method(
@@ -501,10 +445,7 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getDatabaseDate());
 	}
 
-	/**
-	 *
-	 * @dataProvider initializableRirStatusProvider
-	 */
+	#[DataProvider('initializableRirStatusProvider')]
 	public function testIsUpdateDatabaseSuccessForInitializableOk(int $rir_status_before,
 			int $rir_status_inter, bool $bit_64_ok) {
 		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
@@ -533,10 +474,7 @@ class RIRDataTest extends TestCase {
 		$this->assertTrue($this->rir_data->updateDatabase());
 	}
 
-	/**
-	 *
-	 * @dataProvider updateableRirStatusProvider
-	 */
+	#[DataProvider('updateableRirStatusProvider')]
 	public function testIsUpdateDatabaseSuccessForUpdateableOk(int $rir_status_before,
 			int $rir_status_inter, bool $bit_64_ok) {
 		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
@@ -565,10 +503,7 @@ class RIRDataTest extends TestCase {
 		$this->assertTrue($this->rir_data->updateDatabase());
 	}
 
-	/**
-	 *
-	 * @dataProvider nonUpdateableRirStatusProvider
-	 */
+	#[DataProvider('nonUpdateableRirStatusProvider')]
 	public function testIsUpdateDatabaseForNoUpdateStatesOk(
 			int $rir_status_before) {
 		$this->config->expects($this->once())->method(
@@ -583,10 +518,7 @@ class RIRDataTest extends TestCase {
 		$this->assertFalse($this->rir_data->updateDatabase());
 	}
 
-	/**
-	 *
-	 * @dataProvider initializableRirStatusProvider
-	 */
+	#[DataProvider('initializableRirStatusProvider')]
 	public function testIsUpdateDatabaseErrorDuringErasingForInitializableOk(int $rir_status_before,
 			int $rir_status_inter) {
 		$ret_map = [
@@ -613,10 +545,7 @@ class RIRDataTest extends TestCase {
 		$this->assertFalse($this->rir_data->updateDatabase());
 	}
 
-	/**
-	 *
-	 * @dataProvider updateableRirStatusProvider
-	 */
+	#[DataProvider('updateableRirStatusProvider')]
 	public function testIsUpdateDatabaseErrorDuringErasingForUpdateableOk(int $rir_status_before,
 			int $rir_status_inter, bool $bit_64_ok) {
 		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
@@ -649,10 +578,7 @@ class RIRDataTest extends TestCase {
 		$this->assertFalse($this->rir_data->updateDatabase());
 	}
 
-	/**
-	 *
-	 * @dataProvider updateableRirStatusAndInvalidFilesProvider
-	 */
+	#[DataProvider('updateableRirStatusAndInvalidFilesProvider')]
 	public function testIsUpdateDatabaseErrorRirFormatOk(int $rir_status_before,
 			int $rir_status_inter, int $fileNumber) {
 		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn(true);
@@ -710,11 +636,8 @@ class RIRDataTest extends TestCase {
 		$this->assertFalse($this->rir_data->updateDatabase());
 	}
 
-	/**
-	 *
-	 * @dataProvider updateableRirStatusProvider
-	 * @dataProvider initializableRirStatusProvider
-	 */
+	#[DataProvider('updateableRirStatusProvider')]
+	#[DataProvider('initializableRirStatusProvider')]
 	public function testIsUpdateDatabaseExceptionDuringFillingOk(int $rir_status_before,
 			int $rir_status_inter) {
 		$ret_map = [
@@ -775,11 +698,8 @@ class RIRDataTest extends TestCase {
 		$this->assertFalse($this->rir_data->updateDatabase());
 	}
 
-	/**
-	 *
-	 * @dataProvider updateableRirStatusProvider
-	 * @dataProvider initializableRirStatusProvider
-	 */
+	#[DataProvider('updateableRirStatusProvider')]
+	#[DataProvider('initializableRirStatusProvider')]
 	public function testIsUpdateDatabaseErrorInvalidFileHandleOk(int $rir_status_before,
 			int $rir_status_inter) {
 		$ret_map = [
@@ -830,10 +750,7 @@ class RIRDataTest extends TestCase {
 		$this->assertFalse($this->rir_data->updateDatabase());
 	}
 
-	/**
-	 *
-	 * @dataProvider updateableRirStatusProvider
-	 */
+	#[DataProvider('updateableRirStatusProvider')]
 	public function testIsUpdateDatabaseSuccessEntriesAlreadyExistOk(int $rir_status_before,
 			int $rir_status_inter, bool $bit_64_ok) {
 		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
@@ -872,10 +789,7 @@ class RIRDataTest extends TestCase {
 		$this->assertTrue($this->rir_data->updateDatabase());
 	}
 
-	/**
-	 *
-	 * @dataProvider updateableRirStatusProvider
-	 */
+	#[DataProvider('updateableRirStatusProvider')]
 	public function testIsUpdateDatabaseEntriesAlreadyExistEraseFailureOk(int $rir_status_before,
 			int $rir_status_inter) {
 		$ret_map = [
@@ -948,10 +862,7 @@ class RIRDataTest extends TestCase {
 		$this->assertFalse($this->rir_data->resetDatabase());
 	}
 
-	/**
-	 *
-	 * @dataProvider databaseUpdatingStatusProvider
-	 */
+	#[DataProvider('databaseUpdatingStatusProvider')]
 	public function testIsGetDatabaseUpdateStatusUpdatingOk(int $rir_status) {
 		$this->config->expects($this->once())->method(
 				'getServiceSpecificConfigValue')->with(
@@ -962,10 +873,7 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getDatabaseUpdateStatus());
 	}
 
-	/**
-	 *
-	 * @dataProvider databaseNotUpdatingStatusProvider
-	 */
+	#[DataProvider('databaseNotUpdatingStatusProvider')]
 	public function testIsGetDatabaseUpdateStatusUpdateNotPossibleOk(
 			int $rir_status) {
 		$this->config->expects($this->once())->method(
@@ -980,10 +888,7 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getDatabaseUpdateStatus());
 	}
 
-	/**
-	 *
-	 * @dataProvider databaseNotUpdatingStatusProvider
-	 */
+	#[DataProvider('databaseNotUpdatingStatusProvider')]
 	public function testIsGetDatabaseUpdateStatusUpdatePossibleOk(
 			int $rir_status) {
 		$this->config->expects($this->once())->method(
@@ -998,10 +903,7 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getDatabaseUpdateStatus());
 	}
 
-	/**
-	 *
-	 * @dataProvider databaseUpdatingStatusProvider
-	 */
+	#[DataProvider('databaseUpdatingStatusProvider')]
 	public function testIsGetDatabaseUpdateStatusStringUpdatingOk(
 			int $rir_status, int $version) {
 		$ret_map = [
@@ -1020,10 +922,7 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getDatabaseUpdateStatusString());
 	}
 
-	/**
-	 *
-	 * @dataProvider databaseNotUpdatingStatusStingsProvider
-	 */
+	#[DataProvider('databaseNotUpdatingStatusStingsProvider')]
 	public function testIsGetDatabaseUpdateStatusStringUpdateNotPossibleOk(
 			int $rir_status, bool $ret1, bool $ret2, bool $ret3, string $msg) {
 		$this->config->expects($this->once())->method(
@@ -1044,10 +943,7 @@ class RIRDataTest extends TestCase {
 				$this->rir_data->getDatabaseUpdateStatusString());
 	}
 
-	/**
-	 *
-	 * @dataProvider databaseNotUpdatingStatusProvider
-	 */
+	#[DataProvider('databaseNotUpdatingStatusProvider')]
 	public function testIsGetDatabaseUpdateStatusStringUpdatePossibleOk(
 			int $rir_status, bool $bit_64_ok) {
 		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
@@ -1065,11 +961,11 @@ class RIRDataTest extends TestCase {
 		}
 	}
 
-	public function callbackLTJustRouteThrough(string $in): string {
+	public static function callbackLTJustRouteThrough(string $in): string {
 		return $in;
 	}
 
-	public function allRirStatusProvider(): array {
+	public static function allRirStatusProvider(): array {
 		return ["kDbError" => [RIRStatus::kDbError],
 			"kDbInitilazing" => [RIRStatus::kDbInitilazing],
 			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized],
@@ -1078,23 +974,23 @@ class RIRDataTest extends TestCase {
 			"kDbOkButError" => [RIRStatus::kDbOkButError]];
 	}
 
-	public function invalidRirStatusProvider(): array {
+	public static function invalidRirStatusProvider(): array {
 		return ["invalid" => [- 1]];
 	}
 
-	public function okRirStatusProvider(): array {
+	public static function okRirStatusProvider(): array {
 		return ["kDbOk" => [RIRStatus::kDbOk],
 			"kDbUpdating" => [RIRStatus::kDbUpdating],
 			"kDbOkButError" => [RIRStatus::kDbOkButError]];
 	}
 
-	public function nonOkRirStatusProvider(): array {
+	public static function nonOkRirStatusProvider(): array {
 		return ["kDbError" => [RIRStatus::kDbError],
 			"kDbInitilazing" => [RIRStatus::kDbInitilazing],
 			"kDbNotInitialized" => [RIRStatus::kDbNotInitialized]];
 	}
 
-	public function initializableRirStatusProvider(): array {
+	public static function initializableRirStatusProvider(): array {
 		$ret = [];
 		$states = [[RIRStatus::kDbNotInitialized, RIRStatus::kDbInitilazing],
 			[RIRStatus::kDbError,RIRStatus::kDbInitilazing]];
@@ -1112,7 +1008,7 @@ class RIRDataTest extends TestCase {
 		return $ret;
 	}
 
-	public function updateableRirStatusProvider(): array {
+	public static function updateableRirStatusProvider(): array {
 		$ret = [];
 		$states = [ [RIRStatus::kDbOk,RIRStatus::kDbUpdating],
 			[RIRStatus::kDbOkButError,RIRStatus::kDbUpdating]];
@@ -1130,12 +1026,12 @@ class RIRDataTest extends TestCase {
 		return $ret;
 	}
 
-	public function nonUpdateableRirStatusProvider(): array {
+	public static function nonUpdateableRirStatusProvider(): array {
 		return ["kDbInitilazing" => [RIRStatus::kDbInitilazing],
 			"kDbUpdating" => [RIRStatus::kDbUpdating]];
 	}
 
-	public function validIpProvider(): array {
+	public static function validIpProvider(): array {
 		$ret = [];
 		$ips = [['2a02:2e0:3fe:1001:302::', true, 'DE'],
 			['24.165.23.67', false, 'US']];
@@ -1163,7 +1059,7 @@ class RIRDataTest extends TestCase {
 		return $ret;
 	}
 
-	public function invalidIpProvider(): array {
+	public static function invalidIpProvider(): array {
 		return [['asdfes', '0', strval(RIRStatus::kDbOk)],
 			['2342552', '0', strval(RIRStatus::kDbOk)],
 			['24.165.523.67', '0', strval(RIRStatus::kDbOk)],
@@ -1178,7 +1074,7 @@ class RIRDataTest extends TestCase {
 			['24.165.523.67', '1', strval(RIRStatus::kDbUpdating)],];
 	}
 
-	public function updateableRirStatusAndInvalidFilesProvider(): array {
+	public static function updateableRirStatusAndInvalidFilesProvider(): array {
 		$ret = [];
 
 		$states = ["kDbOk" => [RIRStatus::kDbOk,RIRStatus::kDbUpdating],
@@ -1205,12 +1101,12 @@ class RIRDataTest extends TestCase {
 		return $ret;
 	}
 
-	public function databaseUpdatingStatusProvider(): array {
+	public static function databaseUpdatingStatusProvider(): array {
 		return ["kDbInitilazing" => [RIRStatus::kDbInitilazing, 0],
 			"kDbUpdating" => [RIRStatus::kDbUpdating, 1]];
 	}
 
-	public function databaseNotUpdatingStatusProvider(): array {
+	public static function databaseNotUpdatingStatusProvider(): array {
 		$ret = [];
 		$states = [[RIRStatus::kDbError],
 			[RIRStatus::kDbNotInitialized],
@@ -1230,7 +1126,7 @@ class RIRDataTest extends TestCase {
 		return $ret;
 	}
 
-	public function databaseNotUpdatingStatusStingsProvider(): array {
+	public static function databaseNotUpdatingStatusStingsProvider(): array {
 		$ret = [];
 
 		$states = ["kDbError" => [RIRStatus::kDbError],
