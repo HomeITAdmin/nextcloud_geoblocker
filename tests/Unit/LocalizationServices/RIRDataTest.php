@@ -520,7 +520,7 @@ class RIRDataTest extends TestCase {
 
 	#[DataProvider('initializableRirStatusProvider')]
 	public function testIsUpdateDatabaseErrorDuringErasingForInitializableOk(int $rir_status_before,
-			int $rir_status_inter) {
+			int $rir_status_inter, bool $bit_64_ok) {
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
 			[RIRData::kDbVersionName, '0', '1']
@@ -639,7 +639,7 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('updateableRirStatusProvider')]
 	#[DataProvider('initializableRirStatusProvider')]
 	public function testIsUpdateDatabaseExceptionDuringFillingOk(int $rir_status_before,
-			int $rir_status_inter) {
+			int $rir_status_inter, bool $bit_64_ok) {
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
 			[RIRData::kDbVersionName, '0', '1']
@@ -701,7 +701,7 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('updateableRirStatusProvider')]
 	#[DataProvider('initializableRirStatusProvider')]
 	public function testIsUpdateDatabaseErrorInvalidFileHandleOk(int $rir_status_before,
-			int $rir_status_inter) {
+			int $rir_status_inter, bool $bit_64_ok) {
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
 			[RIRData::kDbVersionName, '0', '1']
@@ -791,7 +791,7 @@ class RIRDataTest extends TestCase {
 
 	#[DataProvider('updateableRirStatusProvider')]
 	public function testIsUpdateDatabaseEntriesAlreadyExistEraseFailureOk(int $rir_status_before,
-			int $rir_status_inter) {
+			int $rir_status_inter, bool $bit_64_ok) {
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
 			[RIRData::kDbVersionName, '0', '1']
@@ -863,7 +863,7 @@ class RIRDataTest extends TestCase {
 	}
 
 	#[DataProvider('databaseUpdatingStatusProvider')]
-	public function testIsGetDatabaseUpdateStatusUpdatingOk(int $rir_status) {
+	public function testIsGetDatabaseUpdateStatusUpdatingOk(int $rir_status, int $version) {
 		$this->config->expects($this->once())->method(
 				'getServiceSpecificConfigValue')->with(
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
@@ -875,7 +875,7 @@ class RIRDataTest extends TestCase {
 
 	#[DataProvider('databaseNotUpdatingStatusProvider')]
 	public function testIsGetDatabaseUpdateStatusUpdateNotPossibleOk(
-			int $rir_status) {
+			int $rir_status, bool $bit_64_ok) {
 		$this->config->expects($this->once())->method(
 				'getServiceSpecificConfigValue')->with(
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
@@ -890,7 +890,7 @@ class RIRDataTest extends TestCase {
 
 	#[DataProvider('databaseNotUpdatingStatusProvider')]
 	public function testIsGetDatabaseUpdateStatusUpdatePossibleOk(
-			int $rir_status) {
+			int $rir_status, bool $bit_64_ok) {
 		$this->config->expects($this->once())->method(
 				'getServiceSpecificConfigValue')->with(
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
