@@ -7,6 +7,7 @@ namespace OCA\GeoBlocker\Tests\Unit\LocalizationService;
 
 use PHPUnit\Framework\TestCase;
 use OCA\GeoBlocker\LocalizationServices\Dummy;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class DummyTest extends TestCase {
 	protected $l;

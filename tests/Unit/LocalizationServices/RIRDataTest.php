@@ -1191,10 +1191,11 @@ class RIRDataTest extends TestCase {
 	}
 
 	private function expectConfigGetServiceSpecificConfigValueCalls(array $expectedCalls): void {
-		$invokedCount = $this->exactly(count($expectedCalls));
-		$this->config->expects($invokedCount)->method('getServiceSpecificConfigValue')
-			->willReturnCallback(function (...$parameters) use ($invokedCount, $expectedCalls) {
-				$index = $invokedCount->getInvocationCount() - 1;
+		$expectedCount = count($expectedCalls);
+		$callIndex = 0;
+		$this->config->expects($this->exactly($expectedCount))->method('getServiceSpecificConfigValue')
+			->willReturnCallback(function (...$parameters) use (&$callIndex, $expectedCalls) {
+				$index = $callIndex++;
 				$expected = $expectedCalls[$index];
 				$this->assertMockedParameters($parameters, [$expected[0], $expected[1]]);
 				return $expected[2];
@@ -1202,19 +1203,21 @@ class RIRDataTest extends TestCase {
 	}
 
 	private function expectConfigSetServiceSpecificConfigValueCalls(array $expectedCalls): void {
-		$invokedCount = $this->exactly(count($expectedCalls));
-		$this->config->expects($invokedCount)->method('setServiceSpecificConfigValue')
-			->willReturnCallback(function (...$parameters) use ($invokedCount, $expectedCalls) {
-				$index = $invokedCount->getInvocationCount() - 1;
+		$expectedCount = count($expectedCalls);
+		$callIndex = 0;
+		$this->config->expects($this->exactly($expectedCount))->method('setServiceSpecificConfigValue')
+			->willReturnCallback(function (...$parameters) use (&$callIndex, $expectedCalls) {
+				$index = $callIndex++;
 				$this->assertMockedParameters($parameters, $expectedCalls[$index]);
 			});
 	}
 
 	private function expectRirServiceMapperInsertCalls(array $expectedEntries): void {
-		$invokedCount = $this->exactly(count($expectedEntries));
-		$this->rir_service_mapper->expects($invokedCount)->method('insert')
-			->willReturnCallback(function ($entry) use ($invokedCount, $expectedEntries) {
-				$index = $invokedCount->getInvocationCount() - 1;
+		$expectedCount = count($expectedEntries);
+		$callIndex = 0;
+		$this->rir_service_mapper->expects($this->exactly($expectedCount))->method('insert')
+			->willReturnCallback(function ($entry) use (&$callIndex, $expectedEntries) {
+				$index = $callIndex++;
 				$this->assertEquals($expectedEntries[$index], $entry);
 			});
 	}
