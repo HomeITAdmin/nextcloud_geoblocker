@@ -722,7 +722,8 @@ class RIRDataTest extends TestCase {
 					$this->equalTo(RIRStatus::kDbOkButError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
 					$this->equalTo(
-							'Invalid file handle for region "%s". Probably the internet connection got lost during the update.')]);
+							'Invalid file handle for region "%s". Probably the internet connection got lost during the update.')],
+			]);
 		} else {
 			$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
@@ -736,7 +737,8 @@ class RIRDataTest extends TestCase {
 				[$this->equalTo(RIRData::kErrorMessageName),
 					$this->equalTo(
 							'Invalid file handle for region "%s". Probably the internet connection got lost during the update.')],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+			]);
 		}
 
 		$this->setupAndCheckDbEntriesNotCalled(
