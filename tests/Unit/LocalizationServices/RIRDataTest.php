@@ -1219,6 +1219,7 @@ class RIRDataTest extends TestCase {
 			->willReturnCallback(function ($entry) use (&$callIndex, $expectedEntries) {
 				$index = $callIndex++;
 				$this->assertEquals($expectedEntries[$index], $entry);
+				return $entry;
 			});
 	}
 
