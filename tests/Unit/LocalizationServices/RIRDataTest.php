@@ -601,7 +601,7 @@ class RIRDataTest extends TestCase {
 			[$this->equalTo(RIRData::kServiceStatusName),
 				$this->equalTo(RIRStatus::kDbOkButError)],
 			[$this->equalTo(RIRData::kErrorMessageName),
-				$this->isType('string')],
+				fn($v) => $this->assertIsString($v)],
 		]);
 		} else {
 			$this->rir_service_mapper->expects($this->once())->method(
@@ -614,7 +614,7 @@ class RIRDataTest extends TestCase {
 			[$this->equalTo(RIRData::kServiceStatusName),
 				$this->equalTo(RIRStatus::kDbError)],
 			[$this->equalTo(RIRData::kErrorMessageName),
-				$this->isType('string')],
+				fn($v) => $this->assertIsString($v)],
 			[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
 		]);
 		}
