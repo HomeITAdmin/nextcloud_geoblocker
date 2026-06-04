@@ -458,16 +458,16 @@ class RIRDataTest extends TestCase {
 			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 		$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
-		$this->config->expects($this->exactly(5))->method(
-				'setServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo($rir_status_inter)],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
-				[$this->equalTo(RIRData::kDbVersionName),$this->equalTo('0')],
-				[$this->equalTo(RIRData::kDatabaseDateName),
-					$this->equalTo(date("Y-m-d"))],
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo(RIRStatus::kDbOk)]);
+		$this->expectConfigSetServiceSpecificConfigValueCalls([
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo($rir_status_inter)],
+			[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+			[$this->equalTo(RIRData::kDbVersionName),$this->equalTo('0')],
+			[$this->equalTo(RIRData::kDatabaseDateName),
+				$this->equalTo(date("Y-m-d"))],
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo(RIRStatus::kDbOk)]
+		]);
 
 		$this->setupAndCheckDbEntriesCalled($bit_64_ok);
 
@@ -478,25 +478,24 @@ class RIRDataTest extends TestCase {
 	public function testIsUpdateDatabaseSuccessForUpdateableOk(int $rir_status_before,
 			int $rir_status_inter, bool $bit_64_ok) {
 		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
-		$this->config->expects($this->exactly(4))->method(
-				'getServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0')],
-				[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')],
-				[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')],
-				[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')])
-				->willReturnOnConsecutiveCalls(strval($rir_status_before), '1', '1', '0');
+		$this->expectConfigGetServiceSpecificConfigValueCalls([
+			[$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'), strval($rir_status_before)],
+			[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0'), '1'],
+			[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0'), '1'],
+			[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0'), '0'],
+		]);
 		$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
-		$this->config->expects($this->exactly(4))->method(
-				'setServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo($rir_status_inter)],
-				[$this->equalTo(RIRData::kDatabaseDateName),
-					$this->equalTo(date("Y-m-d"))],
-				[$this->equalTo(RIRData::kDbVersionName),
-					$this->equalTo('0')],
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo(RIRStatus::kDbOk)]);
+		$this->expectConfigSetServiceSpecificConfigValueCalls([
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo($rir_status_inter)],
+			[$this->equalTo(RIRData::kDatabaseDateName),
+				$this->equalTo(date("Y-m-d"))],
+			[$this->equalTo(RIRData::kDbVersionName),
+				$this->equalTo('0')],
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo(RIRStatus::kDbOk)],
+		]);
 
 		$this->setupAndCheckDbEntriesCalled($bit_64_ok);
 
@@ -529,16 +528,16 @@ class RIRDataTest extends TestCase {
 			'getServiceSpecificConfigValue')->willReturnMap($ret_map);
 		$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(false);
-		$this->config->expects($this->exactly(4))->method(
-				'setServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo($rir_status_inter)],
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo(RIRStatus::kDbError)],
-				[$this->equalTo(RIRData::kErrorMessageName),
-					$this->equalTo(
-							'Problem during erasing the whole or part of the database occured. Reset the database using the command line tool.')],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+		$this->expectConfigSetServiceSpecificConfigValueCalls([
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo($rir_status_inter)],
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo(RIRStatus::kDbError)],
+			[$this->equalTo(RIRData::kErrorMessageName),
+				$this->equalTo(
+						'Problem during erasing the whole or part of the database occured. Reset the database using the command line tool.')],
+			[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+		]);
 
 		$this->setupAndCheckDbEntriesNotCalled($this->rir_data_test_file);
 
@@ -549,29 +548,27 @@ class RIRDataTest extends TestCase {
 	public function testIsUpdateDatabaseErrorDuringErasingForUpdateableOk(int $rir_status_before,
 			int $rir_status_inter, bool $bit_64_ok) {
 		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
-		$this->config->expects($this->exactly(3))->method(
-			'getServiceSpecificConfigValue')->withConsecutive(
-			[$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0')],
-			[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')],
-			[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')])
-			->willReturnOnConsecutiveCalls(strval($rir_status_before), '1', '1');
+		$this->expectConfigGetServiceSpecificConfigValueCalls([
+			[$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'), strval($rir_status_before)],
+			[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0'), '1'],
+			[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0'), '1'],
+		]);
 		$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(false);
-		$this->config->expects($this->exactly(6))->method(
-				'setServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo($rir_status_inter)],
-				[$this->equalTo(RIRData::kDatabaseDateName),
-					$this->equalTo(date("Y-m-d"))],
-				[$this->equalTo(RIRData::kDbVersionName),
-					$this->equalTo('0')],
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo(RIRStatus::kDbError)],
-				[$this->equalTo(RIRData::kErrorMessageName),
-					$this->equalTo(
-							'Problem during erasing the whole or part of the database occured. Reset the database using the command line tool.')],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]
-				);
+		$this->expectConfigSetServiceSpecificConfigValueCalls([
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo($rir_status_inter)],
+			[$this->equalTo(RIRData::kDatabaseDateName),
+				$this->equalTo(date("Y-m-d"))],
+			[$this->equalTo(RIRData::kDbVersionName),
+				$this->equalTo('0')],
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo(RIRStatus::kDbError)],
+			[$this->equalTo(RIRData::kErrorMessageName),
+				$this->equalTo(
+						'Problem during erasing the whole or part of the database occured. Reset the database using the command line tool.')],
+			[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+		]);
 
 		$this->setupAndCheckDbEntriesCalled($bit_64_ok);
 
@@ -598,28 +595,28 @@ class RIRDataTest extends TestCase {
 				->expects($this->once())
 				->method('eraseAllDatabaseEntries')
 				->willReturn(true);
-			$this->config->expects($this->exactly(3))->method(
-				'setServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo($rir_status_inter)],
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo(RIRStatus::kDbOkButError)],
-				[$this->equalTo(RIRData::kErrorMessageName),
-					$this->isType('string')]);
+			$this->expectConfigSetServiceSpecificConfigValueCalls([
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo($rir_status_inter)],
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo(RIRStatus::kDbOkButError)],
+			[$this->equalTo(RIRData::kErrorMessageName),
+				$this->isType('string')],
+		]);
 		} else {
 			$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
-			$this->config->expects($this->exactly(6))->method(
-				'setServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo($rir_status_inter)],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
-				[$this->equalTo(RIRData::kDbVersionName),$this->equalTo('0')],
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo(RIRStatus::kDbError)],
-				[$this->equalTo(RIRData::kErrorMessageName),
-					$this->isType('string')],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+			$this->expectConfigSetServiceSpecificConfigValueCalls([
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo($rir_status_inter)],
+			[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+			[$this->equalTo(RIRData::kDbVersionName),$this->equalTo('0')],
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo(RIRStatus::kDbError)],
+			[$this->equalTo(RIRData::kErrorMessageName),
+				$this->isType('string')],
+			[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+		]);
 		}
 
 		$this->logger->expects($this->once())
@@ -656,19 +653,18 @@ class RIRDataTest extends TestCase {
 				->expects($this->once())
 				->method('eraseAllDatabaseEntries')
 				->willReturn(true);
-			$this->config->expects($this->exactly(3))->method(
-				'setServiceSpecificConfigValue')->withConsecutive(
+			$this->expectConfigSetServiceSpecificConfigValueCalls([
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo($rir_status_inter)],
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo(RIRStatus::kDbOkButError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
-					$this->stringStartsWith('Exception caught during Update for region')]);
+					$this->stringStartsWith('Exception caught during Update for region')],
+			]);
 		} else {
 			$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
-			$this->config->expects($this->exactly(6))->method(
-				'setServiceSpecificConfigValue')->withConsecutive(
+			$this->expectConfigSetServiceSpecificConfigValueCalls([
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo($rir_status_inter)],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
@@ -677,7 +673,8 @@ class RIRDataTest extends TestCase {
 					$this->equalTo(RIRStatus::kDbError)],
 				[$this->equalTo(RIRData::kErrorMessageName),
 					$this->stringStartsWith('Exception caught during Update for region')],
-				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+			]);
 		}
 
 		$this->rir_data->setDataSource(
@@ -718,8 +715,7 @@ class RIRDataTest extends TestCase {
 				->expects($this->once())
 				->method('eraseAllDatabaseEntries')
 				->willReturn(true);
-			$this->config->expects($this->exactly(3))->method(
-				'setServiceSpecificConfigValue')->withConsecutive(
+			$this->expectConfigSetServiceSpecificConfigValueCalls([
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo($rir_status_inter)],
 				[$this->equalTo(RIRData::kServiceStatusName),
@@ -730,8 +726,7 @@ class RIRDataTest extends TestCase {
 		} else {
 			$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
-			$this->config->expects($this->exactly(6))->method(
-				'setServiceSpecificConfigValue')->withConsecutive(
+			$this->expectConfigSetServiceSpecificConfigValueCalls([
 				[$this->equalTo(RIRData::kServiceStatusName),
 					$this->equalTo($rir_status_inter)],
 				[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
@@ -754,14 +749,13 @@ class RIRDataTest extends TestCase {
 	public function testIsUpdateDatabaseSuccessEntriesAlreadyExistOk(int $rir_status_before,
 			int $rir_status_inter, bool $bit_64_ok) {
 		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
-		$this->config->expects($this->exactly(5))->method(
-				'getServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0')],
-				[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')],
-				[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')],
-				[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')],
-				[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0')])
-				->willReturnOnConsecutiveCalls(strval($rir_status_before), '1', '1', '1', '0');
+		$this->expectConfigGetServiceSpecificConfigValueCalls([
+			[$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'), strval($rir_status_before)],
+			[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0'), '1'],
+			[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0'), '1'],
+			[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0'), '1'],
+			[$this->equalTo(RIRData::kDbVersionName), $this->equalTo('0'), '0'],
+		]);
 
 		$this->rir_service_mapper->expects($this->once())->method('getNumberOfEntries')
 			->with($this->equalTo('0'))
@@ -771,17 +765,16 @@ class RIRDataTest extends TestCase {
 		$this->rir_service_mapper->expects($this->exactly(2))->method(
 			'eraseAllDatabaseEntries')->willReturn(true);
 
-		$this->config->expects($this->exactly(4))->method(
-			'setServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo($rir_status_inter)],
-				[$this->equalTo(RIRData::kDatabaseDateName),
-					$this->equalTo(date("Y-m-d"))],
-				[$this->equalTo(RIRData::kDbVersionName),
-					$this->equalTo('0')],
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo(RIRStatus::kDbOk)]
-			);
+		$this->expectConfigSetServiceSpecificConfigValueCalls([
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo($rir_status_inter)],
+			[$this->equalTo(RIRData::kDatabaseDateName),
+				$this->equalTo(date("Y-m-d"))],
+			[$this->equalTo(RIRData::kDbVersionName),
+				$this->equalTo('0')],
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo(RIRStatus::kDbOk)],
+		]);
 	
 
 		$this->setupAndCheckDbEntriesCalled($bit_64_ok);
@@ -809,8 +802,7 @@ class RIRDataTest extends TestCase {
 			->with($this->equalTo('0'))
 			->willReturn(false);
 
-		$this->config->expects($this->exactly(4))->method(
-			'setServiceSpecificConfigValue')->withConsecutive(
+		$this->expectConfigSetServiceSpecificConfigValueCalls([
 			[$this->equalTo(RIRData::kServiceStatusName),
 				$this->equalTo($rir_status_inter)],
 			[$this->equalTo(RIRData::kServiceStatusName),
@@ -818,7 +810,8 @@ class RIRDataTest extends TestCase {
 			[$this->equalTo(RIRData::kErrorMessageName),
 				$this->equalTo(
 						'Problem during erasing the whole or part of the database occured. Reset the database using the command line tool.')],
-			[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')]);
+			[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+		]);
 
 		$this->assertFalse($this->rir_data->updateDatabase());
 	}
@@ -829,13 +822,11 @@ class RIRDataTest extends TestCase {
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'));
 		$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(true);
-		$this->config->expects($this->at(0))->method(
-				'setServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo(''));
-		$this->config->expects($this->at(1))->method(
-				'setServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kServiceStatusName),
-				$this->equalTo(RIRStatus::kDbNotInitialized));
+		$this->expectConfigSetServiceSpecificConfigValueCalls([
+			[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo(RIRStatus::kDbNotInitialized)],
+		]);
 
 		$this->assertTrue($this->rir_data->resetDatabase());
 	}
@@ -846,18 +837,14 @@ class RIRDataTest extends TestCase {
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'));
 		$this->rir_service_mapper->expects($this->once())->method(
 				'eraseAllDatabaseEntries')->willReturn(false);
-		$this->config->expects($this->at(0))->method(
-				'setServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kServiceStatusName),
-				$this->equalTo(RIRStatus::kDbError));
-		$this->config->expects($this->at(1))->method(
-				'setServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kErrorMessageName),
+		$this->expectConfigSetServiceSpecificConfigValueCalls([
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo(RIRStatus::kDbError)],
+			[$this->equalTo(RIRData::kErrorMessageName),
 				$this->equalTo(
-						'Problem during erasing the whole or part of the database occured. Reset the database using the command line tool.'));
-		$this->config->expects($this->at(2))->method(
-				'setServiceSpecificConfigValue')->with(
-				$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo(''));
+						'Problem during erasing the whole or part of the database occured. Reset the database using the command line tool.')],
+			[$this->equalTo(RIRData::kDatabaseDateName),$this->equalTo('')],
+		]);
 
 		$this->assertFalse($this->rir_data->resetDatabase());
 	}
@@ -1158,12 +1145,12 @@ class RIRDataTest extends TestCase {
 	}
 
 	private function checkSetDBToErrorState($error_message) {
-		$this->config->expects($this->exactly(3))->method(
-				'setServiceSpecificConfigValue')->withConsecutive(
-				[$this->equalTo(RIRData::kServiceStatusName),
-					$this->equalTo(RIRStatus::kDbError)],
-				[$this->equalTo(RIRData::kErrorMessageName),$error_message],
-				[$this->equalTo(RIRData::kDatabaseDateName),'']);
+		$this->expectConfigSetServiceSpecificConfigValueCalls([
+			[$this->equalTo(RIRData::kServiceStatusName),
+				$this->equalTo(RIRStatus::kDbError)],
+			[$this->equalTo(RIRData::kErrorMessageName),$error_message],
+			[$this->equalTo(RIRData::kDatabaseDateName),''],
+		]);
 	}
 
 	private function makeServiceValid(string $version, string $rir_status) {
@@ -1178,6 +1165,56 @@ class RIRDataTest extends TestCase {
 		];
 		$this->config->expects($this->atLeast(2))->method(
 					'getServiceSpecificConfigValue')->willReturnMap($ret_map);
+	}
+
+	private function assertMockedParameters(array $parameters, array $expectedParams): void {
+		$this->assertCount(count($expectedParams), $parameters);
+		foreach ($expectedParams as $index => $expected) {
+			$this->assertMockedParameter($expected, $parameters[$index]);
+		}
+	}
+
+	private function assertMockedParameter($expected, $actual): void {
+		if ($expected instanceof \PHPUnit\Framework\Constraint\Constraint) {
+			$this->assertThat($actual, $expected);
+			return;
+		}
+
+		if (is_callable($expected)) {
+			$expected($actual);
+			return;
+		}
+
+		$this->assertSame($expected, $actual);
+	}
+
+	private function expectConfigGetServiceSpecificConfigValueCalls(array $expectedCalls): void {
+		$invokedCount = $this->exactly(count($expectedCalls));
+		$this->config->expects($invokedCount)->method('getServiceSpecificConfigValue')
+			->willReturnCallback(function (...$parameters) use ($invokedCount, $expectedCalls) {
+				$index = $invokedCount->getInvocationCount() - 1;
+				$expected = $expectedCalls[$index];
+				$this->assertMockedParameters($parameters, [$expected[0], $expected[1]]);
+				return $expected[2];
+			});
+	}
+
+	private function expectConfigSetServiceSpecificConfigValueCalls(array $expectedCalls): void {
+		$invokedCount = $this->exactly(count($expectedCalls));
+		$this->config->expects($invokedCount)->method('setServiceSpecificConfigValue')
+			->willReturnCallback(function (...$parameters) use ($invokedCount, $expectedCalls) {
+				$index = $invokedCount->getInvocationCount() - 1;
+				$this->assertMockedParameters($parameters, $expectedCalls[$index]);
+			});
+	}
+
+	private function expectRirServiceMapperInsertCalls(array $expectedEntries): void {
+		$invokedCount = $this->exactly(count($expectedEntries));
+		$this->rir_service_mapper->expects($invokedCount)->method('insert')
+			->willReturnCallback(function ($entry) use ($invokedCount, $expectedEntries) {
+				$index = $invokedCount->getInvocationCount() - 1;
+				$this->assertEquals($expectedEntries[$index], $entry);
+			});
 	}
 
 	private function setupAndCheckDbEntriesCalled(bool $ip_v6_ok = true): void {
@@ -1217,15 +1254,17 @@ class RIRDataTest extends TestCase {
 				array_push($db_entries, $db_entry);
 			}
 
-			$this->rir_service_mapper->expects($this->exactly(4))->method('insert')->withConsecutive(
-				[$this->equalTo($db_entries[0])],
-				[$this->equalTo($db_entries[1])],
-				[$this->equalTo($db_entries[2])],
-				[$this->equalTo($db_entries[3])]);
+			$this->expectRirServiceMapperInsertCalls([
+				$db_entries[0],
+				$db_entries[1],
+				$db_entries[2],
+				$db_entries[3],
+			]);
 		} else {
-			$this->rir_service_mapper->expects($this->exactly(2))->method('insert')->withConsecutive(
-				[$this->equalTo($db_entries[0])],
-				[$this->equalTo($db_entries[1])]);
+			$this->expectRirServiceMapperInsertCalls([
+				$db_entries[0],
+				$db_entries[1],
+			]);
 		}
 	}
 
