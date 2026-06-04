@@ -148,7 +148,7 @@ class GeoBlockerIntegrationTest extends TestCase {
 				$isCountryInList);
 	}
 
-	public function ipCountryListProvider(): array {
+	public static function ipCountryListProvider(): array {
 		return ["ip_v6" => ['2a02:2e0:3fe:1001:302::','DE'],
 			"ip_v4" => ['24.165.23.67','US']];
 	}
