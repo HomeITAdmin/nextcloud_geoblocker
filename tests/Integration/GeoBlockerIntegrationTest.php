@@ -12,6 +12,7 @@ use OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper;
 use OCA\GeoBlocker\LocalizationServices\MaxMindGeoLite2;
 use PHPUnit\Framework\MockObject\Rule\InvokedCount as InvokedCountMatcher;
 use OC\User\LoginException;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class GeoBlockerIntegrationTest extends TestCase {
 	protected $user;
@@ -81,10 +82,7 @@ class GeoBlockerIntegrationTest extends TestCase {
 		return call_user_func_array('sprintf', $sprintf_args);
 	}
 
-	/**
-	 *
-	 * @dataProvider ipCountryListProvider
-	 */
+	#[DataProvider('ipCountryListProvider')]
 	public function testLoginNotBlockedFromGeoiplookup(string $ip_address,
 			string $country_code) {
 		$this->mySetUp();
@@ -100,10 +98,7 @@ class GeoBlockerIntegrationTest extends TestCase {
 				$log_string_template, $log_method, $this->never());
 	}
 	
-	/**
-	 *
-	 * @dataProvider ipCountryListProvider
-	 */
+	#[DataProvider('ipCountryListProvider')]
 	public function testLoginBlockedFromGeoiplookup(string $ip_address,
 			string $country_code) {
 		$this->mySetUp();
@@ -121,10 +116,7 @@ class GeoBlockerIntegrationTest extends TestCase {
 				$isCountryInList);
 	}
 
-	/**
-	 *
-	 * @dataProvider ipCountryListProvider
-	 */
+	#[DataProvider('ipCountryListProvider')]
 	public function testLoginNotBlockedFromMaxmindGeoLite2(string $ip_address,
 			string $country_code) {
 		$this->mySetUp();
@@ -139,10 +131,7 @@ class GeoBlockerIntegrationTest extends TestCase {
 				$log_string_template, $log_method, $this->never());
 	}
 
-	/**
-	 *
-	 * @dataProvider ipCountryListProvider
-	 */
+	#[DataProvider('ipCountryListProvider')]
 	public function testLoginBlockedFromMaxmindGeoLite2(string $ip_address,
 			string $country_code) {
 		$this->mySetUp();
