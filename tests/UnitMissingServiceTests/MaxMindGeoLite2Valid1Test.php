@@ -3,7 +3,7 @@
 declare(strict_types = 1)
 	;
 
-namespace OCA\Geoblocker\Tests\UnitMissingServiceTests;
+namespace OCA\GeoBlocker\Tests\UnitMissingServiceTests;
 
 use OCA\GeoBlocker\LocalizationServices\MaxMindGeoLite2;
 use OCA\GeoBlocker\Tests\UnitMissingServiceTests\MaxMindGeoLite2TestBase;

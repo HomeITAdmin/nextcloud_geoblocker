@@ -3,7 +3,7 @@
 declare(strict_types = 1)
 	;
 
-namespace OCA\Geoblocker\Tests\UnitMissingServiceTests;
+namespace OCA\GeoBlocker\Tests\UnitMissingServiceTests;
 
 use PHPUnit\Framework\TestCase;
 
