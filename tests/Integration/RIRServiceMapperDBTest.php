@@ -24,7 +24,7 @@ class RIRServiceMapperDBTest extends TestCase {
 
 		$app = new \OCA\GeoBlocker\AppInfo\Application();
 		$this->container = $app->getContainer();
-		$this->db = $this->container->get('ServerContainer')->getDatabaseConnection();
+		$this->db = $this->container->get(\OCP\IDBConnection::class);
 		$this->rir_mapper = new RIRServiceMapper($this->db);
 	}
 	
