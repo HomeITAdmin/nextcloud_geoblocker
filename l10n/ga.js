@@ -190,7 +190,7 @@ OC.L10N.register(
     "Ireland" : "Éire",
     "Israel" : "Iosrael",
     "Isle of Man" : "Oileán Mhanann",
-    "India" : "India",
+    "India" : "An India",
     "British Indian Ocean Territory" : "Críoch Aigéan Indiach na Breataine",
     "Iraq" : "Iaráic",
     "Iran (Islamic Republic of)" : "An Iaráin (Poblacht Ioslamach)",
