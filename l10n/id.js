@@ -1,6 +1,7 @@
 OC.L10N.register(
     "geoblocker",
     {
+    "default" : "default",
     "OK" : "OK",
     "Loading" : "Memuat",
     "Test" : "Uji",

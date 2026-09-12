@@ -1,4 +1,5 @@
 { "translations": {
+    "default" : "default",
     "OK" : "OK",
     "Loading" : "Memuat",
     "Test" : "Uji",
