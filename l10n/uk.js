@@ -276,7 +276,7 @@ OC.L10N.register(
     "Réunion" : "Реюньйон",
     "Romania" : "Румунія",
     "Serbia" : "Сербія",
-    "Russian Federation" : "мордор ",
+    "Russian Federation" : "Російська Федерація",
     "Rwanda" : "Руанда",
     "Saudi Arabia" : "Саудівська Аравія ",
     "Solomon Islands" : "Соломонові острови ",
