@@ -125,7 +125,7 @@ OC.L10N.register(
     "Belize" : "Belize",
     "Canada" : "Kanada",
     "Cocos (Keeling) Islands" : "Kokosové ostrovy",
-    "Congo, Democratic Republic of the" : "Kongo",
+    "Congo, Democratic Republic of the" : "Konžská demokratická republika",
     "Central African Republic" : "Stredoafrická republika",
     "Congo" : "Kongo",
     "Switzerland" : "Švajčiarsko",
