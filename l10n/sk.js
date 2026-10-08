@@ -96,7 +96,7 @@ OC.L10N.register(
     "Angola" : "Angola",
     "Antarctica" : "Antarktída",
     "Argentina" : "Argentína",
-    "American Samoa" : "Americká Samo",
+    "American Samoa" : "Americká Samoa",
     "Austria" : "Rakúsko",
     "Australia" : "Austrália",
     "Aruba" : "Aruba",
