@@ -29,11 +29,11 @@ class GeoBlockerIntegrationTest extends TestCase {
 	private function mySetUp(): void {
 		$this->user = 'admin';
 		$this->logger = $this->getMockBuilder('Psr\Log\LoggerInterface')->getMock();
-		$tmp_config = $this->getMockBuilder('OCP\IConfig')->getMock();
+		$tmp_config = $this->createStub('OCP\IConfig');
 		$this->config = $this->getMockBuilder(
 				'OCA\GeoBlocker\Config\GeoBlockerConfig')->setConstructorArgs(
 				[$tmp_config])->getMock();
-		$this->l = $this->getMockBuilder('OCP\IL10N')->getMock();
+		$this->l = $this->createStub('OCP\IL10N');
 	}
 
 	private function doCheckTest(String $ip_address, String $country_code,

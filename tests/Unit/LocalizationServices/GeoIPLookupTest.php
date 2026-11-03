@@ -16,12 +16,22 @@ class GeoIPLookupTest extends TestCase {
 
 	public function setUp(): void {
 		parent::setUp();
-		$this->cmd_wrapper = $this->getMockBuilder(
-				'OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper')->getMock();
-		$this->l = $this->getMockBuilder('OCP\IL10N')->getMock();
+		$this->cmd_wrapper = $this->createStub(
+				'OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper');
+		$this->l = $this->createStub('OCP\IL10N');
 		$this->l->method('t')->willReturnCallback(
 				[$this,'callbackLTJustRouteThrough']);
+		$this->createGeoIpLookup();
+	}
+
+	private function createGeoIpLookup(): void {
 		$this->geo_ip_lookup = new GeoIPLookup($this->cmd_wrapper, $this->l);
+	}
+
+	private function useCmdWrapperMock(): void {
+		$this->cmd_wrapper = $this->createMock(
+				'OCA\GeoBlocker\LocalizationServices\GeoIPLookupCmdWrapper');
+		$this->createGeoIpLookup();
 	}
 
 	public function testIsValidStatusOk() {
@@ -92,6 +102,7 @@ class GeoIPLookupTest extends TestCase {
 	}
 
 	public function testIsCountryCodeFromInvalidIp1Ok() {
+		$this->useCmdWrapperMock();
 		$this->cmd_wrapper->expects($this->once())->method('geoiplookup')->with(
 				'127.0.0.1')->willReturnCallback(
 				[$this,'callbackGeoIpLookupValid']);
@@ -104,6 +115,7 @@ class GeoIPLookupTest extends TestCase {
 	}
 
 	public function testIsCountryCodeFromInvalidIp2Ok() {
+		$this->useCmdWrapperMock();
 		$this->cmd_wrapper->expects($this->once())->method('geoiplookup')->with(
 				'127.0.0.1')->willReturnCallback(
 				[$this,'callbackGeoIpLookupValid']);
@@ -116,6 +128,7 @@ class GeoIPLookupTest extends TestCase {
 	}
 
 	public function testIsCountryCodeFromInvalidIp3Ok() {
+		$this->useCmdWrapperMock();
 		$this->cmd_wrapper->expects($this->once())->method('geoiplookup')->with(
 				'127.0.0.1')->willReturnCallback(
 				[$this,'callbackGeoIpLookupValid']);
@@ -128,6 +141,7 @@ class GeoIPLookupTest extends TestCase {
 	}
 
 	public function testIsCountryCodeFromValidIpButInvalidServiceOk() {
+		$this->useCmdWrapperMock();
 		$this->cmd_wrapper->expects($this->once())->method('geoiplookup')->with(
 				'127.0.0.1')->willReturnCallback(
 				[$this,'callbackGeoIpLookupInvalid']);
@@ -140,6 +154,7 @@ class GeoIPLookupTest extends TestCase {
 	}
 
 	public function testIsCountryCodeFromValidIpButNonsenseServiceOk() {
+		$this->useCmdWrapperMock();
 		$this->cmd_wrapper->expects($this->once())->method('geoiplookup')->with(
 				'127.0.0.1')->willReturnCallback(
 				[$this,'callbackGeoIpLookupNonsense']);
@@ -152,6 +167,7 @@ class GeoIPLookupTest extends TestCase {
 	}
 
 	public function testIsDateFromValidConfigOk() {
+		$this->useCmdWrapperMock();
 		$this->cmd_wrapper->expects($this->once())->method('getFullDateString')->willReturnCallback(
 				[$this,'callbackGeoIpLookupValidDate']);
 		$this->assertEquals('2021-02-22',
@@ -159,6 +175,7 @@ class GeoIPLookupTest extends TestCase {
 	}
 
 	public function testIsDateFromValidConfig2Ok() {
+		$this->useCmdWrapperMock();
 		$this->cmd_wrapper->expects($this->once())->method('getFullDateString')->willReturnCallback(
 				[$this,'callbackGeoIpLookupValidDate2']);
 		$this->assertEquals('2018-11-08',
@@ -166,6 +183,7 @@ class GeoIPLookupTest extends TestCase {
 	}
 
 	public function testIsDateFromInvalidConfigOk() {
+		$this->useCmdWrapperMock();
 		$this->cmd_wrapper->expects($this->once())->method('getFullDateString')->willReturnCallback(
 				[$this,'callbackGeoIpLookupInvalidDate']);
 		$this->assertEquals('Date of the database cannot be determined!',

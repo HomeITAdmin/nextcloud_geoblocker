@@ -27,26 +27,49 @@ class RIRDataTest extends TestCase {
 
 	public function setUp(): void {
 		parent::setUp();
-		$this->rir_data_checks = $this->getMockBuilder(
-				'OCA\GeoBlocker\LocalizationServices\RIRDataChecks')->getMock();
-		$tmp_config = $this->getMockBuilder('OCP\IConfig')->getMock();
+		$this->rir_data_checks = $this->createStub(
+				'OCA\GeoBlocker\LocalizationServices\RIRDataChecks');
+		$tmp_config = $this->createStub('OCP\IConfig');
 		$this->config = $this->getMockBuilder(
 				'OCA\GeoBlocker\Config\GeoBlockerConfig')->setConstructorArgs(
 				[$tmp_config])->getMock();
-		$tmp_db = $this->getMockBuilder('OCP\IDBConnection')->getMock();
-		$this->rir_service_mapper = $this->getMockBuilder(
-				'OCA\GeoBlocker\Db\RIRServiceMapper')->setConstructorArgs(
-				[$tmp_db])->getMock();
-		$this->l = $this->getMockBuilder('OCP\IL10N')->getMock();
+		$this->rir_service_mapper = $this->createStub(
+				'OCA\GeoBlocker\Db\RIRServiceMapper');
+		$this->l = $this->createStub('OCP\IL10N');
 		$this->l->method('t')->willReturnCallback(
 				[$this,'callbackLTJustRouteThrough']);
-		$this->logger = $this->getMockBuilder('Psr\Log\LoggerInterface')->getMock();
+		$this->logger = $this->createStub('Psr\Log\LoggerInterface');
+		$this->createRirData();
+	}
+
+	private function createRirData(): void {
 		$this->rir_data = new RIRData($this->rir_data_checks,
 				$this->rir_service_mapper, $this->config, $this->l, $this->logger);
 	}
 
+	private function useRirDataChecksMock(): void {
+		$this->rir_data_checks = $this->createMock(
+				'OCA\GeoBlocker\LocalizationServices\RIRDataChecks');
+		$this->createRirData();
+	}
+
+	private function useRirServiceMapperMock(): void {
+		$tmp_db = $this->createStub('OCP\IDBConnection');
+		$this->rir_service_mapper = $this->getMockBuilder(
+				'OCA\GeoBlocker\Db\RIRServiceMapper')->setConstructorArgs(
+				[$tmp_db])->getMock();
+		$this->createRirData();
+	}
+
+	private function useLoggerMock(): void {
+		$this->logger = $this->createMock('Psr\Log\LoggerInterface');
+		$this->createRirData();
+	}
+
 	#[DataProvider('okRirStatusProvider')]
 	public function testIsStatusTrueOk(int $rir_status) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->Once())->method(
 			'checkGMP')->willReturn(true);
 		$map = [
@@ -63,6 +86,8 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('nonOkRirStatusProvider')]
 	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsStatusFalseOkForNonOkRirStatus(int $rir_status) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				true);
 		$this->config->expects($this->once())->method(
@@ -78,6 +103,8 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('allRirStatusProvider')]
 	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsStatusFalseOkForCheckGmpNotOk(int $rir_status) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				false);
 		$this->config->expects($this->once())->method(
@@ -93,6 +120,8 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('allRirStatusProvider')]
 	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsStatusFalseOkForNoEntriesInDb(int $rir_status) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				true);
 		$this->rir_service_mapper->expects($this->atMost(1))->method(
@@ -115,6 +144,8 @@ class RIRDataTest extends TestCase {
 
 	#[DataProvider('okRirStatusProvider')]
 	public function testIsValidStatusStringOk(int $rir_status) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->once())->method('checkGMP')->willReturn(
 				true);
 		$this->rir_data_checks->expects($this->atMost(1))->method('check64Bit')->willReturn(true);
@@ -138,6 +169,8 @@ class RIRDataTest extends TestCase {
 
 	#[DataProvider('okRirStatusProvider')]
 	public function testIsValidStatusStringWith64BitHintOk(int $rir_status) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->once())->method('checkGMP')->willReturn(
 				true);
 		$this->rir_data_checks->expects($this->atMost(1))->method('check64Bit')->willReturn(false);
@@ -166,6 +199,8 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('nonOkRirStatusProvider')]
 	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsErrorStatusStringOkForNonOkRirStatus(int $rir_status) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				true);
 		$this->rir_service_mapper->expects($this->atMost(1))->method(
@@ -188,6 +223,8 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('allRirStatusProvider')]
 	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsErrorStatusStringOkForCheckGmpNotOk(int $rir_status) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				false);
 		$this->rir_service_mapper->expects($this->atMost(1))->method(
@@ -210,6 +247,8 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('allRirStatusProvider')]
 	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsInvalidStatusStringOkForNoEntriesInDb(int $rir_status) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				true);
 		$this->rir_service_mapper->expects($this->atMost(1))->method(
@@ -234,6 +273,8 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('validIpProvider')]
 	public function testIsCountryCodeFromValidIpOk(string $ip_address, bool $ip_v6,
 			string $country_code, string $version, string $rir_status, bool $bit_64_ok) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->makeServiceValid($version, $rir_status);
 		$this->rir_data_checks->expects($this->atMost(1))->method('check64Bit')->willReturn($bit_64_ok);
 
@@ -264,6 +305,8 @@ class RIRDataTest extends TestCase {
 
 	#[DataProvider('invalidIpProvider')]
 	public function testIsCountryCodeFromInvalidIpOk(string $ip_address, string $version, string $rir_status) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->makeServiceValid($version, $rir_status);
 
 		$this->rir_service_mapper->expects($this->never())->method(
@@ -279,6 +322,8 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('allRirStatusProvider')]
 	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsCountryCodeFromValidIpWithCheckGmpNotOkServiceOk(int $rir_status) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				false);
 		$this->rir_service_mapper->expects($this->atMost(1))->method(
@@ -304,6 +349,8 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('allRirStatusProvider')]
 	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsCountryCodeFromValidIpWithNoEntriesInDbServiceOk(int $rir_status) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				true);
 		$this->rir_service_mapper->expects($this->atMost(1))->method(
@@ -335,6 +382,8 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('nonOkRirStatusProvider')]
 	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsCountryCodeFromValidIpWithNonOkStatus(int $rir_status) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->atMost(1))->method('checkGMP')->willReturn(
 				true);
 		$this->rir_service_mapper->expects($this->atMost(1))->method(
@@ -361,6 +410,7 @@ class RIRDataTest extends TestCase {
 
 	#[DataProvider('okRirStatusProvider')]
 	public function testIsGetDatabaseDateValidOk(int $rir_status) {
+		$this->useRirServiceMapperMock();
 		$db_date = '2020-06-07';
 		$this->rir_service_mapper->expects($this->once())->method(
 				'getNumberOfEntries')->willReturn(1000);
@@ -377,6 +427,7 @@ class RIRDataTest extends TestCase {
 
 	#[DataProvider('okRirStatusProvider')]
 	public function testIsGetDatabaseDateInvalidForNoSavedDateAndOkStatusOk(int $rir_status) {
+		$this->useRirServiceMapperMock();
 		$this->rir_service_mapper->expects($this->never())->method(
 				'getNumberOfEntries');
 		$ret_map = [
@@ -394,6 +445,7 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('nonOkRirStatusProvider')]
 	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsGetDatabaseDateInvalidForNoSavedDateAndNonOkStatusOk(int $rir_status) {
+		$this->useRirServiceMapperMock();
 		$this->rir_service_mapper->expects($this->never())->method(
 				'getNumberOfEntries');
 		$ret_map = [
@@ -411,6 +463,7 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('nonOkRirStatusProvider')]
 	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsGetDatabaseDateInvalidForNonOKStatusOk(int $rir_status) {
+		$this->useRirServiceMapperMock();
 		$db_date = '2020-06-07';
 		$this->rir_service_mapper->expects($this->never())->method(
 			'getNumberOfEntries');
@@ -429,6 +482,7 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('allRirStatusProvider')]
 	#[DataProvider('invalidRirStatusProvider')]
 	public function testIsGetDatabaseDateInvalidForNoEntryInDbOk(int $rir_status) {
+		$this->useRirServiceMapperMock();
 		$db_date = '2020-06-07';
 		$this->rir_service_mapper->expects($this->atMost(1))->method(
 				'getNumberOfEntries')->willReturn(0);
@@ -448,6 +502,8 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('initializableRirStatusProvider')]
 	public function testIsUpdateDatabaseSuccessForInitializableOk(int $rir_status_before,
 			int $rir_status_inter, bool $bit_64_ok) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
 
 		$ret_map = [
@@ -477,6 +533,8 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('updateableRirStatusProvider')]
 	public function testIsUpdateDatabaseSuccessForUpdateableOk(int $rir_status_before,
 			int $rir_status_inter, bool $bit_64_ok) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
 		$this->expectConfigGetServiceSpecificConfigValueCalls([
 			[$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'), strval($rir_status_before)],
@@ -505,6 +563,7 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('nonUpdateableRirStatusProvider')]
 	public function testIsUpdateDatabaseForNoUpdateStatesOk(
 			int $rir_status_before) {
+		$this->useRirServiceMapperMock();
 		$this->config->expects($this->once())->method(
 				'getServiceSpecificConfigValue')->with(
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
@@ -520,6 +579,7 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('initializableRirStatusProvider')]
 	public function testIsUpdateDatabaseErrorDuringErasingForInitializableOk(int $rir_status_before,
 			int $rir_status_inter, bool $bit_64_ok) {
+		$this->useRirServiceMapperMock();
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
 			[RIRData::kDbVersionName, '0', '1']
@@ -547,6 +607,8 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('updateableRirStatusProvider')]
 	public function testIsUpdateDatabaseErrorDuringErasingForUpdateableOk(int $rir_status_before,
 			int $rir_status_inter, bool $bit_64_ok) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
 		$this->expectConfigGetServiceSpecificConfigValueCalls([
 			[$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'), strval($rir_status_before)],
@@ -578,6 +640,9 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('updateableRirStatusAndInvalidFilesProvider')]
 	public function testIsUpdateDatabaseErrorRirFormatOk(int $rir_status_before,
 			int $rir_status_inter, int $fileNumber) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
+		$this->useLoggerMock();
 		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn(true);
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
@@ -637,6 +702,7 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('initializableRirStatusProvider')]
 	public function testIsUpdateDatabaseExceptionDuringFillingOk(int $rir_status_before,
 			int $rir_status_inter, bool $bit_64_ok) {
+		$this->useRirServiceMapperMock();
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
 			[RIRData::kDbVersionName, '0', '1']
@@ -699,6 +765,7 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('initializableRirStatusProvider')]
 	public function testIsUpdateDatabaseErrorInvalidFileHandleOk(int $rir_status_before,
 			int $rir_status_inter, bool $bit_64_ok) {
+		$this->useRirServiceMapperMock();
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
 			[RIRData::kDbVersionName, '0', '1']
@@ -750,6 +817,8 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('updateableRirStatusProvider')]
 	public function testIsUpdateDatabaseSuccessEntriesAlreadyExistOk(int $rir_status_before,
 			int $rir_status_inter, bool $bit_64_ok) {
+		$this->useRirDataChecksMock();
+		$this->useRirServiceMapperMock();
 		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
 		$this->expectConfigGetServiceSpecificConfigValueCalls([
 			[$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'), strval($rir_status_before)],
@@ -787,6 +856,7 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('updateableRirStatusProvider')]
 	public function testIsUpdateDatabaseEntriesAlreadyExistEraseFailureOk(int $rir_status_before,
 			int $rir_status_inter, bool $bit_64_ok) {
+		$this->useRirServiceMapperMock();
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status_before)],
 			[RIRData::kDbVersionName, '0', '1']
@@ -819,6 +889,7 @@ class RIRDataTest extends TestCase {
 	}
 
 	public function testIsResetDatabaseSuccessOk() {
+		$this->useRirServiceMapperMock();
 		$this->config->expects($this->never())->method(
 				'getServiceSpecificConfigValue')->with(
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'));
@@ -834,6 +905,7 @@ class RIRDataTest extends TestCase {
 	}
 
 	public function testIsResetDatabaseFailureOk() {
+		$this->useRirServiceMapperMock();
 		$this->config->expects($this->never())->method(
 				'getServiceSpecificConfigValue')->with(
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'));
@@ -865,6 +937,7 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('databaseNotUpdatingStatusProvider')]
 	public function testIsGetDatabaseUpdateStatusUpdateNotPossibleOk(
 			int $rir_status, bool $bit_64_ok) {
+		$this->useRirDataChecksMock();
 		$this->config->expects($this->once())->method(
 				'getServiceSpecificConfigValue')->with(
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
@@ -880,6 +953,7 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('databaseNotUpdatingStatusProvider')]
 	public function testIsGetDatabaseUpdateStatusUpdatePossibleOk(
 			int $rir_status, bool $bit_64_ok) {
+		$this->useRirDataChecksMock();
 		$this->config->expects($this->once())->method(
 				'getServiceSpecificConfigValue')->with(
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
@@ -895,6 +969,7 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('databaseUpdatingStatusProvider')]
 	public function testIsGetDatabaseUpdateStatusStringUpdatingOk(
 			int $rir_status, int $version) {
+		$this->useRirServiceMapperMock();
 		$ret_map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status)],
 			[RIRData::kDbVersionName, '0', '0']
@@ -914,6 +989,7 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('databaseNotUpdatingStatusStingsProvider')]
 	public function testIsGetDatabaseUpdateStatusStringUpdateNotPossibleOk(
 			int $rir_status, bool $ret1, bool $ret2, bool $ret3, string $msg) {
+		$this->useRirDataChecksMock();
 		$this->config->expects($this->once())->method(
 				'getServiceSpecificConfigValue')->with(
 				$this->equalTo(RIRData::kServiceStatusName), $this->equalTo('0'))->willReturn(
@@ -935,6 +1011,7 @@ class RIRDataTest extends TestCase {
 	#[DataProvider('databaseNotUpdatingStatusProvider')]
 	public function testIsGetDatabaseUpdateStatusStringUpdatePossibleOk(
 			int $rir_status, bool $bit_64_ok) {
+		$this->useRirDataChecksMock();
 		$this->rir_data_checks->expects($this->exactly(1))->method('check64Bit')->willReturn($bit_64_ok);
 		$this->config->expects($this->once())->method(
 				'getServiceSpecificConfigValue')->with(

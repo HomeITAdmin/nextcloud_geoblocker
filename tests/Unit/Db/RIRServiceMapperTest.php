@@ -14,7 +14,7 @@ class RIRServiceMapperTest extends TestCase {
 
 	public function setUp(): void {
 		parent::setUp();
-		$this->db = $this->getMockBuilder('OCP\IDBConnection')->getMock();
+		$this->db = $this->createStub('OCP\IDBConnection');
 		$this->rir_service_mapper = new RIRServiceMapper($this->db);
 	}
 	

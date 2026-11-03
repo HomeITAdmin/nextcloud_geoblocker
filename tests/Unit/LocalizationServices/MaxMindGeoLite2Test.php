@@ -17,14 +17,12 @@ class MaxMindGeoLite2Test extends TestCase {
 
 	public function setUp(): void {
 		parent::setUp();
-		$this->l = $this->getMockBuilder('OCP\IL10N')->getMock();
+		$this->l = $this->createStub('OCP\IL10N');
 		$this->l->method('t')->willReturnCallback(
 				[$this,'callbackLTJustRouteThrough']);
-		$this->logger = $this->getMockBuilder('Psr\Log\LoggerInterface')->getMock();
-		$tmp_config = $this->getMockBuilder('OCP\IConfig')->getMock();
-		$this->config = $this->getMockBuilder(
-				'OCA\GeoBlocker\Config\GeoBlockerConfig')->setConstructorArgs(
-				[$tmp_config])->getMock();
+		$this->logger = $this->createStub('Psr\Log\LoggerInterface');
+		$this->config = $this->createStub(
+				'OCA\GeoBlocker\Config\GeoBlockerConfig');
 		$this->geo_ip_lookup = new MaxMindGeoLite2($this->config, $this->l, $this->logger);
 	}
 
