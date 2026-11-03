@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use OCA\GeoBlocker\GeoBlocker\GeoBlocker;
 use PHPUnit\Framework\MockObject\Rule\InvokedCount as InvokedCountMatcher;
 use OC\User\LoginException;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class GeoBlockerTest extends TestCase {
 	protected $user;
@@ -244,5 +245,80 @@ class GeoBlockerTest extends TestCase {
 		$this->doCheckTest($ip_address, $country_code, $this->once(),
 				$log_string_template, $log_method, $this->once(), false, false,
 				$isCountryInList, $useWhiteListing, true, true, true);
+	}
+
+	public function testLegacyBlockSettingBlocksAndMigratesNewSetting() {
+		$this->mySetUp();
+		$this->location_service->expects($this->once())->method('getCountryCodeFromIP')->willReturn('DE');
+		$this->config->method('isCountryCodeInListOfChoosenCountries')->willReturn(true);
+		$this->config->method('getBlockIpAddress')->willReturn(false);
+		$this->config->method('getBlockIpAddressBefore')->willReturn(true);
+		$this->config->expects($this->once())->method('setBlockIpAddress')->with(true);
+		$this->l->method('t')->willReturnCallback([$this,'defaultTranslate']);
+		$this->logger->expects($this->once())->method('warning')->with(
+			$this->stringEndsWith(' Login is blocked.'), ['app' => 'geoblocker']);
+		$this->expectException(LoginException::class);
+		$this->expectExceptionMessage('Your attempt to login from country "DE" is blocked');
+		$this->geo_blocker->blockIpAddress('24.165.23.67');
+	}
+
+	public function testBlockSettingDoesNotRewriteNewSetting() {
+		$this->mySetUp();
+		$this->location_service->expects($this->once())->method('getCountryCodeFromIP')->willReturn('DE');
+		$this->config->method('isCountryCodeInListOfChoosenCountries')->willReturn(true);
+		$this->config->method('getBlockIpAddress')->willReturn(true);
+		$this->config->method('getBlockIpAddressBefore')->willReturn(true);
+		$this->config->expects($this->never())->method('setBlockIpAddress');
+		$this->logger->expects($this->once())->method('warning');
+		$this->l->method('t')->willReturnCallback([$this,'defaultTranslate']);
+		$this->expectException(LoginException::class);
+		$this->geo_blocker->blockIpAddress('24.165.23.67');
+	}
+
+	public function testNoReactionActivatedIsLoggedWithoutBlocking() {
+		$this->mySetUp();
+		$this->location_service->expects($this->once())->method('getCountryCodeFromIP')->willReturn('DE');
+		$this->config->method('isCountryCodeInListOfChoosenCountries')->willReturn(true);
+		$this->config->method('getLogWithUserName')->willReturn(true);
+		$this->config->method('getLogWithCountryCode')->willReturn(true);
+		$this->config->method('getLogWithIpAddress')->willReturn(true);
+		$this->config->expects($this->never())->method('setBlockIpAddress');
+		$this->logger->expects($this->once())->method('warning')->with(
+			'The user "admin" attempt to login with IP address "24.165.23.67" from blocked country "DE". No reaction is activated.',
+			['app' => 'geoblocker']);
+		$this->geo_blocker->blockIpAddress('24.165.23.67');
+	}
+
+	public static function ipAddressProvider(): array {
+		return [
+			'public ipv4' => ['8.8.8.8', true, false],
+			'public ipv6' => ['2a02:2e0:3fe:1001:302::', true, false],
+			'loopback ipv4' => ['127.0.0.1', true, true],
+			'private 10/8' => ['10.0.0.1', true, true],
+			'private 172.16/12' => ['172.16.0.1', true, true],
+			'private 192.168/16' => ['192.168.1.1', true, true],
+			'link local ipv4' => ['169.254.1.1', true, true],
+			'reserved 240/4' => ['240.0.0.1', true, true],
+			'ipv6 loopback' => ['::1', true, true],
+			'ipv6 unique local' => ['fc00::1', true, true],
+			'ipv6 link local' => ['fe80::1', true, true],
+			'invalid octet' => ['256.1.1.1', false, false],
+			'garbage' => ['abc', false, false],
+			'empty' => ['', false, false],
+			'too many octets' => ['1.2.3.4.5', false, false],
+		];
+	}
+
+	#[DataProvider('ipAddressProvider')]
+	public function testIsIPAddressValidAndLocal(string $ip, bool $valid, bool $local) {
+		$this->assertSame($valid, GeoBlocker::isIPAddressValid($ip));
+		$this->assertSame($local, GeoBlocker::isIPAddressLocal($ip));
+	}
+
+	public function testInvalidIpCodeFromLocationServiceIsLogged() {
+		$ip_address = '24.165.23.67';
+		$this->doCheckTest($ip_address, 'INVALID_IP', $this->once(),
+				'The user "%s" attempt to login with an invalid IP address "%s".',
+				'warning', $this->once());
 	}
 }

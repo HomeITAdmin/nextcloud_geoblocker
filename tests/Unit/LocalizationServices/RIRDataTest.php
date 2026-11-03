@@ -3,7 +3,7 @@
 declare(strict_types = 1)
 	;
 
-namespace OCA\GeoBlocker\Tests\Unit\LocalizationService;
+namespace OCA\GeoBlocker\Tests\Unit\LocalizationServices;
 
 use Exception;
 use OCA\GeoBlocker\Db\RIRServiceMapper;

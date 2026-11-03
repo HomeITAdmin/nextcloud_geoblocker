@@ -256,4 +256,135 @@ class GeoBlockerConfigTest extends TestCase {
 		$this->geo_config->setServiceSpecificConfigValue($test_name,
 				$test_return);
 	}
+
+	public function testIsGetDelayIpAddressFalseValid() {
+		$this->config->expects($this->once())->method('getAppValue')->with(
+				$this->equalTo('geoblocker'), $this->equalTo('delayIpAddress'),
+				$this->equalTo('0'))->willReturn('0');
+		$this->assertFalse($this->geo_config->getDelayIpAddress());
+	}
+
+	public function testIsGetDelayIpAddressTrueValid() {
+		$this->config->expects($this->once())->method('getAppValue')->with(
+				$this->equalTo('geoblocker'), $this->equalTo('delayIpAddress'),
+				$this->equalTo('0'))->willReturn('1');
+		$this->assertTrue($this->geo_config->getDelayIpAddress());
+	}
+
+	public function testIsSetDelayIpAddressFalseValid() {
+		$this->config->expects($this->once())->method('setAppValue')->with(
+				$this->equalTo('geoblocker'), $this->equalTo('delayIpAddress'),
+				$this->equalTo('0'));
+		$this->geo_config->setDelayIpAddress(false);
+	}
+
+	public function testIsSetDelayIpAddressTrueValid() {
+		$this->config->expects($this->once())->method('setAppValue')->with(
+				$this->equalTo('geoblocker'), $this->equalTo('delayIpAddress'),
+				$this->equalTo('1'));
+		$this->geo_config->setDelayIpAddress(true);
+	}
+
+	public function testIsGetBlockIpAddressFalseValid() {
+		$this->config->expects($this->once())->method('getAppValue')->with(
+				$this->equalTo('geoblocker'), $this->equalTo('blockIpAddress'),
+				$this->equalTo('0'))->willReturn('0');
+		$this->assertFalse($this->geo_config->getBlockIpAddress());
+	}
+
+	public function testIsGetBlockIpAddressTrueValid() {
+		$this->config->expects($this->once())->method('getAppValue')->with(
+				$this->equalTo('geoblocker'), $this->equalTo('blockIpAddress'),
+				$this->equalTo('0'))->willReturn('1');
+		$this->assertTrue($this->geo_config->getBlockIpAddress());
+	}
+
+	public function testIsSetBlockIpAddressFalseValid() {
+		$this->config->expects($this->once())->method('setAppValue')->with(
+				$this->equalTo('geoblocker'), $this->equalTo('blockIpAddress'),
+				$this->equalTo('0'));
+		$this->geo_config->setBlockIpAddress(false);
+	}
+
+	public function testIsSetBlockIpAddressTrueValid() {
+		$this->config->expects($this->once())->method('setAppValue')->with(
+				$this->equalTo('geoblocker'), $this->equalTo('blockIpAddress'),
+				$this->equalTo('1'));
+		$this->geo_config->setBlockIpAddress(true);
+	}
+
+	public function testIsGetBlockIpAddressBeforeFalseValid() {
+		$this->config->expects($this->once())->method('getAppValue')->with(
+				$this->equalTo('geoblocker'),
+				$this->equalTo('blockIpAddressBefore'), $this->equalTo('0'))->willReturn('0');
+		$this->assertFalse($this->geo_config->getBlockIpAddressBefore());
+	}
+
+	public function testIsGetBlockIpAddressBeforeTrueValid() {
+		$this->config->expects($this->once())->method('getAppValue')->with(
+				$this->equalTo('geoblocker'),
+				$this->equalTo('blockIpAddressBefore'), $this->equalTo('0'))->willReturn('1');
+		$this->assertTrue($this->geo_config->getBlockIpAddressBefore());
+	}
+
+	public function testIsSetBlockIpAddressBeforeFalseValid() {
+		$this->config->expects($this->once())->method('setAppValue')->with(
+				$this->equalTo('geoblocker'),
+				$this->equalTo('blockIpAddressBefore'), $this->equalTo('0'));
+		$this->geo_config->setBlockIpAddressBefore(false);
+	}
+
+	public function testIsSetBlockIpAddressBeforeTrueValid() {
+		$this->config->expects($this->once())->method('setAppValue')->with(
+				$this->equalTo('geoblocker'),
+				$this->equalTo('blockIpAddressBefore'), $this->equalTo('1'));
+		$this->geo_config->setBlockIpAddressBefore(true);
+	}
+
+	public function testIsSetChoosenCountriesByStringValid() {
+		$countries = 'AE, AF, AG,';
+		$this->config->expects($this->once())->method('setAppValue')->with(
+				$this->equalTo('geoblocker'), $this->equalTo('choosenCountries'),
+				$this->equalTo($countries));
+		$this->geo_config->setChoosenCountriesByString($countries);
+	}
+
+	public function testIsGetFakeAddressUserValid() {
+		$this->config->expects($this->once())->method('getAppValue')->with(
+				$this->equalTo('geoblocker'), $this->equalTo('fakeAddressUser'),
+				$this->equalTo(''))->willReturn('admin');
+		$this->assertEquals('admin', $this->geo_config->getFakeAddressUser());
+	}
+
+	public function testIsGetFakeAddressUserEmptyValid() {
+		$this->config->expects($this->once())->method('getAppValue')->with(
+				$this->equalTo('geoblocker'), $this->equalTo('fakeAddressUser'),
+				$this->equalTo(''))->willReturn('');
+		$this->assertEquals('', $this->geo_config->getFakeAddressUser());
+	}
+
+	public function testIsSetFakeAddressUserValid() {
+		$this->config->expects($this->once())->method('setAppValue')->with(
+				$this->equalTo('geoblocker'), $this->equalTo('fakeAddressUser'),
+				$this->equalTo('admin'));
+		$this->geo_config->setFakeAddressUser('admin');
+	}
+
+	public function testIsGetDatabaseFileLocationValid() {
+		$this->config->expects($this->once())->method('getAppValue')->with(
+				$this->equalTo('geoblocker'),
+				$this->equalTo('MaxMindGeoLite2_DatabaseFileLocation'),
+				$this->equalTo(''))->willReturn('/tmp/GeoLite2.mmdb');
+		$this->assertEquals('/tmp/GeoLite2.mmdb',
+				$this->geo_config->getDatabaseFileLocation('MaxMindGeoLite2'));
+	}
+
+	public function testIsSetDatabaseFileLocationValid() {
+		$this->config->expects($this->once())->method('setAppValue')->with(
+				$this->equalTo('geoblocker'),
+				$this->equalTo('MaxMindGeoLite2_DatabaseFileLocation'),
+				$this->equalTo('/tmp/GeoLite2.mmdb'));
+		$this->geo_config->setDatabaseFileLocation('/tmp/GeoLite2.mmdb',
+				'MaxMindGeoLite2');
+	}
 }

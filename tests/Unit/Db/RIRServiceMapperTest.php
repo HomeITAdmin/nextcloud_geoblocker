@@ -52,6 +52,12 @@ class RIRServiceMapperTest extends TestCase {
 		$this->assertEquals(RIRServiceMapper::ipv6String2Int64($ip2), RIRServiceMapper::ipv6String2Int64($ip));
 	}
 
+	public function testIsIpv4String2Int64Correct() {
+		$this->assertEquals(0, RIRServiceMapper::ipv4String2Int64('0.0.0.0'));
+		$this->assertEquals(16909060, RIRServiceMapper::ipv4String2Int64('1.2.3.4'));
+		$this->assertEquals(4294967295, RIRServiceMapper::ipv4String2Int64('255.255.255.255'));
+	}
+
 	public function callbackLTJustRouteThrough(string $in): string {
 		return $in;
 	}

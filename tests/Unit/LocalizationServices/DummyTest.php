@@ -3,7 +3,7 @@
 declare(strict_types = 1)
 	;
 
-namespace OCA\GeoBlocker\Tests\Unit\LocalizationService;
+namespace OCA\GeoBlocker\Tests\Unit\LocalizationServices;
 
 use PHPUnit\Framework\TestCase;
 use OCA\GeoBlocker\LocalizationServices\Dummy;
