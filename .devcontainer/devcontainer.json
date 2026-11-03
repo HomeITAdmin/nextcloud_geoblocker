@@ -1,0 +1,37 @@
+{
+  "name": "nextcloud-app",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "PHP_VERSION": "8.3",
+      "NEXTCLOUD_BRANCH": "stable35"
+    }
+  },
+
+  "workspaceMount": "source=${localWorkspaceFolder},target=/srv/nextcloud/apps/geoblocker,type=bind",
+  "workspaceFolder": "/srv/nextcloud/apps/geoblocker",
+  "remoteUser": "dev",
+
+  "containerEnv": {
+    "MAXMIND_ACCOUNT_ID": "${localEnv:MAXMIND_ACCOUNT_ID}",
+    "MAXMIND_LICENSE_KEY": "${localEnv:MAXMIND_LICENSE_KEY}"
+  },
+
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "forwardPorts": [8080],
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client"
+      ],
+      "settings": {
+        "telemetry.telemetryLevel": "off",
+        "intelephense.environment.includePaths": [
+          "/srv/nextcloud/lib",
+          "/srv/nextcloud/3rdparty"
+        ]
+      }
+    }
+  }
+}
