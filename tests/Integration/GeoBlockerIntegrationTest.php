@@ -54,15 +54,18 @@ class GeoBlockerIntegrationTest extends TestCase {
 				$logWithCountryCode);
 		$this->config->method('getLogWithIpAddress')->willReturn(
 				$logWithIPAdress);
-		$this->config->method('isCountryCodeInListOfChoosenCountries')->with(
-				$this->equalTo($country_code))->willReturn(
-				$isCountryInList);
-		$this->config->method('getUseWhiteListing')->with()->willReturn(
+		$this->config->method('isCountryCodeInListOfChoosenCountries')->willReturnCallback(
+				function (string $cc) use ($country_code, $isCountryInList): bool {
+					$this->assertSame($country_code, $cc);
+					return $isCountryInList;
+				});
+		$this->config->method('getUseWhiteListing')->willReturn(
 				$useWhiteListing);
-		$this->config->method('getDelayIpAddress')->with()->willReturn(
+		$this->config->method('getDelayIpAddress')->willReturn(
 				false);
-		$this->config->method('getBlockIpAddress')->with()->willReturn(
+		$this->config->method('getBlockIpAddress')->willReturn(
 				$blocking_active);
+		$this->config->expects($this->never())->method('setBlockIpAddress');
 		$this->l->method('t')->willReturnCallback(
 				[$this,'defaultTranslate']);
 		$this->logger->expects($invokerLogging)->method($log_method)->with(

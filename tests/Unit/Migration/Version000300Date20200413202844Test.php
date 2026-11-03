@@ -12,10 +12,11 @@ namespace OCA\GeoBlocker\Tests\Unit\Migration;
 use PHPUnit\Framework\TestCase;
 use OCA\GeoBlocker\Migration\Version000300Date20200413202844;
 use OCP\DB\ISchemaWrapper;
-use OCP\DB\Schema\ITable;
 use OCP\Migration\IOutput;
 
 class Version000300Date20200413202844Test extends TestCase {
+	use SchemaMockTypes;
+
 	private $output;
 	private $migration;
 
@@ -37,7 +38,7 @@ class Version000300Date20200413202844Test extends TestCase {
 	}
 
 	public function testIsChangeSchemaTableMissingValid() {
-		$table = $this->createMock(ITable::class);
+		$table = $this->createMock(self::tableType());
 		$table->expects($this->exactly(6))->method('addColumn');
 		$table->expects($this->once())->method('setPrimaryKey')->with(
 				$this->equalTo(['id']));

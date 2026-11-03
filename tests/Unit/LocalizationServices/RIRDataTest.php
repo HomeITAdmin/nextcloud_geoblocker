@@ -70,7 +70,7 @@ class RIRDataTest extends TestCase {
 	public function testIsStatusTrueOk(int $rir_status) {
 		$this->useRirDataChecksMock();
 		$this->useRirServiceMapperMock();
-		$this->rir_data_checks->expects($this->Once())->method(
+		$this->rir_data_checks->expects($this->once())->method(
 			'checkGMP')->willReturn(true);
 		$map = [
 			[RIRData::kServiceStatusName, '0', strval($rir_status)],
@@ -78,7 +78,7 @@ class RIRDataTest extends TestCase {
 		];
 		$this->config->expects($this->exactly(2))->method(
 			'getServiceSpecificConfigValue')->willReturnMap($map);
-		$this->rir_service_mapper->expects($this->Once())->method(
+		$this->rir_service_mapper->expects($this->once())->method(
 			'getNumberOfEntries')->willReturn(100);
 		$this->assertTrue($this->rir_data->getStatus());
 	}
@@ -811,7 +811,18 @@ class RIRDataTest extends TestCase {
 		$this->setupAndCheckDbEntriesNotCalled(
 				__DIR__ . DIRECTORY_SEPARATOR . 'file-does-not-exist.txt');
 
-		$this->assertFalse($this->rir_data->updateDatabase());
+		$warnings = [];
+		set_error_handler(function (int $errno, string $errstr) use (&$warnings): bool {
+			$warnings[] = $errstr;
+			return true;
+		}, E_WARNING);
+		try {
+			$this->assertFalse($this->rir_data->updateDatabase());
+		} finally {
+			restore_error_handler();
+		}
+		$this->assertCount(1, $warnings);
+		$this->assertStringContainsString('Failed to open stream', $warnings[0]);
 	}
 
 	#[DataProvider('updateableRirStatusProvider')]

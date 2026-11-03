@@ -12,7 +12,7 @@ class RIRServiceDBEntity extends Entity implements JsonSerializable {
 	protected $countryCode;
 	protected $version;
 
-	public function jsonSerialize() {
+	public function jsonSerialize(): array {
 		return ['id' => $this->id,'beginIpRange' => $this->beginIpRange,
 			'lengthIpRange' => $this->lengthIpRange,'isIpV6' => $this->isIpV6,
 			'countryCode' => $this->countryCode,'version' => $this->version];

@@ -15,7 +15,7 @@ use OCA\GeoBlocker\Hooks\UserHooks;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
-use Psr\Container\ContainerInterface;
+use ReflectionMethod;
 
 class ApplicationTest extends TestCase {
 	private $application;
@@ -40,7 +40,9 @@ class ApplicationTest extends TestCase {
 		$hooks = $this->createMock(UserHooks::class);
 		$hooks->expects($this->once())->method('register');
 
-		$container = $this->createStub(ContainerInterface::class);
+		// Nextcloud 35 returns a ContainerInterface, older versions the deprecated IAppContainer.
+		$container_type = (string)(new ReflectionMethod(IBootContext::class, 'getAppContainer'))->getReturnType();
+		$container = $this->createStub($container_type);
 		$container->method('get')->willReturnCallback(
 				fn (string $id) => $id === UserHooks::class ? $hooks : null);
 
